@@ -158,6 +158,11 @@ Auth::routes();
 Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/', 'HomeController@index')->name('index');
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/admin-page', 'HomeController@demoAdmin');
+});
+
+Route::group(['middleware' => ['role:Employee']], function () {
+    Route::get('/emp-page', 'HomeController@demoEmployee');
 });
 
 Route::get('/', 'HomeController@index')->name('index');

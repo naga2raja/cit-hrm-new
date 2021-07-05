@@ -31,4 +31,12 @@ class HomeController extends Controller
             return view('employees-dashboard');            
         }
     }
+
+    public function demoAdmin() {
+        return view('test-page');
+    }
+
+    public function demoEmployee() {
+        return view('test-page');
+    }
 }

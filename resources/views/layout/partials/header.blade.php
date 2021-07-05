@@ -209,6 +209,28 @@
                                                 </span>
                                             </span>
                                         </a>
+
+                                        @hasrole('Admin')
+                                        <a class="p-2" href="/admin-page">
+                                            <span class="media align-items-center">
+                                                <span class="lnr lnr-users mr-3"></span>
+                                                <span class="media-body text-truncate text-left">
+                                                    <span class="text-truncate text-left">Admin demo</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        @endrole
+                                        @hasrole('Employee')
+                                        <a class="p-2" href="/emp-page">
+                                            <span class="media align-items-center">
+                                                <span class="lnr lnr-users mr-3"></span>
+                                                <span class="media-body text-truncate text-left">
+                                                    <span class="text-truncate text-left">Employees Demo</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        @endrole
+
                                     </div>
                                 </div>
                                 <!-- /Offcanvas menu --> 
@@ -239,6 +261,32 @@
                                         @endrole
                                         <li class="mr-1 {{ Request::is('leave') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="#"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a></li>
                                         <li class="mr-1 {{ Request::is('time') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="#"><span class="lnr lnr-clock pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a></li>
+
+                                        @hasrole('Admin')
+                                        <li class="mr-1 {{ Request::is('admin-page') ? 'active' : '' }}">
+                                            <a  class="btn-ctm-space text-dark" href="/admin-page">
+                                            <span class="media align-items-center">
+                                                <span class="lnr lnr-users mr-3"></span>
+                                                <span class="media-body text-truncate text-left">
+                                                    <span class="text-truncate text-left">Admin demo</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        </li>
+                                        @endrole
+                                        @hasrole('Employee')
+                                        <li class="mr-1 {{ Request::is('emp-page') ? 'active' : '' }}">
+                                        <a  class="btn-ctm-space text-dark" href="/emp-page">
+                                            <span class="media align-items-center">
+                                                <span class="lnr lnr-users mr-3"></span>
+                                                <span class="media-body text-truncate text-left">
+                                                    <span class="text-truncate text-left">Employees Demo</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        </li>
+                                        @endrole
+
                                     </ul>
                                 </div>
                             </div>

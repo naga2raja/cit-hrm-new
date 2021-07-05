@@ -57,16 +57,25 @@
 											<span class="ctm-text-sm">Your password needs to be at least 8 characters long.</span>
 										</div>
 										<div class="card-body">
+											@if($message = Session::get('success'))
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
+											</div>
+											@endif										
+
 										  <form method="post" action="{{ route('change-password') }}">	
 										  		@csrf
 												<div class="form-group">
-													<input type="password" name="current_password" class="form-control" required placeholder="Current Password">
+													<input type="password" name="current_password" class="form-control {{ $errors->has('current_password') ? 'is-invalid' : ''}}" required placeholder="Current Password">
+													{!! $errors->first('current_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="form-group">
-													<input type="password" name="new_password"  class="form-control" required placeholder="New Password" id="pwd">
+													<input type="password" name="new_password"  class="form-control {{ $errors->has('new_password') ? 'is-invalid' : ''}}" required placeholder="New Password" id="pwd">
+													{!! $errors->first('new_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="form-group">
-													<input type="password" name="confirm_password" class="form-control" placeholder="Repeat Password">
+													<input type="password" name="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="Repeat Password">
+													{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="text-center">
 													<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center">Change My Password</button>
