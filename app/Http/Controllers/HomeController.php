@@ -37,6 +37,6 @@ class HomeController extends Controller
     }
 
     public function demoEmployee() {
-        return view('test-page');
+        return view('test-page-employees');
     }
 }
