@@ -50,7 +50,7 @@
                                         <div class="user-info align-right dropdown d-inline-block header-dropdown">
                                             <a href="javascript:void(0)" data-toggle="dropdown" class=" menu-style dropdown-toggle">
                                                 <div class="user-avatar d-inline-block">
-                                                    <img src="img/profiles/img-6.jpg" alt="user avatar" class="rounded-circle img-fluid" width="55">
+                                                    <img src="img/profiles/profile.png" alt="user avatar" class="rounded-circle img-fluid" width="55">
                                                 </div>
                                             </a>
                                             <!-- Notifications -->
@@ -241,59 +241,245 @@
             </div>
             <!-- /Top Header Section -->
             <!-- Slide Nav -->
-            <div class="header-wrapper d-none d-sm-none d-md-none d-lg-block">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
-                                <div class="append mr-auto my-0 my-md-0 mr-auto">
-                                    <ul class="list-group list-group-horizontal-md mr-auto">
-                                        <li class="mr-1 {{ Request::is('index','employees-dashboard') || request()->routeIs('index') ? 'active' : '' }}"><a href="{{ route('index') }}" class="btn-ctm-space text-dark header_class"><span class="lnr lnr-home pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Dashboard</span></a></li>
-                                        @hasrole('Admin')
-                                        <li class="mr-1 {{ Request::is('employees','add-employee','employees-list','employees-offices-list','employees-offices','employees-team') ? 'active' : '' }}"><a class="text-dark btn-ctm-space header_class" href="employees"><span class="lnr lnr-users pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Employees</span></a></li>
-                                        <li class="mr-1 {{ Request::is('company') ? 'active' : '' }}"><a class="text-dark btn-ctm-space " href="company"><span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Company</span></a></li>
-                                        <li class="mr-1 {{ Request::is('calendar') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="calendar"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Calendar</span></a></li>                                        
-                                        <li class="mr-1 {{ Request::is('reports','contact-reports','email-reports','leave-reports','payroll-reports','security-reports','work-from-home-reports') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="reports"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a></li>
-                                        <!--
-                                        <li class="mr-1 {{ Request::is('reviews','create-review','edit-review') ? 'active' : '' }}"><a class="text-dark btn-ctm-space" href="reviews"><span class="lnr lnr-star pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reviews</span></a></li>                                            
-                                        <li class="mr-1 {{ Request::is('manage','admin','custom-timeoff-approver','line-manager','manage-leadership','payroll-admin','super-admin','team-lead','team-member') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="manage"><span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Manage</span></a></li>
-                                        <li class="mr-1 {{ Request::is('settings','details','documents','employment','payroll','profile-reviews','profile-settings','settings-timeoff','time-off') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="settings"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a></li> -->
-                                        @endrole
-                                        <li class="mr-1 {{ Request::is('leave') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="#"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a></li>
-                                        <li class="mr-1 {{ Request::is('time') ? 'active' : '' }}"><a class="btn-ctm-space text-dark" href="#"><span class="lnr lnr-clock pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a></li>
-
-                                        @hasrole('Admin')
-                                        <li class="mr-1 {{ Request::is('admin-page') ? 'active' : '' }}">
-                                            <a  class="btn-ctm-space text-dark" href="/admin-page">
-                                            <span class="media align-items-center">
-                                                <span class="lnr lnr-users mr-3"></span>
-                                                <span class="media-body text-truncate text-left">
-                                                    <span class="text-truncate text-left">Admin demo</span>
-                                                </span>
-                                            </span>
-                                        </a>
+            <nav class="navbar navbar-expand-md navbar-hover">
+                <div class="collapse navbar-collapse header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom" id="navbarHover" >
+                    <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
+                        <div class="append mr-auto my-0 my-md-0 mr-auto">
+                            <ul class="navbar-nav list-group list-group-horizontal-md mr-auto">
+                                <li class="mr-1 {{ Request::is('','index','employees-dashboard') ? 'active' : '' }}">
+                                    <a href="index" class="btn-ctm-space text-dark header_class">
+                                        <span class="lnr lnr-home pr-0 pr-lg-2"></span>
+                                        <span class="d-none d-lg-inline">Dashboard</span>
+                                    </a>
+                                </li>
+                                @hasrole('Admin')
+                                <li class="mr-1 nav-item dropdown {{ Request::is('listSystemUsers','JobTitleList','PayGradeList') ? 'active' : '' }}">
+                                    <a class="nav-link dropdown-toggle" href="employees" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="lnr lnr-users pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Admin</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item {{ Request::is('listSystemUsers') ? 'active' : '' }}" href="listSystemUsers">User Management</a>
                                         </li>
-                                        @endrole
-                                        @hasrole('Employee')
-                                        <li class="mr-1 {{ Request::is('emp-page') ? 'active' : '' }}">
-                                        <a  class="btn-ctm-space text-dark" href="/emp-page">
-                                            <span class="media align-items-center">
-                                                <span class="lnr lnr-users mr-3"></span>
-                                                <span class="media-body text-truncate text-left">
-                                                    <span class="text-truncate text-left">Employees Demo</span>
-                                                </span>
-                                            </span>
-                                        </a>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Job</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="JobTitleList">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="PayGradeList">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        @endrole
-
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Organization</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">General Information</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Locations</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Structure</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Qualification</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Submenu link</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Submenu link 2</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Subsubmenu 1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Subsubmenu 2</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu 2</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Subsubmenu 2.1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Subsubmenu 2.2</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Nationality</a>
+                                        </li>
                                     </ul>
-                                </div>
-                            </div>
+                                </li>
+                                @endrole
+                                <li class="mr-1 nav-item dropdown {{ Request::is('company') ? 'active' : '' }}">
+                                    <a class="nav-link dropdown-toggle" href="company" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 {{ Request::is('calendar') ? 'active' : '' }}">
+                                    <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="LeavePeriod">Leave Period</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="LeaveTypes">Leave Types</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="Holidays">Holidays</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 {{ Request::is('leave') ? 'active' : '' }}">
+                                    <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 {{ Request::is('reviews','create-review','edit-review') ? 'active' : '' }}">
+                                    <a class="nav-link dropdown-toggle" href="reviews"><span class="lnr lnr-star pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">My Info</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 {{ Request::is('reports','contact-reports','email-reports','leave-reports','payroll-reports','security-reports','work-from-home-reports') ? 'active' : '' }}">
+                                    <a class="nav-link dropdown-toggle" href="reports"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 {{ Request::is('manage','admin','custom-timeoff-approver','line-manager','manage-leadership','payroll-admin','super-admin','team-lead','team-member') ? 'active' : '' }}">
+                                    <a class="btn-ctm-space text-dark" href="manage"><span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Biomatric Data</span></a>
+                                </li>
+                                <li class="mr-1 {{ Request::is('settings','details','documents','employment','payroll','profile-reviews','profile-settings','settings-timeoff','time-off') ? 'active' : '' }}">
+                                    <a class="btn-ctm-space text-dark" href="settings"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
+            </nav>
             <!-- /Slide Nav -->
         </header>
         <!-- /Header -->
