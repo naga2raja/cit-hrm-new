@@ -164,6 +164,8 @@ Route::group(['middleware' => ['role:Admin']], function () {
 
     Route::get('/listJobTitles', 'AdminController@listJobTitles')->name('listJobTitles');
     Route::get('/addJobTitle', 'AdminController@addJobTitle')->name('addJobTitle');
+
+    Route::resource('/employees', 'EmployeeController');
 });
 
 Route::group(['middleware' => ['role:Employee']], function () {

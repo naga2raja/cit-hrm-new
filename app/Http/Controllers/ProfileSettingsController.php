@@ -20,7 +20,15 @@ class ProfileSettingsController extends Controller
                     return $fail(__('The current password is incorrect.'));
                 }
             }],
-            'new_password' => 'required|string|min:8',
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',             // must be at least 10 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ],
             'confirm_password' => 'required|same:new_password',
         ]);
 
