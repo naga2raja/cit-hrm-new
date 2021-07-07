@@ -19,7 +19,7 @@
                         <div class="col-lg-3 col-md-3 col-sm-3 col-6">
                             <div class="logo my-3 my-sm-0">
                                 <a href="index">
-                                    <img src="img/logo.png" alt="logo image" class="img-fluid" width="100">
+                                    <img src="{{ assetUrl('img/logo.png') }}" alt="logo image" class="img-fluid" width="100">
                                 </a>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                         <div class="user-info align-right dropdown d-inline-block header-dropdown">
                                             <a href="javascript:void(0)" data-toggle="dropdown" class=" menu-style dropdown-toggle">
                                                 <div class="user-avatar d-inline-block">
-                                                    <img src="img/profiles/profile.png" alt="user avatar" class="rounded-circle img-fluid" width="55">
+                                                    <img src="{{ assetUrl('img/profiles/profile.png') }}" alt="user avatar" class="rounded-circle img-fluid" width="55">
                                                 </div>
                                             </a>
                                             <!-- Notifications -->
@@ -247,28 +247,33 @@
                         <div class="append mr-auto my-0 my-md-0 mr-auto">
                             <ul class="navbar-nav list-group list-group-horizontal-md mr-auto">
                                 <li class="mr-1 {{ Request::is('','index','employees-dashboard') ? 'active' : '' }}">
-                                    <a href="index" class="btn-ctm-space text-dark header_class">
-                                        <span class="lnr lnr-home pr-0 pr-lg-2"></span>
-                                        <span class="d-none d-lg-inline">Dashboard</span>
-                                    </a>
+                                    @hasrole('Admin')
+                                        <a class="nav-link" href="adminDashboard">                                            
+                                    @endrole
+                                    @hasrole('Employee')
+                                        <a class="nav-link" href="empDashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    @endrole
+                                            <span class="lnr lnr-home pr-0 pr-lg-2"></span>
+                                            <span class="d-none d-lg-inline">Dashboard</span>
+                                        </a>
                                 </li>
                                 @hasrole('Admin')
-                                <li class="mr-1 nav-item dropdown {{ Request::is('listSystemUsers','JobTitleList','PayGradeList') ? 'active' : '' }}">
+                                <li class="mr-1 nav-item dropdown {{ Request::is('systemUsers','jobTitles','payGrades') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="employees" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="lnr lnr-users pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Admin</span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item {{ Request::is('listSystemUsers') ? 'active' : '' }}" href="listSystemUsers">User Management</a>
+                                            <a class="dropdown-item {{ Request::is('systemUsers') ? 'active' : '' }}" href="{{ route('systemUsers.index') }}">User Management</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Job</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('jobTitles') ? 'active' : '' }}" href="#">Job</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="JobTitleList">Job Title</a>
+                                                    <a class="dropdown-item {{ Request::is('jobTitles') ? 'active' : '' }}" href="{{ route('jobTitles.index') }}">Job Title</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="PayGradeList">Pay Grades</a>
+                                                    <a class="dropdown-item" href="{{ route('payGrades.index') }}">Pay Grades</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="#">Employment Status</a>

@@ -159,13 +159,20 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/', 'HomeController@index')->name('index');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/admin-page', 'HomeController@demoAdmin');
-    Route::get('/listSystemUsers', 'AdminController@listSystemUsers')->name('listSystemUsers');
-    Route::get('/addSystemUser', 'AdminController@addSystemUser')->name('addSystemUser');
 
-    Route::get('/listJobTitles', 'AdminController@listJobTitles')->name('listJobTitles');
-    Route::get('/addJobTitle', 'AdminController@addJobTitle')->name('addJobTitle');
-
+    // admin_dashboard
+    Route::get('/adminDashboard', 'AdminController@index')->name('adminDashboard');
+    // system_user
+    Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
+    // job_title
+    Route::resource('/jobTitles', 'Admin\Job\JobTitles\JobTitlesController');
+    // pay_grades
+    Route::resource('/payGrades', 'Admin\Job\PayGrades\PayGradesController');
+    // payGradescurrency
+    Route::resource('/currency', 'Admin\Job\PayGrades\CurrencyController');
+    // employee
     Route::resource('/employees', 'EmployeeController');
+
     Route::post('/employees/multiple-delete', 'EmployeeController@deleteMultiple');
 
     /* admin/qualifications/skills */
