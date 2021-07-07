@@ -288,7 +288,7 @@
                                                     <a class="dropdown-item" href="#">General Information</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="listLocations">Locations</a>
+                                                    <a class="dropdown-item" href="{{ route('locations.index') }}">Locations</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="#">Structure</a>
@@ -299,7 +299,7 @@
                                             <a class="dropdown-item dropdown-toggle" href="#">Qualifications</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="listSkills">Skills</a>
+                                                    <a class="dropdown-item" href="{{ route('skills.index') }}">Skills</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="#">Submenu link 2</a>
@@ -390,6 +390,17 @@
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Project Info</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ route('customers.index') }}">Customers</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ route('projects.index') }}">Projects</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li>
                                             <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
