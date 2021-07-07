@@ -164,6 +164,21 @@ Route::group(['middleware' => ['role:Admin']], function () {
 
     Route::get('/listJobTitles', 'AdminController@listJobTitles')->name('listJobTitles');
     Route::get('/addJobTitle', 'AdminController@addJobTitle')->name('addJobTitle');
+
+    /* admin/qualifications/skills */
+    Route::get('/listSkills', 'SkillsController@listSkills')->name('listSkills');
+    Route::get('/addSkills', 'SkillsController@addSkills')->name('addSkills');
+    Route::get('/editSkills/{id}', 'SkillsController@editSkills')->name('editSkills');
+    Route::get('/deleteSkills/{id}', 'SkillsController@deleteSkills')->name('deleteSkills');
+    Route::post('/storeSkill', 'SkillsController@storeSkill')->name('storeSkill');
+    Route::post('/updateSkill/{id}', 'SkillsController@updateSkill')->name('updateSkill');
+
+    /* admin/organization/locations */
+    Route::get('/listLocations', 'LocationsController@listLocations')->name('listLocations');
+    Route::get('/addCompanyLocation', 'LocationsController@addCompanyLocation')->name('addCompanyLocation');
+    Route::get('/editCompanyLocation', 'LocationsController@editCompanyLocation')->name('editCompanyLocation');
+    
+        
 });
 
 Route::group(['middleware' => ['role:Employee']], function () {

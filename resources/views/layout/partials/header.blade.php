@@ -288,7 +288,7 @@
                                                     <a class="dropdown-item" href="#">General Information</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Locations</a>
+                                                    <a class="dropdown-item" href="listLocations">Locations</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="#">Structure</a>
@@ -296,10 +296,10 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Qualification</a>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Qualifications</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Submenu link</a>
+                                                    <a class="dropdown-item" href="listSkills">Skills</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="#">Submenu link 2</a>
