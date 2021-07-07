@@ -9,7 +9,7 @@
   @endif
  @yield('content')
  @include('layout.partials.footer-scripts')
-
+ @stack('scripts')
 
   </body>
 </html>

@@ -339,7 +339,7 @@
                                         <span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">Employee List</a>
+                                            <a class="dropdown-item" href="{{ route('employees.index') }}">Employee List</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
