@@ -159,26 +159,19 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/', 'HomeController@index')->name('index');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/admin-page', 'HomeController@demoAdmin');
-    Route::get('/listSystemUsers', 'AdminController@listSystemUsers')->name('listSystemUsers');
-    Route::get('/addSystemUser', 'AdminController@addSystemUser')->name('addSystemUser');
 
-    Route::get('/listJobTitles', 'AdminController@listJobTitles')->name('listJobTitles');
-    Route::get('/addJobTitle', 'AdminController@addJobTitle')->name('addJobTitle');
-
+    // admin_dashboard
+    Route::get('/adminDashboard', 'AdminController@index')->name('adminDashboard');
+    // system_user
+    Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
+    // job_title
+    Route::resource('/jobTitles', 'Admin\Job\JobTitles\JobTitlesController');
+    // pay_grades
+    Route::resource('/payGrades', 'Admin\Job\PayGrades\PayGradesController');
+    // payGradescurrency
+    Route::resource('/currency', 'Admin\Job\PayGrades\CurrencyController');
+    // employee
     Route::resource('/employees', 'EmployeeController');
-
-    /* admin/qualifications/skills */
-    Route::get('/listSkills', 'SkillsController@listSkills')->name('listSkills');
-    Route::get('/addSkills', 'SkillsController@addSkills')->name('addSkills');
-    Route::get('/editSkills/{id}', 'SkillsController@editSkills')->name('editSkills');
-    Route::get('/deleteSkills/{id}', 'SkillsController@deleteSkills')->name('deleteSkills');
-    Route::post('/storeSkill', 'SkillsController@storeSkill')->name('storeSkill');
-    Route::post('/updateSkill/{id}', 'SkillsController@updateSkill')->name('updateSkill');
-
-    /* admin/organization/locations */
-    Route::get('/listLocations', 'LocationsController@listLocations')->name('listLocations');
-    Route::get('/addCompanyLocation', 'LocationsController@addCompanyLocation')->name('addCompanyLocation');
-    Route::get('/editCompanyLocation', 'LocationsController@editCompanyLocation')->name('editCompanyLocation');
     
 });
 
