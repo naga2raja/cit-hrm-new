@@ -1432,7 +1432,8 @@ fieldset[disabled] .form-control {
 .dropdown-item.active, .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #3E007C;
+    /*background-color: #3E007C;*/
+    background-color: #f1bd06;
 }
 .dropdown-menu {
     font-size: 15px;
