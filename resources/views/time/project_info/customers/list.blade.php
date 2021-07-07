@@ -9,10 +9,10 @@
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
 									<div class="text-left">
-										<h4 class="card-title mb-0">Skills</h4>
+										<h4 class="card-title mb-0">Customers</h4>
 										<hr>
-										<a href="{{ route('skills.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-										<a href="deleteSkills" class="btn btn-danger text-white ctm-border-radius"><span class="fa fa-trash"></span> Delete</a>
+										<a href="{{ route('customers.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
+										<a href="" class="btn btn-danger text-white ctm-border-radius"><span class="fa fa-trash"></span> Delete</a>
 									</div>
 								</div>
 								<div class="card-body">
@@ -29,20 +29,20 @@
 														<th class="text-center">
 															<input type="checkbox" name="select_all" onclick="select_deselect()">
 														</th>
-														<th>Skill</th>
-														<th>Skill Description</th>
+														<th>Customer</th>
+														<th>Description</th>
 													</tr>
 												</thead>
 												<tbody>
-													@foreach ($skills as $skill)
+													@foreach ($customers as $customer)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="checkbox" value="{{$skill->id}}">
+															<input type="checkbox" name="checkbox" value="{{$customer->id}}">
 														</td>
 														<td>
-															<h2><u><a href="{{ route('skills.edit', [$skill->id]) }}">{{$skill->skill}}</a></u></h2>
+															<h2><u><a href="{{ route('customers.edit', [$customer->id]) }}">{{$customer->customer_name}}</a></u></h2>
 														</td>
-														<td>{{$skill->skill_description}}</td>
+														<td>{{$customer->customer_description}}</td>
 													</tr>
 													@endforeach
 												</tbody>

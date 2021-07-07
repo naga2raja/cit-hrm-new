@@ -12,8 +12,8 @@
 										<h4 class="card-title mb-0">Add Skills</h4>
 									</div>
 								</div>
-								<div class="card-body">
-									<form method="POST" action="{{ route('storeSkill') }}">
+								<div class="card-body">									
+									<form method="POST" action="{{ route('skills.store') }}">
 										@csrf
 										<div class="row">
 											<div class="col-sm-2">
@@ -56,7 +56,7 @@
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
 												<button href="javascript:void(0);" class="btn btn-success text-white ctm-border-radius" type="submit">Save</button>
-												<button href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius">Cancel</button>
+												<a href="{{ route('skills.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
 											</div>
 										</div>
 

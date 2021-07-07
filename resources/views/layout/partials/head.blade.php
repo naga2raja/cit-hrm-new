@@ -153,4 +153,6 @@
         <link rel="stylesheet" href="{{ assetUrl('plugins/fullcalendar/fullcalendar.min.css') }}">
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="{{ assetUrl('css/style.css') }}">
+		<!-- Multi select checkbox -->		
+        <script src="{{ asset('js/locations.js')}}"></script>
 	</head>

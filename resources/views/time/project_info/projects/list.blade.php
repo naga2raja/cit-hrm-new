@@ -11,7 +11,7 @@
 								<div class="col-md-12">
 									<div class="card ctm-border-radius shadow-sm border">
 										<div class="card-header">
-											<h4 class="card-title mb-0">Company Locations</h4>
+											<h4 class="card-title mb-0">Projects</h4>
 										</div>
 										<div class="card-body">
 											@if($message = Session::get('success'))
@@ -19,34 +19,29 @@
 												<p>{{$message}}</p>
 											</div>
 											@endif
-											<form method="GET" action="{{ route('locations.index') }}">
+											<form method="GET" action="{{ route('projects.index') }}">
 												<div class="row">
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
-															<label>Company</label>
-															<input type="text" class="form-control" placeholder="Location" name="company_name" value="{{ Request::get('company_name') }}">
+															<label>Customer Name</label>
+															<input type="text" class="form-control" placeholder="Type for hint..." name="customer_name" value="{{ Request::get('customer_name') }}">
 														</div>
 													</div>
 													<div class="col-sm-2">
 														<div class="form-group">
-															<label>City</label>
-															<input type="text" class="form-control" placeholder="Company city" name="city" value="{{ Request::get('city') }}">															
+															<label>Project</label>
+															<input type="text" class="form-control" placeholder="Type for hint..." name="project_name" value="{{ Request::get('project_name') }}">							
 														</div>
 													</div>
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
-															<label>Country</label>
-															<select class="form-control select" name="country">
-																<option value="">-Select-</option>
-																@foreach ($countries as $country)
-                                                                    <option value="{{ $country->id }}" {{ Request::get('country') == $country->id ? 'selected' : '' }}>{{ $country->country }}</option>
-																@endforeach
-															</select>
+															<label>Project Admin</label>
+															<input type="text" class="form-control" placeholder="Type for hint..." name="project_admin" value="{{ Request::get('project_admin') }}">		
 														</div>
 													</div>	
 													<div class="col-sm-2">
 														<button type="submit" class="btn btn-success text-white ctm-border-radius mt-4"><span class="fa fa-search"></span> Search</button>
-														<a href="{{ route('locations.index') }}" class="btn btn-danger text-white ctm-border-radius mt-4"><span class="fa fa-refresh"></span> Reset</a>
+														<a href="{{ route('projects.index') }}" class="btn btn-danger text-white ctm-border-radius mt-4"><span class="fa fa-refresh"></span> Reset</a>
 													</div>											
 												</div>
 											</form>
@@ -55,12 +50,12 @@
 								</div>
 							</div>
 							<div class="card ctm-border-radius shadow-sm border">
-								<form method="POST" action="{{ route('locations.destroy', 1) }}">
+								<form method="POST" action="{{ route('projects.destroy', 1) }}">
 									@csrf
 									@method('DELETE')
 									<div class="card-header">
 										<div class="text-left">
-											<a href="{{ route('locations.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
+											<a href="{{ route('projects.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
 											<button type="submit" class="btn btn-danger text-white ctm-border-radius"><span class="fa fa-trash"></span> Delete</button>
 										</div>
 									</div>
@@ -74,28 +69,20 @@
 															<th class="text-center">
 																<input type="checkbox" name="select_all" onclick="select_deselect()">
 															</th>
-															<th>Company</th>
-															<th>City</th>
-															<th>Country</th>
-															<th>Phone</th>
-															<th>Number of employees</th>
+															<th>Customer Name</th>
+															<th>Project</th>
+															<th>project Admin</th>
 														</tr>
 													</thead>
 													<tbody>
-														@foreach ($locations as $location)
-															<tr>
-																<td class="text-center">
-																	<input type="checkbox" name="checkbox" value="{{ $location->id }}">
-																</td>
-																<td>
-																	<h2><u><a href="{{ route('locations.edit', $location->id) }}">{{ $location->company_name }}</a></u></h2>
-																</td>
-																<td>{{ $location->city }}</td>
-																<td>{{ $location->country }}</td>
-																<td>{{ $location->phone_number }}</td>
-																<td>432234234</td>
-															</tr>
-														@endforeach													
+														<tr>
+															<td class="text-center">
+																<input type="checkbox" name="checkbox" value="">
+															</td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>												
 													</tbody>
 												</table>
 											</div>

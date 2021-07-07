@@ -9,7 +9,7 @@
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
 									<div class="text-left">
-										<h4 class="card-title mb-0">Edit Skills</h4>
+										<h4 class="card-title mb-0">Edit Customer</h4>
 									</div>
 								</div>
 								<div class="card-body">
@@ -18,7 +18,7 @@
 										<p>{{$message}}</p>
 									</div>
 									@endif
-									<form method="POST" action="{{ route('skills.update', $skills[0]->id) }}">
+									<form method="POST" action="{{ route('customers.update', $customers[0]->id) }}">
 										@csrf
 										@method('PUT')
 										<div class="row">
@@ -29,8 +29,8 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('skill') ? 'is-invalid' : ''}}" placeholder="" name="skill" value="{{ old('skill', $skills[0]->skill) }}">
-													{!! $errors->first('skill', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<input type="text" class="form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" placeholder="" name="customer_name" value="{{ old('customer_name', $customers[0]->customer_name) }}">
+													{!! $errors->first('customer_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -43,8 +43,8 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<textarea class="form-control {{ $errors->has('skill_description') ? 'is-invalid' : ''}}" rows="3" name="skill_description">{{ old('skill_description', $skills[0]->skill_description) }}</textarea>
-													{!! $errors->first('skill_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<textarea class="form-control {{ $errors->has('customer_description') ? 'is-invalid' : ''}}" rows="3" name="customer_description">{{ old('customer_description', $customers[0]->customer_description) }}</textarea>
+													{!! $errors->first('customer_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -62,7 +62,7 @@
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
 												<button href="javascript:void(0);" class="btn btn-success text-white ctm-border-radius" type="submit">Save</button>
-												<a href="{{ route('skills.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+												<a href="{{ route('customers.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
 											</div>
 										</div>
 

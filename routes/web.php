@@ -172,7 +172,6 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/currency', 'Admin\Job\PayGrades\CurrencyController');
     // employee
     Route::resource('/employees', 'EmployeeController');
-
     Route::post('/employees/multiple-delete', 'EmployeeController@deleteMultiple');
 
     /* admin/qualifications/skills */
@@ -183,10 +182,18 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::post('/storeSkill', 'SkillsController@storeSkill')->name('storeSkill');
     Route::post('/updateSkill/{id}', 'SkillsController@updateSkill')->name('updateSkill');
 
-    /* admin/organization/locations */
-    Route::get('/listLocations', 'LocationsController@listLocations')->name('listLocations');
-    Route::get('/addCompanyLocation', 'LocationsController@addCompanyLocation')->name('addCompanyLocation');
-    Route::get('/editCompanyLocation', 'LocationsController@editCompanyLocation')->name('editCompanyLocation');
+    /* Admin/Qualifications/Skills */
+    Route::resource('/skills', 'Admin\Qualifications\SkillsController');
+
+    /* Admin/Organization/Locations */
+    Route::resource('/locations', 'Admin\Organization\LocationsController');
+
+    /* Time/ProjectInfo/Customers */
+    Route::resource('/customers', 'Time\ProjectInfo\CustomersController');
+
+    /* Time/ProjectInfo/Projects */
+    Route::resource('/projects', 'Time\ProjectInfo\ProjectsController');
+    
     
 });
 

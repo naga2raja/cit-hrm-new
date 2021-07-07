@@ -54,4 +54,28 @@ class LocationsController extends Controller
             return view('employees-dashboard');            
         } 
     }
+
+    public function storeCompanyLocation(Request $request)
+    {
+        $user = Auth::user();
+        if($user->hasRole('Admin')){
+
+            $validated = $request->validate([
+                'company_name' => 'required|string|max:255',
+                'country' => 'required',
+                'state_province' => 'nullable|string|max:255',
+                'city' => 'nullable|string|max:255',
+                'address' => 'nullable|string|max:255',
+            ]);
+
+            // $location = mCompanyLocation::create([
+            //     'company_name'       => $request->company_name,
+            //     'country'        => $request->country,
+            // ]);
+
+            return redirect('/listLocations');
+        } else {
+            return view('employees-dashboard');            
+        }
+    }
 }
