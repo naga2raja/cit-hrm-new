@@ -15,11 +15,30 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        // dd('List');
-        return view('employees/list');
+        $employees = Employee::join('users', 'users.id', 'employees.user_id');
+        
+        $where = '';
+        if($request->employee_name) {
+            $where .= ' ( employees.first_name LIKE "%'.$request->employee_name.'%" OR  employees.middle_name LIKE "%'.$request->employee_name.'%" OR employees.last_name LIKE "%'.$request->employee_name.'%" ) ';
+            $employees = $employees->whereRaw($where);
+        }        
+
+        $employees = $employees->when(request()->filled('employee_id'), function ($query) {
+            $query->where('employees.employee_id', request('employee_id'));
+        })
+        ->when(request()->filled('email'), function ($query) {
+            $query->where('users.email', request('email'));
+        })
+        ->when(request()->filled('status'), function ($query) {
+            $query->where('employees.status', request('status'));
+        });
+
+
+        $employees = $employees->paginate(5);
+        // dd($employees);
+        return view('employees/list', compact('employees'));
     }
 
     /**
@@ -122,6 +141,31 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::where('id', $id)->first();
+        $user->delete(); 
+        
+        $employee = Employee::where('user_id', $id)->first();
+        $employee->delete();        
+        return redirect('employees')->with('success','Deleted Successfully');
+    }
+
+    public function deleteMultiple(Request $request)
+    {       
+        if($request->delete_ids) {
+            User::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($user) {
+                    $user->delete();
+                });
+            Employee::whereIn('user_id', $request->delete_ids)
+                ->get()
+                ->map(function($emp) {
+                    $emp->delete();
+                });
+            return true;
+        } else {   
+            return false;
+        }
+       
     }
 }

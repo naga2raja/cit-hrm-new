@@ -166,6 +166,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/addJobTitle', 'AdminController@addJobTitle')->name('addJobTitle');
 
     Route::resource('/employees', 'EmployeeController');
+    Route::post('/employees/multiple-delete', 'EmployeeController@deleteMultiple');
 
     /* admin/qualifications/skills */
     Route::get('/listSkills', 'SkillsController@listSkills')->name('listSkills');

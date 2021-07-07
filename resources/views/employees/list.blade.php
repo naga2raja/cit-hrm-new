@@ -14,44 +14,44 @@
 											<h4 class="card-title mb-0">Employees</h4>
 										</div>
 										<div class="card-body">
-											<form>
+											<form method="GET">
 												<div class="row">
-													<div class="col-sm-4 leave-col">
+													<div class="col-sm-3 leave-col">
 														<div class="form-group">
-															<label>Username</label>
-															<input type="text" class="form-control" placeholder="Username">
+															<label>Employee Name</label>
+															<input type="text" class="form-control" placeholder="First/Middle/Last Name" name="employee_name" value="{{ Request::get('employee_name') }}">
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3 leave-col">
+														<div class="form-group">
+															<label>Employee Id</label>
+															<input type="text" class="form-control" placeholder="Employee Id" name="employee_id" value="{{ Request::get('employee_id') }}">
+														</div>
+													</div>
+													<div class="col-sm-3 leave-col">
+														<div class="form-group">
+															<label>Email</label>
+															<input type="text" class="form-control" placeholder="Email" name="email" value="{{ Request::get('email') }}">
+														</div>
+													</div>
+													<div class="col-sm-3">
 														<div class="form-group">
 															<label>
-															User Role
+															Status
 															<span class="text-danger">*</span>
 															</label>
-															<select class="form-control select">
-																<option>All</option>
-																<option>Admin</option>
-																<option>ESS</option>
+															<select class="form-control select" name="status">
+																<option value="">All</option>
+																<option value="Active"  {{ Request::get('status') == 'Active' ? 'selected' : ''}}>Active</option>
+																<option value="Inactive" {{ Request::get('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
 															</select>
 														</div>
 													</div>
-													<div class="col-sm-2">
-														<button type="button" class="btn btn-success text-white ctm-border-radius mt-4"><span class="fa fa-search"></span> Search</button>
-														<button type="reset" class="btn btn-danger text-white ctm-border-radius mt-4"><span class="fa fa-refresh"></span> Reset</button>
-													</div>
 												</div>
 												<div class="row">
-													<div class="col-sm-4 leave-col">
-														<div class="form-group">
-															<label>Employee Name</label>
-															<input type="text" class="form-control" placeholder="Employee Name">
-														</div>
-													</div>
-													<div class="col-sm-4 leave-col">
-														<div class="form-group">
-															<label>Status</label>
-															<input type="text" class="form-control" placeholder="Status">
-														</div>
+													<div class="col-sm-4">
+														<button type="submit" class="btn btn-success text-white ctm-border-radius mt-4" name="search"><span class="fa fa-search"></span> Search</button>
+														<button type="reset" class="btn btn-danger text-white ctm-border-radius mt-4"><span class="fa fa-refresh"></span> Reset</button>
 													</div>													
 												</div>
 											</form>
@@ -63,65 +63,82 @@
 								<div class="card-header">
 									<div class="text-left">
 										<a href="{{ route('employees.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-										<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius"><span class="fa fa-trash"></span> Delete</a>
+										<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
 									</div>
 								</div>
 								<div class="card-body">
+									@if($message = Session::get('success'))
+										<div class="alert alert-success">
+											<p>{{$message}}</p>
+										</div>
+									@endif	
 
 									<div class="employee-office-table">
 										<div class="table-responsive">
-											<table class="table custom-table mb-0 table-hover table-striped table-bordered">
+											<table class="table custom-table mb-0 table-hover table-striped table-bordered" >
 												<thead>
 													<tr class="bg-blue-header text-white">
 														<th class="text-center">
-															<input type="checkbox" name="">
+															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll()">
 														</th>
-														<th>Username</th>
-														<th>User Role</th>
-														<th>Employee Name</th>
+														<th>Employee Id</th>
+														<th>Employee First Name</th>
+														<th>Employee Last Name</th>
+														<th>Email</th>
 														<th>Status</th>
-														<!-- <th class="text-right">Action</th> -->
+														<th class="text-center">Action</th>
 													</tr>
 												</thead>
-												<tbody>
+												<tbody id="list_emp_table">
+													@foreach($employees as $employee)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="">
+															<input type="checkbox" name="chk_user" value="{{ $employee->user_id }}">
 														</td>
 														<td>
-															<h2><a href="employment">Danny Ward</a></h2>
+															{{ $employee->employee_id }} 
 														</td>
-														<td>Parental Leave</td>
-														<td>05 Dec 2019</td>
-														<td>07 Dec 2019</td>
-														<!-- <td class="text-right text-danger"><a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																	<span class="lnr lnr-trash"></span> Delete
-																</a></td> -->
-													</tr>
+														<td>
+															{{ $employee->first_name }} 
+														</td> 
+														<td>
+															{{ $employee->last_name }} 
+														</td>
+														<td>
+															{{ $employee->email }} 
+														</td> 
+														<td>
+															{{ $employee->status }} 
+														</td> 
+														<td style="display:inline-flex;">
+															<a class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+
+															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->user_id)}}" method="post">
+																@method('DELETE')
+																@csrf
+																<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
+															 </form>
+															<a class="btn-sm btn-success"><i class="fa fa-eye"></i></a>
+														</td>
+													</tr>														
+													@endforeach
+
+													@if(!count($employees)) 
+														<tr>
+															<td colspan="7">
+																<div class="alert alert-danger"> No data found!</div>
+															</td>
+														</tr>
+													@endif
 													<tr>
-														<td class="text-center"><input type="checkbox" name=""></td>
-														<td>
-															<h2><a href="employment">Danny Ward</a></h2>
+														<td colspan="7">
+															<div class="d-flex justify-content-center">
+																{{ $employees->links() }}
+															</div>
 														</td>
-														<td>Parental Leave</td>
-														<td>05 Dec 2019</td>
-														<td>07 Dec 2019</td>
-														<!-- <td class="text-right text-danger"><a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																	<span class="lnr lnr-trash"></span> Delete
-																</a></td> -->
 													</tr>
-													<tr>
-														<td class="text-center"><input type="checkbox" name=""></td>
-														<td>
-															<h2><a href="employment">Danny Ward</a></h2>
-														</td>
-														<td>Parental Leave</td>
-														<td>05 Dec 2019</td>
-														<td>07 Dec 2019</td>
-														<!-- <td class="text-right text-danger"><a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																	<span class="lnr lnr-trash"></span> Delete
-																</a></td> -->
-													</tr>
+														
+													
 												</tbody>
 											</table>
 										</div>
@@ -191,3 +208,47 @@
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
 @endsection
+
+@push('scripts')
+	<script>
+		function SelectAll() {
+			var isCheckedAll = $('#select_checkAll').val();
+			if ($('#select_checkAll').is(':checked')) {
+				$('#list_emp_table input[type="checkbox"]').prop("checked", true);
+			} else {
+				$('#list_emp_table input[type="checkbox"]').prop("checked", false);
+			}                
+		}
+
+		function deleteAll() {
+			var selectedUserIds = [];
+			$('#list_emp_table input[type="checkbox"]:checked').each(function(){
+				var selected_user_ids = $(this).val();
+				selectedUserIds.push(selected_user_ids);
+			});                
+
+			if(selectedUserIds.length == 0) {
+				alert('Please select a employee');
+				return false;
+			}
+
+			if (!confirm("Do you want to delete?")){
+					return false;
+			}
+			console.log('delete', selectedUserIds);
+
+			$.ajax({
+                    method: 'POST',
+                    url: '/employees/multiple-delete',
+                    data: JSON.stringify({'delete_ids': selectedUserIds, "_token": "{{ csrf_token() }}" }),
+                    dataType: "json",
+                    contentType: 'application/json',
+                    success: function(response){
+                        console.log('response : ', response);
+						alert('deleted successfully!');
+						window.location.reload();                        
+                    }					
+                });
+		}
+	</script>
+@endpush
