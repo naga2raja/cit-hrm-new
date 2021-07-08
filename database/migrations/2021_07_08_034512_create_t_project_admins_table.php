@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMProjectAdminsTable extends Migration
+class CreateTProjectAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMProjectAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('m_project_admins', function (Blueprint $table) {
+        Schema::create('t_project_admins', function (Blueprint $table) {
             $table->id();
             $table->integer('project_id');
             $table->integer('admin_id');
@@ -28,6 +28,6 @@ class CreateMProjectAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_project_admins');
+        Schema::dropIfExists('t_project_admins');
     }
 }

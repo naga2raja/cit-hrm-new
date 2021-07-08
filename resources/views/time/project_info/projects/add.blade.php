@@ -9,7 +9,7 @@
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
 									<div class="text-left">
-										<h4 class="card-title mb-0">Add Location</h4>
+										<h4 class="card-title mb-0">Add Project</h4>
 									</div>
 								</div>
 								<div class="card-body">
@@ -18,13 +18,18 @@
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
-													<label>Company Name <span class="text-danger">*</span></label>
+													<label>Customer Name <span class="text-danger">*</span></label>
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('company_name') ? 'is-invalid' : ''}}" placeholder="" name="company_name" value="{{ old('company_name') }}">
-													{!! $errors->first('company_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<input type="text" class="form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" placeholder="" name="customer_name" value="{{ old('customer_name') }}">
+													{!! $errors->first('customer_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="form-group">
+													<u><a href="">Add customer</a></u>
 												</div>
 											</div>
 										</div>
@@ -32,18 +37,13 @@
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
-													<label>Country <span class="text-danger">*</span></label>
+													<label>Name <span class="text-danger">*</span></label>
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<select class="form-control select {{ $errors->has('country') ? 'is-invalid' : ''}}" name="country">
-														<option value="">-Select-</option>
-														@foreach ($countries as $country)
-														<option value="{{ $country->id }}">{{ $country->country }}</option>
-														@endforeach
-													</select>													
-														{!! $errors->first('country', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="" name="project_name" value="{{ old('project_name') }}">
+													{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -51,13 +51,18 @@
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
-													<label>State/Province </label>
+													<label>Project Admin </label>
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('state_province') ? 'is-invalid' : ''}}" placeholder="" name="state_province" value="{{ old('state_province') }}">
-													{!! $errors->first('state_province', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<input type="text" class="form-control {{ $errors->has('project_admin') ? 'is-invalid' : ''}}" placeholder="" name="project_admin" value="{{ old('project_admin') }}">
+													{!! $errors->first('project_admin', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="form-group">
+													<u><a href="">Add admin</a></u>
 												</div>
 											</div>
 										</div>
@@ -65,81 +70,12 @@
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
-													<label>City </label>
+													<label>Description </label>
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('city') ? 'is-invalid' : ''}}" placeholder="" name="city" value="{{ old('city') }}">
-													{!! $errors->first('city', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Address</label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<textarea class="form-control {{ $errors->has('address') ? 'is-invalid' : ''}}" rows="3" name="address">{{ old('address') }}</textarea>{!! $errors->first('address', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Zip/Postal code </label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('zip_code') ? 'is-invalid' : ''}}" placeholder="" name="zip_code" value="{{ old('zip_code') }}">
-													{!! $errors->first('zip_code', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Phone number </label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('phone_number') ? 'is-invalid' : ''}}" placeholder="" name="phone_number" value="{{ old('phone_number') }}">
-													{!! $errors->first('phone_number', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Fax </label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('fax') ? 'is-invalid' : ''}}" placeholder="" name="fax" value="{{ old('fax') }}">
-													{!! $errors->first('fax', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Notes</label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<textarea class="form-control {{ $errors->has('notes') ? 'is-invalid' : ''}}" rows="3" name="notes">{{ old('notes') }}</textarea>{!! $errors->first('notes', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<textarea class="form-control {{ $errors->has('project_description') ? 'is-invalid' : ''}}" rows="3" name="project_description">{{ old('project_description') }}</textarea>{!! $errors->first('project_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>

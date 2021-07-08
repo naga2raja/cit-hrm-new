@@ -10,9 +10,8 @@
 	@yield('content')
 	@include('layout.partials.footer-scripts')
 
-	<!-- Common ultiple delete -->
-	@push('scripts')
-	<script>
+	<!-- Common multiple delete -->
+	<script type="text/javascript">
 		function SelectAll($table_tbody_id) {
 			var isCheckedAll = $('#select_checkAll').val();
 			if ($('#select_checkAll').is(':checked')) {
@@ -52,10 +51,9 @@
 	        });
 		}
 	</script>
-	@endpush
 	<!-- Common multiple delete end-->
 
-	@stack('scripts')
+  @stack('scripts')
 
   </body>
 </html>

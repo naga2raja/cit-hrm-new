@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\mCountry;
 use App\mCompanyLocation;
+use App\Employee;
 use Auth;
 use App\Session;
 use DB;
@@ -24,6 +25,7 @@ class LocationsController extends Controller
         $country = $request->input('country');
 
         $countries = mCountry::get();
+
         $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country as country')
                                     ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id');
         if ($company_name) {
@@ -36,9 +38,18 @@ class LocationsController extends Controller
             $locations->Where('m_countries.id', $country);
         }
         $locations = $locations->orderBy('m_company_locations.id', 'asc')
-                       ->get();            
+                       ->get();   
+        
+        DB::connection()->enableQueryLog(); 
+        $employees_count = Employee::select('employees.company_location_id', DB::raw('count(*) as count'))
+                                ->join('users', 'users.id', 'employees.user_id')
+                                ->where('users.deleted_at', null)
+                                ->groupby('employees.company_location_id')
+                                ->get();
 
-        return view('admin/organization/locations/list', ['countries' => $countries],['locations' => $locations]);
+        // dd(DB::getQueryLog());
+
+        return view('admin/organization/locations/list',compact('employees_count','countries','locations'));
     }
 
     /**
@@ -74,15 +85,15 @@ class LocationsController extends Controller
         ]);
 
         $location = mCompanyLocation::create([
-            'company_name' => $request->company_name,
-            'country_id' => $request->country,
-            'state_province' => $request->state_province,
-            'city' => $request->city,
-            'address' => $request->address,
-            'zip_code' => $request->zip_code,
-            'phone_number' => $request->phone_number,
-            'fax' => $request->fax,
-            'notes' => $request->notes,
+            'company_name' => (empty($request->company_name) ? '' :  $request->company_name),
+            'country_id' => (empty($request->country) ? '' :  $request->country),
+            'state_province' => (empty($request->state_province) ? '' :  $request->state_province),
+            'city' => (empty($request->city) ? '' :  $request->city),
+            'address' => (empty($request->address) ? '' :  $request->address),
+            'zip_code' => (empty($request->zip_code) ? '' :  $request->zip_code),
+            'phone_number' => (empty($request->phone_number) ? '' :  $request->phone_number),
+            'fax' => (empty($request->fax) ? '' :  $request->fax),
+            'notes' => (empty($request->notes) ? '' :  $request->notes),
         ]);
 
         // return redirect('/listLocations');
@@ -140,15 +151,15 @@ class LocationsController extends Controller
         ]);
 
         $location = mCompanyLocation::where('id', $id)->update([
-            'company_name' => $request->company_name,
-            'country_id' => $request->country,
-            'state_province' => $request->state_province,
-            'city' => $request->city,
-            'address' => $request->address,
-            'zip_code' => $request->zip_code,
-            'phone_number' => $request->phone_number,
-            'fax' => $request->fax,
-            'notes' => $request->notes,
+            'company_name' => (empty($request->company_name) ? '' :  $request->company_name),
+            'country_id' => (empty($request->country) ? '' :  $request->country),
+            'state_province' => (empty($request->state_province) ? '' :  $request->state_province),
+            'city' => (empty($request->city) ? '' :  $request->city),
+            'address' => (empty($request->address) ? '' :  $request->address),
+            'zip_code' => (empty($request->zip_code) ? '' :  $request->zip_code),
+            'phone_number' => (empty($request->phone_number) ? '' :  $request->phone_number),
+            'fax' => (empty($request->fax) ? '' :  $request->fax),
+            'notes' => (empty($request->notes) ? '' :  $request->notes),
         ]);
 
         return redirect()->back()->with('success', 'Location updated successfully'); 
@@ -163,16 +174,20 @@ class LocationsController extends Controller
      */
     public function destroy($id)
     {
-        $ids = explode(',', $id);
-        $locations = mCompanyLocation::destroy($ids);
 
-        $checked = Request::input('checked',[]);
-       foreach ($checked as $id) {
-            mCompanyLocation::where("id",$id)->delete(); //Assuming you have a Todo model. 
-       }
-       //Or as @Alex suggested 
-       Todo::whereIn($checked)->delete();
-        
-        return redirect()->route('locations.index');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            mCompanyLocation::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($location) {
+                    $location->delete();
+                });
+            return true;
+        } else {  
+            return false;
+        }  
     }
 }
