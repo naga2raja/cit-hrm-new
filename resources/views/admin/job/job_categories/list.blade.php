@@ -9,10 +9,10 @@
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
 									<div class="text-left ml-3">
-										<h4 class="card-title mb-0">Job Titles</h4>
+										<h4 class="card-title mb-0">Job Category</h4>
 										<hr>
-										<a href="{{ route('jobTitles.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-										<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_job_title_table','jobTitles')"><span class="fa fa-trash"></span> Delete</button>
+										<a href="{{ route('jobCategory.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
+										<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_job_category_table','jobCategory')"><span class="fa fa-trash"></span> Delete</button>
 									</div>
 								</div>
 								<div class="card-body">
@@ -27,29 +27,28 @@
 												<thead>
 													<tr class="bg-blue-header text-white">
 														<th class="text-center">
-															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_job_title_table')">
+															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_job_category_table')">
 														</th>
 														<th>Job Title</th>
 														<th>Job Description</th>
 													</tr>
 												</thead>
-												<tbody id="list_job_title_table">
-													@if(count($jobs) > 0)
-														@foreach ($jobs as $job)
+												<tbody id="list_job_category_table">
+													@if(count($categories) > 0)
+														@foreach ($categories as $category)
 														<tr>
 															<td class="text-center">
-																<input type="checkbox" name="job_title_id" value="{{ $job->id }}">
+																<input type="checkbox" name="job_title_id" value="{{ $category->id }}">
 															</td>
 															<td>
-																<h2><u><a href="{{ route('jobTitles.edit', $job->id) }}">{{ $job->job_title }}</a></u></h2>
+																<h2><u><a href="{{ route('jobCategory.edit', $category->job_category) }}">{{ $category->job_title }}</a></u></h2>
 															</td>
-															<td>{{ $job->job_description }}</td>
 														</tr>
 														@endforeach
 													@else
 														<tr>
 															<td colspan="5">
-																<div class="alert alert-danger text-center">No Job Titles Found !</div>
+																<div class="alert alert-danger text-center">No Job Category Found !</div>
 															</td>
 														</tr>
 													@endif

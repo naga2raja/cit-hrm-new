@@ -13,6 +13,15 @@
 	<!-- Common ultiple delete -->
 	@push('scripts')
 	<script>
+		// $("#select_checkAll").on("click",function(){
+		// 	$table_tbody_id = $(this).closest('table').find('tbody').attr('id')
+		// 	var isCheckedAll = $('#select_checkAll').val();
+		// 	if ($('#select_checkAll').is(':checked')) {
+		// 		$('#'+$table_tbody_id+' input[type="checkbox"]').prop("checked", true);
+		// 	}else {
+		// 		$('#'+$table_tbody_id+' input[type="checkbox"]').prop("checked", false);
+		// 	}
+		// });
 		function SelectAll($table_tbody_id) {
 			var isCheckedAll = $('#select_checkAll').val();
 			if ($('#select_checkAll').is(':checked')) {

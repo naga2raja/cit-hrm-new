@@ -8,8 +8,8 @@
 						<div class="col-xl-12 col-lg-8  col-md-12">
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
-									<div class="text-left ml-2">
-										<h4 class="card-title mb-0">Edit Job Titles</h4>
+									<div class="text-left">
+										<h4 class="card-title mb-0 ml-2">Edit Job Titles</h4>
 									</div>
 								</div>
 								<div class="card-body">

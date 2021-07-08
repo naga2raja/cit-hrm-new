@@ -10,7 +10,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card ctm-border-radius shadow-sm border">
-										<div class="card-header">
+										<div class="card-header ml-2">
 											<h4 class="card-title mb-0">System User</h4>
 										</div>
 										<div class="card-body">
@@ -67,20 +67,19 @@
 							</div>
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
-									<div class="text-left">
+									<div class="text-left ml-3">
 										<a href="{{ route('systemUsers.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-										<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius"><span class="fa fa-trash"></span> Delete</a>
+										<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_user_table','systemUsers')"><span class="fa fa-trash"></span> Delete</button>
 									</div>
 								</div>
 								<div class="card-body">
-
 									<div class="employee-office-table">
 										<div class="table-responsive">
 											<table class="table custom-table mb-0 table-hover table-striped table-bordered">
 												<thead>
 													<tr class="bg-blue-header text-white">
 														<th class="text-center">
-															<input type="checkbox" name="">
+															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_user_table')">
 														</th>
 														<th>Username</th>
 														<th>User Role</th>
@@ -89,7 +88,7 @@
 														<!-- <th class="text-right">Action</th> -->
 													</tr>
 												</thead>
-												<tbody>
+												<tbody id="list_user_table">
 													@if(count($users) > 0)
 														@foreach ($users as $user)
 														<tr>
@@ -120,10 +119,9 @@
 					</div>
 				</div>
 			</div>
-			<!--/Content-->
-			
+			<!--/Content-->			
 		</div>
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
-		
+
 @endsection
