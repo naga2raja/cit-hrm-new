@@ -155,4 +155,5 @@
 		<link rel="stylesheet" href="{{ assetUrl('css/style.css') }}">
 		<!-- Multi select checkbox -->		
         <script src="{{ asset('js/locations.js')}}"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	</head>

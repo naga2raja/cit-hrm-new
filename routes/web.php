@@ -184,16 +184,21 @@ Route::group(['middleware' => ['role:Admin']], function () {
 
     /* Admin/Qualifications/Skills */
     Route::resource('/skills', 'Admin\Qualifications\SkillsController');
+    Route::post('/skills/multiple-delete', 'Admin\Qualifications\SkillsController@deleteMultiple');
 
     /* Admin/Organization/Locations */
     Route::resource('/locations', 'Admin\Organization\LocationsController');
+    Route::post('/locations/multiple-delete', 'Admin\Organization\LocationsController@deleteMultiple');
 
     /* Time/ProjectInfo/Customers */
     Route::resource('/customers', 'Time\ProjectInfo\CustomersController');
+    Route::post('/customers/multiple-delete', 'Time\ProjectInfo\CustomersController@deleteMultiple');
 
     /* Time/ProjectInfo/Projects */
     Route::resource('/projects', 'Time\ProjectInfo\ProjectsController');
-    
+    Route::post('/customers-search', 'Time\ProjectInfo\ProjectsController@customers_search')->name('customers-search');
+    Route::post('/projects-search', 'Time\ProjectInfo\ProjectsController@projects_search')->name('projects-search');
+    Route::post('/project-admin-search', 'Time\ProjectInfo\ProjectsController@project_admin_search')->name('project-admin-search');    
     
 });
 

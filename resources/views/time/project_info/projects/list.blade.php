@@ -20,23 +20,27 @@
 											</div>
 											@endif
 											<form method="GET" action="{{ route('projects.index') }}">
+												{{ csrf_field() }}
 												<div class="row">
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Customer Name</label>
-															<input type="text" class="form-control" placeholder="Type for hint..." name="customer_name" value="{{ Request::get('customer_name') }}">
+															<input type="text" class="form-control" placeholder="Type for hint..." name="customer_name" value="{{ Request::get('customer_name') }}" autocomplete="off" id="customer_name">
+															<div id="customers_list"></div>
 														</div>
 													</div>
 													<div class="col-sm-2">
 														<div class="form-group">
 															<label>Project</label>
-															<input type="text" class="form-control" placeholder="Type for hint..." name="project_name" value="{{ Request::get('project_name') }}">							
+															<input type="text" class="form-control" placeholder="Type for hint..." name="project_name" value="{{ Request::get('project_name') }}" autocomplete="off" id="project_name">	
+															<div id="projects_list"></div>						
 														</div>
 													</div>
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Project Admin</label>
-															<input type="text" class="form-control" placeholder="Type for hint..." name="project_admin" value="{{ Request::get('project_admin') }}">		
+															<input type="text" class="form-control" placeholder="Type for hint..." name="project_admin" value="{{ Request::get('project_admin') }}" autocomplete="off" id="project_admin">	
+															<div id="project_admins_list"></div>			
 														</div>
 													</div>	
 													<div class="col-sm-2">
@@ -54,9 +58,9 @@
 									@csrf
 									@method('DELETE')
 									<div class="card-header">
-										<div class="text-left">
+										<div class="text-left ml-3">
 											<a href="{{ route('projects.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-											<button type="submit" class="btn btn-danger text-white ctm-border-radius"><span class="fa fa-trash"></span> Delete</button>
+											<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_projects_table','projects')"><span class="fa fa-trash"></span> Delete</button>
 										</div>
 									</div>
 									<div class="card-body">
@@ -67,22 +71,30 @@
 													<thead>
 														<tr class="bg-blue-header text-white">
 															<th class="text-center">
-																<input type="checkbox" name="select_all" onclick="select_deselect()">
+																<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_projects_table')">
 															</th>
 															<th>Customer Name</th>
 															<th>Project</th>
 															<th>project Admin</th>
 														</tr>
 													</thead>
-													<tbody>
-														<tr>
-															<td class="text-center">
-																<input type="checkbox" name="checkbox" value="">
-															</td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>												
+													<tbody id="list_projects_table">
+														@if(count($projects) > 0)
+															@foreach ($projects as $project)
+															<tr>
+																<td class="text-center">
+																	<input type="checkbox" name="delete_ids" id="delete_ids" value="{{$project->project_id}}">
+																</td>
+																<td>{{$project->customer_name}}</td>
+																<td><h2><u><a href="">{{$project->project_name}}</a></u></h2></td>
+																<td>{{$project->admin_name}}</td>
+															</tr>
+															@endforeach
+														@else
+															<tr>
+																<td colspan="5"><div class="alert alert-danger text-center">No projects Found!</div></td>
+															</tr>
+														@endif												
 													</tbody>
 												</table>
 											</div>
@@ -98,58 +110,84 @@
 			<!--/Content-->
 			
 		</div>
-		<!-- Inner Wrapper -->
-		
-		<!-- Create Reports The Modal -->
-		<div class="modal fade" id="add_report">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<!-- Modal body -->
-					<div class="modal-body">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title mb-3">Create Report</h4>
-						<form>
-							<p class="mb-2">Select Report Type</p>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" class="custom-control-input" id="customRadio" name="example" value="customEx">
-								<label class="custom-control-label" for="customRadio">Team Member</label>
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" class="custom-control-input" id="customRadio2" name="example" value="customEx">
-								<label class="custom-control-label" for="customRadio2">Time Off</label>
-							</div>
-							
-							<div class="form-group">
-								<label class="mt-3">What data would you like to include?</label>
-								<!-- Multiselect dropdown -->
-								<select multiple class="select w-100 form-control">
-									<option>Full Name</option>
-									<option>Working Days Off</option>
-									<option>Booked By</option>
-									<option>Start Date</option>
-									<option>End Date</option>
-									<option>Team Name</option>
-									<option>First Name</option>
-									<option>Last Name</option>
-									<option>Email</option>
-									<option>Date Of Birth</option>
-									<option>Phone Number</option>
-								</select><!-- End -->
-							</div>
-						</form>
-						<button type="button" class="btn btn-danger text-white ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-theme button-1 text-white ctm-border-radius float-right">Add</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<script type="text/javascript">
-	        $(document).ready( function () {
-			    $('#example').DataTable();
-			} );
-	    </script>
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
 @endsection
+@push('scripts')
+	<script>
+
+	 	$('#customer_name').keyup(function(){ 
+	        var customer_name = $(this).val();
+	        if(customer_name != '')
+	        {
+	         var _token = $('input[name="_token"]').val();
+	         $.ajax({
+	          url:"{{ route('customers-search') }}",
+	          method:"POST",
+	          data:{customer_name:customer_name, _token:_token},
+	          success:function(data){
+	           $('#customers_list').fadeIn();
+	           $('#customers_list').html(data);
+	          }
+	         });
+	        } else{
+	        	$('#customers_list').html('');	        	
+	        }
+	    });
+
+	    $(document).on('click', '.customer', function(){  
+	        $('#customer_name').val($(this).text());  
+	        $('#customers_list').fadeOut();  
+	    });  
+
+	    $('#project_name').keyup(function(){ 
+	        var project_name = $(this).val();
+	        if(project_name != '')
+	        {
+	         var _token = $('input[name="_token"]').val();
+	         $.ajax({
+	          url:"{{ route('projects-search') }}",
+	          method:"POST",
+	          data:{project_name:project_name, _token:_token},
+	          success:function(data){
+	           $('#projects_list').fadeIn();
+	           $('#projects_list').html(data);
+	          }
+	         });
+	        } else{
+	        	$('#projects_list').html('');	        	
+	        }
+	    });
+
+	    $(document).on('click', '.project', function(){
+	        $('#project_name').val($(this).text());  
+	        $('#projects_list').fadeOut();  
+	    }); 
+
+	    $('#project_admin').keyup(function(){ 
+	        var project_admin = $(this).val();
+	        if(project_admin != '')
+	        {
+	         var _token = $('input[name="_token"]').val();
+	         $.ajax({
+	          url:"{{ route('project-admin-search') }}",
+	          method:"POST",
+	          data:{project_admin:project_admin, _token:_token},
+	          success:function(data){
+	           $('#project_admins_list').fadeIn();
+	           $('#project_admins_list').html(data);
+	          }
+	         });
+	        } else{
+	        	$('#project_admins_list').html('');	        	
+	        }
+	    });
+
+	    $(document).on('click', '.admin', function(){
+	        $('#project_admin').val($(this).text());  
+	        $('#project_admins_list').fadeOut();  
+	    }); 
+
+</script>
+@endpush

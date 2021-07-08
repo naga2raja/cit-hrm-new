@@ -106,9 +106,20 @@ class CustomersController extends Controller
      */
     public function destroy($id)
     {
-        // $ids = explode(',', $id);
-        // $customers = mCustomer::destroy($ids);
 
-        return redirect('/listCustomers');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            mCustomer::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($customer) {
+                    $customer->delete();
+                });
+            return true;
+        } else {  
+            return false;
+        }  
     }
 }

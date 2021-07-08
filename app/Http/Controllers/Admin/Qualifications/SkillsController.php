@@ -107,9 +107,20 @@ class SkillsController extends Controller
      */
     public function destroy($id)
     {
-        // $ids = explode(',', $id);
-        // $skills = mSkill::destroy($ids);
 
-        return redirect('/listSkills');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            mSkill::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($skill) {
+                    $skill->delete();
+                });
+            return true;
+        } else {  
+            return false;
+        }  
     }
 }
