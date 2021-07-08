@@ -111,14 +111,14 @@
 															{{ $employee->status }} 
 														</td> 
 														<td style="display:inline-flex;">
-															<a class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+															<a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->user_id) }}"><i class="fa fa-pencil"></i></a>
 
 															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->user_id)}}" method="post">
 																@method('DELETE')
 																@csrf
 																<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
 															 </form>
-															<a class="btn-sm btn-success"><i class="fa fa-eye"></i></a>
+															<a class="btn-sm btn-success" href="{{ route('employees.show', $employee->user_id) }}"><i class="fa fa-eye"></i></a>
 														</td>
 													</tr>														
 													@endforeach
@@ -210,7 +210,7 @@
 @endsection
 
 @push('scripts')
-	<script>
+	<script type="text/javascript">
 		function SelectAll() {
 			var isCheckedAll = $('#select_checkAll').val();
 			if ($('#select_checkAll').is(':checked')) {
