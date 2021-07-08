@@ -21,7 +21,7 @@ class JobTitlesController extends Controller
     public function index()
     {
         $jobs = mJobTitle::get();
-        return view('admin/job/job_titles/list', ['jobs' => $jobs]);
+        return view('admin/job/job_titles/list', compact('jobs'));
     }
 
     /**
@@ -78,7 +78,7 @@ class JobTitlesController extends Controller
     public function edit($id)
     {
         $jobs = mJobTitle::find($id);
-        return view('admin/job/job_titles/edit', ['jobs' => $jobs]);
+        return view('admin/job/job_titles/edit', compact('jobs'));
     }
 
     /**
@@ -114,5 +114,19 @@ class JobTitlesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            mJobTitle::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($job) {
+                    $job->delete();
+                });
+            return true;
+        } else {   
+            return false;
+        }       
     }
 }

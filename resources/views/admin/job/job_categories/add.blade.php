@@ -8,19 +8,13 @@
 						<div class="col-xl-12 col-lg-8  col-md-12">
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
-									<div class="text-left ml-2">
-										<h4 class="card-title mb-0">Edit Job Titles</h4>
+									<div class="text-left">
+										<h4 class="card-title mb-0 ml-2">Add Job Titles</h4>
 									</div>
 								</div>
 								<div class="card-body">
-									@if($message = Session::get('success'))
-										<div class="alert alert-success">
-											<p>{{$message}}</p>
-										</div>
-									@endif
-									<form method="POST" action="{{ route('jobTitles.update', $jobs->id) }}">
+									<form method="POST" action="{{ route('jobTitles.store') }}">
 										@csrf
-										@method('PUT')
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
@@ -29,8 +23,8 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" name="job_title" class="form-control {{ $errors->has('job_title') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_title', $jobs->job_title) }}">
-													{!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<input type="text" name="job_title" class="form-control {{ $errors->has('job_title') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_title') }}">
+													{!! $errors->first('job_title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -43,7 +37,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<textarea name="job_description" class="form-control" rows="3">{{ old('job_description', $jobs->job_description) }}</textarea>
+													<textarea name="job_description" class="form-control" rows="3">{{ old('job_description') }}</textarea>
 												</div>
 											</div>
 										</div>
@@ -69,7 +63,7 @@
 												</div>
 											</div>
 											<div class="col-sm-4">
-												<textarea name="note" class="form-control" rows="3">{{ old('note', $jobs->note) }}</textarea>
+												<textarea name="note" class="form-control" rows="3">{{ old('job_description') }}</textarea>
 											</div>
 										</div>
 
@@ -85,7 +79,7 @@
 										<div class="row">
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
-												<button type="submit" class="btn btn-success text-white ctm-border-radius">Update</button>
+												<button type="submit" class="btn btn-success text-white ctm-border-radius">Save</button>
 												<a href="{{ route('jobTitles.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
 											</div>
 										</div>

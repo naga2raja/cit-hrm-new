@@ -164,23 +164,22 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/adminDashboard', 'AdminController@index')->name('adminDashboard');
     // system_user
     Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
+    Route::post('/systemUsers/multiple-delete', 'Admin\UserManagement\SystemUserController@deleteMultiple');
     // job_title
     Route::resource('/jobTitles', 'Admin\Job\JobTitles\JobTitlesController');
+    Route::post('/jobTitles/multiple-delete', 'Admin\Job\JobTitles\JobTitlesController@deleteMultiple');
     // pay_grades
     Route::resource('/payGrades', 'Admin\Job\PayGrades\PayGradesController');
-    // payGradescurrency
-    Route::resource('/currency', 'Admin\Job\PayGrades\CurrencyController');
+    Route::post('/payGrades/multiple-delete', 'Admin\Job\PayGrades\PayGradesController@deleteMultiple');
+    // payGradecurrency
+    Route::resource('/payGradeCurrency', 'Admin\Job\PayGrades\PayGradeCurrencyController');
+    // job_categories
+    Route::resource('/jobCategory', 'Admin\Job\JobCategories\JobCategoryController');
+    // Route::post('/jobCategory/multiple-delete', 'Admin\Job\JobCategories\JobCategoryController');
+
     // employee
     Route::resource('/employees', 'EmployeeController');
     Route::post('/employees/multiple-delete', 'EmployeeController@deleteMultiple');
-
-    /* admin/qualifications/skills */
-    Route::get('/listSkills', 'SkillsController@listSkills')->name('listSkills');
-    Route::get('/addSkills', 'SkillsController@addSkills')->name('addSkills');
-    Route::get('/editSkills/{id}', 'SkillsController@editSkills')->name('editSkills');
-    Route::get('/deleteSkills/{id}', 'SkillsController@deleteSkills')->name('deleteSkills');
-    Route::post('/storeSkill', 'SkillsController@storeSkill')->name('storeSkill');
-    Route::post('/updateSkill/{id}', 'SkillsController@updateSkill')->name('updateSkill');
 
     /* Admin/Qualifications/Skills */
     Route::resource('/skills', 'Admin\Qualifications\SkillsController');

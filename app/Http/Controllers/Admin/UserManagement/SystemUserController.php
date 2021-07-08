@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Carbon\Carbon;
 use App\User;
+use App\Employee;
 use App\Role;
 use Session;
 use DB;
@@ -41,12 +42,12 @@ class SystemUserController extends Controller
             $users->Where('roles.name', $role);
         }
         $users = $users->orderBy('users.id', 'asc')
-                       ->get();
+                       ->paginate(5);
 
         // dd(DB::getQueryLog());
 
         $roles = Role::get();
-        return view('admin/system_users/list', ['users' => $users, 'roles' => $roles]);
+        return view('admin/system_users/list', compact('users', 'roles'));
     }
 
     /**
@@ -57,7 +58,7 @@ class SystemUserController extends Controller
     public function create()
     {
         $roles = Role::get();
-        return view('admin/system_users/add', ['roles' => $roles]);
+        return view('admin/system_users/add', compact('roles'));
     }
 
     /**
@@ -113,7 +114,7 @@ class SystemUserController extends Controller
                     ->get();
                     // dd($users);
         $roles = Role::get();
-        return view('admin/system_users/edit', ['users' => $users, 'roles' => $roles]);
+        return view('admin/system_users/edit', compact('users', 'roles'));
     }
 
     /**
@@ -152,5 +153,24 @@ class SystemUserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            User::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($user) {
+                    $user->delete();
+                });
+            Employee::whereIn('user_id', $request->delete_ids)
+                ->get()
+                ->map(function($emp) {
+                    $emp->delete();
+                });
+            return true;
+        } else {   
+            return false;
+        }       
     }
 }
