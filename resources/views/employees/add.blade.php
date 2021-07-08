@@ -84,7 +84,7 @@
 												<div class="form-group">
 													<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}">
 														<option value="Active" {{old ('status') == 'Active' ? 'selected' : ''}}>Active</option>
-														<option value="Inactive" {{old ('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
+														<option value="In active" {{old ('status') == 'In active' ? 'selected' : ''}}>Inactive</option>
 													</select>
 													{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>

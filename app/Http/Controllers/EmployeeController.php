@@ -118,7 +118,13 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = User::join('employees', 'employees.user_id', 'users.id')
+                    ->where('users.id', $id)
+                    ->first();
+                
+                    // dd($employee);
+
+        return view('employees/edit', compact('id', 'employee'));
     }
 
     /**
@@ -130,7 +136,29 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'employee_id' => 'required',
+            'email' => 'required|unique:users,email,'.$id,
+            'status' => 'required',
+        ]);
+
+        $user = User::where('id', $id)->first();
+        $user->name = $request->first_name . ' '.$request->last_name;
+        $user->email = $request->email;
+        $user->save();
+
+        $employee = Employee::where('user_id', $id)->update([
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'employee_id' => $request->employee_id,
+            'status' => $request->status,
+            'updated_by' => Auth::User()->id
+        ]);    
+
+        return redirect()->back()->with('success', 'Employee updated successfully');
     }
 
     /**
