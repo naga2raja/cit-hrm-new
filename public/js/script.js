@@ -1,17 +1,16 @@
-
-(function () {
+(function() {
     "use strict";
     /*jslint browser: true*/
     /*global $, jQuery, alert*/
- // Defaultly Hiding sidebar Overlay
+    // Defaultly Hiding sidebar Overlay
     $("#sidebar_overlay").hide();
 
- // Tooltip
+    // Tooltip
 
     if ($('[data-toggle="tooltip"]').length > 0) {
         $('[data-toggle="tooltip"]').tooltip();
     }
-     // Select 2
+    // Select 2
 
     if ($('.select').length > 0) {
         $('.select').select2({
@@ -19,7 +18,7 @@
             width: '100%'
         });
     }
-  // Date Time Picker
+    // Date Time Picker
 
     if ($('.datetimepicker').length > 0) {
         $('.datetimepicker').datetimepicker({
@@ -32,29 +31,32 @@
             }
         });
     }
-     //sidebar open and close
 
-    $(document).on('click', '#open_navSidebar', function () {
+    $('.datetimepicker1').datetimepicker({ format: "YYYY-MM-DD", maxDate: moment() });
+
+    //sidebar open and close
+
+    $(document).on('click', '#open_navSidebar', function() {
         $('#offcanvas_menu').css('width', '250px');
         $("#sidebar_overlay").show();
         $('.inner-wrapper').css('overflow', 'hidden');
     });
 
-    $(document).on('click', '#close_navSidebar', function () {
+    $(document).on('click', '#close_navSidebar', function() {
         $('#offcanvas_menu').css('width', '0px');
         $("#sidebar_overlay").hide();
         $('.inner-wrapper').css('overflow', 'scroll');
     });
 
-    $(document).on('click', "#sidebar_overlay", function () {
+    $(document).on('click', "#sidebar_overlay", function() {
         $('#offcanvas_menu').css('width', '0px');
         $("#sidebar_overlay").hide();
     });
 
-    $(window).on('load', function () {
+    $(window).on('load', function() {
         $('#loader').delay(100).fadeOut('slow');
         $('#loader-wrapper').delay(500).fadeOut('slow');
-        $('body').delay(500).css({'overflow': 'visible'});
+        $('body').delay(500).css({ 'overflow': 'visible' });
     });
 
     /*================================
@@ -64,7 +66,7 @@
     if ($(window).width() > 767) {
         if ($('.theiaStickySidebar').length > 0) {
             $('.theiaStickySidebar').theiaStickySidebar({
-             // Settings
+                // Settings
                 additionalMarginTop: 30
             });
         }

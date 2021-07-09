@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Employee;
+use App\ContactDetails;
+use App\mCountry;
+use App\mJobTitle;
 use Auth;
 
 class EmployeeController extends Controller
@@ -121,10 +124,14 @@ class EmployeeController extends Controller
         $employee = User::join('employees', 'employees.user_id', 'users.id')
                     ->where('users.id', $id)
                     ->first();
+        
+        $contactInfo =  ContactDetails::where('user_id', $id)->first();
                 
-                    // dd($employee);
+        $countries = mCountry::all();
 
-        return view('employees/edit', compact('id', 'employee'));
+        $jobTitles = mJobTitle::all();
+
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles'));
     }
 
     /**
@@ -142,6 +149,7 @@ class EmployeeController extends Controller
             'employee_id' => 'required',
             'email' => 'required|unique:users,email,'.$id,
             'status' => 'required',
+            'alternate_email' => 'email'
         ]);
 
         $user = User::where('id', $id)->first();
@@ -155,8 +163,34 @@ class EmployeeController extends Controller
             'last_name' => $request->last_name,
             'employee_id' => $request->employee_id,
             'status' => $request->status,
+            'date_of_birth' => date('Y-m-d', strtotime($request->date_of_birth)),
+            'marital_status' => $request->marital_status,
+            'gender' => $request->gender,
             'updated_by' => Auth::User()->id
         ]);    
+
+        //update contact details
+        $contactDetails = ContactDetails::where('user_id', $id)->first();
+        $contactInfo = [
+            'street_address_1' => $request->street_address_1,
+            'street_address_2' => $request->street_address_2,
+            'city' => $request->city,
+            'state' => $request->state,
+            'zip_code' => $request->zip_code,
+            'country' => $request->country,
+            'home_telephone' => $request->home_telephone,
+            'mobile' => $request->mobile,
+            'work_telephone' => $request->work_telephone,
+            'alternate_email' => $request->alternate_email
+        ];
+        if($contactDetails) {
+            //update
+            ContactDetails::where('user_id', $id)->update($contactInfo); 
+        } else {
+            // insert
+            $contactInfo['user_id'] = $id;
+            ContactDetails::insert($contactInfo);
+        }
 
         return redirect()->back()->with('success', 'Employee updated successfully');
     }
