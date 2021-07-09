@@ -45,8 +45,8 @@
 	            contentType: 'application/json',
 	            success: function(response){
 	                console.log('response : ', response);
-					alert('deleted successfully!');
-					window.location.reload();                        
+					alert('Deleted successfully!');
+					window.location.reload();
 	            }					
 	        });
 		}

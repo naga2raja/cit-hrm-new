@@ -7,7 +7,7 @@
 					<div class="row">					
 						<div class="col-xl-12 col-lg-8  col-md-12">
 							<div class="card ctm-border-radius shadow-sm border">
-								<div class="card-header">
+								<div class="card-header shadow-sm">
 									<div class="text-left ml-2">
 										<h4 class="card-title mb-0">Edit Pay Grade</h4>
 									</div>
@@ -37,17 +37,15 @@
 
 										<div class="row">
 											<div class="col-sm-2">
-												<div class="form-group">
-													<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
-												</div>
+												<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
 											</div>
 										</div>
 										<hr>
 
 										<div class="row">
 											<div class="col-sm-2 text-center">
-												<button type="submit" class="btn btn-success text-white ctm-border-radius">Update</button>
-												<a href="{{ route('payGrades.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+												<button type="submit" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-refresh"></i> Update</button>
+												<a href="{{ route('payGrades.index') }}" class="btn btn-danger text-white ctm-border-radius"><i class="fa fa-arrow-left"></i> Cancel</a>
 											</div>
 										</div>
 									</form>
@@ -62,7 +60,7 @@
 					<div class="row">					
 						<div class="col-xl-12 col-lg-8  col-md-12">
 							<div class="card ctm-border-radius shadow-sm border">
-								<div class="card-header">
+								<div class="card-header shadow-sm">
 									<div class="text-left ml-2">
 										<h4 class="card-title mb-0">Add Currency</h4> 
 									</div>
@@ -97,8 +95,8 @@
 											<div class="col-sm-2 leave-col">
 												<div class="form-group">
 													<label>.</label><br>
-													<button href="javascript:void(0);" class="btn btn-success text-white ctm-border-radius">Save</button>
-													<a id="currency_hide" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+													<button href="javascript:void(0);" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-save"></i> Save</button>
+													<a id="currency_hide" class="btn btn-danger text-white ctm-border-radius"><i class="fa fa-arrow-left"></i> Cancel</a>
 												</div>
 											</div>
 										</div>
@@ -124,15 +122,16 @@
 					<div class="row">					
 						<div class="col-xl-12 col-lg-8  col-md-12">
 							<div class="card ctm-border-radius shadow-sm border">
-								<div class="card-header">
+								<div class="card-header shadow-sm">
 									<div class="text-left ml-3">
 										<h4 class="card-title mb-0">Assigned Currencies</h4>
-										<hr>
-										<a id="currency_show" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-										<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius"><span class="fa fa-trash"></span> Delete</a>
 									</div>
 								</div>
 								<div class="card-body">
+									<div class="mb-3">
+										<a id="currency_show" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-plus"></i> Add</a>
+										<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius"><i class="fa fa-trash"></i> Delete</a>
+									</div>
 									<div class="employee-office-table">
 										<div class="table-responsive">
 											@if($message = Session::get('currency_success'))

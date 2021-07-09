@@ -161,10 +161,12 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/admin-page', 'HomeController@demoAdmin');
 
     // admin_dashboard
-    Route::get('/adminDashboard', 'AdminController@index')->name('adminDashboard');
+    Route::get('/adminDashboard', 'Admin\AdminController@index')->name('adminDashboard');
     // system_user
     Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
     Route::post('/systemUsers/multiple-delete', 'Admin\UserManagement\SystemUserController@deleteMultiple');
+    Route::post('/employeeNameSearch', 'Admin\UserManagement\SystemUserController@employeeNameSearch');
+    
     // job_title
     Route::resource('/jobTitles', 'Admin\Job\JobTitles\JobTitlesController');
     Route::post('/jobTitles/multiple-delete', 'Admin\Job\JobTitles\JobTitlesController@deleteMultiple');
@@ -175,7 +177,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/payGradeCurrency', 'Admin\Job\PayGrades\PayGradeCurrencyController');
     // job_categories
     Route::resource('/jobCategory', 'Admin\Job\JobCategories\JobCategoryController');
-    // Route::post('/jobCategory/multiple-delete', 'Admin\Job\JobCategories\JobCategoryController');
+    Route::post('/jobCategory/multiple-delete', 'Admin\Job\JobCategories\JobCategoryController@deleteMultiple');
 
     // employee
     Route::resource('/employees', 'EmployeeController');

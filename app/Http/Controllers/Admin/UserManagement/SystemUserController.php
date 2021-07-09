@@ -26,17 +26,20 @@ class SystemUserController extends Controller
         $name = $request->input('name');
         $role = $request->input('role');
         
-        DB::connection()->enableQueryLog(); 
+        DB::connection()->enableQueryLog();
 
-        $users = User::select('roles.name as role_name', 'users.*')
+        $users = User::select('users.*', 'employees.*', 'employees.status as emp_status', 'roles.name as role_name')
                     ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
-                    ->join('roles', 'model_has_roles.model_id', 'roles.id');
+                    ->join('roles', 'model_has_roles.model_id', 'roles.id')
+                    ->join('employees', 'employees.user_id', 'users.id');
         
         if ($username) {
             $users->Where('email', 'like', "%$username%");
         }
         if ($name) {
-            $users->Where('users.name', 'like', "%$name%");
+            // remove the space in string
+            $string = str_replace(' ', '', $name);
+            $users->Where(DB::raw("CONCAT(employees.first_name, employees.middle_name, employees.last_name)"), 'LIKE', "%$string%");
         }
         if ($role) {
             $users->Where('roles.name', $role);
@@ -172,5 +175,46 @@ class SystemUserController extends Controller
         } else {   
             return false;
         }       
+    }
+
+    public function employeeNameSearch(Request $request)
+    {
+        DB::connection()->enableQueryLog();
+
+        $employee_name = $request->employee_name;
+
+        if(!empty(trim($employee_name))){
+            $employees = Employee::where('employees.first_name', 'like', "%{$employee_name}%")
+                                    ->orwhere('employees.middle_name', 'like', "%{$employee_name}%")
+                                    ->orwhere('employees.last_name', 'like', "%{$employee_name}%")
+                                    ->get();
+            // dd(DB::getQueryLog());
+
+            if(count($employees) != 0){
+                $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
+                foreach($employees as $row) {
+                    $emp_name = '';
+                    if($row->first_name != ''){
+                        $emp_name = $emp_name.$row->first_name;
+                    }                    
+                    if($row->middle_name != ''){
+                        $emp_name = $emp_name.' '.$row->middle_name;
+                    }
+                    if($row->last_name != ''){
+                        $emp_name = $emp_name.' '.$row->last_name;
+                    }
+                    
+                   $output .= '<li id='.$row->user_id.' class="employees"><a class="dropdown-item">'.$emp_name.'</a></li>';
+                }
+                $output .= '</ul>';
+                echo $output;
+            } else{
+                $output = "";
+                echo $output;
+            }
+        } else{
+            $output = "";
+            echo $output;
+        }
     }
 }

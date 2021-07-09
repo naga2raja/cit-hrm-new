@@ -7,15 +7,16 @@
 			<div class="row">					
 				<div class="col-xl-12 col-lg-8  col-md-12">
 					<div class="card ctm-border-radius shadow-sm border">
-						<div class="card-header">
-							<div class="text-left ml-3">
-								<h4 class="card-title mb-0">Pay Grades</h4>
-								<hr>
-								<a href="{{ route('payGrades.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-								<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_pay_grade_table','payGrades')"><span class="fa fa-trash"></span> Delete</button>
+						<div class="card-header shadow-sm">
+							<div class="text-left ml-2">
+								<h4 class="card-title mb-0"><i class="fa fa-list"></i> Pay Grades</h4>								
 							</div>
 						</div>
 						<div class="card-body">
+							<div class="mb-3">
+								<a href="{{ route('payGrades.create') }}" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-plus"></i> Add</a>
+								<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_pay_grade_table','payGrades')"><i class="fa fa-trash"></i> Delete</button>
+							</div>
 							<div class="employee-office-table">
 								<div class="table-responsive">
 									@if($message = Session::get('success'))
@@ -37,13 +38,19 @@
 											@if(count($grades) > 0)
 												@foreach ($grades as $grade)
 												<tr>
-													<td class="text-center">
+													<td class="text-center" style="width: 5%">
 														<input type="checkbox" name="pay_grades_id" value="{{ $grade->id }}">
 													</td>
 													<td>
 														<h2><u><a href="{{ route('payGrades.edit', $grade->id) }}">{{ $grade->name }}</a></u></h2>
 													</td>
-													<td>{{ $grade->currency_id }}</td>
+													<td>
+														@foreach ($grade_currency as $currency)
+															@if($currency->pay_grade_id == $grade->id)
+																{{ $currency->currency_id }},
+															@endif
+														@endforeach
+													</td>
 												</tr>
 												@endforeach
 											@else
