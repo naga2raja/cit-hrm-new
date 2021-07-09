@@ -105,7 +105,7 @@
 															@endforeach
 														@else
 															<tr>
-																<td colspan="5"><div class="alert alert-danger text-center">No locations Found!</div></td>
+																<td colspan="6"><div class="alert alert-danger text-center">No locations Found!</div></td>
 															</tr>
 														@endif												
 													</tbody>

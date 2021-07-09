@@ -78,6 +78,24 @@ Version: 1.0
 	background: grey !important;
 }
 
+ /*all autocomplete input box*/
+.autocomplete{
+    list-style: none;
+    padding: 0px;
+    width: auto;
+    position: absolute;
+    margin: 0;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+	display:none;
+	z-index:1;
+}
+
+.autocomplete li:hover{
+    cursor: pointer;
+}
+
 /*-----------------------
 	 01. GENERAL
 -------------------------*/
@@ -224,7 +242,7 @@ h5 {
 	background: #62d03a;
 }
 .ctm-border-radius {
-	border-radius: 10px;
+	/*border-radius: 10px;*/
 }
 .ctm-btn-padding {
 	padding: 10px 15px;
@@ -272,7 +290,8 @@ h5 {
     box-shadow: 0 9px 14px 1px rgba(214, 211, 208, 0.56);
 }
 .btn-secondary {
-	background: #7347c1;
+	/*background: #7347c1;*/
+	background: #777;
 }
 .btn-outline { 
 	border: 1px solid #ffffff;
@@ -701,6 +720,7 @@ a.text-warning:focus, a.text-warning:hover {
 nav ul li a {
 	color: #333333;
 }
+
 nav ul li.active a,
 nav ul li.focus a,
 nav ul li.hover a {

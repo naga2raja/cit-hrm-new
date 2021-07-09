@@ -26,21 +26,21 @@
 														<div class="form-group">
 															<label>Customer Name</label>
 															<input type="text" class="form-control" placeholder="Type for hint..." name="customer_name" value="{{ Request::get('customer_name') }}" autocomplete="off" id="customer_name">
-															<div id="customers_list"></div>
+															<div id="customers_list" class="autocomplete"></div>
 														</div>
 													</div>
 													<div class="col-sm-2">
 														<div class="form-group">
 															<label>Project</label>
 															<input type="text" class="form-control" placeholder="Type for hint..." name="project_name" value="{{ Request::get('project_name') }}" autocomplete="off" id="project_name">	
-															<div id="projects_list"></div>						
+															<div id="projects_list" class="autocomplete"></div>						
 														</div>
 													</div>
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Project Admin</label>
 															<input type="text" class="form-control" placeholder="Type for hint..." name="project_admin" value="{{ Request::get('project_admin') }}" autocomplete="off" id="project_admin">	
-															<div id="project_admins_list"></div>			
+															<div id="project_admins_list" class="autocomplete"></div>			
 														</div>
 													</div>	
 													<div class="col-sm-2">
@@ -86,7 +86,8 @@
 																	<input type="checkbox" name="delete_ids" id="delete_ids" value="{{$project->project_id}}">
 																</td>
 																<td>{{$project->customer_name}}</td>
-																<td><h2><u><a href="">{{$project->project_name}}</a></u></h2></td>
+																<td><h2><u><a href="{{ route('projects.edit', $project->project_id) }}">{{$project->project_name}}</a></u></h2>
+																</td>
 																<td>{{$project->admin_name}}</td>
 															</tr>
 															@endforeach
