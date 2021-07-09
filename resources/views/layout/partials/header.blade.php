@@ -497,5 +497,5 @@
                 </div>
             </nav>
             <!-- /Slide Nav -->
-        </header>
+        </header> 
         <!-- /Header -->
