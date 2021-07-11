@@ -290,7 +290,7 @@
 								<div class="row">
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Title</p>
-										<select class="form-control select" name="job_id">
+										<select class="form-control select" name="job_id" id="job_id" onchange="getJobDetails()">
 											<option value="">Select </option>
 											@foreach ($jobTitles as $job)
 												<option value="{{ $job->id }}" {{old ('job_id', @$employee->job_id) == $job->id ? 'selected' : ''}}> {{ $job->job_title }}</option>
@@ -299,15 +299,28 @@
 									</div>
 
 									<div class="col-md-12 form-group">
-										<select class="form-control select">
-											<option selected>Currency </option>
-											<option value="1">$</option>
-										</select>
+										<p class="mb-2">Job Specification</p>
+										<div id="job_specification"></div>
 									</div>
 									<div class="col-md-12 form-group">
-										<input type="text" class="form-control" placeholder="Amount">
+										<p class="mb-2">Job Category</p>
+										<select class="form-control select">
+											<option selected>Frequency</option>
+											<option value="1">Annualy</option>
+											<option value="2">Monthly</option>
+											<option value="3">Weekly</option>
+											<option value="4">Daily</option>
+											<option value="5">Hourly</option>
+											<option value="6">Fixed</option>
+										</select>												
 									</div>
 									<div class="col-12 form-group">
+										<p class="mb-2">Date of Join</p>
+										<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}" id="datetimepicker1">
+										
+									</div>
+									<div class="col-md-12 form-group mb-0">
+										<p class="mb-2">Location</p>
 										<select class="form-control select">
 											<option selected>Frequency</option>
 											<option value="1">Annualy</option>
@@ -317,11 +330,6 @@
 											<option value="5">Hourly</option>
 											<option value="6">Fixed</option>
 										</select>
-									</div>
-									<div class="col-md-12 form-group mb-0">
-										<div class="cal-icon">
-											<input class="form-control datetimepicker cal-icon-input" type="text" placeholder="Start Date">
-										</div>
 									</div>
 								</div>
 							</div>
@@ -563,7 +571,10 @@
 @push('scripts')
 <script type="text/javascript"> 
     $(document).ready(function() { 
-		//
+		function getJobDetails() {
+			var jobId = $('#job_id').val();
+			alert(jobId);
+		}
 	}); 
 </script>
 @endpush
