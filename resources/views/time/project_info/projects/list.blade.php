@@ -1,7 +1,6 @@
 @extends('layout.mainlayout')
 @section('content')
 <!-- Content -->
-
 			<div class="page-wrapper">
 				<div class="container-fluid">
 					<div class="row">
@@ -26,7 +25,7 @@
 														<div class="form-group">
 															<label>Customer Name</label>
 															<input type="text" class="form-control" placeholder="Type for hint..." name="customer_name" value="{{ Request::get('customer_name') }}" autocomplete="off" id="customer_name">
-															<div id="customers_list"></div>
+															<span id="customers_list" class="autocomplete"></span>
 														</div>
 													</div>
 													<div class="col-sm-2">

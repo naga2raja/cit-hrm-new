@@ -22,7 +22,8 @@ class PayGradesController extends Controller
     public function index()
     {
         $grades = mPayGrade::get();
-        return view('admin/job/pay_grades/list', compact('grades'));
+        $grade_currency = tPayGradeCurrency::get();
+        return view('admin/job/pay_grades/list', compact('grades', 'grade_currency'));
     }
 
     /**

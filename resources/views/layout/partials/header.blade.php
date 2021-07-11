@@ -258,32 +258,32 @@
                                         </a>
                                 </li>
                                 @hasrole('Admin')
-                                <li class="mr-1 nav-item dropdown {{ Request::is('systemUsers','jobTitles','payGrades') ? 'active' : '' }}">
+                                <li class="mr-1 nav-item dropdown {{ Request::is('systemUsers*','jobTitles*','payGrades*','jobCategory*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="employees" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="lnr lnr-users pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Admin</span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item {{ Request::is('systemUsers') ? 'active' : '' }}" href="{{ route('systemUsers.index') }}">User Management</a>
+                                            <a class="dropdown-item {{ Request::is('systemUsers*') ? 'active' : '' }}" href="{{ route('systemUsers.index') }}">User Management</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle {{ Request::is('jobTitles') ? 'active' : '' }}" href="#">Job</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('jobTitles*','payGrades*','jobCategory*') ? 'active' : '' }}" href="#">Job</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item {{ Request::is('jobTitles') ? 'active' : '' }}" href="{{ route('jobTitles.index') }}">Job Title</a>
+                                                    <a class="dropdown-item {{ Request::is('jobTitles*') ? 'active' : '' }}" href="{{ route('jobTitles.index') }}">Job Title</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('payGrades.index') }}">Pay Grades</a>
+                                                    <a class="dropdown-item {{ Request::is('payGrades*') ? 'active' : '' }}" href="{{ route('payGrades.index') }}">Pay Grades</a>
                                                 </li>
-                                                <li>
+                                                <!-- <li>
                                                     <a class="dropdown-item" href="#">Employment Status</a>
-                                                </li>
+                                                </li> -->
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                    <a class="dropdown-item {{ Request::is('jobCategory*') ? 'active' : '' }}" href="{{ route('jobCategory.index') }}">Job Categories</a>
                                                 </li>
-                                                <li>
+                                                <!-- <li>
                                                     <a class="dropdown-item" href="#">Work Shifts</a>
-                                                </li>
+                                                </li> -->
                                             </ul>
                                         </li>
                                         <li>
@@ -350,19 +350,7 @@
                                             <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Job Title</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Pay Grades</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Employment Status</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Job Categories</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                    <a class="dropdown-item" href="#">Data Import</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -497,5 +485,5 @@
                 </div>
             </nav>
             <!-- /Slide Nav -->
-        </header>
+        </header> 
         <!-- /Header -->

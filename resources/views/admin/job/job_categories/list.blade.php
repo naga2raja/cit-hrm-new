@@ -9,13 +9,14 @@
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
 									<div class="text-left ml-3">
-										<h4 class="card-title mb-0">Job Category</h4>
-										<hr>
-										<a href="{{ route('jobCategory.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-										<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_job_category_table','jobCategory')"><span class="fa fa-trash"></span> Delete</button>
+										<h4 class="card-title mb-0"><i class="fa fa-list"></i> Job Category</h4>
 									</div>
 								</div>
 								<div class="card-body">
+									<div class="mb-3">
+										<a href="{{ route('jobCategory.create') }}" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-plus"></i> Add</a>
+										<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_job_category_table','jobCategory')"><i class="fa fa-trash"></i> Delete</button>
+									</div>
 									<div class="employee-office-table">
 										<div class="table-responsive">
 											@if($message = Session::get('success'))
@@ -29,19 +30,18 @@
 														<th class="text-center">
 															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_job_category_table')">
 														</th>
-														<th>Job Title</th>
-														<th>Job Description</th>
+														<th>Job Category</th>
 													</tr>
 												</thead>
 												<tbody id="list_job_category_table">
 													@if(count($categories) > 0)
 														@foreach ($categories as $category)
 														<tr>
-															<td class="text-center">
-																<input type="checkbox" name="job_title_id" value="{{ $category->id }}">
+															<td class="text-center" style="width: 5%">
+																<input type="checkbox" name="job_category_id" value="{{ $category->id }}">
 															</td>
 															<td>
-																<h2><u><a href="{{ route('jobCategory.edit', $category->job_category) }}">{{ $category->job_title }}</a></u></h2>
+																<h2><u><a href="{{ route('jobCategory.edit', $category->id) }}">{{ $category->name }}</a></u></h2>
 															</td>
 														</tr>
 														@endforeach
