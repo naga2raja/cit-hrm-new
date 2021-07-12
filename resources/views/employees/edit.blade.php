@@ -29,11 +29,11 @@
 							<h4 class="card-title mb-0">Details Content</h4>
 						</div>
 						<div class="card-body">
-							<div id="list-example" class="list-group border-none">
-								<a class="list-group-item list-group-item-action border-none" href="javascript:void(0)">Basic</a>
-								<a class="list-group-item list-group-item-action border-none" href="javascript:void(0)">Employment</a>
-								<a class="list-group-item list-group-item-action border-none" href="javascript:void(0)">Teams & Offices</a>
-								<a class="list-group-item list-group-item-action border-none" href="javascript:void(0)">Salary</a>
+							<div id="user_profile_list" class="list-group border-none">
+								<a class="list-group-item list-group-item-action border-none" href="#personal">Personal Details</a>
+								<a class="list-group-item list-group-item-action border-none" href="#contact">Contact Details</a>
+								<a class="list-group-item list-group-item-action border-none" href="#jobDetails">Job Details</a>
+								<!-- <a class="list-group-item list-group-item-action border-none" href="javascript:void(0)">Salary</a> -->
 							</div>
 						</div>
 					</div>
@@ -54,7 +54,7 @@
 
 				<div class="accordion add-employee" id="accordion-details">
 					<div class="card shadow-sm ctm-border-radius">
-						<div class="card-header" id="basic1">
+						<div class="card-header" id="personal">
 							<h4 class="cursor-pointer mb-0">
 								<a class=" coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
 									Personal Details
@@ -63,7 +63,7 @@
 							</h4>
 						</div>
 						<div class="card-body p-0">
-							<div id="basic-one" class="collapse show ctm-padding" aria-labelledby="basic1" data-parent="#accordion-details">
+							<div id="basic-one" class="collapse show ctm-padding" aria-labelledby="personal" data-parent="#accordion-details">
 								
 									<div class="row">
 										<!-- <div class="col form-group">
@@ -169,7 +169,7 @@
 						</div>
 					</div>
 					<div class="card shadow-sm ctm-border-radius">
-						<div class="card-header" id="headingTwo">
+						<div class="card-header" id="contact">
 							<h4 class="cursor-pointer mb-0">
 								<a class="coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#employee-det">
 									Contact Details
@@ -178,7 +178,7 @@
 							</h4>
 						</div>
 						<div class="card-body p-0">
-							<div id="employee-det" class="collapse show ctm-padding" aria-labelledby="headingTwo" data-parent="#accordion-details">
+							<div id="employee-det" class="collapse show ctm-padding" aria-labelledby="contact" data-parent="#accordion-details">
 								
 									<div class="row">
 										<div class="col-md-12">
@@ -286,11 +286,11 @@
 							</h4>
 						</div>
 						<div class="card-body p-0">
-							<div id="emp_job_det" class="collapse show ctm-padding" aria-labelledby="headingFour" data-parent="#accordion-details">
+							<div id="emp_job_det" class="collapse show ctm-padding" aria-labelledby="jobDetails" data-parent="#accordion-details">
 								<div class="row">
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Title</p>
-										<select class="form-control select" name="job_id" id="job_id" onchange="getJobDetails()">
+										<select class="form-control select" name="job_id" id="job_id">
 											<option value="">Select </option>
 											@foreach ($jobTitles as $job)
 												<option value="{{ $job->id }}" {{old ('job_id', @$employee->job_id) == $job->id ? 'selected' : ''}}> {{ $job->job_title }}</option>
@@ -300,35 +300,29 @@
 
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Specification</p>
-										<div id="job_specification"></div>
+										<div id="job_specification" style="font-weight: bold;"> {{ $jobDetails->job_description }}</div>
 									</div>
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Category</p>
-										<select class="form-control select">
-											<option selected>Frequency</option>
-											<option value="1">Annualy</option>
-											<option value="2">Monthly</option>
-											<option value="3">Weekly</option>
-											<option value="4">Daily</option>
-											<option value="5">Hourly</option>
-											<option value="6">Fixed</option>
+										<select class="form-control select" name="job_category_id">
+											<option value="">Select </option>
+											@foreach ($jobCategories as $job)
+												<option value="{{ $job->id }}" {{old ('job_category_id', @$employee->job_category_id) == $job->id ? 'selected' : ''}}> {{ $job->name }}</option>
+											@endforeach
 										</select>												
 									</div>
 									<div class="col-12 form-group">
 										<p class="mb-2">Date of Join</p>
-										<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}" id="datetimepicker1">
+										<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}">
 										
 									</div>
 									<div class="col-md-12 form-group mb-0">
 										<p class="mb-2">Location</p>
-										<select class="form-control select">
-											<option selected>Frequency</option>
-											<option value="1">Annualy</option>
-											<option value="2">Monthly</option>
-											<option value="3">Weekly</option>
-											<option value="4">Daily</option>
-											<option value="5">Hourly</option>
-											<option value="6">Fixed</option>
+										<select class="form-control select" name="company_location_id">
+											<option value="">Select </option>
+											@foreach ($locations as $item)
+												<option value="{{ $item->id }}" {{old ('company_location_id', @$employee->job_category_id) == $item->id ? 'selected' : ''}}> {{ $item->company_name }}</option>
+											@endforeach
 										</select>
 									</div>
 								</div>
@@ -548,8 +542,8 @@
 										<div class="row">
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
-												<button class="btn btn-success text-white ctm-border-radius" type="submit">Save</button>
-												<a href="{{ route('employees.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+												<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
+												<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
 											</div>
 										</div>
 
@@ -571,10 +565,46 @@
 @push('scripts')
 <script type="text/javascript"> 
     $(document).ready(function() { 
-		function getJobDetails() {
-			var jobId = $('#job_id').val();
-			alert(jobId);
-		}
+		
+
 	}); 
+
+	$(document.body).on("change","#job_id",function(){		
+		var jobId = this.value;
+		console.log(jobId);
+		if(jobId > 0) {
+			$.ajax({
+			method: 'GET',
+			url: '/jobTitles/'+ jobId,
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(response){
+					console.log('response : ', response);
+					var job_specification = '';     
+					if(response && response.job_description) {
+						job_specification = response.job_description;
+					}
+					$('#job_specification').html(job_specification);
+				}					
+			});
+		}		
+		
+	});
+	
+	$('#datetimepicker1').datetimepicker({
+		date: '{{ ($employee->date_of_birth) }}',
+		format: "YYYY-MM-DD", 
+		maxDate: moment()
+	});
+
+	$('.datetimepicker2').datetimepicker({
+		date: '{{ ($employee->joined_date) }}',
+		format: "YYYY-MM-DD", 
+		maxDate: moment()
+	});
+
+	$("#user_profile_list a.list-group-item").click(function() {
+    	$(this).addClass('active').siblings().removeClass('active');
+    });
 </script>
 @endpush

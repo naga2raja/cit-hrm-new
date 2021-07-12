@@ -66,7 +66,8 @@ class JobTitlesController extends Controller
      */
     public function show($id)
     {
-        //
+        $job = mJobTitle::find($id);
+        return $job;
     }
 
     /**

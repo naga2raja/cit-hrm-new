@@ -32,7 +32,7 @@
         });
     }
 
-    $('.datetimepicker1').datetimepicker({ format: "YYYY-MM-DD", maxDate: moment() });
+
 
     //sidebar open and close
 

@@ -50,8 +50,8 @@
 												</div>
 												<div class="row">
 													<div class="col-sm-4">
-														<button type="submit" class="btn btn-success text-white ctm-border-radius mt-4" name="search"><span class="fa fa-search"></span> Search</button>
-														<button type="reset" class="btn btn-danger text-white ctm-border-radius mt-4"><span class="fa fa-refresh"></span> Reset</button>
+														<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" name="search"><span class="fa fa-search"></span> Search</button>
+														<button type="reset" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-refresh"></span> Reset</button>
 													</div>													
 												</div>
 											</form>
@@ -62,8 +62,8 @@
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
 									<div class="text-left">
-										<a href="{{ route('employees.create') }}" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-										<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
+										<a href="{{ route('employees.create') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-plus"></span> Add</a>
+										<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
 									</div>
 								</div>
 								<div class="card-body">
@@ -96,7 +96,7 @@
 															<input type="checkbox" name="chk_user" value="{{ $employee->user_id }}">
 														</td>
 														<td>
-															{{ $employee->employee_id }} 
+															<u><a href="{{ route('employees.edit', $employee->user_id) }}"> {{ $employee->employee_id }}  </a></u>
 														</td>
 														<td>
 															{{ $employee->first_name }} 
@@ -110,15 +110,17 @@
 														<td>
 															{{ $employee->status }} 
 														</td> 
-														<td style="display:inline-flex;">
-															<a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->user_id) }}"><i class="fa fa-pencil"></i></a>
+														<td>
+															<div style="display:inline-flex;">
+															<!-- <a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->user_id) }}"><i class="fa fa-pencil"></i></a> -->
 
 															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->user_id)}}" method="post">
 																@method('DELETE')
 																@csrf
 																<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
 															 </form>
-															<a class="btn-sm btn-success" href="{{ route('employees.show', $employee->user_id) }}"><i class="fa fa-eye"></i></a>
+															<!-- <a class="btn-sm btn-success" href="{{ route('employees.show', $employee->user_id) }}"><i class="fa fa-eye"></i></a> -->
+															</div>
 														</td>
 													</tr>														
 													@endforeach

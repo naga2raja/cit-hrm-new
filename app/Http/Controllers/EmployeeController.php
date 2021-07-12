@@ -9,6 +9,8 @@ use App\Employee;
 use App\ContactDetails;
 use App\mCountry;
 use App\mJobTitle;
+use App\mJobCategory;
+use App\mCompanyLocation;
 use Auth;
 
 class EmployeeController extends Controller
@@ -128,10 +130,15 @@ class EmployeeController extends Controller
         $contactInfo =  ContactDetails::where('user_id', $id)->first();
                 
         $countries = mCountry::all();
-
         $jobTitles = mJobTitle::all();
+        $jobCategories = mJobCategory::get();
+        $locations = mCompanyLocation::get();
+        $jobDetails = '';
+        if($employee && $employee->job_id) {
+            $jobDetails = mJobTitle::find($employee->job_id);
+        }
 
-        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles'));
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails'));
     }
 
     /**
@@ -166,7 +173,13 @@ class EmployeeController extends Controller
             'date_of_birth' => date('Y-m-d', strtotime($request->date_of_birth)),
             'marital_status' => $request->marital_status,
             'gender' => $request->gender,
-            'updated_by' => Auth::User()->id
+            'updated_by' => Auth::User()->id,
+
+            //job details
+            'job_id' => $request->job_id,
+            'job_category_id' => $request->job_category_id,
+            'joined_date' => $request->joined_date, //date('Y-m-d', strtotime($request->joined_date)),
+            'company_location_id' => $request->company_location_id
         ]);    
 
         //update contact details
