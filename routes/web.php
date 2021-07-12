@@ -182,6 +182,8 @@ Route::group(['middleware' => ['role:Admin']], function () {
     // employee
     Route::resource('/employees', 'EmployeeController');
     Route::post('/employees/multiple-delete', 'EmployeeController@deleteMultiple');
+    Route::get('/employees-import', 'ImportEmployeeController@index')->name('employees.import');
+    Route::post('/employees-import', 'ImportEmployeeController@import')->name('employees-import');
 
     /* Admin/Qualifications/Skills */
     Route::resource('/skills', 'Admin\Qualifications\SkillsController');

@@ -111,7 +111,7 @@
 															{{ $employee->status }} 
 														</td> 
 														<td>
-															<div style="display:inline-flex;">
+															<div style="text-align: center;">
 															<!-- <a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->user_id) }}"><i class="fa fa-pencil"></i></a> -->
 
 															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->user_id)}}" method="post">

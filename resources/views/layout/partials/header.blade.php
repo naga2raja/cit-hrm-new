@@ -350,7 +350,7 @@
                                             <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Data Import</a>
+                                                    <a class="dropdown-item" href="{{ route('employees.import') }}">Data Import</a>
                                                 </li>
                                             </ul>
                                         </li>

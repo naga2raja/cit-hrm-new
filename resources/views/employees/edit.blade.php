@@ -423,8 +423,8 @@
 					<div class="col-12">
 						<div class="submit-section text-center btn-add">
 							<!-- <button class="btn btn-theme text-white ctm-border-radius button-1">Add Team Member</button> -->
-							<button class="btn btn-success text-white ctm-border-radius" type="submit">Save</button>
-							<a href="{{ route('employees.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+							<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
+							<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
 						</div>
 					</div>
 				</div>
@@ -542,7 +542,7 @@
 										<div class="row">
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
-												<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
+												<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0 " type="submit">Save</button>
 												<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
 											</div>
 										</div>
