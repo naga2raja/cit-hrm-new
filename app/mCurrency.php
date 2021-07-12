@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class mCurrency extends Model
 {
-    protected $fillable = ['curreny', 'currency_code'];
+    protected $fillable = ['currency_id', 'currency_name'];
 }

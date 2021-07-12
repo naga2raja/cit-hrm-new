@@ -16,10 +16,12 @@ class CreateTPayGradeCurrenciesTable extends Migration
         Schema::create('t_pay_grade_currencies', function (Blueprint $table) {
             $table->id();
             $table->integer('pay_grade_id')->nullable();
-            $table->integer('currency_id')->nullable();
+            $table->string('currency_id', 6)->nullable();
             $table->decimal('min_salary', 10,0)->nullable();
             $table->decimal('max_salary', 10,0)->nullable();
             $table->timestamps();
+            
+            $table->foreign('currency_id')->references('currency_id')->on('m_currencies');
         });
     }
 

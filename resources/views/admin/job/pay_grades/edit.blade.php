@@ -72,9 +72,10 @@
 											<div class="col-sm-2 leave-col">
 												<div class="form-group">
 													<label>Currency <span class="text-danger">*</span></label>
-													<input type="text" name="currency" class="form-control" placeholder="" required="">
-													<input type="text" name="currency_id" class="form-control" placeholder="">
-													<input type="text" name="pay_grade_id" class="form-control" value="{{ $grades->id }}">
+													<input type="text" name="currency" id="currency" class="form-control" placeholder="" required="" autocomplete="off">
+													<input type="hidden" name="currency_id" id="currency_id" class="form-control" placeholder="">
+													<input type="hidden" name="pay_grade_id" id="pay_grade_id" class="form-control" value="{{ $grades->id }}">
+													<div id="currency_list" class="autocomplete"></div>
 												</div>
 											</div>
 
@@ -152,16 +153,20 @@
 												</thead>
 												<tbody>
 													@if(count($grade_currency) > 0)
-														@foreach ($grade_currency as $currency)
+														@foreach ($grade_currency as $row)
 															<tr>
 																<td class="text-center">
-																	<input type="checkbox" name="currency_id" value="{{ $currency->currency_id }}">
+																	<input type="checkbox" name="currency_id" value="{{ $row->currency_id }}">
 																</td>
 																<td>
-																	<h2><a href="javascript:void(0);" >{{ $currency->currency_id }}</a></h2>
+																	<h2>
+																		<u><a href="javascript:void(0);" >
+																			{{ $row->currencyName->currency_name }}
+																		</a></u>
+																	</h2>
 																</td>
-																<td>{{ $currency->min_salary }}</td>
-																<td>{{ $currency->max_salary }}</td>
+																<td>{{ $row->min_salary }}</td>
+																<td>{{ $row->max_salary }}</td>
 															</tr>
 														@endforeach
 													@else
@@ -189,5 +194,60 @@
 @endsection
 
 @push('scripts')
-	<script type="text/javascript" src="{{ URL::asset('js/currency.js') }}"></script>
+<script type="text/javascript">
+	$('#currency_show').on('click', function () {
+		if ($("#currency_div").css("display") == 'none') {
+		 	$('#currency_div').css("display", "block");
+		}
+	});
+
+	$('#currency_hide').on('click', function () {
+		if ($("#currency_div").css("display") == 'block') {
+		 	$('#currency_div').css("display", "none");
+		}
+	});
+
+	// Autocomplete ajax call
+	$('#currency').keyup(function(){ 
+		var currency = $(this).val();
+		if(currency != '')
+		{
+			var _token = $('input[name="_token"]').val();
+			$.ajax({
+				method:"POST",
+				url: '/currencyNameSearch',
+				data:{ currency:currency, _token:_token },
+				success:function(data){
+					$('#currency').removeClass('is-invalid');
+					$("#not_exist").remove();
+
+					if(data != ""){					
+						$('#currency_list').fadeIn();
+						$('#currency_list').html(data);
+					}else{
+						var exists = ($("#not_exist").length == 0);
+					    if (exists) {
+					        $('#currency').addClass('is-invalid');
+							$('#currency_list').fadeOut();
+							$('<span id="not_exist" class="invalid-feedback" role="alert">Currency does not exist</span>').insertAfter('#currency');
+					    }
+					}
+				}
+			});
+		} else{
+			$('#currency_list').html('');	        	
+		}
+	});
+
+	$(document).on('click', '.currencies', function(){
+		$('#currency').val($(this).text());
+		$('#currency_id').val($(this).attr('id'));
+		$('#currency').removeClass('is-invalid');
+		$('#currency_list').fadeOut();
+		$("#not_exist").remove();
+	});
+
+
+</script>
+<!-- <script type="text/javascript" src="{{ URL::asset('js/currency.js') }}"></script> -->
 @endpush
