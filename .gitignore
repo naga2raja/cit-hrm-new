@@ -20,3 +20,5 @@ package-lock.json
 composer.lock
 storage
 bootstrap
+bootstrap/cache/config.php
+bootstrap/cache/routes-v7.php
