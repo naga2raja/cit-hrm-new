@@ -10,49 +10,50 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card ctm-border-radius shadow-sm border">
-										<div class="card-header">
+										<!-- <div class="card-header">
 											<h4 class="card-title mb-0">Employees</h4>
-										</div>
+										</div> -->
 										<div class="card-body">
 											<form method="GET">
 												<div class="row">
 													<div class="col-sm-3 leave-col">
-														<div class="form-group">
-															<label>Employee Name</label>
+														<div>
+															<!-- <label>Employee Name</label> -->
 															<input type="text" class="form-control" placeholder="First/Middle/Last Name" name="employee_name" value="{{ Request::get('employee_name') }}">
 														</div>
 													</div>
-													<div class="col-sm-3 leave-col">
-														<div class="form-group">
-															<label>Employee Id</label>
+													<div class="col-sm-2 leave-col">
+														<div>
+															<!-- <label>Employee Id</label> -->
 															<input type="text" class="form-control" placeholder="Employee Id" name="employee_id" value="{{ Request::get('employee_id') }}">
 														</div>
 													</div>
-													<div class="col-sm-3 leave-col">
-														<div class="form-group">
-															<label>Email</label>
+													<div class="col-sm-2 leave-col">
+														<div>
+															<!-- <label>Email</label> -->
 															<input type="text" class="form-control" placeholder="Email" name="email" value="{{ Request::get('email') }}">
 														</div>
 													</div>
-													<div class="col-sm-3">
-														<div class="form-group">
-															<label>
+													<div class="col-sm-2">
+														<div>
+															<!-- <label>
 															Status
 															<span class="text-danger">*</span>
-															</label>
+															</label> -->
 															<select class="form-control select" name="status">
-																<option value="">All</option>
+																<option value="">Status</option>
 																<option value="Active"  {{ Request::get('status') == 'Active' ? 'selected' : ''}}>Active</option>
 																<option value="Inactive" {{ Request::get('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
 															</select>
 														</div>
 													</div>
-												</div>
-												<div class="row">
-													<div class="col-sm-4">
+													<div class="col-sm-3">														
 														<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" name="search"><span class="fa fa-search"></span> Search</button>
 														<button type="reset" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-refresh"></span> Reset</button>
-													</div>													
+													</div>
+												</div>
+												<div class="row">
+																										
 												</div>
 											</form>
 										</div>
@@ -61,10 +62,18 @@
 							</div>
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
-									<div class="text-left">
-										<a href="{{ route('employees.create') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-plus"></span> Add</a>
-										<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
+									<div class="row">
+										<div class="col-md-8">
+											<h4 class="card-title mb-0">Employees</h4>
+										</div>
+										<div class="col-md-4">
+											<div class="text-right">
+												<a href="{{ route('employees.create') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-plus"></span> Add</a>
+												<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
+											</div>
+										</div>
 									</div>
+									
 								</div>
 								<div class="card-body">
 									@if($message = Session::get('success'))
@@ -73,11 +82,11 @@
 										</div>
 									@endif	
 
-									<div class="employee-office-table">
+									<div class="card-body align-center">
 										<div class="table-responsive">
-											<table class="table custom-table mb-0 table-hover table-striped table-bordered" >
+											<table class="table custom-table table-hover" >
 												<thead>
-													<tr class="bg-blue-header text-white">
+													<tr>
 														<th class="text-center">
 															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll()">
 														</th>
