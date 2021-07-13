@@ -91,8 +91,8 @@
 															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll()">
 														</th>
 														<th>Employee Id</th>
-														<th>Employee First Name</th>
-														<th>Employee Last Name</th>
+														<th>First Name</th>
+														<th>Last Name</th>
 														<th>Email</th>
 														<th>Status</th>
 														<th class="text-center">Action</th>
@@ -117,7 +117,14 @@
 															{{ $employee->email }} 
 														</td> 
 														<td>
-															{{ $employee->status }} 
+															@if($employee->status == 'In active')
+																<a class="btn btn-outline-danger btn-sm"> Inactive </a>
+															@endif
+
+															@if($employee->status == 'Active')
+																<a class="btn  btn-outline-success btn-sm"> {{ $employee->status }} </a>
+															@endif
+															 
 														</td> 
 														<td>
 															<div style="text-align: center;">

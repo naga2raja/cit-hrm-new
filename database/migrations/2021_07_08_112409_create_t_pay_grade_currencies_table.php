@@ -21,7 +21,7 @@ class CreateTPayGradeCurrenciesTable extends Migration
             $table->decimal('max_salary', 10,0)->nullable();
             $table->timestamps();
             
-            $table->foreign('currency_id')->references('currency_id')->on('m_currencies');
+            //$table->foreign('currency_id')->references('currency_id')->on('m_currencies');
         });
     }
 

@@ -96,10 +96,10 @@
 													@foreach ($users as $user)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="user_id" value="{{ $user->id }}">
+															<input type="checkbox" name="user_id" value="{{ $user->user_id }}">
 														</td>
 														<td>
-															<h2><u><a href="{{ route('systemUsers.edit', $user->id) }}">{{ $user->email }}</a></u></h2>
+															<h2><u><a href="{{ route('systemUsers.edit', $user->user_id) }}">{{ $user->email }}</a></u></h2>
 														</td>
 														<td>{{ $user->role_name }}</td>
 														<td>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</td>
