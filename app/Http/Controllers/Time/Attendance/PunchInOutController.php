@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\mAttendanceConfigure;
 use App\tPunchInOut;
 use Auth;
-// use DateTime;
+use DateTime;
 use App\Session;
 use Carbon\Carbon;
 
@@ -58,29 +58,25 @@ class PunchInOutController extends Controller
             'in_time' => 'date_format:'.'H:i',
             'note' => 'nullable|string|max:255',
         ]);
-        date_default_timezone_set('Asia/Kolkata');
-        $current_date = date('d-m-Y');
-        $current_time = date('H:i');
-        date_default_timezone_set('UTC');
 
-        $user_date = "";
-        if(!empty($request->in_time)){
-            $user_date = $current_date.' '.$request->in_time.':00';
+        // convertion of date format
+        if($request->input('in_date') != "" && $request->input('in_time') != ""){
+            $in_date = DateTime::createFromFormat('d/m/Y', $request->input('in_date'));
+            $in_date = $in_date->format('Y-m-d');
+            $login_date = $in_date.' '.$request->in_time.':00';
         }
 
-        $new_user_date = date('Y-m-d H:i:s', strtotime($user_date));
-
-        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $new_user_date, 'Asia/Kolkata');
+        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, 'Asia/Kolkata');
         $utc_date->setTimezone('UTC');
 
-        $time_diff =  $utc_date->diff($new_user_date)->format('%H.%I');
+        $time_diff =  $utc_date->diff($login_date)->format('%H.%I');
 
         $punch_in = tPunchInOut::create([
             'employee_id' => $request->employee_id,
             'punch_in_utc_time' => $utc_date,
             'punch_in_note' => (empty($request->note) ? '' : $request->note),
             'punch_in_time_offset' => $time_diff,
-            'punch_in_user_time' => (empty($new_user_date) ? '' : $new_user_date),
+            'punch_in_user_time' => (empty($login_date) ? '' : $login_date),
             'state' => 'PUNCHED IN',
         ]);
 
@@ -141,28 +137,23 @@ class PunchInOutController extends Controller
             'note' => 'nullable|string|max:255',
         ]);
 
-        date_default_timezone_set('Asia/Kolkata');
-        $current_date = date('d-m-Y');
-        $current_time = date('H:i');
-        date_default_timezone_set('UTC');
-
-        $user_date = "";
-        if(!empty($request->out_time)){
-            $user_date = $current_date.' '.$request->out_time.':00';
+        // convertion of date format
+        if($request->input('out_date') != "" && $request->input('out_time') != ""){
+            $out_date = DateTime::createFromFormat('d/m/Y', $request->input('out_date'));
+            $out_date = $out_date->format('Y-m-d');
+            $logout_date = $out_date.' '.$request->out_time.':00';
         }
 
-        $new_user_date = date('Y-m-d H:i:s', strtotime($user_date));
-
-        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $new_user_date, 'Asia/Kolkata');
+        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, 'Asia/Kolkata');
         $utc_date->setTimezone('UTC');
 
-        $time_diff =  $utc_date->diff($new_user_date)->format('%H.%I');
+        $time_diff =  $utc_date->diff($logout_date)->format('%H.%I');
 
         $punch = tPunchInOut::find($id);
         $punch->punch_out_utc_time = $utc_date;
         $punch->punch_out_note = (empty($request->note) ? '' : $request->note);
         $punch->punch_out_time_offset = $time_diff;
-        $punch->punch_out_user_time = (empty($new_user_date) ? '' : $new_user_date);
+        $punch->punch_out_user_time = (empty($logout_date) ? '' : $logout_date);
         $punch->state = 'PUNCHED OUT';
         $punch->save();
 
