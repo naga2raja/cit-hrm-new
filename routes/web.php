@@ -200,8 +200,18 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::post('/customers-search', 'Time\ProjectInfo\ProjectsController@customers_search')->name('customers-search');
     Route::post('/projects-search', 'Time\ProjectInfo\ProjectsController@projects_search')->name('projects-search');
     Route::post('/project-admin-search', 'Time\ProjectInfo\ProjectsController@project_admin_search')->name('project-admin-search'); 
-    Route::post('/project-save-customer', 'Time\ProjectInfo\ProjectsController@project_save_customer')->name('project-save-customer'); 
-    
+    Route::post('/project-save-customer', 'Time\ProjectInfo\ProjectsController@project_save_customer')->name('project-save-customer');
+    Route::post('/update-project', 'Time\ProjectInfo\ProjectsController@update_project')->name('update-project');
+    Route::post('/projects/multiple-delete', 'Time\ProjectInfo\ProjectsController@deleteMultiple');
+    Route::resource('/activities', 'Time\ProjectInfo\ActivitiesController');
+    Route::post('/update-activity', 'Time\ProjectInfo\ActivitiesController@update_activity')->name('update-activity');
+    Route::post('/activities/multiple-delete', 'Time\ProjectInfo\ActivitiesController@deleteMultiple');
+
+    /* Admin/Organization/CompanyInfo */
+    Route::resource('/company', 'Admin\Organization\CompanyInfoController');
+    Route::post('/update-company-name', 'Admin\Organization\CompanyInfoController@update_company_name')->name('update-company-name');
+    Route::post('/update-company-info', 'Admin\Organization\CompanyInfoController@update_company_info')->name('update-company-info');
+    Route::post('/update-company-contact', 'Admin\Organization\CompanyInfoController@update_company_contact')->name('update-company-contact');
 });
 
 Route::group(['middleware' => ['role:Employee']], function () {

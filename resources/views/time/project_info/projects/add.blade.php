@@ -101,7 +101,7 @@
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
 												<button class="btn btn-success text-white ctm-border-radius" type="submit">Save</button>
-												<a href="{{ route('locations.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+												<a href="{{ route('projects.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
 											</div>
 										</div>
 
@@ -118,7 +118,7 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 
-		<!--Delete The Modal -->
+		<!--Customer The Modal -->
 		<div class="modal fade" id="add_customer">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -200,7 +200,7 @@
 		var admin = document.getElementsByClassName('admin');
 
 		var id = admin.length + 1;
-   		admin_div.innerHTML += "<div class='row admin'id='admin_name_"+id+""+"'"+"><div class='col-sm-2'></div><div class='col-sm-4'><div class='form-group'><input type='text' class='form-control' placeholder='Type for hints...'></div></div><div class='col-sm-4'><div class='form-group'><u><a class='remove' id='admin_remove_"+id+""+"'"+" style='color: #007bff;' onClick='remove_admin(this.id)'>------------</a></u><br></div></div></div>";
+   		admin_div.innerHTML += "<div class='row admin'id='admin_name_"+id+""+"'"+"><div class='col-sm-2'></div><div class='col-sm-4'><div class='form-group'><input type='text' class='form-control' placeholder='Type for hints...'></div></div><div class='col-sm-4'><div class='form-group'><u><a class='remove' id='admin_remove_"+id+""+"'"+" style='color: #007bff;' onClick='remove_admin(this.id)'>Remove</a></u><br></div></div></div>";
 	}
 
 	function remove_admin(id){
