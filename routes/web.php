@@ -173,11 +173,17 @@ Route::group(['middleware' => ['role:Admin']], function () {
     // pay_grades
     Route::resource('/payGrades', 'Admin\Job\PayGrades\PayGradesController');
     Route::post('/payGrades/multiple-delete', 'Admin\Job\PayGrades\PayGradesController@deleteMultiple');
+    Route::post('/currencyNameSearch', 'Admin\Job\PayGrades\PayGradesController@currencyNameSearch');
     // payGradecurrency
     Route::resource('/payGradeCurrency', 'Admin\Job\PayGrades\PayGradeCurrencyController');
     // job_categories
     Route::resource('/jobCategory', 'Admin\Job\JobCategories\JobCategoryController');
     Route::post('/jobCategory/multiple-delete', 'Admin\Job\JobCategories\JobCategoryController@deleteMultiple');
+
+    // leave_period
+    Route::resource('/leavePeriod', 'Leave\LeavePeriod\LeavePeriodController');
+    // leave_type
+    Route::resource('/leaveTypes', 'Leave\LeaveType\LeaveTypeController');
 
     // employee
     Route::resource('/employees', 'EmployeeController');

@@ -4,130 +4,146 @@
 
 			<div class="page-wrapper">
 				<div class="container-fluid">
-					<div class="row">					
-						<div class="col-xl-12 col-lg-8  col-md-12">
-							<div class="card ctm-border-radius shadow-sm border">
-								<div class="card-header shadow-sm">
-									<div class="text-left">
-										<h4 class="card-title mb-0 text-left ml-2">Edit System User</h4>
+					<div class="row">
+
+						<div class="col-xl-12 col-lg-12 col-md-12">
+							<div class="accordion add-employee" id="accordion-details">
+								<div class="card shadow-sm ctm-border-radius">
+									<div class="card-header" id="basic1">
+										<h4 class="cursor-pointer mb-0">
+											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
+												Edit System User
+											</a>
+										</h4>
 									</div>
-								</div>
-								<div class="card-body">
-									@if($message = Session::get('success'))
-										<div class="alert alert-success">
-											<p>{{$message}}</p>
-										</div>
-									@endif
+									<div class="card-body p-0">
+										<div id="basic-one" class="collapse show ctm-padding" aria-labelledby="basic1" data-parent="#accordion-details">
+											@if($message = Session::get('success'))
+												<div class="alert alert-success">
+													<p>{{$message}}</p>
+												</div>
+											@endif
 
-									<form method="POST" action="{{ route('systemUsers.update', [$users[0]->id]) }}">
-										@csrf
-										@method('PUT')
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>User Role <span class="text-danger">*</span></label>
+											<form method="POST" action="{{ route('systemUsers.update', [$users[0]->id]) }}">
+												@csrf
+												@method('PUT')
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>User Role <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role">
+		                                                        @foreach ($roles as $role)
+		                                                            <option value='{{ $role->name }}' {{ $role->name == $users[0]->role_name ? 'selected' : '' }}>{{ $role->name }}</option>
+		                                                        @endforeach
+		                                                    </select>
+		                                                    {!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role">
-                                                        @foreach ($roles as $role)
-                                                            <option value='{{ $role->name }}' {{ $role->name == $users[0]->role_name ? 'selected' : '' }}>{{ $role->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    {!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Employee Name <span class="text-danger">*</span></label>
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>Employee Name <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<input type="text" name="name" id="employee_name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $users[0]->name) }}" autocomplete="off">
+															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															<div id="employees_list" class="autocomplete"></div>
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $users[0]->name) }}">
-													{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Username <span class="text-danger">*</span></label>
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>Username <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email', $users[0]->email) }}">
+															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email', $users[0]->email) }}">
-													{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Status <span class="text-danger">*</span></label>
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>Status <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status">
+															    <option value='1' {{ old('status') == "1" ? 'selected' : '' }}>Enabled</option>
+															    <option value='0' {{ old('status') == "0" ? 'selected' : '' }}>Disabled</option>
+															</select>
+															{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status">
-													    <option value='1' {{ old('status') == "1" ? 'selected' : '' }}>Enabled</option>
-													    <option value='0' {{ old('status') == "0" ? 'selected' : '' }}>Disabled</option>
-													</select>
-													{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Password <span class="text-danger">*</span></label>
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>Password <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<input type="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('password', $users[0]->password) }}">
+															{!! $errors->first('password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('password', $users[0]->password) }}">
-													{!! $errors->first('password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Confirm Password <span class="text-danger">*</span></label>
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>Confirm Password <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<input type="password" name="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('confirm_password', $users[0]->password) }}">
+															{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="password" name="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('confirm_password', $users[0]->password) }}">
-													{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+
+												<div class="row">
+													<div class="col-sm-2">
+														<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
+													</div>
 												</div>
-											</div>
-										</div>
+												<hr>
 
-										<div class="row">
-											<div class="col-sm-2">
-												<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
-											</div>
+												<div class="row">
+													<div class="col-sm-2"></div>
+													<div class="col-sm-4 text-center">
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="submit-section text-center btn-add">
+																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<a href="{{ route('systemUsers.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
 										</div>
-										<hr>
-
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<div class="col-sm-4 text-center">
-												<button type="submit" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-refresh"></i> Update</button>
-												<a href="{{ route('systemUsers.index') }}" class="btn btn-danger text-white ctm-border-radius"><i class="fa fa-arrow-left"></i> Cancel</a>
-											</div>
-										</div>
-									</form>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -141,3 +157,49 @@
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+	// Autocomplete ajax call
+	$('#employee_name').keyup(function(){ 
+		var employee_name = $(this).val();
+		if(employee_name != '')
+		{
+			var _token = $('input[name="_token"]').val();
+			$.ajax({
+				method:"POST",
+				url: '/employeeNameSearch',
+				data:{
+					employee_name:employee_name,
+					_token:_token
+				},
+				success:function(data){
+					$('#employee_name').removeClass('is-invalid');
+					$("#not_exist").remove();
+
+					if(data != ""){					
+						$('#employees_list').fadeIn();
+						$('#employees_list').html(data);
+					}else{
+						var exists = ($("#not_exist").length == 0);
+					    if (exists) {
+					        $('#employee_name').addClass('is-invalid');
+							$('#employees_list').fadeOut();
+							$('<span id="not_exist" class="invalid-feedback" role="alert">Employee does not exist</span>').insertAfter('#employee_name');
+					    }
+					}
+				}
+			});
+		} else{
+			$('#employees_list').html('');	        	
+		}
+	});
+
+	$(document).on('click', '.employees', function(){
+		$('#employee_name').val($(this).text());
+		$('#employees_list').fadeOut();
+		$('#employee_name').removeClass('is-invalid');
+		$("#not_exist").remove();
+	});
+</script>    
+@endpush

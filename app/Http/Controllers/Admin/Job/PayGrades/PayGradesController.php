@@ -21,9 +21,10 @@ class PayGradesController extends Controller
      */
     public function index()
     {
-        $grades = mPayGrade::get();
-        $grade_currency = tPayGradeCurrency::get();
-        return view('admin/job/pay_grades/list', compact('grades', 'grade_currency'));
+        $pay_grades = mPayGrade::get();
+        $pay_grade_currency = tPayGradeCurrency::with('currencyName')->get();
+        $mCurrency = mCurrency::get();
+        return view('admin/job/pay_grades/list', compact('pay_grades', 'pay_grade_currency', 'mCurrency'));
     }
 
     /**
@@ -33,8 +34,8 @@ class PayGradesController extends Controller
      */
     public function create()
     {
-        // $currency = mCurrency::where('')->get();
-        return view('admin/job/pay_grades/add');
+        $currency = mCurrency::get();
+        return view('admin/job/pay_grades/add', compact('currency'));
     }
 
     /**
@@ -77,8 +78,8 @@ class PayGradesController extends Controller
     {
         $grades = mPayGrade::find($id);
         $grade_currency = tPayGradeCurrency::where('pay_grade_id', $id)->get();
-        $currency = mCurrency::get();
-        return view('admin/job/pay_grades/edit', compact('grades', 'grade_currency', 'currency'));
+        $mCurrency = mCurrency::get();
+        return view('admin/job/pay_grades/edit', compact('grades', 'grade_currency', 'mCurrency'));
     }
 
     /**
@@ -131,5 +132,48 @@ class PayGradesController extends Controller
         } else {   
             return false;
         }       
+    }
+
+    public function currencyNameSearch(Request $request)
+    {
+        DB::connection()->enableQueryLog();
+
+        $currency = $request->currency;
+
+        // dd($request->currency);
+
+        if(!empty(trim($currency))){
+            $query1 = mCurrency::where('currency_id', 'like', "%{$currency}%")
+                                ->orwhere('currency_name', 'like', "%{$currency}%")
+                                ->get();
+
+            $query2 = mCurrency::where(DB::raw("CONCAT(currency_id, ' - ' ,currency_name)"), 'LIKE', "%$currency%")
+                                ->get();
+
+            // dd(DB::getQueryLog());
+
+            $currencies = [];
+            if(count($query1) != 0){
+                $currencies = $query1;
+            }
+            elseif(count($query2) != 0){
+                $currencies = $query2;
+            }
+
+            if(count($currencies) != 0){
+                $output = '<ul class="list-group" style="display:block; position:relative;">';
+                foreach($currencies as $row) {                    
+                   $output .= '<li id='.$row->currency_id.' class="list-group-item currencies"><a class="dropdown-item">'.$row->currency_id.' - '.$row->currency_name.'</a></li>';
+                }
+                $output .= '</ul>';
+                echo $output;
+            } else{
+                $output = "";
+                echo $output;
+            }
+        } else{
+            $output = "";
+            echo $output;
+        }
     }
 }

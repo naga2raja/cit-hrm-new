@@ -77,7 +77,7 @@ class PayGradeCurrencyController extends Controller
      */
     public function edit($id)
     {
-        $pay_grade_currency = tPayGradeCurrency::find($id);
+        $pay_grade_currency = tPayGradeCurrency::with('currencyName')->find($id);
         return view('admin/job/pay_grade_currency/edit', compact('grade_currency'));
     }
 

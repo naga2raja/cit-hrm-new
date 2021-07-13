@@ -347,12 +347,15 @@
                                             <a class="dropdown-item" href="{{ route('employees.index') }}">Employee List</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
-                                            <ul class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Add Employee</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Data Import</a>
+                                            <!-- <ul class="dropdown-menu">
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('employees.import') }}">Data Import</a>
                                                 </li>
-                                            </ul>
+                                            </ul> -->
                                         </li>
                                     </ul>
                                 </li>
@@ -360,21 +363,41 @@
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">Employee List</a>
+                                            <a class="dropdown-item" href="#">Apply Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">My Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Entitlements</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="LeavePeriod">Add Entitlements</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="LeaveTypes">My Entitlements</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li>
                                             <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="LeavePeriod">Leave Period</a>
+                                                    <a class="dropdown-item" href="{{ route('leavePeriod.create') }}">Leave Period</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="LeaveTypes">Leave Types</a>
+                                                    <a class="dropdown-item" href="{{ route('leaveTypes.index') }}">Leave Types</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="Holidays">Holidays</a>
                                                 </li>
                                             </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Leave List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Assign Leave</a>
                                         </li>
                                     </ul>
                                 </li>

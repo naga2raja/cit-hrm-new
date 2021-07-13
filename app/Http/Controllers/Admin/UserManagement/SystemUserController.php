@@ -41,7 +41,7 @@ class SystemUserController extends Controller
             $string = str_replace(' ', '', $name);
             $users->Where(DB::raw("CONCAT(employees.first_name, employees.middle_name, employees.last_name)"), 'LIKE', "%$string%");
         }
-        if ($role) {
+        if (($role)&&($role != "all")) {
             $users->Where('roles.name', $role);
         }
         $users = $users->orderBy('users.id', 'asc')
@@ -183,15 +183,30 @@ class SystemUserController extends Controller
 
         $employee_name = $request->employee_name;
 
+        // dd($request->employee_name);
+
         if(!empty(trim($employee_name))){
-            $employees = Employee::where('employees.first_name', 'like', "%{$employee_name}%")
+            $query1 = Employee::where('employees.first_name', 'like', "%{$employee_name}%")
                                     ->orwhere('employees.middle_name', 'like', "%{$employee_name}%")
                                     ->orwhere('employees.last_name', 'like', "%{$employee_name}%")
                                     ->get();
+
+            $string = str_replace(' ', '', $employee_name);
+            $query2 = Employee::where(DB::raw("CONCAT(employees.first_name, employees.middle_name, employees.last_name)"), 'LIKE', "%$string%")
+                                ->get();
+
             // dd(DB::getQueryLog());
 
+            $employees = [];
+            if(count($query1) != 0){
+                $employees = $query1;
+            }
+            elseif(count($query2) != 0){
+                $employees = $query2;
+            }
+
             if(count($employees) != 0){
-                $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
+                $output = '<ul class="list-group" style="display:block; position:relative;">';
                 foreach($employees as $row) {
                     $emp_name = '';
                     if($row->first_name != ''){
@@ -204,7 +219,7 @@ class SystemUserController extends Controller
                         $emp_name = $emp_name.' '.$row->last_name;
                     }
                     
-                   $output .= '<li id='.$row->user_id.' class="employees"><a class="dropdown-item">'.$emp_name.'</a></li>';
+                   $output .= '<li id='.$row->user_id.' class="list-group-item employees"><a class="dropdown-item">'.$emp_name.'</a></li>';
                 }
                 $output .= '</ul>';
                 echo $output;
