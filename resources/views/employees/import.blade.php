@@ -35,6 +35,12 @@
 										<h4 class="card-title mb-0 d-inline-block">Import Employees Data</h4>
 									</div>
 									<div class="card-body">
+
+										@if($message = Session::get('success'))
+										<div class="alert alert-success">
+											<p>{{$message}}</p>
+										</div>
+										@endif
 										
 											<form method="POST" enctype="multipart/form-data" action="{{ route('employees-import') }}">
 												@csrf
@@ -52,8 +58,73 @@
 															<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Upload</button>
 														</div>
 													</div>
+
+													<div class="col-md-12">
+														<ul class="list-group">
+															<li  class="list-group-item">
+																Column order should not be changed                    </li>
+															<li  class="list-group-item">
+																First Name, Last Name, Employee Id and Email are compulsory                    </li>
+															<li  class="list-group-item">
+																All date fields should be in YYYY-MM-DD format                    </li>
+															<li  class="list-group-item">
+																If gender is specified, value should be either <b>Male</b> or <b>Female</b> </li>	
+															<li  class="list-group-item">Sample CSV file:                         
+																<a title="Download" target="_blank" class="download" href="{{ assetUrl('sample/employee-import.csv') }}">Download</a>
+															</li>
+														 </ul>
+													</div>
 												</div>
 											</form>
+
+											@if($results = Session::get('results'))
+											<div class="card shadow-sm ctm-border-radius">
+												<div class="card-body align-center">
+													<div class="employee-office-table">
+														<div class="table-responsive">
+															<h4>Results</h4>
+															<table class="table custom-table table-hover">
+																<thead>
+																	<tr>
+																		<th>Name</th>
+																		<th>Email</th>
+																		<th>Status</th>
+																	</tr>
+																</thead>
+																<tbody>
+																@if(@$results['success'])	
+																	@foreach (@$results['success'] as $item)		
+																			<tr>
+																				<td>	
+																					<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>																				
+																					<h2><a href="#">{{ $item->name }} </a></h2>
+																				</td>
+																				<td> {{ $item->email }}</td>
+																				<td> <span class="btn btn-outline-success text-dark btn-sm">Success</span></td>
+																			</tr>
+																	@endforeach
+																@endif
+
+																@if(@$results['failed'])	
+																	@foreach (@$results['failed'] as $item)		
+																			<tr>
+																				<td>
+																					<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>
+																					<h2><a href="employment">{{ $item['name'] }} </a></h2>
+																				</td>
+																				<td> {{ $item['email'] }}</td>
+																				<td> <span class="btn btn-outline-danger text-dark btn-sm">Failed</span></td>
+																			</tr>
+																	@endforeach
+																@endif
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+											@endif
+
 										
 									</div>
 								</div>

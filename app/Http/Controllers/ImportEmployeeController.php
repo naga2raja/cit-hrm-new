@@ -20,9 +20,17 @@ class ImportEmployeeController extends Controller
             'upload_file' => 'max:10240|required|mimes:csv,txt',
         ]);
         try {
-            $data = Excel::toArray(new EmployeesImport,request()->file('upload_file'));
-            // dd(response()->json($data));
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+
+            $import = new EmployeesImport;
+            $data = Excel::import($import, request()->file('upload_file'));
+            $count = $import->getRowCount();
+            $results = $import->getResultsArray();
+                        
+            return redirect()->back()
+                            ->with('success', '('.$count.') Employees imported successfully')
+                            ->with('results', $results);            
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) 
+        {
             $failures = $e->failures();
             
             foreach ($failures as $failure) {
@@ -31,8 +39,7 @@ class ImportEmployeeController extends Controller
                 $failure->errors(); // Actual error messages from Laravel validator
                 $failure->values(); // The values of the row that has failed.
             }
+            return redirect()->back()->with('error', 'Something went wrong!');        
         }
-        
-        return view('employees/import');
     }
 }
