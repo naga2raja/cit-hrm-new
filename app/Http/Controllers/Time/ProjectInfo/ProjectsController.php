@@ -126,11 +126,13 @@ class ProjectsController extends Controller
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
                 ->leftjoin('employees', 'employees.user_id', 't_project_admins.admin_id')
+                ->leftjoin('t_activities', 't_activities.project_id', 'm_projects.id')
+                ->where('m_projects.id', $id)
                 ->groupby('m_projects.id')
                        ->get();
         // dd(DB::getQueryLog());
 
-        $activities = tActivity::get();
+        $activities = tActivity::where('project_id', $id)->get();
 
 
         return view('time/project_info/projects/edit', compact('projects', 'activities'));
@@ -145,32 +147,28 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'company_name' => 'required|string|max:255',
-            'country' => 'required',
-            'state_province' => 'nullable|string|max:64',
-            'city' => 'nullable|string|max:64',
-            'address' => 'nullable|string|max:255',
-            'zip_code' => 'nullable|numeric|digits_between:3,8',
-            'phone_number' => 'nullable|string|max:20',
-            'fax' => 'nullable|string|max:30',
-            'notes' => 'nullable|string|max:255',
+
+    }
+
+    public function update_project(Request $request)
+    {   
+        $project = mProject::where('id', $request->project_id)->update([
+            'project_name' => $request->project_name,
+            'project_description' => (empty($request->project_description) ? '' :  $request->project_description),
+            'customer_id' => $request->customer
         ]);
 
-        $location = mCompanyLocation::where('id', $id)->update([
-            'company_name' => $request->company_name,
-            'country_id' => $request->country,
-            'state_province' => $request->state_province,
-            'city' => $request->city,
-            'address' => $request->address,
-            'zip_code' => $request->zip_code,
-            'phone_number' => $request->phone_number,
-            'fax' => $request->fax,
-            'notes' => $request->notes,
-        ]);
+        $delete_admin = tProjectAdmin::where('project_id', $request->project_id)->delete();
 
-        return redirect()->back()->with('success', 'Location updated successfully'); 
 
+        if($request->admin_id != null){
+            $project_admin = tProjectAdmin::create([
+                'project_id' => $request->project_id,
+                'admin_id' => $request->admin_id
+            ]);
+        }
+
+        return response()->json(['project', $project]);
     }
 
     /**
@@ -181,17 +179,31 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-        $ids = explode(',', $id);
-        $locations = mCompanyLocation::destroy($ids);
 
-        $checked = Request::input('checked',[]);
-       foreach ($checked as $id) {
-            mCompanyLocation::where("id",$id)->delete(); //Assuming you have a Todo model. 
-       }
-       //Or as @Alex suggested 
-       Todo::whereIn($checked)->delete();
-        
-        return redirect()->route('projects.index');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            mProject::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($project) {
+                    $project->delete();
+                });
+            tProjectAdmin::whereIn('project_id', $request->delete_ids)
+                ->get()
+                ->map(function($project_admin) {
+                    $project_admin->delete();
+                });
+            tActivity::whereIn('project_id', $request->delete_ids)
+                ->get()
+                ->map(function($project_activity) {
+                    $project_activity->delete();
+                });
+            return true;
+        } else {  
+            return false;
+        }  
     }
 
     public function customers_search(Request $request)

@@ -290,7 +290,7 @@
                                             <a class="dropdown-item dropdown-toggle" href="#">Organization</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">General Information</a>
+                                                    <a class="dropdown-item" href="{{ route('company.index') }}">General Information</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('locations.index') }}">Locations</a>

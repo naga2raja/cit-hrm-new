@@ -28,7 +28,6 @@ class ActivitiesController extends Controller
      */
     public function create()
     {
-        return view('time/project_info/customers/add');
     }
 
     /**
@@ -39,7 +38,11 @@ class ActivitiesController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $activity = tActivity::create([
+            'project_id' => $request->project_id,
+            'activity_name' => (empty($request->activity_name) ? '' :  $request->activity_name),
+        ]);
+        return response()->json(['url'=> route('projects.edit', $request->project_id)]);               
     }
 
     /**
@@ -72,7 +75,7 @@ class ActivitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-         
+
     }
 
     /**
@@ -86,8 +89,27 @@ class ActivitiesController extends Controller
 
     }
 
+    public function update_activity(Request $request)
+    {
+        $activity = tActivity::where('id', $request->activity_id)->update([
+            'project_id' => $request->project_id,
+            'activity_name' => (empty($request->activity_name) ? '' :  $request->activity_name)
+        ]);
+
+        return response()->json(['url'=> route('projects.edit', $request->project_id)]);
+    }
+
     public function deleteMultiple(Request $request)
     {
-        
+        if($request->delete_ids) {
+            tActivity::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($activity) {
+                    $activity->delete();
+                });
+            return true;
+        } else {  
+            return false;
+        }  
     }
 }
