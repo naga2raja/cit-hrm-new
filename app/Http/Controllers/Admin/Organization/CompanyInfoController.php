@@ -21,7 +21,7 @@ class CompanyInfoController extends Controller
     public function index()
     {
         $company = mCompany::select('m_companies.*', 'm_countries.country as country')
-                            ->join('m_countries', 'm_countries.id', 'm_companies.country_id')
+                            ->leftjoin('m_countries', 'm_countries.id', 'm_companies.country_id')
                             ->get();
         $branches = mCompanyLocation::select('*')->count(); 
         $employees = Employee::whereNull('deleted_at')->count();
@@ -46,15 +46,15 @@ class CompanyInfoController extends Controller
     public function update_company_info(Request $request)
     {
         $validated = $request->validate([
-            'company_name' => 'string|max:255',
-            'registration_number' => 'string|max:20',
-            'tax_id' => 'string|max:9',
-            'incorporation_date' => 'date_format:d-m-Y|before_or_equal:'.now()->format('d-m-Y'),
-            'address_street_1' => 'string|max:255',
-            'address_street_2' => 'string|max:255',
-            'city' => 'string|max:64',
-            'state_province' => 'string|max:64',
-            'zip_code' => 'string|max:10',
+            'company_name' => 'nullable|string|max:255',
+            'registration_number' => 'nullable|string|max:20',
+            'tax_id' => 'nullable|string|max:9',
+            // 'incorporation_date' => 'nullable|date|before:tomorrow',
+            'address_street_1' => 'nullable|string|max:255',
+            'address_street_2' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:64',
+            'state_province' => 'nullable|string|max:64',
+            'zip_code' => 'nullable|string|max:7',
         ]);
 
         $company = mCompany::where('id', $request->modal_company_id)
@@ -153,16 +153,6 @@ class CompanyInfoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-
-    }
-
-    public function update_activity(Request $request)
-    {
-
-    }
-
-    public function deleteMultiple(Request $request)
     {
 
     }
