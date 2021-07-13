@@ -347,15 +347,10 @@
                                             <a class="dropdown-item" href="{{ route('employees.index') }}">Employee List</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Add Employee</a>
+                                            <a class="dropdown-item" href="{{ route('employees.create') }}">Add Employee</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Data Import</a>
-                                            <!-- <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('employees.import') }}">Data Import</a>
-                                                </li>
-                                            </ul> -->
+                                            <a class="dropdown-item" href="{{ route('employees.import') }}">Data Import</a>                                            
                                         </li>
                                     </ul>
                                 </li>

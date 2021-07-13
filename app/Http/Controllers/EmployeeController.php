@@ -156,7 +156,7 @@ class EmployeeController extends Controller
             'employee_id' => 'required',
             'email' => 'required|unique:users,email,'.$id,
             'status' => 'required',
-            'alternate_email' => 'email'
+            'alternate_email' => 'email|nullable'
         ]);
 
         $user = User::where('id', $id)->first();

@@ -300,7 +300,7 @@
 
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Specification</p>
-										<div id="job_specification" style="font-weight: bold;"> {{ $jobDetails->job_description }}</div>
+										<div id="job_specification" style="font-weight: bold;"> {{ @$jobDetails->job_description }}</div>
 									</div>
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Category</p>
