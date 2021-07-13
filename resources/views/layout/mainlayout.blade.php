@@ -54,6 +54,7 @@
 	<!-- Common multiple delete end-->
 
   @stack('scripts')
+  @stack('custom-scripts')
 
   </body>
 </html>

@@ -156,7 +156,8 @@ class EmployeeController extends Controller
             'employee_id' => 'required',
             'email' => 'required|unique:users,email,'.$id,
             'status' => 'required',
-            'alternate_email' => 'email|nullable'
+            'alternate_email' => 'email|nullable',
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable'
         ]);
 
         $user = User::where('id', $id)->first();
@@ -164,7 +165,7 @@ class EmployeeController extends Controller
         $user->email = $request->email;
         $user->save();
 
-        $employee = Employee::where('user_id', $id)->update([
+        $employeeArr = [
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -172,7 +173,7 @@ class EmployeeController extends Controller
             'status' => $request->status,
             'date_of_birth' => date('Y-m-d', strtotime($request->date_of_birth)),
             'marital_status' => $request->marital_status,
-            'gender' => $request->gender,
+            'gender' => $request->gender,            
             'updated_by' => Auth::User()->id,
 
             //job details
@@ -180,7 +181,16 @@ class EmployeeController extends Controller
             'job_category_id' => $request->job_category_id,
             'joined_date' => $request->joined_date, //date('Y-m-d', strtotime($request->joined_date)),
             'company_location_id' => $request->company_location_id
-        ]);    
+        ];
+        if ($request->file('profile_photo')) {
+            $imagePath = $request->file('profile_photo');
+            $imageName = $imagePath->getClientOriginalName();
+
+            $path = $request->file('profile_photo')->storeAs('uploads', $imageName, 'public');
+            $employeeArr['profile_photo'] = '/storage/'.$path;
+        }
+
+        $employee = Employee::where('user_id', $id)->update($employeeArr);        
 
         //update contact details
         $contactDetails = ContactDetails::where('user_id', $id)->first();

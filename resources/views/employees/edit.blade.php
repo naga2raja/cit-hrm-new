@@ -48,7 +48,7 @@
 				</div>
 				@endif	
 
-			<form method="POST" action="{{ route('employees.update', $id) }}">
+			<form method="POST" action="{{ route('employees.update', $id) }}" enctype="multipart/form-data">
 				@csrf
 				{{ method_field('PUT') }}
 
@@ -146,6 +146,37 @@
 												<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date" name="date_of_birth" value="{{ old('date_of_birth', $employee->date_of_birth) }}" id="datetimepicker1">
 											</div>
 										</div>
+
+										<div class="col-md-6">
+											
+												<p class="mb-2">Profile image</p>
+												@if($employee->profile_photo)
+												<div id="preview_profile_image" style="max-width:200px;position: relative;">
+													<img src="{{$employee->profile_photo}}" style="max-width:100%">
+													<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editImage()"></a>
+												</div>	
+												@endif
+												<div class="form-group" style="{{ ($employee->profile_photo) ? 'display:none' : '' }}" id="upload_profile_image">
+													<input type='file' name="profile_photo" class="{{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" />
+													<label class="mb-2">Accepts jpg, .png, .gif up to 1MB.</label>
+
+													{!! $errors->first('profile_photo', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+												</div>
+
+												<!-- <div class="avatar-upload">
+													<div class="avatar-edit">
+														<input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+														<label for="imageUpload"></label>
+													</div>
+													<div class="avatar-preview">
+														<div id="imagePreview">
+														</div>
+													</div>
+												</div>
+											-->
+											
+										</div>
+
 										
 										<!--
 										<div class="col-md-12">
@@ -562,13 +593,8 @@
 		
 @endsection
 
-@push('scripts')
+@push('custom-scripts')
 <script type="text/javascript"> 
-    $(document).ready(function() { 
-		
-
-	}); 
-
 	$(document.body).on("change","#job_id",function(){		
 		var jobId = this.value;
 		console.log(jobId);
@@ -592,13 +618,13 @@
 	});
 	
 	$('#datetimepicker1').datetimepicker({
-		date: '{{ ($employee->date_of_birth) }}',
+		date: '{{ (@$employee->date_of_birth) }}',
 		format: "YYYY-MM-DD", 
 		maxDate: moment()
 	});
 
 	$('.datetimepicker2').datetimepicker({
-		date: '{{ ($employee->joined_date) }}',
+		date: '{{ (@$employee->joined_date) }}',
 		format: "YYYY-MM-DD", 
 		maxDate: moment()
 	});
@@ -606,5 +632,10 @@
 	$("#user_profile_list a.list-group-item").click(function() {
     	$(this).addClass('active').siblings().removeClass('active');
     });
+
+	function editImage() {
+		$('#preview_profile_image').hide();
+		$('#upload_profile_image').show();
+	}
 </script>
 @endpush
