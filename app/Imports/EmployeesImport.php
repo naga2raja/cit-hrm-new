@@ -38,32 +38,25 @@ class EmployeesImport implements ToModel, WithStartRow
         $country = $row[13];
         $home_telephone = $row[14];
         $mobile = $row[15];
-        $isExists = User::where('email', $email)->first();
-        $isExistsEmployee = Employee::where('employee_id', $employee_id)->first();
+        //$isExists = User::where('email', $email)->first();
+        $isExistsEmployee = Employee::where('employee_id', $employee_id)->orWhere('email', $email)->first();
 
-       if($first_name && $last_name && $email && !$isExists && !$isExistsEmployee) {            
-            // return new User([
-            //     'name' => $first_name . ' '.$middle_name.' '.$last_name,
-            //     'email' => $email,
-            //     'password' => 'hello'
-            // ]);
-            // Log::info('here');
-            $user = new User;
-            $user->name = $first_name . ' '.$middle_name.' '.$last_name;
-            $user->email = $email;
-            $user->password = bcrypt(time());
-            $user->save();
-            Log::info($user);  
-            $this->results['success'][] = $user;
-            ++$this->rows;
+       if($first_name && $last_name && $email && !$isExistsEmployee) {            
+            // $user = new User;
+            // $user->name = $first_name . ' '.$middle_name.' '.$last_name;
+            // $user->email = $email;
+            // $user->password = bcrypt(time());
+            // $user->save();
+            // Log::info($user); 
 
-            $user->assignRole('Employee');
+            // $user->assignRole('Employee');
 
             $employee = new Employee;
-            $employee->user_id = $user->id;
+            $employee->user_id = NULL;
             $employee->first_name = $first_name;
             $employee->middle_name = $middle_name;
             $employee->last_name = $last_name;
+            $employee->email = $email;
             $employee->employee_id = $employee_id;
             $employee->status = 'Active';
             $employee->created_by = Auth::User()->id;
@@ -71,7 +64,7 @@ class EmployeesImport implements ToModel, WithStartRow
             $employee->save();
 
             $contact = new ContactDetails;
-            $contact->user_id = $user->id;
+            $contact->user_id = $employee->id;
             $contact->street_address_1 = $street_address_1;
             $contact->street_address_2 = $street_address_2;
             $contact->city = $city;
@@ -82,7 +75,11 @@ class EmployeesImport implements ToModel, WithStartRow
             $contact->mobile = $mobile;
             $contact->save();
 
-            return $user;
+            $this->results['success'][] = ['name' => $first_name . ' '.$middle_name.' '.$last_name, 'email' => $email];
+            ++$this->rows;
+            Log::info("==== Inserted Success====");
+            Log::info($employee);
+            return $employee;
        } else {
             Log::info("==== Not Inserted ====");
             Log::info($email);

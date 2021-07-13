@@ -97,9 +97,9 @@
 																			<tr>
 																				<td>	
 																					<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>																				
-																					<h2><a href="#">{{ $item->name }} </a></h2>
+																					<h2><a href="#">{{ $item['name'] }} </a></h2>
 																				</td>
-																				<td> {{ $item->email }}</td>
+																				<td> {{ $item['email'] }}</td>
 																				<td> <span class="btn btn-outline-success text-dark btn-sm">Success</span></td>
 																			</tr>
 																	@endforeach

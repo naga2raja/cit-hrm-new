@@ -102,10 +102,10 @@
 													@foreach($employees as $employee)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="chk_user" value="{{ $employee->user_id }}">
+															<input type="checkbox" name="chk_user" value="{{ $employee->id }}">
 														</td>
 														<td>
-															<u><a href="{{ route('employees.edit', $employee->user_id) }}"> {{ $employee->employee_id }}  </a></u>
+															<u><a href="{{ route('employees.edit', $employee->id) }}"> {{ $employee->employee_id }}  </a></u>
 														</td>
 														<td>
 															{{ $employee->first_name }} 
@@ -128,14 +128,14 @@
 														</td> 
 														<td>
 															<div style="text-align: center;">
-															<!-- <a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->user_id) }}"><i class="fa fa-pencil"></i></a> -->
+															<!-- <a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->id) }}"><i class="fa fa-pencil"></i></a> -->
 
-															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->user_id)}}" method="post">
+															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->id)}}" method="post">
 																@method('DELETE')
 																@csrf
 																<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
 															 </form>
-															<!-- <a class="btn-sm btn-success" href="{{ route('employees.show', $employee->user_id) }}"><i class="fa fa-eye"></i></a> -->
+															<!-- <a class="btn-sm btn-success" href="{{ route('employees.show', $employee->id) }}"><i class="fa fa-eye"></i></a> -->
 															</div>
 														</td>
 													</tr>														
