@@ -24,25 +24,14 @@
 												</div>
 											@endif
 
+											@if($message = Session::get('error'))
+												<div class="alert alert-danger">
+													<p>{{$message}}</p>
+												</div>
+											@endif
+
 											<form method="POST" action="{{ route('systemUsers.store') }}">
 												@csrf
-												<div class="row">
-													<div class="col-sm-2">
-														<div class="form-group">
-															<label>User Role <span class="text-danger">*</span></label>
-														</div>
-													</div>
-													<div class="col-sm-4">
-														<div class="form-group">
-															<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role">
-		                                                        @foreach ($roles as $role)
-		                                                            <option value='{{ $role->name }}' {{ old('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
-		                                                        @endforeach
-		                                                    </select>
-		                                                    {!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-														</div>
-													</div>
-												</div>
 
 												<div class="row">
 													<div class="col-sm-2">
@@ -50,7 +39,7 @@
 															<label>Employee Name <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
 															<input type="text" name="name" id="employee_name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="Type for hints.." value="{{ old('name') }}" autocomplete="off">
 															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -62,30 +51,48 @@
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
-															<label>Username <span class="text-danger">*</span></label>
+															<label>User Role <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email') }}">
-															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role">
+		                                                        @foreach ($roles as $role)
+		                                                            <option value='{{ $role->name }}' {{ old('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
+		                                                        @endforeach
+		                                                    </select>
+		                                                    {!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
 
-												<div class="row">
+												<!-- <div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
 															<label>Status <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
 															<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status">
 															    <option value='Active' {{ old('status') == "Active" ? 'selected' : '' }}>Active</option>
-													    		<option value='In-active' {{ old('status') == "In-active" ? 'selected' : '' }}>In-active</option>
+													    		<option value='In active' {{ old('status') == "In active" ? 'selected' : '' }}>In-active</option>
 															</select>
 															{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
+												</div> -->
+
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>Username <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="form-group">
+															<input type="text" name="email" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email') }}" readonly="">
+															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
@@ -96,24 +103,16 @@
 															<label>Password <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('password') }}">
+															<input type="password" name="password" id="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('password') }}" readonly="">
 															{!! $errors->first('password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-sm-2">
-														<div class="form-group">
-															<label>Confirm Password <span class="text-danger">*</span></label>
-														</div>
-													</div>
 													<div class="col-sm-4">
-														<div class="form-group">
-															<input type="password" name="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('confirm_password') }}">
-															{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														<div class=" custom-control custom-checkbox mb-0 mt-2">
+															<input type="checkbox" onclick="showPassword('password')" id="show_password" class="custom-control-input" >
+															<label class="mb-0 custom-control-label" for="show_password">Show Password</label>
 														</div>
 													</div>
 												</div>
@@ -127,7 +126,7 @@
 
 												<div class="row">
 													<div class="col-sm-2"></div>
-													<div class="col-sm-4 text-center">
+													<div class="col-sm-3 text-center">
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="submit-section text-center btn-add">
@@ -180,6 +179,8 @@
 						$('#employees_list').fadeIn();
 						$('#employees_list').html(data);
 					}else{
+						$('#email').val('');
+						$('#password').val('');
 						var exists = ($("#not_exist").length == 0);
 					    if (exists) {
 					        $('#employee_name').addClass('is-invalid');
@@ -190,15 +191,56 @@
 				}
 			});
 		} else{
-			$('#employees_list').html('');	        	
+			$('#employees_list').html('');
+			$('#email').val('');
+			$('#password').val('');	        	
 		}
 	});
 
 	$(document).on('click', '.employees', function(){
 		$('#employee_name').val($(this).text());
+		$('#email').val($(this).attr('emp_email'));
+		var password = generatePassword();
+		$('#password').val(password);	
 		$('#employees_list').fadeOut();
 		$('#employee_name').removeClass('is-invalid');
 		$("#not_exist").remove();
 	});
+
+	// show password
+	function showPassword() {
+        var temp = document.getElementById("password");
+        if (temp.type === "password") {
+            temp.type = "text";
+        }
+        else {
+            temp.type = "password";
+        }
+    }
+
+	function generatePassword() {
+		var passwordLength = 12;
+		var numberChars = "0123456789";
+		var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		var lowerChars = "abcdefghijklmnopqrstuvwxyz";
+		var allChars = numberChars + upperChars + lowerChars;
+		var randPasswordArray = Array(passwordLength);
+		randPasswordArray[0] = numberChars;
+		randPasswordArray[1] = upperChars;
+		randPasswordArray[2] = lowerChars;
+		randPasswordArray = randPasswordArray.fill(allChars, 3);
+		return shuffleArray(randPasswordArray.map(function(x) { return x[Math.floor(Math.random() * x.length)] })).join('');
+	}
+
+	function shuffleArray(array) {
+		for (var i = array.length - 1; i > 0; i--) {
+			var j = Math.floor(Math.random() * (i + 1));
+			var temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
+	}
+
 </script>    
 @endpush

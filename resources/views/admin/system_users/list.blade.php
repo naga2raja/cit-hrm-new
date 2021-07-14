@@ -41,8 +41,8 @@
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<select class="form-control select" name="status">
 														<option value="">Status</option>
-													    <option value='Active' {{ old('status') == "Active" ? 'selected' : '' }}>Active</option>
-													    <option value='In-active' {{ old('status') == "In-active" ? 'selected' : '' }}>In-active</option>
+													    <option value='Active' {{ Request::get('status') == "Active" ? 'selected' : '' }}>Active</option>
+													    <option value='In active' {{ Request::get('status') == "In active" ? 'selected' : '' }}>In-active</option>
 													</select>
 												</div>
 											</div>

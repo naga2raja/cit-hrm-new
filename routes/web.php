@@ -188,6 +188,10 @@ Route::group(['middleware' => ['role:Admin']], function () {
     // holidays
     Route::resource('/holidays', 'Leave\Holidays\HolidaysController');
     Route::post('/holidays/multiple-delete', 'Leave\Holidays\HolidaysController@deleteMultiple');
+
+    Route::resource('/entitlements', 'Leave\Entitlements\LeaveEntitlementController');
+    // Route::resource('/myEntitlements', 'Leave\Entitlements\LeaveEntitlementController');
+    
     
     // employee
     Route::resource('/employees', 'EmployeeController');
