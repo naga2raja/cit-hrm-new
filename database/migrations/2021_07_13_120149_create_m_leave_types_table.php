@@ -15,10 +15,12 @@ class CreateMLeaveTypesTable extends Migration
     {
         Schema::create('m_leave_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');            
+            $table->tinyInteger('exclude_if_no_entitlement')->default(0)->comment('0 - No, 1 - Yes');
             $table->bigInteger('operational_country_id')->unsigned();
-            $table->string('name');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->softDeletes();
         });
     }
 

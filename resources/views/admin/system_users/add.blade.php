@@ -82,8 +82,8 @@
 													<div class="col-sm-4">
 														<div class="form-group">
 															<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status">
-															    <option value='1' {{ old('status') == "1" ? 'selected' : '' }}>Enabled</option>
-															    <option value='0' {{ old('status') == "0" ? 'selected' : '' }}>Disabled</option>
+															    <option value='Active' {{ old('status') == "Active" ? 'selected' : '' }}>Active</option>
+													    		<option value='In-active' {{ old('status') == "In-active" ? 'selected' : '' }}>In-active</option>
 															</select>
 															{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>

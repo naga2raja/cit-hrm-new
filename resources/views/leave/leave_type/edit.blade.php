@@ -12,7 +12,7 @@
 									<div class="card-header" id="basic1">
 										<h4 class="cursor-pointer mb-0">
 											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
-												Add Leave Type
+												Edit Leave Type
 											</a>
 										</h4>
 									</div>
@@ -30,8 +30,9 @@
 												</div>
 											@endif
 
-											<form method="POST" action="{{ route('leaveTypes.store') }}">
+											<form method="POST" action="{{ route('leaveTypes.update', [$leave_type->id]) }}">
 												@csrf
+												@method('PUT')
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
@@ -40,7 +41,7 @@
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
-															<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name') }}" autocomplete="off">
+															<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $leave_type->name) }}" autocomplete="off">
 															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -54,7 +55,7 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="checkbox" name="entitlement">
+															<input type="checkbox" name="entitlement" {{ $leave_type->exclude_if_no_entitlement == '1' ? 'checked' : '' }}>
 														</div>
 													</div>
 												</div>
@@ -72,7 +73,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="submit-section text-center btn-add">
-																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
 																</div>
 															</div>
 															<div class="col-sm-6">

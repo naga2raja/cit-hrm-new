@@ -180,24 +180,24 @@
 	     return months[selectedMonth - 1];
 	}
 
-	function setContent(end_date, leave_period) {
-	    var month = dayOfMonth(start_month);
-			
-		if(start_date != 'null'){
-			var date = start_date;				
-		}else{
-			var date = '1';
-		}
+	function setLeavePeriod() {			
+		// get the day from month(number)
+		var month = dayOfMonth($('#start_month').val());
+		var date = $('#start_date').val();
+
 		$('#end_date').html(""+month+" "+date+" (Following Year)");
-		$('#leave_period').html("");
+		// $('#leave_period').html("");
 	}
 
-	function setMonthDate(start_month, start_date) {
+	function setMonthDate() {		
+		// get the day from month(number)
+		var start_month = $('#start_month').val();
+
 		if (start_month.length > 0) {
 			$('#start_date').prop('disabled', false);
 			$('#start_date').find('option').remove();
 
-			var daysInSelectedMonth = daysInMonth($('#start_month').val());
+			var daysInSelectedMonth = daysInMonth(start_month);
 			for (var i = 1; i <= daysInSelectedMonth; i++) {
 				var selected = "";
 				if(i == start_date){
@@ -208,15 +208,8 @@
 	  
 	            $('#start_date').append('<option value="'+i+'" '+selected+'>'+i+'</option>');
 			}
-			var month = dayOfMonth(start_month);
-			
-			if(start_date != 'null'){
-				var date = start_date;				
-			}else{
-				var date = '1';
-			}
-			$('#end_date').html(""+month+" "+date+" (Following Year)");
-			$('#leave_period').html("");
+
+			setLeavePeriod();
 		} else {
 			$('#start_date').prop('disabled', true);
 			$('#start_date').find('option').remove();
@@ -224,23 +217,17 @@
 	}
 
 	window.onload = function() {
-	    var start_month = $('#start_month').val();
-		var start_date = '@if(count($leave_period) > 0) {{ $leave_period[0]->start_date }} @endif';
-		setMonthDate(start_month, start_date);
+		$('#start_date').val('@if(count($leave_period) > 0) {{ $leave_period[0]->start_date }} @endif');
+		setMonthDate();
 	}
 
 	$('#start_month').change(function() {
-		var start_month = $('#start_month').val();
-		var start_date = $('#start_date').val();
-		setMonthDate(start_month, start_date);
+		setMonthDate();
 	});
 
 	$('#start_date').change(function() {		
-		var month = dayOfMonth($('#start_month').val());
-		$('#end_date').html(""+month+" "+$('#start_date').val()+" (Following Year)");
-		$('#leave_period').html("");
+		setLeavePeriod();
 	});
 	
 </script>  
 @endpush
-

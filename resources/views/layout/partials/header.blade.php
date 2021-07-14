@@ -246,12 +246,12 @@
                     <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
                         <div class="append mr-auto my-0 my-md-0 mr-auto">
                             <ul class="navbar-nav list-group list-group-horizontal-md mr-auto">
-                                <li class="mr-1 {{ Request::is('','index','employees-dashboard') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('','index','adminDashboard') ? 'active' : '' }}">
                                     @hasrole('Admin')
-                                        <a class="nav-link" href="adminDashboard">                                            
+                                        <a class="nav-link" href="{{ route('adminDashboard') }}">                                            
                                     @endrole
                                     @hasrole('Employee')
-                                        <a class="nav-link" href="empDashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                        <a class="nav-link" href="{{ route('empDashboard') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                     @endrole
                                             <span class="lnr lnr-home pr-0 pr-lg-2"></span>
                                             <span class="d-none d-lg-inline">Dashboard</span>
@@ -354,7 +354,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="mr-1 {{ Request::is('calendar') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -375,16 +375,16 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : '' }}" href="#">Configuration</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('leavePeriod.create') }}">Leave Period</a>
+                                                    <a class="dropdown-item {{ Request::is('leavePeriod*') ? 'active' : '' }}" href="{{ route('leavePeriod.create') }}">Leave Period</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('leaveTypes.index') }}">Leave Types</a>
+                                                    <a class="dropdown-item {{ Request::is('leaveTypes*') ? 'active' : '' }}" href="{{ route('leaveTypes.index') }}">Leave Types</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="Holidays">Holidays</a>
+                                                    <a class="dropdown-item {{ Request::is('holidays*') ? 'active' : '' }}" href="{{ route('holidays.index') }}">Holidays</a>
                                                 </li>
                                             </ul>
                                         </li>
