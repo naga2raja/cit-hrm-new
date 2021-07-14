@@ -373,14 +373,20 @@
 						<div class="card-body p-0">
 							<div id="emp_report_to" class="collapse show ctm-padding" aria-labelledby="reportTo" data-parent="#accordion-details">
 								<div class="row">
+									<div class="col-md-12 pull-right">
+										<a class="btn btn-theme button-1 text-white p-2" data-toggle="modal" data-target="#assign_manager" style="float: right;">Add</a>
+									</div>
+									
+									<input type="hidden" id="assigned_managers" name="assigned_managers" value="{{ $assigned_managers }}">
 									<div class="col-md-12 form-group">
-										<p class="mb-2">Select Manager</p>
-										<select class="form-control select" name="job_id" id="job_id">
-											<option value="">Select </option>
-											@foreach ($jobTitles as $job)
-												<option value="{{ $job->id }}" {{old ('job_id', @$employee->job_id) == $job->id ? 'selected' : ''}}> {{ $job->job_title }}</option>
-											@endforeach
-										</select>
+										<!--  <p class="mb-2">Select Manager</p> -->
+										<div id="selected_managers">
+											@if($reportTo)
+												@foreach ($reportTo as $manager)
+													{{ $manager->name }} <i class="fa fa-close" onclick="removeAssignedEmployee({{ $manager->id }})"></i> <hr>
+												@endforeach
+											@endif
+										</div>
 									</div>
 								</div>
 							</div>
@@ -605,6 +611,8 @@
 										</div>
 
 									</form>
+
+									<div id="existing_manager_ids">{{ json_encode($reportTo) }}</div>
 								</div>
 							</div>
 						</div>
@@ -616,10 +624,48 @@
 		</div>
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
-		
+
+		<div class="modal fade" id="assign_manager">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title mb-1">Assign Manager</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label>Name <span class="text-danger">*</span></label>
+									</div>
+								</div>
+								<div class="col-sm-8">
+									<div class="form-group">										
+										<select class="itemName form-control" name="itemName" id="itemName" style="width: 100%"></select>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="assignEmployee()" data-dismiss="modal">Save</button>
+					        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Cancel</button>						
+					    </div>	
+				</div>
+			</div>
+		</div>		
 @endsection
 
-@push('scripts')
+@section('my-scripts')
 <script type="text/javascript"> 
 	$(document.body).on("change","#job_id",function(){		
 		var jobId = this.value;
@@ -663,5 +709,91 @@
 		$('#preview_profile_image').hide();
 		$('#upload_profile_image').show();
 	}
+
+	var assigned_managers = [];
+	var existing_manager_ids = $('#existing_manager_ids').html();
+	if(existing_manager_ids) {
+		assigned_managers = JSON.parse(existing_manager_ids);
+		console.log(JSON.parse(existing_manager_ids));
+	}
+	
+	
+
+
+
+
+var list_managers = [];
+var assigned_managers_final = [];
+// Autocomplete ajax call
+function assignEmployee () {
+	var managerId = $('#itemName').val();
+	var name = $('#select2-itemName-container').html();
+	assigned_managers.push({'id':managerId, 'name': name});
+	console.log(managerId, name, assigned_managers);
+	
+	var result = uniqueArray(assigned_managers);
+	console.log(result);
+	var selected_managers_html = '';
+	var empIds = [];
+	result.forEach(element => {
+		console.log(element.name);
+		empIds.push(element.id);
+		selected_managers_html += element.name + '<i class="fa fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
+	});
+	$('#selected_managers').html(selected_managers_html);
+	$('#assigned_managers').val(empIds);
+	assigned_managers_final = empIds;
+}
+		
+
+	$('.itemName').select2({
+		placeholder: 'Select a employee',
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+			return {
+				results:  $.map(data, function (item) {
+					return {
+						text: item.name,
+						id: item.id
+					}
+				})
+			};
+			},
+			cache: true
+		}
+		});
+		
+		function uniqueArray(arr) {
+			return arr.reduce(function(memo, e1){
+			var matches = memo.filter(function(e2){
+				return e1.name == e2.name
+			})
+			if (matches.length == 0)
+				memo.push(e1)
+				return memo;
+			}, []);
+		}
+
+		function removeAssignedEmployee(id) {						
+			console.log(id);
+			assigned_managers = assigned_managers.filter(function( obj ) {
+				return obj.id !== id;
+			});
+
+			var selected_managers_html = '';
+			var empIds = [];
+			assigned_managers.forEach(element => {
+				console.log(element.name);
+				empIds.push(element.id);
+				selected_managers_html += element.name + '<i class="fa fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
+			});
+			$('#selected_managers').html(selected_managers_html);
+			$('#assigned_managers').val(empIds);
+			assigned_managers_final = empIds;
+		}
+
 </script>
-@endpush
+@endsection

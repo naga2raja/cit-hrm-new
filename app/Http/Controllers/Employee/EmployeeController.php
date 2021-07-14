@@ -11,6 +11,7 @@ use App\mCountry;
 use App\mJobTitle;
 use App\mJobCategory;
 use App\mCompanyLocation;
+use App\tEmployeeReportTo;
 use Auth;
 
 class EmployeeController extends Controller
@@ -186,7 +187,18 @@ class EmployeeController extends Controller
             $jobDetails = mJobTitle::find($employee->job_id);
         }
 
-        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails'));
+        $reportTo = tEmployeeReportTo::join('employees', 't_employee_report_to.manager_id', 'employees.id')
+            ->where('t_employee_report_to.employee_id', $id)
+            ->selectRaw('employees.id as id, CONCAT(first_name, " ", last_name) as name')
+            ->groupBy('t_employee_report_to.manager_id')
+            ->get();
+        $assigned_managers = [];
+        foreach($reportTo as $manager) {
+            $assigned_managers[] = $manager->id;
+        } 
+        $assigned_managers = implode(',',  $assigned_managers);
+
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
     }
 
     /**
@@ -264,6 +276,19 @@ class EmployeeController extends Controller
             ContactDetails::insert($contactInfo);
         }
 
+        //update report to
+        if($request->assigned_managers) {
+            $empIds = explode(',', $request->assigned_managers);
+            tEmployeeReportTo::where('employee_id', $id)->delete();
+            foreach($empIds as $managerId) {
+                $report = new tEmployeeReportTo;
+                $report->employee_id = $id;
+                $report->manager_id = $managerId;
+                $report->save();
+            }
+        }
+        
+
         return redirect()->back()->with('success', 'Employee updated successfully');
     }
 
@@ -301,5 +326,20 @@ class EmployeeController extends Controller
             return false;
         }
        
+    }
+
+    public function searchEmployeeAjax(Request $request)
+    {
+    	$data = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $data = Employee::select("id")->selectRaw('CONCAT (first_name, " ", last_name) as name ')
+            		->where('first_name','LIKE',"%$search%")
+                    ->orWhere('middle_name','LIKE',"%$search%")
+                    ->orWhere('last_name','LIKE',"%$search%")
+            		->get();
+        }
+        return response()->json($data);
     }
 }

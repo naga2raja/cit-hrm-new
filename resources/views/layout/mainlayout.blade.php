@@ -55,6 +55,7 @@
 
   @stack('scripts')
   @stack('custom-scripts')
+  @yield('my-scripts')
 
   </body>
 </html>

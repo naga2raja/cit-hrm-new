@@ -194,6 +194,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::post('/employees/multiple-delete', 'Employee\EmployeeController@deleteMultiple');
     Route::get('/employees-import', 'Employee\ImportEmployeeController@index')->name('employees.import');
     Route::post('/employees-import', 'Employee\ImportEmployeeController@import')->name('employees-import');
+    Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
 
     //Leave
     Route::resource('/leave', 'Leave\Leave\LeaveController');
