@@ -64,16 +64,7 @@
 													<div id="project_admins_list" class="autocomplete"></div>
 												</div>
 											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<u><a style="color: #007bff;" onclick="add_another()">Add another</a></u>
-												</div>
-											</div>
 										</div>
-
-										<div id="admin_div">
-											
-										</div>										
 
 										<div class="row">
 											<div class="col-sm-2">
@@ -194,30 +185,6 @@
 		  }
 		});
 	}	
-
-	function add_another(){
-		var admin_div = document.getElementById('admin_div');
-		var admin = document.getElementsByClassName('admin');
-
-		var id = admin.length + 1;
-   		admin_div.innerHTML += "<div class='row admin'id='admin_name_"+id+""+"'"+"><div class='col-sm-2'></div><div class='col-sm-4'><div class='form-group'><input type='text' class='form-control' placeholder='Type for hints...'></div></div><div class='col-sm-4'><div class='form-group'><u><a class='remove' id='admin_remove_"+id+""+"'"+" style='color: #007bff;' onClick='remove_admin(this.id)'>Remove</a></u><br></div></div></div>";
-	}
-
-	function remove_admin(id){
-		var id = id.slice(13, );
-		document.getElementById('admin_remove_'+id).remove();
-		document.getElementById('admin_name_'+id).remove();
-
-		//rearrange the id after removing
-		var admin = document.getElementsByClassName('admin');
-		var remove = document.getElementsByClassName('remove');
-
-		for(var i = 0; i < admin.length; i++){
-			var j = i + 1;
-			admin[i].id = "admin_name_"+j;
-			remove[i].id = "admin_remove_"+j;
-		}
-	}
 
 	$('#customer_name').keyup(function(){ 
         var customer_name = $(this).val();

@@ -295,9 +295,6 @@
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('locations.index') }}">Locations</a>
                                                 </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Structure</a>
-                                                </li>
                                             </ul>
                                         </li>
                                         <li>
@@ -306,35 +303,7 @@
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('skills.index') }}">Skills</a>
                                                 </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Submenu link 2</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a class="dropdown-item" href="#">Subsubmenu 1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="#">Subsubmenu 2</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu 2</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a class="dropdown-item" href="#">Subsubmenu 2.1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="#">Subsubmenu 2.2</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
                                             </ul>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Nationality</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -401,6 +370,23 @@
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Attendance</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">My Records</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ route('punch.create') }}">Punch In/Out</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employee Records</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ route('configurations.index') }}">Configuration</a>
+                                                </li>                                                
+                                            </ul>
                                         </li>
                                         <li>
                                             <a class="dropdown-item dropdown-toggle" href="#">Project Info</a>
