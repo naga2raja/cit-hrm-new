@@ -190,10 +190,13 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::post('/holidays/multiple-delete', 'Leave\Holidays\HolidaysController@deleteMultiple');
     
     // employee
-    Route::resource('/employees', 'EmployeeController');
-    Route::post('/employees/multiple-delete', 'EmployeeController@deleteMultiple');
-    Route::get('/employees-import', 'ImportEmployeeController@index')->name('employees.import');
-    Route::post('/employees-import', 'ImportEmployeeController@import')->name('employees-import');
+    Route::resource('/employees', 'Employee\EmployeeController');
+    Route::post('/employees/multiple-delete', 'Employee\EmployeeController@deleteMultiple');
+    Route::get('/employees-import', 'Employee\ImportEmployeeController@index')->name('employees.import');
+    Route::post('/employees-import', 'Employee\ImportEmployeeController@import')->name('employees-import');
+
+    //Leave
+    Route::resource('/leave', 'Leave\Leave\LeaveController');
 
     /* Admin/Qualifications/Skills */
     Route::resource('/skills', 'Admin\Qualifications\SkillsController');

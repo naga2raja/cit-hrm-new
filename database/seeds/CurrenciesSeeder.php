@@ -18,8 +18,8 @@ class CurrenciesSeeder extends Seeder
         $currency->save();
 
         $currency = new mCurrency;
-        $currency->currency_id = 'USD';
-        $currency->currency_name = 'American Dollar';
+        $currency->currency_id = 'JPY';
+        $currency->currency_name = 'Japanese Yen';
         $currency->save();
     }
 }

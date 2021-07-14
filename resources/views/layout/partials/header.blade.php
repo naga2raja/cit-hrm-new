@@ -327,10 +327,10 @@
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">Apply Leave</a>
+                                            <a class="dropdown-item" href="{{ route('leave.create') }}">Apply Leave</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">My Leave</a>
+                                            <a class="dropdown-item" href="{{ route('leave.index') }}">My Leave</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item dropdown-toggle" href="#">Entitlements</a>
