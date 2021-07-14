@@ -27,7 +27,7 @@
 													<label>Punched In Time</label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 													<label>{{ $punch_in[0]->punch_in_user_time }}</label>
 												</div>
@@ -41,7 +41,7 @@
 														<label>Punch In Note</label>
 													</div>
 												</div>
-												<div class="col-sm-4">
+												<div class="col-sm-3">
 													<div class="form-group">
 														<label>{{ $punch_in[0]->punch_in_note }}</label>
 													</div>
@@ -55,10 +55,26 @@
 													<label>Date</label>
 												</div>
 											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input class="form-control datetimepicker" type="text" id="out_date" name="out_date" value="{{ $current_date }}" readonly="">
+											<div class="col-sm-3">
+												<!-- <div class="form-group">
+													<input class="form-control datetimepicker" type="text" id="out_date" name="out_date" value="{{ $current_date }}">
 													<input type="hidden" name="employee_id" value="{{ $employee_id }}">
+												</div>
+											</div>
+
+											<div class="col-sm-4">
+												<div class="form-group"><h4 class="card-title mt-3">
+													<i class="fa fa-calendar" aria-hidden="true" style="font-size: 30px;"></i></h4>
+												</div> -->
+
+												<div class="input-group mb-3">
+													<input class="form-control datetimepicker" type="text" id="out_date" name="out_date" value="{{ $current_date }}">
+													<input type="hidden" name="employee_id" value="{{$employee_id}}">
+													<div class="input-group-append">
+														<button class="btn btn-theme text-white" type="button" id="calendar_icon">
+															<i class="fa fa-calendar" aria-hidden="true"></i>
+														</button>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -69,9 +85,9 @@
 													<label>Time</label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control time {{ $errors->has('out_time') ? 'is-invalid' : ''}}" name="out_time" id="out_time" value="{{ old('out_time') ? old('out_time') : $current_time }}">
+													<input type="text" class="form-control time {{ $errors->has('out_time') ? 'is-invalid' : ''}}" name="out_time" id="out_time" value="{{ old('out_time') ? old('out_time') : '00:00' }}">
                                                     {!! $errors->first('out_time', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -88,7 +104,7 @@
 													<label>Note</label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 													<textarea class="form-control {{ $errors->has('note') ? 'is-invalid' : ''}}" rows="3" name="note">{{ old('note') }}</textarea>
                                                     {!! $errors->first('note', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -98,8 +114,13 @@
 										<hr>
 
 										<div class="row">
-											<div class="col-sm-1 text-center">
-												<button class="btn btn-theme text-white ctm-border-radius button-1" type="submit">Out </button>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-3 text-center">
+												<div class="row">
+													<div class="col-sm-6">
+														<button class="btn btn-theme text-white ctm-border-radius button-1" type="submit">Punch Out</button>
+													</div>
+												</div>
 											</div>
 										</div>
 
@@ -117,3 +138,11 @@
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+	$('#calendar_icon').on('click', function(){
+		$('#out_date').datetimepicker("show");
+	});
+</script>
+@endpush
