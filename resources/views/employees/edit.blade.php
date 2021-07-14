@@ -14,8 +14,8 @@
 									<div class="custom-search input-group">
 										<div class="custom-breadcrumb">
 											<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-												<li class="breadcrumb-item d-inline-block"><a href="index" class="text-dark">Home</a></li>
-												<li class="breadcrumb-item d-inline-block active">Employees</li>
+												<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">Home</a></li>
+												<li class="breadcrumb-item d-inline-block active"><a href="{{ route('employees.index') }}">Employees</a></li>
 											</ol>
 											<h4 class="text-dark">Edit Employee</h4>
 										</div>
@@ -33,7 +33,7 @@
 								<a class="list-group-item list-group-item-action border-none" href="#personal">Personal Details</a>
 								<a class="list-group-item list-group-item-action border-none" href="#contact">Contact Details</a>
 								<a class="list-group-item list-group-item-action border-none" href="#jobDetails">Job Details</a>
-								<!-- <a class="list-group-item list-group-item-action border-none" href="javascript:void(0)">Salary</a> -->
+								<a class="list-group-item list-group-item-action border-none" href="#reportTo">Report To</a>
 							</div>
 						</div>
 					</div>
@@ -59,7 +59,7 @@
 								<a class=" coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
 									Personal Details
 								<br><span class="ctm-text-sm">Organized and secure.</span>
-								</a>
+								</a>								
 							</h4>
 						</div>
 						<div class="card-body p-0">
@@ -360,6 +360,32 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="card shadow-sm ctm-border-radius">
+						<div class="card-header" id="reportTo">
+							<h4 class="cursor-pointer mb-0">
+								<a class="coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#emp_report_to">
+									Report To
+								<br><span class="ctm-text-sm">Reporting Manager of the employee</span>
+								</a>
+							</h4>
+						</div>
+						<div class="card-body p-0">
+							<div id="emp_report_to" class="collapse show ctm-padding" aria-labelledby="reportTo" data-parent="#accordion-details">
+								<div class="row">
+									<div class="col-md-12 form-group">
+										<p class="mb-2">Select Manager</p>
+										<select class="form-control select" name="job_id" id="job_id">
+											<option value="">Select </option>
+											@foreach ($jobTitles as $job)
+												<option value="{{ $job->id }}" {{old ('job_id', @$employee->job_id) == $job->id ? 'selected' : ''}}> {{ $job->job_title }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<!--
 					<div class="card shadow-sm ctm-border-radius">
 						<div class="card-header" id="headingThree">
@@ -593,7 +619,7 @@
 		
 @endsection
 
-@push('custom-scripts')
+@push('scripts')
 <script type="text/javascript"> 
 	$(document.body).on("change","#job_id",function(){		
 		var jobId = this.value;

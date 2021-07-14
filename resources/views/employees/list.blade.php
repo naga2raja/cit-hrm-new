@@ -49,7 +49,7 @@
 													</div>
 													<div class="col-sm-3">														
 														<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" name="search"><span class="fa fa-search"></span> Search</button>
-														<button type="reset" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-refresh"></span> Reset</button>
+														<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-refresh"></span> Reset</a>
 													</div>
 												</div>
 												<div class="row">
@@ -69,7 +69,7 @@
 										<div class="col-md-4">
 											<div class="text-right">
 												<a href="{{ route('employees.create') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-plus"></span> Add</a>
-												<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
+												<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
 											</div>
 										</div>
 									</div>
