@@ -25,12 +25,13 @@ class ProjectsController extends Controller
         $customer_name = $request->input('customer_name');
         $project_name = $request->input('project_name');
         $project_admin = $request->input('project_admin');
-         DB::connection()->enableQueryLog(); 
+        
+        DB::connection()->enableQueryLog(); 
 
         $projects = mProject::select(DB::raw('GROUP_CONCAT( DISTINCT m_customers.customer_name) as customer_name'),DB::raw("CONCAT(employees.first_name,' ',employees.middle_name,' ',employees.last_name) as admin_name"), 'm_projects.id as project_id', 'm_projects.project_name as project_name')
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
-                ->leftjoin('employees', 'employees.user_id', 't_project_admins.admin_id');
+                ->leftjoin('employees', 'employees.id', 't_project_admins.admin_id');
         if ($customer_name) {
             $projects->Where('m_customers.customer_name', 'like', "%$customer_name%");
         }
@@ -40,19 +41,10 @@ class ProjectsController extends Controller
         if ($project_admin) {
             $string = str_replace(' ', '', $project_admin);
             $projects->Where(DB::raw("CONCAT(employees.first_name,employees.middle_name, employees.last_name)"), 'LIKE', "%$string%");
-  
-
         }
         $projects = $projects->groupby('m_projects.id')
                        ->get();  
-
-                       // dd($projects);
-
-        // dd(DB::getQueryLog());
-
         $activities = tActivity::get();
-
-        // dd($activities);
 
         return view('time/project_info/projects/list', compact('projects', 'activities'));
     }
@@ -96,8 +88,6 @@ class ProjectsController extends Controller
             ]);
         }
         
-
-        // return redirect('/listLocations');
         return redirect()->route('projects.index')->with('success', 'Project added successfully');
     }
 
@@ -125,15 +115,13 @@ class ProjectsController extends Controller
         $projects = $projects = mProject::select('m_projects.id','m_projects.project_name', 'm_projects.project_description', 'm_projects.customer_id', 'm_customers.customer_name', 't_project_admins.admin_id',DB::raw("CONCAT(employees.first_name,' ',employees.middle_name,' ',employees.last_name) as admin_name"))
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
-                ->leftjoin('employees', 'employees.user_id', 't_project_admins.admin_id')
+                ->leftjoin('employees', 'employees.id', 't_project_admins.admin_id')
                 ->leftjoin('t_activities', 't_activities.project_id', 'm_projects.id')
                 ->where('m_projects.id', $id)
                 ->groupby('m_projects.id')
                        ->get();
-        // dd(DB::getQueryLog());
 
         $activities = tActivity::where('project_id', $id)->get();
-
 
         return view('time/project_info/projects/edit', compact('projects', 'activities'));
     }
@@ -159,7 +147,6 @@ class ProjectsController extends Controller
         ]);
 
         $delete_admin = tProjectAdmin::where('project_id', $request->project_id)->delete();
-
 
         if($request->admin_id != null){
             $project_admin = tProjectAdmin::create([
@@ -208,7 +195,6 @@ class ProjectsController extends Controller
 
     public function customers_search(Request $request)
     {
-
         DB::connection()->enableQueryLog(); 
 
         $customer_name = $request->customer_name;
@@ -217,7 +203,6 @@ class ProjectsController extends Controller
             $customers = mCustomer::select('m_customers.customer_name', 'm_customers.id')
                                     ->where('m_customers.customer_name', 'like', "%{$customer_name}%")
                                     ->get();
-            // dd(DB::getQueryLog());
 
             if(count($customers) != 0){
                 $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
@@ -244,7 +229,6 @@ class ProjectsController extends Controller
             $projects = mProject::select('m_projects.project_name', 'm_projects.id')
                                     ->where('m_projects.project_name', 'like', "%{$project_name}%")
                                     ->get();
-            // dd(DB::getQueryLog());
 
             if(count($projects) != 0){
                 $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
@@ -268,12 +252,11 @@ class ProjectsController extends Controller
         $project_admin = $request->project_admin;
 
         if(!empty(trim($project_admin))){
-            $admins = Employee::select('employees.first_name', 'employees.middle_name', 'employees.last_name', 'employees.id', 'employees.user_id')
+            $admins = Employee::select('employees.first_name', 'employees.middle_name', 'employees.last_name', 'employees.id')
                                     ->where('employees.first_name', 'like', "%{$project_admin}%")
                                     ->orWhere('employees.middle_name', 'like', "%{$project_admin}%")
                                     ->orWhere('employees.last_name', 'like', "%{$project_admin}%")
                                     ->get();
-            // dd(DB::getQueryLog());
 
             if(count($admins) != 0){
                 $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
@@ -290,7 +273,7 @@ class ProjectsController extends Controller
                         $emp_name = $emp_name.' '.$row->last_name;
                     }
 
-                    $output .= '<li class="admin"><a id='.$row->user_id.' class="dropdown-item" onClick="pass_admin_id(this.id)" href="#">'.$emp_name.'</a></li>';
+                    $output .= '<li class="admin"><a id='.$row->id.' class="dropdown-item" onClick="pass_admin_id(this.id)" href="#">'.$emp_name.'</a></li>';
                 }
                 $output .= '</ul>';
                 echo $output;
@@ -306,17 +289,11 @@ class ProjectsController extends Controller
         $modal_customer_name = $request->modal_customer_name;
         $modal_customer_description = $request->modal_customer_description;
 
-        // $validated = $request->validate([
-        //     'customer_name' => 'required|string|max:255',
-        //     'customer_description' => 'nullable|string|max:255',
-        // ]);
-
         $customers = mCustomer::create([
             'customer_name' => $request->modal_customer_name,
             'customer_description' => (empty($request->modal_customer_description) ? '' :  $request->modal_customer_description),
         ]);
 
         return response()->json(['customer_name' => $customers->customer_name, 'customer_id' => $customers->id]);
-
     }
 }

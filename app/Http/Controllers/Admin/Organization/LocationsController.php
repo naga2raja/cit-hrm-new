@@ -42,8 +42,7 @@ class LocationsController extends Controller
         
         DB::connection()->enableQueryLog(); 
         $employees_count = Employee::select('employees.company_location_id', DB::raw('count(*) as count'))
-                                ->join('users', 'users.id', 'employees.user_id')
-                                ->where('users.deleted_at', null)
+                                ->where('employees.deleted_at', null)
                                 ->groupby('employees.company_location_id')
                                 ->get();
 
