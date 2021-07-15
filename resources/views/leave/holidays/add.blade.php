@@ -35,6 +35,7 @@
 										<div class="col-sm-3">
 											<div class="form-group">
 												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" required="" autocomplete="off">
+												{!! $errors->first('description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
 									</div>

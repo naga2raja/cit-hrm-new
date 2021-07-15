@@ -27,13 +27,29 @@
 											<form method="POST" action="{{ route('systemUsers.update', [$users[0]->id]) }}">
 												@csrf
 												@method('PUT')
+
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">
+															<label>Employee Name <span class="text-danger">*</span></label>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="form-group">
+															<input type="text" name="name" id="employee_name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $users[0]->name) }}" autocomplete="off" readonly="">
+															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															<div id="employees_list" class="autocomplete"></div>
+														</div>
+													</div>
+												</div>
+
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
 															<label>User Role <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
 															<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role">
 		                                                        @foreach ($roles as $role)
@@ -48,39 +64,24 @@
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
-															<label>Employee Name <span class="text-danger">*</span></label>
-														</div>
-													</div>
-													<div class="col-sm-4">
-														<div class="form-group">
-															<input type="text" name="name" id="employee_name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $users[0]->name) }}" autocomplete="off">
-															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-															<div id="employees_list" class="autocomplete"></div>
-														</div>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-sm-2">
-														<div class="form-group">
 															<label>Username <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email', $users[0]->email) }}">
+															<input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email', $users[0]->email) }}" readonly="">
 															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
 
-												<div class="row">
+												<!-- <div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
 															<label>Status <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
 															<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status">
 															    <option value='Active' {{ old('status') == "Active" ? 'selected' : '' }}>Active</option>
@@ -89,35 +90,7 @@
 															{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-sm-2">
-														<div class="form-group">
-															<label>Password <span class="text-danger">*</span></label>
-														</div>
-													</div>
-													<div class="col-sm-4">
-														<div class="form-group">
-															<input type="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('password', $users[0]->password) }}">
-															{!! $errors->first('password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-														</div>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-sm-2">
-														<div class="form-group">
-															<label>Confirm Password <span class="text-danger">*</span></label>
-														</div>
-													</div>
-													<div class="col-sm-4">
-														<div class="form-group">
-															<input type="password" name="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('confirm_password', $users[0]->password) }}">
-															{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-														</div>
-													</div>
-												</div>
+												</div> -->
 
 												<div class="row">
 													<div class="col-sm-2">
@@ -128,7 +101,7 @@
 
 												<div class="row">
 													<div class="col-sm-2"></div>
-													<div class="col-sm-4 text-center">
+													<div class="col-sm-3 text-center">
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="submit-section text-center btn-add">

@@ -25,16 +25,17 @@ class SystemUserController extends Controller
         $username = $request->input('email');
         $name = $request->input('name');
         $role = $request->input('role');
+        $status = $request->input('status');
         
         DB::connection()->enableQueryLog();
 
         $users = User::select('users.*', 'employees.*', 'employees.status as emp_status', 'roles.name as role_name')
                     ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
-                    ->join('roles', 'model_has_roles.model_id', 'roles.id')
-                    ->join('employees', 'employees.user_id', 'users.id');
+                    ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                    ->join('employees', 'employees.email', 'users.email');
         
         if ($username) {
-            $users->Where('email', 'like', "%$username%");
+            $users->Where('users.email', 'like', "%$username%");
         }
         if ($name) {
             // remove the space in string
@@ -43,6 +44,9 @@ class SystemUserController extends Controller
         }
         if (($role)&&($role != "all")) {
             $users->Where('roles.name', $role);
+        }
+        if ($status) {
+            $users->Where('employees.status', $status);
         }
         $users = $users->orderBy('users.id', 'asc')
                        ->paginate(5);
@@ -73,13 +77,16 @@ class SystemUserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'role' => 'required',
             'name' => 'required',
-            'email' => 'required|email',
-            'status' => 'required',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
+            'email' => 'required',
+            'password' => 'required'
         ]);
+
+        // duplicate check
+        $isExists = User::where('email', $request->input('email'))->get();
+        if($isExists) {
+            return redirect()->back()->with('error', 'Username already Exists');        
+        }
 
         $user = User::create([
             'name'  => $request->input('name'),
@@ -112,10 +119,10 @@ class SystemUserController extends Controller
     {
         $users = User::select('roles.name as role_name', 'roles.id as role_id', 'users.*')
                     ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
-                    ->join('roles', 'model_has_roles.model_id', 'roles.id')
+                    ->join('roles', 'roles.id', 'model_has_roles.role_id')
                     ->where('users.id', $id)
                     ->get();
-                    // dd($users);
+        // dd($users);
         $roles = Role::get();
         return view('admin/system_users/edit', compact('users', 'roles'));
     }
@@ -130,19 +137,15 @@ class SystemUserController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'role' => 'required',
-            'name' => 'required',
-            'email' => 'required|email',
-            'status' => 'required',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
+            'role' => 'required'
         ]);
 
         $users = User::find($id);
         $users->name = $request->input('name');
-        $users->email = $request->input('email');
-        $users->password = $request->input('password');
+        // $users->email = $request->input('email');
         $users->save();
+
+        $users->syncRoles($request->input('role'));
 
         return redirect()->back()->with('success', 'System User Updated successfully');
     }
@@ -219,7 +222,7 @@ class SystemUserController extends Controller
                         $emp_name = $emp_name.' '.$row->last_name;
                     }
                     
-                   $output .= '<li id='.$row->user_id.' class="list-group-item employees"><a class="dropdown-item">'.$emp_name.'</a></li>';
+                   $output .= '<li id='.$row->user_id.' class="list-group-item employees" emp_no='.$row->employee_id.' emp_email='.$row->email.'><a class="dropdown-item">'.$emp_name.'</a></li>';
                 }
                 $output .= '</ul>';
                 echo $output;

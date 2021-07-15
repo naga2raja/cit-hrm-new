@@ -29,7 +29,7 @@ class LeavePeriodController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    { 
         $leave_period = mLeavePeriod::get();
         return view('leave/leave_period/add', compact('leave_period'));
     }

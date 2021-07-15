@@ -42,6 +42,7 @@
 										<div class="col-sm-3">
 											<div class="form-group">
 												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('description', $holidays[0]->description) }}" required="" autocomplete="off">
+												{!! $errors->first('description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
 									</div>

@@ -82,7 +82,7 @@
 												<label>End Date </label>
 											</div>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-3">
 											<div class="form-group">
 												<label id="end_date">
 													@if(count($leave_period) > 0)
@@ -131,7 +131,7 @@
 
 									<div class="row">
 										<div class="col-sm-2"></div>
-										<div class="col-sm-4 text-center">
+										<div class="col-sm-3 text-center">
 											<div class="row">
 												<div class="col-sm-6">
 													<div class="submit-section text-center btn-add">

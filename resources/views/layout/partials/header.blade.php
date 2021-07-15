@@ -323,7 +323,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*','holidays*', 'entitlements*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -333,13 +333,10 @@
                                             <a class="dropdown-item" href="{{ route('leave.index') }}">My Leave</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Entitlements</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('entitlements*') ? 'active' : '' }}" href="#">Entitlements</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="LeavePeriod">Add Entitlements</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="LeaveTypes">My Entitlements</a>
+                                                    <a class="dropdown-item {{ Request::is('entitlements*') ? 'active' : '' }}" href="{{ route('entitlements.create') }}">Add Entitlements</a>
                                                 </li>
                                             </ul>
                                         </li>
