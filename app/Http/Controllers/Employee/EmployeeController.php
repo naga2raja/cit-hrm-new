@@ -150,9 +150,20 @@ class EmployeeController extends Controller
             'user_id' => $employee->id
         ];
         // insert
-        ContactDetails::insert($contactInfo);        
+        ContactDetails::insert($contactInfo);    
+        
+        //update report to
+        if($request->assigned_managers) {
+            $empIds = explode(',', $request->assigned_managers);            
+            foreach($empIds as $managerId) {
+                $report = new tEmployeeReportTo;
+                $report->employee_id = $employee->id;
+                $report->manager_id = $managerId;
+                $report->save();
+            }
+        }
 
-        return redirect()->back()->with('success', 'Employee created successfully');        
+        return redirect('employees')->with('success', 'Employee created successfully');        
     }
 
     /**
@@ -286,10 +297,9 @@ class EmployeeController extends Controller
                 $report->manager_id = $managerId;
                 $report->save();
             }
-        }
-        
+        }       
 
-        return redirect()->back()->with('success', 'Employee updated successfully');
+        return redirect('employees')->with('success', 'Employee updated successfully');
     }
 
     /**

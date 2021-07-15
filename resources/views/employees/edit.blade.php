@@ -383,7 +383,7 @@
 										<div id="selected_managers">
 											@if($reportTo)
 												@foreach ($reportTo as $manager)
-													{{ $manager->name }} <i class="fa fa-close" onclick="removeAssignedEmployee({{ $manager->id }})"></i> <hr>
+													{{ $manager->name }} <i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee({{ $manager->id }})"></i> <hr>
 												@endforeach
 											@endif
 										</div>
@@ -663,6 +663,13 @@
 				</div>
 			</div>
 		</div>		
+<style>
+#selected_managers i.fa.btn-primary.p-1.fa-close{	
+    font-size: 13px;
+    cursor: pointer;
+	margin-left: 10px;
+}
+</style>
 @endsection
 
 @section('my-scripts')
@@ -715,12 +722,7 @@
 	if(existing_manager_ids) {
 		assigned_managers = JSON.parse(existing_manager_ids);
 		console.log(JSON.parse(existing_manager_ids));
-	}
-	
-	
-
-
-
+	}	
 
 var list_managers = [];
 var assigned_managers_final = [];
@@ -738,7 +740,7 @@ function assignEmployee () {
 	result.forEach(element => {
 		console.log(element.name);
 		empIds.push(element.id);
-		selected_managers_html += element.name + '<i class="fa fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
+		selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
 	});
 	$('#selected_managers').html(selected_managers_html);
 	$('#assigned_managers').val(empIds);
@@ -788,7 +790,7 @@ function assignEmployee () {
 			assigned_managers.forEach(element => {
 				console.log(element.name);
 				empIds.push(element.id);
-				selected_managers_html += element.name + '<i class="fa fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
+				selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
 			});
 			$('#selected_managers').html(selected_managers_html);
 			$('#assigned_managers').val(empIds);
