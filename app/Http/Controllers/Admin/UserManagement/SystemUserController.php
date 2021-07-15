@@ -222,7 +222,7 @@ class SystemUserController extends Controller
                         $emp_name = $emp_name.' '.$row->last_name;
                     }
                     
-                   $output .= '<li id='.$row->user_id.' class="list-group-item employees" emp_no='.$row->employee_id.' emp_email='.$row->email.'><a class="dropdown-item">'.$emp_name.'</a></li>';
+                   $output .= '<li id='.$row->id.' class="list-group-item employees" emp_no='.$row->employee_id.' emp_email='.$row->email.'><a class="dropdown-item">'.$emp_name.'</a></li>';
                 }
                 $output .= '</ul>';
                 echo $output;
