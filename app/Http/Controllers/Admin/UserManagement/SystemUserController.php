@@ -78,12 +78,12 @@ class SystemUserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:employees,email',
             'password' => 'required'
         ]);
 
         // duplicate check
-        $isExists = User::where('email', $request->input('email'))->get();
+        $isExists = User::where('email', $request->input('email'))->first();
         if($isExists) {
             return redirect()->back()->with('error', 'Username already Exists');        
         }

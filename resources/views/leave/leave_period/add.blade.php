@@ -180,13 +180,34 @@
 	     return months[selectedMonth - 1];
 	}
 
+	function addMonths(date, months) {
+		var d = date.getDate();
+	    date.setMonth(date.getMonth() + +months);
+	    if (date.getDate() != d) {
+	      date.setDate(0);
+	    }
+	    return date;    
+	}
+
 	function setLeavePeriod() {			
 		// get the day from month(number)
-		var month = dayOfMonth($('#start_month').val());
+		var year = new Date().getFullYear();
+		var month = $('#start_month').val();
 		var date = $('#start_date').val();
 
-		$('#end_date').html(""+month+" "+date+" (Following Year)");
-		// $('#leave_period').html("");
+		// to add 11 months and 31 days from the selected date
+		var new_date = addMonths(new Date(year,month-1,date), 11);
+		var month_number = moment(new_date).format('MMMM');
+		var month_name = moment(new_date).format('MM');
+
+		// to get no. of days in month
+		var end_date = daysInMonth(month_name);
+
+		var from_date = moment(year+" "+month+" "+date).format('Y-MM-DD');
+		var to_date = moment(year+1 +" "+month_number+" "+end_date).format('Y-MM-DD');
+
+		$('#end_date').html(""+month_number+" "+end_date+" (Following Year)");
+		$('#leave_period').html(from_date+' - '+to_date);
 	}
 
 	function setMonthDate() {		

@@ -24,6 +24,12 @@
 								</div>
 								@endif
 
+								@if($message = Session::get('error'))
+								<div class="alert alert-danger">
+									<p>{{$message}}</p>
+								</div>
+								@endif
+
 								<form method="POST" action="{{ route('entitlements.store') }}">
 									@csrf
 									<div class="row">
@@ -50,8 +56,8 @@
 												<div class="form-group">
 													<select class="form-control select" name="location_id">
 	                                                    <option value='0' {{ old('location_id') == '0' ? 'selected' : '' }}>All</option>
-	                                                    <option value='103' {{ old('location_id') == '1' ? 'selected' : '' }}>India</option>
-	                                                    <option value='112' {{ old('location_id') == '1' ? 'selected' : '' }}>Japan</option>
+	                                                    <option value='103' {{ old('location_id') == '103' ? 'selected' : '' }}>India</option>
+	                                                    <option value='112' {{ old('location_id') == '112' ? 'selected' : '' }}>Japan</option>
 	                                                </select>
 													{!! $errors->first('location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
@@ -118,10 +124,10 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select" name="leave_period_id">
-	                                                <option value='{{ $lperiods }}' {{ old('leave_type_id') == $lperiods ? 'selected' : '' }}>{{ $lperiods }}</option>
+												<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period">
+	                                                <option value='{{ $leave_period_value }}' {{ old('leave_period_value') == $leave_period_value ? 'selected' : '' }}>{{ $leave_period_name }}</option>
                                                 </select>
-                                                {!! $errors->first('leave_period_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
                                                 <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ $from_date }}">
                                                 <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ $end_date }}">
 											</div>
@@ -136,7 +142,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="number" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" placeholder="" autocomplete="off">
+												<input type="number" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" value="{{ old('entitlement') }}" placeholder="" autocomplete="off">
 												{!! $errors->first('entitlement', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -223,7 +229,7 @@
 
 	$(document).on('click', '.employees', function(){
 		$('#employee_name').val($(this).text());
-		$('#emp_number').val($(this).attr('emp_no'));
+		$('#emp_number').val($(this).attr('id'));
 		$('#employees_list').fadeOut();
 		$('#employee_name').removeClass('is-invalid');
 		$("#not_exist").remove();
