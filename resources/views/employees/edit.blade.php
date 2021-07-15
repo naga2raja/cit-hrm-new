@@ -780,11 +780,11 @@ function assignEmployee () {
 		}
 
 		function removeAssignedEmployee(id) {						
-			console.log(id);
+			console.log('emP dELETE', id, assigned_managers);
 			assigned_managers = assigned_managers.filter(function( obj ) {
-				return obj.id !== id;
+				return obj.id != id;
 			});
-
+			console.log(assigned_managers);
 			var selected_managers_html = '';
 			var empIds = [];
 			assigned_managers.forEach(element => {

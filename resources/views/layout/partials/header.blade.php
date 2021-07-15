@@ -308,26 +308,26 @@
                                     </ul>
                                 </li>
                                 @endrole
-                                <li class="mr-1 nav-item dropdown {{ Request::is('company') ? 'active' : '' }}">
+                                <li class="mr-1 nav-item dropdown {{ Request::is('employees*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="company" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('employees.index') }}">Employee List</a>
+                                            <a class="dropdown-item {{ Request::is('employees') ? 'active' : '' }}" href="{{ route('employees.index') }}">Employee List</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('employees.create') }}">Add Employee</a>
+                                            <a class="dropdown-item {{ Request::is('employees/create') ? 'active' : '' }}" href="{{ route('employees.create') }}">Add Employee</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('employees.import') }}">Data Import</a>                                            
+                                            <a class="dropdown-item {{ Request::is('employees-import') ? 'active' : '' }}" href="{{ route('employees.import') }}">Data Import</a>                                            
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*','holidays*', 'entitlements*') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*','holidays*', 'entitlements*', 'leave*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('leave.create') }}">Apply Leave</a>
+                                            <a class="dropdown-item {{ Request::is('leave/create') ? 'active' : '' }}" href="{{ route('leave.create') }}">Apply Leave</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="{{ route('leave.index') }}">My Leave</a>

@@ -576,7 +576,7 @@ function assignEmployee () {
 		function removeAssignedEmployee(id) {						
 			console.log(id);
 			assigned_managers = assigned_managers.filter(function( obj ) {
-				return obj.id !== id;
+				return obj.id != id;
 			});
 
 			var selected_managers_html = '';
