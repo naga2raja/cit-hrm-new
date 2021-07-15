@@ -239,6 +239,8 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/configurations', 'Time\Attendance\ConfigurationsController');
     /* Time/Attendance/PunchInOut */
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
+    /* Time/Timesheets/MyTimesheets */
+    Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
 });
 
 Route::group(['middleware' => ['role:Employee']], function () {

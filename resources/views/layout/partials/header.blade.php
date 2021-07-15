@@ -366,7 +366,15 @@
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">Employee List</a>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Timesheets</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ route('mytimesheets.index') }}">My Timesheets</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employee Timesheets</a>
+                                                </li>                                              
+                                            </ul>
                                         </li>
                                         <li>
                                             <a class="dropdown-item dropdown-toggle" href="#">Attendance</a>
