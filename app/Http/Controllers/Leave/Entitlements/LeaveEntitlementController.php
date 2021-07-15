@@ -46,14 +46,16 @@ class LeaveEntitlementController extends Controller
             $end->modify('+1 years -1 days');
             $end_date = $end->format('Y-m-d');
 
-            $lperiods = $from_date.' - '.$end_date;
+            $leave_period_value = $from_date.' - '.$end_date;
+            $leave_period_name = $from_date.' - '.$end_date;
         }else{
             $from_date = "";
             $end_date = "";
-            $lperiods = "";
+            $leave_period_value = '';
+            $leave_period_name = 'No Leave Period';
         }
 
-        return view('leave/entitlements/add', compact('leave_types', 'leave_periods', 'from_date', 'end_date', 'lperiods'));
+        return view('leave/entitlements/add', compact('leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value'));
     }
 
     /**
@@ -66,15 +68,24 @@ class LeaveEntitlementController extends Controller
     {
         $validated = $request->validate([
             'employee' => 'required',
-            'entitlement' => 'required',
-            'leave_type_id' => 'required'
+            'entitlement' => 'required|max:2',
+            'leave_type' => 'required',
+            'leave_period' => 'required'
         ]);
+
+        // duplicate check
+        $isExists = mLeaveEntitlement::where('emp_number', $request->input('emp_number'))
+                                      ->where('leave_type', $request->input('leave_type'))
+                                      ->first();
+        if($isExists) {
+            return redirect()->back()->with('error', 'Leave Entitlements already Exists');        
+        }
 
         $entitlements = mLeaveEntitlement::create([
             'emp_number' => $request->input('emp_number'),
             'no_of_days' => $request->input('entitlement'),
             'days_used' => '0.0000',
-            'leave_type_id' => $request->input('leave_type_id'),
+            'leave_type_id' => $request->input('leave_type'),
             'from_date' => $request->input('from_date'),
             'to_date' => $request->input('to_date'),
             'entitlement_type' => '1'
