@@ -199,9 +199,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/employees-import', 'Employee\ImportEmployeeController@index')->name('employees.import');
     Route::post('/employees-import', 'Employee\ImportEmployeeController@import')->name('employees-import');
     Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
-
-    //Leave
-    Route::resource('/leave', 'Leave\Leave\LeaveController');
+    
 
     /* Admin/Qualifications/Skills */
     Route::resource('/skills', 'Admin\Qualifications\SkillsController');
@@ -243,8 +241,12 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
 });
 
-Route::group(['middleware' => ['role:Employee']], function () {
+Route::group(['middleware' => ['role:Employee|Admin']], function () {
     Route::get('/emp-page', 'HomeController@demoEmployee');
+
+    //Leave
+    Route::resource('/leave', 'Leave\Leave\LeaveController');
+    Route::POST('leave/leave-balance-ajax', 'Leave\Leave\LeaveController@getLeaveBalance');
 });
 
 Route::resource('/punch', 'Time\Attendance\PunchInOutController');

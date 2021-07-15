@@ -251,7 +251,7 @@
                                         <a class="nav-link" href="{{ route('adminDashboard') }}">                                            
                                     @endrole
                                     @hasrole('Employee')
-                                        <a class="nav-link" href="{{ route('empDashboard') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                        <a class="nav-link" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                     @endrole
                                             <span class="lnr lnr-home pr-0 pr-lg-2"></span>
                                             <span class="d-none d-lg-inline">Dashboard</span>

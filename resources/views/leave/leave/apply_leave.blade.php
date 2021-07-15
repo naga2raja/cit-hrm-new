@@ -37,17 +37,7 @@
 										<a href="employment"><span class="avatar" data-toggle="tooltip" data-placement="top" title="Linda Craver"><img class="img-fluid" alt="avatar image" src="img/profiles/img-4.jpg"></span></a>										
 									</div>
 								</div>
-								<div class="card shadow-sm ctm-border-radius">
-									<div class="card-body">
-										<span class="avatar" data-toggle="tooltip" data-placement="top" title="Jenni Sims"><img src="img/profiles/img-3.jpg" alt="Jenni Sims" class="img-fluid"></span><span class="ml-4">Jenni Sims is working from home today.</span>
-									</div>
-								</div>
-								<div class="card shadow-sm ctm-border-radius">
-									<div class="card-body">
-										<span class="avatar" data-toggle="tooltip" data-placement="top" title="John Gibbs"><img class="img-fluid" src="img/profiles/img-2.jpg" alt="Jenni Sims"></span><span class="ml-4">
-										John Gibbs is away today.</span>
-									</div>
-								</div>
+								
 							</aside>
 						</div>
 						
@@ -59,7 +49,8 @@
 											<h4 class="card-title mb-0">Apply Leaves</h4>
 										</div>
 										<div class="card-body">
-											<form>
+											<form method="POST" action="{{ route('leave.store') }}">
+												@csrf												
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
@@ -67,7 +58,7 @@
 															Leave Type
 															<span class="text-danger">*</span>
 															</label>
-															<select class="form-control select" name="">
+															<select class="form-control select" name="leave_type_id" id="leave_type_id" required>
 																<option>Select Leave</option>
 																@foreach ($leaveType as $item)
 																	<option value="{{ $item->id }}">{{ $item->name }}</option>																	
@@ -78,7 +69,7 @@
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Remaining Leaves</label>
-															<input type="text" class="form-control" placeholder="10" disabled>
+															<input type="text" class="form-control" placeholder="10" disabled id="leave_balance">
 														</div>
 													</div>
 												</div>
@@ -86,13 +77,14 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label>From</label>
-															<input type="text" class="form-control datetimepicker">
+															<input type='text' class="form-control" id='datetimepicker4' name="from_date" required/>
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>To</label>
-															<input type="text" class="form-control datetimepicker">
+															<input type='text' class="form-control" id='datetimepicker5' name="to_date" required/>
+															{{-- <input type="text" class="form-control datetimepicker"> --}}
 														</div>
 													</div>
 												</div>
@@ -100,20 +92,21 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label>
-															Half Day
+															Duration
 															<span class="text-danger">*</span>
 															</label>
-															<select class="form-control select">
-																<option>Select</option>
-																<option>First Half</option>
-																<option>Second Half</option>
+															<select class="form-control select" name="leave_duration" required>
+																<option value="">Select</option>
+																<option value="full day">Full Day</option>
+																<option value="morning">First Half</option>
+																<option value="evening">Second Half</option>
 															</select>
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Number of Days Leave</label>
-															<input type="text" class="form-control" placeholder="2" disabled>
+															<input type="text" class="form-control" placeholder="2" disabled name="number_of_days" id="number_of_days">
 														</div>
 													</div>
 												</div>
@@ -121,12 +114,12 @@
 													<div class="col-sm-12">
 														<div class="form-group mb-0">
 															<label>Reason</label>
-															<textarea class="form-control" rows=4></textarea>
+															<textarea class="form-control" rows=4 required></textarea>
 														</div>
 													</div>
 												</div>
 												<div class="text-center">
-													<a href="javascript:void(0);" class="btn btn-theme button-1 text-white ctm-border-radius mt-4">Apply</a>
+													<button type="submit" class="btn btn-theme button-1 text-white ctm-border-radius mt-4">Apply</button>
 													<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
 												</div>
 											</form>
@@ -275,4 +268,89 @@
 				</div>
 			</div>
 		</div>
+@endsection
+
+@section('my-scripts')
+	<script>
+		$('#leave_balance').val('0');
+		$('#leave_type_id').on('change', function() {
+			getLeaveBalance();			
+		})
+
+		function getLeaveBalance() {
+			var leave_type_id = $("#leave_type_id option:selected").val();
+
+			$.ajax({
+				method: 'POST',
+				url: '/leave/leave-balance-ajax',
+				data: JSON.stringify({'leave_type_id': leave_type_id, 'employee_id' : '{{ $employeeId }}',  '_token': '{{ csrf_token() }}' }),
+				dataType: "json",
+				contentType: 'application/json',
+				success: function(response){
+					console.log('response : ', response);
+					$('#leave_balance').val(response.leave_balance);
+				}					
+			});
+		}
+
+		$('#datetimepicker4, #datetimepicker5').datetimepicker({
+			format: 'DD/MM/YYYY',
+			icons: {
+				up: "fa fa-angle-up",
+				down: "fa fa-angle-down",
+				next: 'fa fa-angle-right',
+				previous: 'fa fa-angle-left'
+			}
+		});
+
+		$("#datetimepicker4, #datetimepicker5").datetimepicker().on('dp.change', function (e) {
+			
+			var from_date = $(this).val();			
+			getLeaveBalance();
+			numberOfDaysLeave();
+
+			var number_of_days = 0;
+			// updateToDate(from_date);			
+    	});
+
+		function numberOfDaysLeave() {
+			var from_date = $('#datetimepicker4').val();
+			var to_date = $('#datetimepicker5').val();
+
+			var startDate = moment(from_date, 'DD/MM/YYYY');
+			var endDate = moment(to_date, 'DD/MM/YYYY');
+			var diff = endDate.diff(startDate, 'days');
+			console.log('diff', diff);
+			if(diff == 0) {
+				diff = 1;
+				console.log('1');
+			}
+			else if(diff > 0 ) {
+				diff++; 
+			} else {	
+				diff = 0;			
+				console.log('please select correct date');
+			}
+			$('#number_of_days').val(diff);
+			
+		}
+
+		// function updateToDate(from_date) {
+		// 	console.log('set to', from_date);
+		// 	$('#datetimepicker5').datetimepicker({
+		// 		format: 'DD/MM/YYYY',
+		// 		minDate: moment(from_date, 'DD/MM/YYYY'),
+		// 		defaultDate: moment(from_date, 'DD/MM/YYYY'),
+		// 		icons: {
+		// 				up: "fa fa-angle-up",
+		// 				down: "fa fa-angle-down",
+		// 				next: 'fa fa-angle-right',
+		// 				previous: 'fa fa-angle-left'
+		// 			}
+		// 	}).show();
+		// }
+
+		
+
+	</script>
 @endsection
