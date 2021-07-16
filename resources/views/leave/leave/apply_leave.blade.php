@@ -59,7 +59,7 @@
 															<span class="text-danger">*</span>
 															</label>
 															<select class="form-control select" name="leave_type_id" id="leave_type_id" required>
-																<option>Select Leave</option>
+																<option value="">Select Leave</option>
 																@foreach ($leaveType as $item)
 																	<option value="{{ $item->id }}">{{ $item->name }}</option>																	
 																@endforeach
@@ -69,7 +69,7 @@
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Remaining Leaves</label>
-															<input type="text" class="form-control" placeholder="10" disabled id="leave_balance">
+															<input type="text" class="form-control" placeholder="-" readonly name="leave_balance" id="leave_balance">															
 														</div>
 													</div>
 												</div>
@@ -98,15 +98,16 @@
 															<select class="form-control select" name="leave_duration" required>
 																<option value="">Select</option>
 																<option value="full day">Full Day</option>
-																<option value="morning">First Half</option>
-																<option value="evening">Second Half</option>
+																<option value="half a day">Half a Day</option>
+																{{-- <option value="morning">First Half</option>
+																<option value="evening">Second Half</option> --}}
 															</select>
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Number of Days Leave</label>
-															<input type="text" class="form-control" placeholder="2" disabled name="number_of_days" id="number_of_days">
+															<input type="text" class="form-control" placeholder="2" readonly name="number_of_days" id="number_of_days">															
 														</div>
 													</div>
 												</div>
@@ -114,7 +115,7 @@
 													<div class="col-sm-12">
 														<div class="form-group mb-0">
 															<label>Reason</label>
-															<textarea class="form-control" rows=4 required></textarea>
+															<textarea class="form-control" rows=4 required name="reason"></textarea>
 														</div>
 													</div>
 												</div>
@@ -288,7 +289,7 @@
 				contentType: 'application/json',
 				success: function(response){
 					console.log('response : ', response);
-					$('#leave_balance').val(response.leave_balance);
+					$('#leave_balance').val(response.leave_balance);									
 				}					
 			});
 		}
@@ -332,7 +333,6 @@
 				console.log('please select correct date');
 			}
 			$('#number_of_days').val(diff);
-			
 		}
 
 		// function updateToDate(from_date) {

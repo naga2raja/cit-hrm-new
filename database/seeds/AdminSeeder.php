@@ -1,5 +1,6 @@
 <?php
 use App\User;
+use App\Employee;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -16,12 +17,26 @@ class AdminSeeder extends Seeder
             'email' => 'cithrm@yopmail.com',
             'password' => bcrypt('password'),
         ]);
+        Employee::insert([
+            'user_id' => $user->id,
+            'email' => 'cithrm@yopmail.com',
+            'first_name' => 'Admin',
+            'last_name' => ' Admin',
+            'employee_id' => '001'        
+        ]);
         $user->assignRole('Admin');
 
         $user = User::create([
             'name' => 'Employee',
             'email' => 'employee@yopmail.com',
             'password' => bcrypt('password'),
+        ]);
+        Employee::insert([
+            'user_id' => $user->id,
+            'email' => 'employee@yopmail.com',
+            'first_name' => 'employee',
+            'last_name' => ' Demo',
+            'employee_id' => '002'     
         ]);
         $user->assignRole('Employee');
     }
