@@ -13,6 +13,7 @@ use App\mLeaveType;
 use App\mLeavePeriod;
 use App\mLeaveEntitlement;
 use App\mCompanyLocation;
+use App\mCountry;
 use Session;
 use DB;
 
@@ -66,6 +67,7 @@ class LeaveEntitlementController extends Controller
         }
         // dd($employees);
         
+        $country = mCountry::get();
         $company_location = mCompanyLocation::get();
         $leave_types = mLeaveType::get();
         $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
@@ -89,7 +91,7 @@ class LeaveEntitlementController extends Controller
             $leave_period_name = 'No Leave Period';
         }
 
-        return view('leave/entitlements/add', compact('employees', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value', 'company_location'));
+        return view('leave/entitlements/add', compact('employees', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value', 'company_location', 'country'));
     }
 
     /**
@@ -117,36 +119,46 @@ class LeaveEntitlementController extends Controller
             $employees = Employee::select('employees.*', 'm_company_locations.*')
                     ->join('m_company_locations', 'm_company_locations.id', 'employees.company_location_id')
                     ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')
-                    ->when(filled($location_id), function($query) use ($location_id) {
+                    ->when(filled(request()->filled('location_id')), function($query) {
                         $query->where('m_company_locations.country_id', request('location_id'));
                     })
-                    ->when(filled($sub_unit_id), function($query) use ($sub_unit_id) {
+                    ->when(filled(request()->filled('sub_unit_id')), function($query) {
                         $query->where('m_company_locations.id', request('sub_unit_id'));
                     })->selectRaw('employees.id as employee_id');
                     $employees = $employees->get()->toArray();
         }
 
         foreach ($employees as $key => $emp) {
-            $entitlements = mLeaveEntitlement::create([
-                'emp_number' => $emp['employee_id'],
-                'no_of_days' => $request->input('entitlement'),
-                'days_used' => '0.0000',
-                'leave_type_id' => $request->input('leave_type'),
-                'from_date' => $request->input('from_date'),
-                'to_date' => $request->input('to_date'),
-                'entitlement_type' => '1'
-            ]);
+            // duplicate check
+            $isExists = mLeaveEntitlement::where('emp_number', $emp['employee_id'])
+                                          ->where('leave_type_id', $request->input('leave_type'))
+                                          ->where('from_date', $request->input('from_date'))
+                                          ->where('to_date', $request->input('to_date'))
+                                          ->first();
+            if(!$isExists) {
+                // create new entitlement
+                $create_entitlements = mLeaveEntitlement::create([
+                    'emp_number' => $emp['employee_id'],
+                    'no_of_days' => $request->input('entitlement'),
+                    'days_used' => '0.0000',
+                    'leave_type_id' => $request->input('leave_type'),
+                    'from_date' => $request->input('from_date'),
+                    'to_date' => $request->input('to_date'),
+                    'entitlement_type' => '1'
+                ]);
+            }else{
+                // update entitlement
+                $no_of_days = $isExists->no_of_days + $request->input('entitlement');
+                $update_entitlements = mLeaveEntitlement::where('emp_number', $emp['employee_id'])
+                                                ->where('leave_type_id', $request->input('leave_type'))
+                                                ->where('from_date', $request->input('from_date'))
+                                                ->where('to_date', $request->input('to_date'))
+                                                ->update(array('no_of_days' => $no_of_days));
+            }
+            
         }
 
-        // duplicate check
-        // $isExists = mLeaveEntitlement::where('emp_number', $request->input('emp_number'))
-        //                               ->where('leave_type_id', $request->input('leave_type'))
-        //                               ->first();
-        // if($isExists) {
-        //     return redirect()->back()->with('error', 'Leave Entitlements already Exists');        
-        // }
-
-        return redirect()->route('entitlements.create')->with('success', 'Leave Entitlements Added successfully');
+        return redirect()->route('leaveEntitlement.create')->with('success', 'Leave Entitlements Added successfully');
     }
 
     /**

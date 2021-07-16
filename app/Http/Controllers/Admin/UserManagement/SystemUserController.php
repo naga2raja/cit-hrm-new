@@ -64,7 +64,7 @@ class SystemUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::get();
+        $roles = Role::orderBy('id', 'desc')->get();
         return view('admin/system_users/add', compact('roles'));
     }
 
@@ -78,7 +78,7 @@ class SystemUserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:employees,email',
+            'email' => 'required|unique:users,email',
             'password' => 'required'
         ]);
 
@@ -94,6 +94,12 @@ class SystemUserController extends Controller
             'password' => Hash::make($request->input('password'))
         ]);
         $user->assignRole($request->input('role'));
+
+        // update user_id in employee table
+        if($user){
+            $employee = Employee::where('email', $request->input('email'))
+                                ->update(array('user_id' => $user->id));
+        }
 
         return redirect()->route('systemUsers.index')->with('success', 'System User Added successfully');
     }
@@ -123,7 +129,7 @@ class SystemUserController extends Controller
                     ->where('users.id', $id)
                     ->get();
         // dd($users);
-        $roles = Role::get();
+        $roles = Role::orderBy('id', 'desc')->get();
         return view('admin/system_users/edit', compact('users', 'roles'));
     }
 

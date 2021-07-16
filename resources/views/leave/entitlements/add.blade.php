@@ -54,6 +54,12 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
+													<!-- <select class="form-control select" name="location_id">
+	                                                    <option value='0' {{ old('location_id') == '0' ? 'selected' : '' }}>All</option>
+	                                                    @foreach ($country as $row)
+		                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : '' }}>{{ $row->country }} - {{ $row->code }}</option>
+		                                                @endforeach
+	                                                </select> -->
 													<select class="form-control select" name="location_id">
 	                                                    <option value='0' {{ old('location_id') == '0' ? 'selected' : '' }}>All</option>
 	                                                    <option value='103' {{ old('location_id') == '103' ? 'selected' : '' }}>India</option>
@@ -73,7 +79,7 @@
 													<select class="form-control select" name="sub_unit_id">
 	                                                    <option value='0' {{ old('sub_unit_id') == '0' ? 'selected' : '' }}>All</option>
 	                                                    @foreach ($company_location as $company)
-		                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->name ? 'selected' : '' }}>{{ $company->company_name }}</option>
+		                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : '' }}>{{ $company->company_name }}</option>
 		                                                @endforeach
 	                                                </select>
 													{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}

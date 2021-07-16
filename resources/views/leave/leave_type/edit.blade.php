@@ -39,7 +39,7 @@
 															<label>Name <span class="text-danger">*</span></label>
 														</div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-3">
 														<div class="form-group">
 															<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $leave_type->name) }}" autocomplete="off">
 															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -47,7 +47,7 @@
 													</div>
 												</div>
 
-												<div class="row">
+												<div class="row" style="display: none;">
 													<div class="col-sm-2">
 														<div class="form-group">
 															<label>Is entitlement situational</label>
@@ -69,7 +69,7 @@
 
 												<div class="row">
 													<div class="col-sm-2"></div>
-													<div class="col-sm-4 text-center">
+													<div class="col-sm-3 text-center">
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="submit-section text-center btn-add">
