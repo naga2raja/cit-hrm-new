@@ -333,10 +333,13 @@
                                             <a class="dropdown-item" href="{{ route('leave.index') }}">My Leave</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle {{ Request::is('entitlements*') ? 'active' : '' }}" href="#">Entitlements</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*') ? 'active' : '' }}" href="#">Entitlements</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item {{ Request::is('entitlements*') ? 'active' : '' }}" href="{{ route('entitlements.create') }}">Add Entitlements</a>
+                                                    <a class="dropdown-item {{ Request::is('leaveEntitlement*') ? 'active' : '' }}" href="{{ route('leaveEntitlement.create') }}">Add Entitlements</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item {{ Request::is('entitlements*') ? 'active' : '' }}" href="{{ route('myEntitlements.index') }}">My Entitlements</a>
                                                 </li>
                                             </ul>
                                         </li>

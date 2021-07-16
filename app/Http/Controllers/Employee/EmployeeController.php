@@ -13,6 +13,7 @@ use App\mJobCategory;
 use App\mCompanyLocation;
 use App\tEmployeeReportTo;
 use Auth;
+use DB;
 
 class EmployeeController extends Controller
 {
@@ -344,10 +345,15 @@ class EmployeeController extends Controller
 
         if($request->has('q')){
             $search = $request->q;
-            $data = Employee::select("id")->selectRaw('CONCAT (first_name, " ", last_name) as name ')
+            $string = str_replace(' ', '', $search);
+            $data = Employee::select("id")
+                    ->selectRaw('CONCAT (first_name, " ", middle_name, " ", last_name) as name')
+                    ->selectRaw('employee_id')
+                    ->selectRaw('email')
             		->where('first_name','LIKE',"%$search%")
                     ->orWhere('middle_name','LIKE',"%$search%")
                     ->orWhere('last_name','LIKE',"%$search%")
+                    ->orwhere(DB::raw("CONCAT(first_name, middle_name, last_name)"), 'LIKE', "%$string%")
             		->get();
         }
         return response()->json($data);

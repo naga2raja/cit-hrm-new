@@ -30,7 +30,7 @@
 								</div>
 								@endif
 
-								<form method="POST" action="{{ route('entitlements.store') }}">
+								<form method="POST" action="{{ route('leaveEntitlement.store') }}">
 									@csrf
 									<div class="row">
 										<div class="col-sm-2">
@@ -72,7 +72,9 @@
 												<div class="form-group">
 													<select class="form-control select" name="sub_unit_id">
 	                                                    <option value='0' {{ old('sub_unit_id') == '0' ? 'selected' : '' }}>All</option>
-	                                                    <option value='3' {{ old('sub_unit_id') == '3' ? 'selected' : '' }}>CABC'S India</option>
+	                                                    @foreach ($company_location as $company)
+		                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->name ? 'selected' : '' }}>{{ $company->company_name }}</option>
+		                                                @endforeach
 	                                                </select>
 													{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
@@ -88,10 +90,17 @@
 												</div>
 											</div>
 											<div class="col-sm-3">
-												<div class="form-group">
+												<!-- <div class="form-group">
 													<input type="text" name="employee" id="employee_name" class="form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" placeholder="Type for hints.." value="{{ old('employee') }}" autocomplete="off">
 													{!! $errors->first('employee', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 													<div id="employees_list" class="autocomplete"></div>
+													<input type="hidden" name="emp_number" id="emp_number" class="form-control">
+												</div> -->
+
+												<div class="form-group">										
+													<select class="employee_name form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" name="employee" id="employee_name" style="width: 100%">
+													</select>
+													{!! $errors->first('employee', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 													<input type="hidden" name="emp_number" id="emp_number" class="form-control">
 												</div>
 											</div>
@@ -106,7 +115,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select" name="leave_type_id">
+												<select class="form-control select" name="leave_type">
                                                     @foreach ($leave_types as $type)
 	                                                    <option value='{{ $type->id }}' {{ old('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
 	                                                @endforeach
@@ -166,7 +175,7 @@
 													</div>
 												</div>
 												<div class="col-sm-6">
-													<a href="{{ route('entitlements.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													<a href="{{ route('leaveEntitlement.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>
@@ -191,50 +200,6 @@
 @push('scripts')
 <script type="text/javascript">
 
-	// Autocomplete ajax call
-	$('#employee_name').keyup(function(){ 
-		var employee_name = $(this).val();
-		if(employee_name != '')
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-				method:"POST",
-				url: '/employeeNameSearch',
-				data:{
-					employee_name:employee_name,
-					_token:_token
-				},
-				success:function(data){
-					$('#employee_name').removeClass('is-invalid');
-					$("#not_exist").remove();
-
-					if(data != ""){					
-						$('#employees_list').fadeIn();
-						$('#employees_list').html(data);
-					}else{
-						$('#emp_number').val('');
-						var exists = ($("#not_exist").length == 0);
-					    if (exists) {
-					        $('#employee_name').addClass('is-invalid');
-							$('#employees_list').fadeOut();
-							$('<span id="not_exist" class="invalid-feedback" role="alert">Employee does not exist</span>').insertAfter('#employee_name');
-					    }
-					}
-				}
-			});
-		} else{
-			$('#employees_list').html('');
-		}
-	});
-
-	$(document).on('click', '.employees', function(){
-		$('#employee_name').val($(this).text());
-		$('#emp_number').val($(this).attr('id'));
-		$('#employees_list').fadeOut();
-		$('#employee_name').removeClass('is-invalid');
-		$("#not_exist").remove();
-	});
-
 	// enable/disable location_div
 	$("#multiple_employee").change(function() {
 	    if(this.checked) {
@@ -246,25 +211,30 @@
 	    }
 	});
 
-	// get the leave period
-	// $(document).ready(function(){
- //        var intialFrom  = $('#from_date').val();
- //        var intialTo    = $('#to_date').val();
-        
- //        $('#period').val(intialFrom+'$$'+intialTo);
-        
- //        $('#period').change(function() {
- //            var val = $(this).val();
-            
- //            if (typeof val == 'string') {
- //                var selectValue = val.split('$$');
- //                $('#from_date').val(selectValue[0]);
- //                $('#to_date').val(selectValue[1]);
- //            } else {
- //                $('#from_date').val('');
- //                $('#to_date').val('');                        
- //            }
- //          });        
- //    });
+	// Autocomplete ajax call
+	$('.employee_name').select2({
+		placeholder: 'Select a employee',
+		allowClear: true,
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+	$(document.body).on("change","#employee_name",function(){
+	 	$('#emp_number').val(this.value);
+	});
 </script>  
 @endpush
