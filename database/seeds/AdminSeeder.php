@@ -22,7 +22,8 @@ class AdminSeeder extends Seeder
             'email' => 'cithrm@yopmail.com',
             'first_name' => 'Admin',
             'last_name' => ' Admin',
-            'employee_id' => '001'        
+            'employee_id' => '001',
+            'status' => 'Active'     
         ]);
         $user->assignRole('Admin');
 
@@ -36,7 +37,8 @@ class AdminSeeder extends Seeder
             'email' => 'employee@yopmail.com',
             'first_name' => 'employee',
             'last_name' => ' Demo',
-            'employee_id' => '002'     
+            'employee_id' => '002',
+            'status' => 'Active'  
         ]);
         $user->assignRole('Employee');
     }

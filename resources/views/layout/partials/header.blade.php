@@ -65,7 +65,7 @@
                                                     </span>
                                                 </a>
                                                 @endif
-                                                <a class="dropdown-item p-2" href="profile-settings">
+                                                <a class="dropdown-item p-2" href="{{ route('profile-settings') }}">
                                                     <span class="media align-items-center">
                                                         <span class="lnr lnr-cog mr-3"></span>
                                                         <span class="media-body text-truncate">
@@ -307,7 +307,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                @endrole
+                                
                                 <li class="mr-1 nav-item dropdown {{ Request::is('employees*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="company" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
@@ -323,6 +323,7 @@
                                         </li>
                                     </ul>
                                 </li>
+                                @endrole
                                 <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*','holidays*', 'entitlements*', 'leave*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
@@ -457,6 +458,7 @@
                                         </li>
                                     </ul>
                                 </li>
+                                @hasrole('Admin')
                                 <li class="mr-1 {{ Request::is('reports','contact-reports','email-reports','leave-reports','payroll-reports','security-reports','work-from-home-reports') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="reports"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a>
                                     <ul class="dropdown-menu">
@@ -491,6 +493,7 @@
                                 <li class="mr-1 {{ Request::is('settings','details','documents','employment','payroll','profile-reviews','profile-settings','settings-timeoff','time-off') ? 'active' : '' }}">
                                     <a class="btn-ctm-space text-dark" href="settings"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a>
                                 </li>
+                                @endrole
                             </ul>
                         </div>
                     </div>

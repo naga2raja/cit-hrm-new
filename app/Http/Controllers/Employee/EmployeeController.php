@@ -348,7 +348,7 @@ class EmployeeController extends Controller
             $search = $request->q;
             $string = str_replace(' ', '', $search);
             $data = Employee::select("id")
-                    ->selectRaw('CONCAT (first_name, " ", middle_name, " ", last_name) as name')
+                    ->selectRaw('CONCAT_WS (first_name, " ", last_name) as name')
                     ->selectRaw('employee_id')
                     ->selectRaw('email')
             		->where('first_name','LIKE',"%$search%")
