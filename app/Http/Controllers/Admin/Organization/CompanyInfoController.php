@@ -22,7 +22,7 @@ class CompanyInfoController extends Controller
     {
         $company = mCompany::select('m_companies.*', 'm_countries.country as country')
                             ->leftjoin('m_countries', 'm_countries.id', 'm_companies.country_id')
-                            ->get();
+                            ->first();
         $branches = mCompanyLocation::select('*')->count(); 
         $employees = Employee::whereNull('deleted_at')->count();
         $countries = mCountry::get();
@@ -36,9 +36,15 @@ class CompanyInfoController extends Controller
             'modal_company_name' => 'string|max:255',
         ]);
 
-        $company = mCompany::where('id', $request->modal_company_id)
-                            ->update(['company_name' => (empty($request->modal_company_name) ? '' :  $request->modal_company_name)]);
+        $isExists = mCompany::where('id', $request->modal_company_id)->first();
+        $infoArr = ['company_name' => (empty($request->modal_company_name) ? '' :  $request->modal_company_name)];
 
+        if($isExists) {
+            $company = mCompany::where('id', $request->modal_company_id)
+                            ->update($infoArr);
+        } else {
+            $company = mCompany::insert($infoArr);
+        }
         return response()->json(['url'=> route('company.index')]); 
 
     }
@@ -56,9 +62,9 @@ class CompanyInfoController extends Controller
             'state_province' => 'nullable|string|max:64',
             'zip_code' => 'nullable|string|max:7',
         ]);
+        $isExists = mCompany::where('id', $request->modal_company_id)->first();
 
-        $company = mCompany::where('id', $request->modal_company_id)
-                            ->update([
+        $infoArr = [
             'company_name' => (empty($request->company_name) ? '' :  $request->company_name),
             'registration_number' => (empty($request->registration_number) ? '' :  $request->registration_number),
             'tax_id' => (empty($request->tax_id) ? '' :  $request->tax_id),
@@ -69,8 +75,15 @@ class CompanyInfoController extends Controller
             'state_province' => (empty($request->state_province) ? '' :  $request->state_province),
             'country_id' => (empty($request->country) ? '' :  $request->country),
             'zip_code' => (empty($request->zip_code) ? '' :  $request->zip_code)
-        ]);
+        ];
 
+        if($isExists) {
+            $company = mCompany::where('id', $request->modal_company_id)
+                            ->update($infoArr);
+        } else {
+            //insert
+            $company = mCompany::insert($infoArr);
+        }
         return response()->json(['url'=> route('company.index')]);
     }
 
@@ -78,17 +91,24 @@ class CompanyInfoController extends Controller
     {
         $validated = $request->validate([
             'phone_number' => 'nullable|string|max:20',
-            'website' => 'nullable|string|max:255',
-            'email' => 'nullable|string|max:255',
+            'website' => 'nullable|url',
+            'email' => 'nullable|email',
 
         ]);
 
-        $company = mCompany::where('id', $request->modal_company_id)
-                            ->update([
-                                'phone_number' => (empty($request->phone_number) ? '' :  $request->phone_number),
-                                'website' => (empty($request->website) ? '' :  $request->website),
-                                'email' => (empty($request->email) ? '' :  $request->email)
-                            ]);
+        $isExists = mCompany::where('id', $request->modal_company_id)->first();
+
+        $contactArr = [
+            'phone_number' => (empty($request->phone_number) ? '' :  $request->phone_number),
+            'website' => (empty($request->website) ? '' :  $request->website),
+            'email' => (empty($request->email) ? '' :  $request->email)
+        ];
+        if($isExists) {
+            $company = mCompany::where('id', $request->modal_company_id)
+                            ->update($contactArr);
+        } else {
+            $company = mCompany::insert($contactArr);  
+        }
 
         return response()->json(['url'=> route('company.index')]);
     }
