@@ -49,7 +49,7 @@
 										<div class="d-inline-block">
 											<h4 class="card-title mb-0">
 												@if(count($company) > 0)
-													{{ $company[0]->company_name }}
+													{{ @$company[0]->company_name }}
 												@endif
 											</h4>
 											<p class="mb-0 ctm-text-sm">Head Office</p>
@@ -69,7 +69,7 @@
 										<div class="card-header">
 											<h4 class="card-title mb-0">
 												@if(count($company) > 0)
-													{{ $company[0]->company_name }}
+													{{ @$company[0]->company_name }}
 												@endif
 												<div class="d-inline-block float-right" data-toggle="modal" data-target="#editOffice">
 													<a href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -81,12 +81,12 @@
 												<div class="col-md-6">
 													<p><span class="text-primary">Register Number : </span>
 														@if(count($company) > 0)
-															{{ $company[0]->registration_number }}
+															{{ @$company[0]->registration_number }}
 														@endif
 													</p>
 													<p><span class="text-primary">Tax ID : </span>
 													@if(count($company) > 0)
-														{{ $company[0]->tax_id }}
+														{{ @$company[0]->tax_id }}
 													@endif
 													</p>
 												</div>
@@ -94,11 +94,11 @@
 													<p>
 														<span class="text-primary">Address:</span><br>
 														@if(count($company) > 0)
-															{{ $company[0]->address_street_1 }}
-															{{ $company[0]->address_street_2 }}
-															{{ $company[0]->city }}
-															{{ $company[0]->state_province }}
-															{{ $company[0]->zip_code }}
+															{{ @$company[0]->address_street_1 }}
+															{{ @$company[0]->address_street_2 }}
+															{{ @$company[0]->city }}
+															{{ @$company[0]->state_province }}
+															{{ @$company[0]->zip_code }}
 														@endif
 													</p>
 													
@@ -119,19 +119,19 @@
 										</div>
 										<div class="card-body">
 											<div class="input-group mb-3">
-												<input type="text" class="form-control" placeholder="Phone Number..." value="@if(count($company) > 0 && $company[0]->phone_number != null) {{ $company[0]->phone_number }} @endif" id="phone_number" name="phone_number" disabled="disabled">
+												<input type="text" class="form-control" placeholder="Phone Number..." value="@if(count($company) > 0 && @$company[0]->phone_number != null) {{ @$company[0]->phone_number }} @endif" id="phone_number" name="phone_number" disabled="disabled">
 												<div class="input-group-append">
 													<button class="btn btn-theme text-white" type="button" id="phone_number_edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 												</div>
 											</div>
 											<div class="input-group mb-3">
-												<input type="text" class="form-control" placeholder="Website..." value="@if(count($company) > 0 && $company[0]->website != null) {{ $company[0]->website }} @endif" id="website" name="website" disabled="disabled">
+												<input type="text" class="form-control" placeholder="Website..." value="@if(count($company) > 0 && @$company[0]->website != null) {{ @$company[0]->website }} @endif" id="website" name="website" disabled="disabled">
 												<div class="input-group-append">
 													<button class="btn btn-theme text-white" type="button" id="website_edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 												</div>
 											</div>
 											<div class="input-group mb-0">
-												<input type="email" class="form-control" placeholder="E-mail..." value="@if(count($company) > 0 && $company[0]->email != null) {{ $company[0]->email }} @endif" id="email" name="email" disabled="disabled">
+												<input type="email" class="form-control" placeholder="E-mail..." value="@if(count($company) > 0 && @$company[0]->email != null) {{ @$company[0]->email }} @endif" id="email" name="email" disabled="disabled">
 												<div class="input-group-append">
 													<button class="btn btn-theme text-white" type="button" id="email_edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 												</div>
@@ -183,8 +183,8 @@
 						<form>
 							@csrf
 							<div class="form-group">
-								<input class="form-control" type="hidden" value="@if(count($company) > 0){{ $company[0]->id }}@endif" id="modal_company_id" name="modal_company_id">
-								<input type="text" class="form-control" placeholder="Office Name" value="@if(count($company) > 0 && $company[0]->company_name != null){{ $company[0]->company_name }}@endif" id="modal_company_name" name="modal_company_name">
+								<input class="form-control" type="hidden" value="@if(count($company) > 0){{ @$company[0]->id }}@endif" id="modal_company_id" name="modal_company_id">
+								<input type="text" class="form-control" placeholder="Office Name" value="@if(count($company) > 0 && @$company[0]->company_name != null){{ @$company[0]->company_name }}@endif" id="modal_company_name" name="modal_company_name">
 							</div>
 							<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-theme text-white ctm-border-radius float-right" id="update_company_name">Save</button>
@@ -220,42 +220,42 @@
 						<h4 class="modal-title mb-3">Add Company Information</h4>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Company Name" value="@if(count($company) > 0 && $company[0]->company_name != null) {{ $company[0]->company_name }} @endif" id="company_name" name="company_name">
+								<input class="form-control" type="text" placeholder="Company Name" value="@if(count($company) > 0 && @$company[0]->company_name != null) {{ @$company[0]->company_name }} @endif" id="company_name" name="company_name">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Registered Company Number" value="@if(count($company) > 0 && $company[0]->registration_number != null) {{ $company[0]->registration_number }} @endif" id="registration_number" name="registration_number">
+								<input class="form-control" type="text" placeholder="Registered Company Number" value="@if(count($company) > 0 && @$company[0]->registration_number != null) {{ @$company[0]->registration_number }} @endif" id="registration_number" name="registration_number">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Tax Id" value="@if(count($company) > 0 && $company[0]->tax_id != null) {{ $company[0]->tax_id }} @endif" id="tax_id" name="tax_id">
+								<input class="form-control" type="text" placeholder="Tax Id" value="@if(count($company) > 0 && @$company[0]->tax_id != null) {{ @$company[0]->tax_id }} @endif" id="tax_id" name="tax_id">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control datetimepicker1" type="text" placeholder="Incorporation Date" value="@if(count($company) > 0 && $company[0]->incorporation_date != null) {{date('d-m-Y', strtotime($company[0]->incorporation_date))}} @endif" id="incorporation_date" name="incorporation_date">
+								<input class="form-control datetimepicker1" type="text" placeholder="Incorporation Date" value="@if(count($company) > 0 && @$company[0]->incorporation_date != null) {{date('d-m-Y', strtotime(@$company[0]->incorporation_date))}} @endif" id="incorporation_date" name="incorporation_date">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Address Line1" value="@if(count($company) > 0 && $company[0]->address_street_1 != null) {{ $company[0]->address_street_1 }} @endif" id="address_street_1" name="address_street_1">
+								<input class="form-control" type="text" placeholder="Address Line1" value="@if(count($company) > 0 && @$company[0]->address_street_1 != null) {{ @$company[0]->address_street_1 }} @endif" id="address_street_1" name="address_street_1">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Address Line2" value="@if(count($company) > 0 && $company[0]->address_street_2 != null) {{ $company[0]->address_street_2 }} @endif" id="address_street_2" name="address_street_2">
+								<input class="form-control" type="text" placeholder="Address Line2" value="@if(count($company) > 0 && @$company[0]->address_street_2 != null) {{ @$company[0]->address_street_2 }} @endif" id="address_street_2" name="address_street_2">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="City" value="@if(count($company) > 0 && $company[0]->city != null) {{ $company[0]->city }} @endif" id="city" name="city">
+								<input class="form-control" type="text" placeholder="City" value="@if(count($company) > 0 && @$company[0]->city != null) {{ @$company[0]->city }} @endif" id="city" name="city">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="State/Province" value="@if(count($company) > 0 && $company[0]->state_province != null) {{ $company[0]->state_province }} @endif" id="state_province" name="state_province">
+								<input class="form-control" type="text" placeholder="State/Province" value="@if(count($company) > 0 && @$company[0]->state_province != null) {{ @$company[0]->state_province }} @endif" id="state_province" name="state_province">
 							</div>
 						</div>
 						<div class="form-group">
@@ -265,7 +265,7 @@
 									@foreach ($countries as $country)
 									<option value="{{ $country->id }}" 
 										@if(count($company) > 0) 
-												@if($country->id == $company[0]->country_id)
+												@if($country->id == @$company[0]->country_id)
 													{{ "selected" }}
 												@else
 													{{ "" }}
@@ -279,7 +279,7 @@
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Post-Code" value="@if(count($company) > 0 && $company[0]->zipcode != null) {{ $company[0]->zip_code }} @endif" id="zip_code" name="zip_code">
+								<input class="form-control" type="text" placeholder="Post-Code" value="@if(count($company) > 0 && @$company[0]->zipcode != null) {{ @$company[0]->zip_code }} @endif" id="zip_code" name="zip_code">
 							</div>
 						</div>
 						<button type="button" class="btn btn-danger text-white ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
@@ -485,7 +485,7 @@
 	});
 
 	$('.datetimepicker1').datetimepicker({
-		date: '{{ ($company[0]->incorporation_date) }}',
+		date: '{{ (@$company[0]->incorporation_date) }}',
 		format: "DD-MM-YYYY", 
 		maxDate: moment()
 	});
