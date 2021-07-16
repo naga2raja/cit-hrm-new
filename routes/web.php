@@ -190,7 +190,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::post('/holidays/multiple-delete', 'Leave\Holidays\HolidaysController@deleteMultiple');
 
     Route::resource('/leaveEntitlement', 'Leave\Entitlements\LeaveEntitlementController'); // add
-    Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
+    // Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
 
     // employee
     Route::resource('/employees', 'Employee\EmployeeController');
@@ -245,7 +245,8 @@ Route::group(['middleware' => ['role:Employee|Admin']], function () {
 
     //Leave
     Route::resource('/leave', 'Leave\Leave\LeaveController');
-    Route::POST('leave/leave-balance-ajax', 'Leave\Leave\LeaveController@getLeaveBalance');
+    Route::post('leave/leave-balance-ajax', 'Leave\Leave\LeaveController@getLeaveBalance');
+    Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
 });
 
 Route::resource('/punch', 'Time\Attendance\PunchInOutController');

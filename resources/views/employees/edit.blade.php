@@ -699,13 +699,25 @@
 	$('#datetimepicker1').datetimepicker({
 		date: '{{ (@$employee->date_of_birth) }}',
 		format: "YYYY-MM-DD", 
-		maxDate: moment()
+		maxDate: moment(),
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		}
 	});
 
 	$('.datetimepicker2').datetimepicker({
 		date: '{{ (@$employee->joined_date) }}',
 		format: "YYYY-MM-DD", 
-		maxDate: moment()
+		maxDate: moment(),
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		}
 	});
 
 	$("#user_profile_list a.list-group-item").click(function() {

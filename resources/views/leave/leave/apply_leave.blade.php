@@ -27,8 +27,8 @@
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-header">
 										<div class="d-inline-block">
-											<h4 class="card-title mb-0">Focus Technologies</h4>
-											<p class="mb-0 ctm-text-sm">Head Office</p>
+											<h4 class="card-title mb-0">Recent Leaves</h4>
+											{{-- <p class="mb-0 ctm-text-sm">Head Office</p> --}}
 										</div>
 									</div>
 									<div class="card-body">
@@ -44,6 +44,16 @@
 						<div class="col-xl-9 col-lg-8 col-md-12">
 							<div class="row">
 								<div class="col-md-12">
+									@if($message = Session::get('success'))
+										<div class="alert alert-success">
+											<p>{{$message}}</p>
+										</div>
+									@endif	
+									@if($message = Session::get('error'))
+										<div class="alert alert-danger">
+											<p>{{$message}}</p>
+										</div>
+									@endif
 									<div class="card ctm-border-radius shadow-sm">
 										<div class="card-header">
 											<h4 class="card-title mb-0">Apply Leaves</h4>
@@ -58,18 +68,20 @@
 															Leave Type
 															<span class="text-danger">*</span>
 															</label>
-															<select class="form-control select" name="leave_type_id" id="leave_type_id" required>
+															<select class="form-control select {{ $errors->has('leave_type_id') ? 'is-invalid' : ''}}" name="leave_type_id" id="leave_type_id" required>
 																<option value="">Select Leave</option>
 																@foreach ($leaveType as $item)
 																	<option value="{{ $item->id }}">{{ $item->name }}</option>																	
 																@endforeach
 															</select>
+															{!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Remaining Leaves</label>
-															<input type="text" class="form-control" placeholder="-" readonly name="leave_balance" id="leave_balance">															
+															<input type="text" class="form-control {{ $errors->has('leave_balance') ? 'is-invalid' : ''}}" placeholder="-" readonly name="leave_balance" id="leave_balance">
+															{!! $errors->first('leave_balance', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
@@ -77,14 +89,15 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label>From</label>
-															<input type='text' class="form-control" id='datetimepicker4' name="from_date" required/>
+															<input type='text' class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}}" id='datetimepicker4' name="from_date" required/>
+															{!! $errors->first('from_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>To</label>
-															<input type='text' class="form-control" id='datetimepicker5' name="to_date" required/>
-															{{-- <input type="text" class="form-control datetimepicker"> --}}
+															<input type='text' class="form-control {{ $errors->has('to_date') ? 'is-invalid' : ''}}" id='datetimepicker5' name="to_date" required/>
+															{!! $errors->first('to_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
@@ -95,19 +108,21 @@
 															Duration
 															<span class="text-danger">*</span>
 															</label>
-															<select class="form-control select" name="leave_duration" required>
+															<select class="form-control select {{ $errors->has('leave_duration') ? 'is-invalid' : ''}}" name="leave_duration" required>
 																<option value="">Select</option>
 																<option value="full day">Full Day</option>
 																<option value="half a day">Half a Day</option>
 																{{-- <option value="morning">First Half</option>
 																<option value="evening">Second Half</option> --}}
 															</select>
+															{!! $errors->first('leave_duration', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Number of Days Leave</label>
-															<input type="text" class="form-control" placeholder="2" readonly name="number_of_days" id="number_of_days">															
+															<input type="text" class="form-control {{ $errors->has('number_of_days') ? 'is-invalid' : ''}}" placeholder="-" readonly name="number_of_days" id="number_of_days">
+															{!! $errors->first('number_of_days', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
@@ -115,7 +130,8 @@
 													<div class="col-sm-12">
 														<div class="form-group mb-0">
 															<label>Reason</label>
-															<textarea class="form-control" rows=4 required name="reason"></textarea>
+															<textarea class="form-control {{ $errors->has('reason') ? 'is-invalid' : ''}}" rows=4 required name="reason"></textarea>
+															{!! $errors->first('reason', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
@@ -127,6 +143,7 @@
 										</div>
 									</div>
 								</div>
+								<!--
 								<div class="col-md-12">
 									<div class="card ctm-border-radius shadow-sm">
 										<div class="card-header">
@@ -242,6 +259,7 @@
 										</div>
 									</div>
 								</div>
+							-->
 							</div>
 						</div>
 					</div>
@@ -273,7 +291,7 @@
 
 @section('my-scripts')
 	<script>
-		$('#leave_balance').val('0');
+		// $('#leave_balance').val('0');
 		$('#leave_type_id').on('change', function() {
 			getLeaveBalance();			
 		})
