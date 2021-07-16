@@ -148,7 +148,6 @@ class SystemUserController extends Controller
 
         $users = User::find($id);
         $users->name = $request->input('name');
-        // $users->email = $request->input('email');
         $users->save();
 
         $users->syncRoles($request->input('role'));

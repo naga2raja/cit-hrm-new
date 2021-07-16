@@ -30,7 +30,7 @@
 								</div>
 								@endif
 
-								<form method="POST" action="{{ route('leaveEntitlement.store') }}">
+								<form method="POST" action="{{ route('leaveEntitlement.store') }}" >
 									@csrf
 									<div class="row">
 										<div class="col-sm-2">
@@ -40,7 +40,8 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="checkbox" name="multiple_employee" id="multiple_employee">
+												<input type="hidden" name="multiple_employee" value="off">
+												<input type="checkbox" name="multiple_employee" id="multiple_employee" {{ old('multiple_employee') == 'on' ? 'checked' : '' }}>
 											</div>
 										</div>
 									</div>
@@ -49,7 +50,7 @@
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
-													<label>Location <span class="text-danger">*</span></label>
+													<label>Location<span class="text-danger">*</span></label>
 												</div>
 											</div>
 											<div class="col-sm-3">
@@ -205,22 +206,28 @@
 
 @push('scripts')
 <script type="text/javascript">
-
 	// enable/disable location_div
-	$("#multiple_employee").change(function() {
-	    if(this.checked) {
+	function display() {
+		if($('#multiple_employee').is(':checked')) {
 	        $('#location_div').css("display", "block");
 	        $('#employee_div').css("display", "none");
 	    }else{
 	    	$('#location_div').css("display", "none");
 	    	$('#employee_div').css("display", "block");
 	    }
+	}
+	
+	window.onload = function() {
+		display();
+	}
+
+	$("#multiple_employee").change(function() {
+	    display();
 	});
 
 	// Autocomplete ajax call
 	$('.employee_name').select2({
 		placeholder: 'Select a employee',
-		allowClear: true,
 		ajax: {
 			url: '/employee-autocomplete-ajax',
 			dataType: 'json',

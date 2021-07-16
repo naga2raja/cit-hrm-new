@@ -102,8 +102,9 @@ class LeaveEntitlementController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
-            'employee' => 'required',
+            'employee' => 'required_if:multiple_employee,off',
             'entitlement' => 'required|max:2',
             'leave_type' => 'required',
             'leave_period' => 'required'
@@ -115,19 +116,22 @@ class LeaveEntitlementController extends Controller
         );
 
         // for multiple employee
-        if($request->input('multiple_employee')){
+        if($request->input('multiple_employee') == "on"){
             $employees = Employee::select('employees.*', 'm_company_locations.*')
                     ->join('m_company_locations', 'm_company_locations.id', 'employees.company_location_id')
                     ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')
-                    ->when(filled(request()->filled('location_id')), function($query) {
-                        $query->where('m_company_locations.country_id', request('location_id'));
-                    })
                     ->when(filled(request()->filled('sub_unit_id')), function($query) {
                         $query->where('m_company_locations.id', request('sub_unit_id'));
                     })->selectRaw('employees.id as employee_id');
+
+                    if($request->input('location_id') != '0'){
+                        $employees->where('m_company_locations.country_id', request('location_id'));
+                    }
                     $employees = $employees->get()->toArray();
         }
 
+        $create_entitlements = [];
+        $update_entitlements = [];
         foreach ($employees as $key => $emp) {
             // duplicate check
             $isExists = mLeaveEntitlement::where('emp_number', $emp['employee_id'])
@@ -154,11 +158,27 @@ class LeaveEntitlementController extends Controller
                                                 ->where('from_date', $request->input('from_date'))
                                                 ->where('to_date', $request->input('to_date'))
                                                 ->update(array('no_of_days' => $no_of_days));
-            }
-            
+            }            
         }
 
-        return redirect()->route('leaveEntitlement.create')->with('success', 'Leave Entitlements Added successfully');
+        $msg = ""; $msg_type = "";
+        if($create_entitlements){
+            $msg_type = "success";
+            $msg = "'success', 'Leave Entitlements Added successfully'";
+        }
+        else if($update_entitlements){
+            $msg_type = "success";
+            if(count($employees) > 1){
+                $msg = "The selected leave entitlement will be applied to the employees";
+            }else{
+                $msg = "Existing Entitlement value ".$isExists->no_of_days." will be updated to ".$no_of_days.".00";
+            }
+        }else{
+            $msg_type = "error";
+            $msg = "Failed, No employees match the selected filters";
+        }
+
+        return redirect()->route('leaveEntitlement.create')->with($msg_type, $msg);
     }
 
     /**
