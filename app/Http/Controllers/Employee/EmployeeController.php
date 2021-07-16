@@ -14,6 +14,7 @@ use App\mCompanyLocation;
 use App\tEmployeeReportTo;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -101,7 +102,7 @@ class EmployeeController extends Controller
             $user = new User;
             $user->name = $request->first_name . ' '.$request->last_name;
             $user->email = $request->email;
-            $user->password = bcrypt('password');
+            $user->password =  Hash::make($request->password);
             $user->save();
 
             $user->assignRole('Employee');
