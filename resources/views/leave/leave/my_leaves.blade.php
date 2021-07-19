@@ -80,7 +80,9 @@
                                                                     <td> {{ $leave->name }}</td>
                                                                     <td> {{ $leave->from_date }}</td>
                                                                     <td> {{ $leave->to_date }}</td>
-                                                                    <td> {{ $leave->leave_days+1 }} </td>
+                                                                    <td> 
+																		{{ ($leave->leave_days+1) * $leave->length_days }} ({{ $leave->leave_duration }})
+																	</td>
                                                                     <td>  - </td>
                                                                     <td> {{ $leave->comments }}</td>
                                                                     <td> {{ $leave->leave_status }}</td>

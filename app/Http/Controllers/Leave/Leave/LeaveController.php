@@ -14,6 +14,9 @@ use App\tLeaveRequest;
 use App\mLeaveStatus;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Mail;
+use App\Mail\ApplyLeaveRequestMail;
+use App\tEmployeeReportTo;
 
 class LeaveController extends Controller
 {
@@ -32,7 +35,7 @@ class LeaveController extends Controller
             ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
             ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
             ->where('t_leave_requests.employee_id', $employeeId)
-            ->select('t_leave_requests.*', 'm_leave_types.name')
+            ->select('t_leave_requests.*', 'm_leave_types.name', 't_leaves.leave_duration', 't_leaves.length_days')
             ->selectRaw('datediff(t_leave_requests.to_date, t_leave_requests.from_date) as leave_days, m_leave_status.name as leave_status')
             ->when(request()->filled('status'), function ($query) {
                 $query->where('t_leave_requests.status', request('status'));
@@ -93,6 +96,11 @@ class LeaveController extends Controller
 
         $employee = Employee::where('user_id', Auth::user()->id)->first();
         $employeeId = $employee->id;
+        
+        $leaveEntitlements = mLeaveEntitlement::where('emp_number', $employeeId)
+                                ->where('id', $request->leave_entitlement_id)
+                                ->where('leave_type_id', $request->leave_type_id)
+                                ->first();
 
         //Check is leave exists
         $exists = tLeave::where('employee_id', $employeeId)
@@ -112,6 +120,14 @@ class LeaveController extends Controller
         $leaveRequest->status = 1;
         $leaveRequest->comments = $request->reason;
         $leaveRequest->save();
+
+        //find Leave Length days
+        $lengthDay = 1;
+        $lengthHour = 8;
+        if($request->leave_duration == 'morning' || $request->leave_duration == 'evening') {
+            $lengthDay = 0.5;
+            $lengthHour = 4;
+        }
         
         // Iterate over the period
         foreach ($leaveDates as $date) {
@@ -120,13 +136,43 @@ class LeaveController extends Controller
             $leave->employee_id = $employeeId;
             $leave->leave_request_id = $leaveRequest->id;
             $leave->date = $leaveDate;
-            $leave->length_hours = 8;
-            $leave->length_days = 1;
+            $leave->length_hours = $lengthHour;
+            $leave->length_days = $lengthDay;
+            $leave->leave_duration = $request->leave_duration;
             $leave->status = 1;
             $leave->approval_level = 0;
             $leave->leave_type_id = $request->leave_type_id;
             $leave->save();
         }
+
+        //updated used leaves count
+        $leaveEntitlements->days_used = $leaveEntitlements->days_used - $request->number_of_days;
+        $leaveEntitlements->save();
+        
+        $managerEmails = [];
+        //get reporting managers
+        $reportTo = $this->getReportingManagers($employeeId);
+        if($reportTo && $reportTo->reporting_manager_ids) {
+            $empId = explode(',', $reportTo->reporting_manager_ids);
+            $managers = Employee::whereIn('employees.id', $empId)
+                ->join('users', 'users.id', '=', 'employees.user_id')
+                ->selectRaw('employees.email as email,  users.name')
+                ->get()
+                ->toArray();
+
+            if($managers) {
+                $managerEmails = $managers;
+            }
+        }
+
+        //send mail notification to Manager and admin
+        $details = [
+            'employee_name' => $employee->first_name . ' '.$employee->last_name,
+            'date'  =>  $fromDate . ' to '. $toDate
+        ];        
+        $managerEmails[] = ['name' => 'Admin', 'email' => 'cithrm@yopmail.com'];
+
+        Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
         
         return redirect()->back()->with('success', 'You applied successfully!');      
                 
@@ -177,6 +223,49 @@ class LeaveController extends Controller
         //
     }
 
+    public function getLeaveList(Request $request)
+    {
+        $user = Auth::user();
+        $empIds = [];
+        if($user->hasRole('Manager')) {
+            //Find Reporting Employees Ids
+            $reportTo = $this->getReportingEmployees(Auth::user()->id);
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        } else {    
+            dd('Admin');
+        }
+
+        $leaveStatus = mLeaveStatus::get();
+
+        $employee = Employee::where('user_id', Auth::user()->id)->first();
+        $employeeId = $employee->id;
+        $myLeaves = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
+            ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
+            ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
+            ->where('t_leave_requests.employee_id', '!=', $employeeId);
+        if(count($empIds)) {
+            $myLeaves = $myLeaves->whereIn('t_leave_requests.employee_id', $empIds);
+            // dd($empIds);
+        }
+
+        $myLeaves = $myLeaves->select('t_leave_requests.*', 'm_leave_types.name', 't_leaves.leave_duration', 't_leaves.length_days')
+            ->selectRaw('datediff(t_leave_requests.to_date, t_leave_requests.from_date) as leave_days, m_leave_status.name as leave_status')
+            ->when(request()->filled('status'), function ($query) {
+                $query->where('t_leave_requests.status', request('status'));
+            })
+            ->when(request()->filled('from_date'), function ($query) {
+                $query->where('t_leave_requests.from_date', '>=', request('from_date'));
+            })
+            ->when(request()->filled('to_date'), function ($query) {
+                $query->where('t_leave_requests.to_date', '<=', request('to_date'));
+            })
+            ->groupBy('t_leave_requests.id')
+            ->paginate(10); 
+
+        return view('leave/leave/my_leaves', compact('leaveStatus', 'myLeaves'));           
+    }
+
     public function getLeaveBalance(Request $request)
     {
         $employeeId = $request->employee_id;
@@ -193,17 +282,37 @@ class LeaveController extends Controller
         $leavesTaken = tLeave::where('employee_id', $employeeId)
                     ->where('leave_type_id', $leaveTypeId)
                     ->whereIn('status', [1,2,3])
-                    ->get();
+                    ->selectraw('SUM(length_days) as leaves_taken')
+                    ->first();
 
         $leaveBalance = 0;
         if($leaveEntitlements) {
-            $leaveBalance = $leaveEntitlements->no_of_days - count($leavesTaken); //$leaveEntitlements->days_used;
+            $leaveBalance = $leaveEntitlements->no_of_days - $leavesTaken->leaves_taken; //$leaveEntitlements->days_used;
         }
         $out['balance'] = $leaveEntitlements;
         $out['as_on_date']  = $date;
         $out['status']  = ($leaveEntitlements) ? true : false;
         $out['leaves'] = $leavesTaken;
         $out['leave_balance'] = $leaveBalance;
+        $out['leave_entitlement_id'] = ($leaveEntitlements) ? $leaveEntitlements->id : 0;;
         return response()->json($out);
+    }
+
+    public function getReportingEmployees($managerId)
+    {
+        $data = tEmployeeReportTo::where('manager_id', $managerId)
+            ->selectRaw('GROUP_CONCAT(employee_id) as reporting_manager_ids')
+            ->first();
+        
+        return $data;
+    }
+
+    public function getReportingManagers($employeeId)
+    {
+        $data = tEmployeeReportTo::where('employee_id', $employeeId)
+            ->selectRaw('GROUP_CONCAT(manager_id) as reporting_manager_ids')
+            ->first();
+        
+        return $data;
     }
 }
