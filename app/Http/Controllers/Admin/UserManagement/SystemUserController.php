@@ -76,32 +76,48 @@ class SystemUserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:users,email',
-            'password' => 'required'
+            'email' => 'required_if:generatePassword,on',
+            'password' => 'required_if:generatePassword,on'
         ]);
 
+        $msg = "";
         // duplicate check
         $isExists = User::where('email', $request->input('email'))->first();
+        $emp = Employee::where('id', $request->input('name'))
+                        ->selectRaw('employees.id as id, CONCAT(first_name, " ", last_name) as name')
+                        ->first();
+
         if($isExists) {
-            return redirect()->back()->with('error', 'Username already Exists');        
+            // update
+            $msg = "User Updated";
+            $users = User::find($isExists->id);
+            $users->name = $emp->name;
+            if($request->input('generatePassword') == 'on'){
+                $users->password = Hash::make($request->input('password'));
+                $msg .= " with Username: ".$request->input('email')." Password: ".$request->input('password');
+            }
+            $users->save();
+            $users->syncRoles($request->input('role'));
+        }else{
+            // create
+            $user = User::create([
+                'name'  => $emp->name,
+                'email'  => $request->input('email'),
+                'password' => Hash::make($request->input('password'))
+            ]);
+            $user->assignRole($request->input('role'));
+            // update user_id in employee table
+            if($user){
+                $employee = Employee::where('email', $request->input('email'))
+                                    ->update(array('user_id' => $user->id));
+            }
+            $msg = "User Added with Username: ".$request->input('email')." Password: ".$request->input('password');
         }
 
-        $user = User::create([
-            'name'  => $request->input('name'),
-            'email'  => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
-        ]);
-        $user->assignRole($request->input('role'));
-
-        // update user_id in employee table
-        if($user){
-            $employee = Employee::where('email', $request->input('email'))
-                                ->update(array('user_id' => $user->id));
-        }
-
-        return redirect()->route('systemUsers.index')->with('success', 'System User Added successfully');
+        return redirect()->route('systemUsers.index')->with('success', $msg);
     }
 
     /**
@@ -239,5 +255,21 @@ class SystemUserController extends Controller
             $output = "";
             echo $output;
         }
+    }
+
+    public function getUsername(Request $request)
+    {
+        $employee_id = $request->employee_id;
+
+        $data = [];
+        if($employee_id){
+            $data = User::select('users.*', 'employees.*', 'roles.name as role_name')
+                    ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
+                    ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                    ->join('employees', 'employees.email', 'users.email')
+                    ->where('employees.id', $employee_id)
+                    ->get();
+        }
+        return response()->json($data);
     }
 }

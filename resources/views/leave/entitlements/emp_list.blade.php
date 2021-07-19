@@ -8,8 +8,21 @@
 						<div class="col-xl-12 col-lg-12 col-md-12">
 							<div class="card shadow-sm ctm-border-radius border">
 								<div class="card-body align-center">
-									<form method="GET" action="{{ route('systemUsers.index') }}">
+									<form method="GET" action="{{ route('leaveEntitlement.index') }}">
 										<div class="row filter-row">
+
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
+												<div class="form-group mb-xl-0 mb-md-2 mb-sm-3">
+													<label>Employee Name <span class="text-danger">*</span></label>
+													<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%">
+														@if(Request::get('name'))
+															<option selected="selected" id="{{ Request::get('emp_number') }}">{{ Request::get('name') }}</option>
+														@endif
+													</select>
+													{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<input type="hidden" name="emp_number" id="emp_number" class="form-control">
+												</div>
+											</div>
 
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-3">
@@ -23,8 +36,8 @@
 												</div>
 											</div>
 
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-3">
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
+												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<label>Leave Type <span class="text-danger">*</span></label>
 													<select class="form-control select" name="leave_type_id">
 	                                                    @foreach ($leave_types as $type)
@@ -80,8 +93,8 @@
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_entitlements_table')">
 													</th>
+													<th>Employee Name</th>
 													<th>Leave Type</th>
-													<!-- <th>Entitlement Type</th> -->
 													<th>Valid From</th>
 													<th>Valid To</th>
 													<th>Days</th>
@@ -94,10 +107,14 @@
 														<td class="text-center">
 															<input type="checkbox" name="user_id" value="{{ $row->id }}">
 														</td>
+														<td>{{ $row->employee_name }}</td>
 														<td>{{ $row->leave_type_id }}</td>
-														<!-- <td>{{ $row->id }}</td> -->
-														<td>{{ $row->from_date }}</td>
-														<td>{{ $row->to_date }}</td>
+														<td>
+															<h2><u><a href="{{ route('leaveEntitlement.create', 'employee_id='.$row->id) }}">{{ $row->from_date }}</a></u></h2>
+														</td>
+														<td>
+															<h2><u><a href="{{ route('leaveEntitlement.create', 'employee_id='.$row->id) }}">{{ $row->to_date }}</a></u></h2>
+														</td>
 														<td>{{ $row->no_of_days }}</td>
 													</tr>
 													@endforeach
@@ -125,45 +142,28 @@
 @push('scripts')
 <script type="text/javascript">
 	// Autocomplete ajax call
-	$('#employee_name').keyup(function(){ 
-		var employee_name = $(this).val();
-		if(employee_name != '')
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-				method:"POST",
-				url: '/employeeNameSearch',
-				data:{
-					employee_name:employee_name,
-					_token:_token
-				},
-				success:function(data){
-					$('#employee_name').removeClass('is-invalid');
-					$("#not_exist").remove();
-
-					if(data != ""){					
-						$('#employees_list').fadeIn();
-						$('#employees_list').html(data);
-					}else{
-						var exists = ($("#not_exist").length == 0);
-					    if (exists) {
-					        $('#employee_name').addClass('is-invalid');
-							$('#employees_list').fadeOut();
-							$('<span id="not_exist" class="invalid-feedback" role="alert">Employee does not exist</span>').insertAfter('#employee_name');
-					    }
-					}
-				}
-			});
-		} else{
-			$('#employees_list').html('');	        	
-		}
+	$('.employee_name').select2({
+		placeholder: 'Select a employee',
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
 	});
 
-	$(document).on('click', '.employees', function(){
-		$('#employee_name').val($(this).text());
-		$('#employees_list').fadeOut();
-		$('#employee_name').removeClass('is-invalid');
-		$("#not_exist").remove();
+	$(document.body).on("change","#employee_name",function(){
+	 	$('#emp_number').val(this.value);
 	});
 </script>    
     <!-- <script src="{{ asset('js/system_users.js')}}"></script> -->

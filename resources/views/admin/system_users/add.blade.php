@@ -40,10 +40,16 @@
 														</div>
 													</div>
 													<div class="col-sm-3">
-														<div class="form-group">
-															<input type="text" name="name" id="employee_name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="Type for hints.." value="{{ old('name') }}" autocomplete="off">
+														<!-- <div class="form-group">
+															<input type="text" name="name" id="employee_name2" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="Type for hints.." value="{{ old('name') }}" autocomplete="off">
 															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 															<div id="employees_list" class="autocomplete"></div>
+														</div> -->
+														<div class="form-group">										
+															<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%">
+															</select>
+															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															<input type="hidden" name="emp_number" id="emp_number" class="form-control">
 														</div>
 													</div>
 												</div>
@@ -56,7 +62,7 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role">
+															<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role" id="role">
 		                                                        @foreach ($roles as $role)
 		                                                            <option value='{{ $role->name }}' {{ old('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
 		                                                        @endforeach
@@ -86,33 +92,49 @@
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
-															<label>Username <span class="text-danger">*</span></label>
+															<label for="generatePassword">Generate Password</label>
 														</div>
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="text" name="email" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email') }}" readonly="">
-															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															<input type="hidden" name="generatePassword" value="off">
+															<input type="checkbox" name="generatePassword" id="generatePassword" {{ old('generatePassword') == 'on' ? 'checked' : '' }}>
 														</div>
 													</div>
 												</div>
 
-												<div class="row">
-													<div class="col-sm-2">
-														<div class="form-group">
-															<label>Password <span class="text-danger">*</span></label>
+												<div id="password_div" style="display: none;">
+													<div class="row">
+														<div class="col-sm-2">
+															<div class="form-group">
+																<label>Username <span class="text-danger">*</span></label>
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<input type="text" name="email" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('email') }}" readonly="">
+																{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															</div>
 														</div>
 													</div>
-													<div class="col-sm-3">
-														<div class="form-group">
-															<input type="password" name="password" id="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('password') }}" readonly="">
-															{!! $errors->first('password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+
+													<div class="row">
+														<div class="col-sm-2">
+															<div class="form-group">
+																<label>Password <span class="text-danger">*</span></label>
+															</div>
 														</div>
-													</div>
-													<div class="col-sm-4">
-														<div class=" custom-control custom-checkbox mb-0 mt-2">
-															<input type="checkbox" onclick="showPassword('password')" id="show_password" class="custom-control-input" >
-															<label class="mb-0 custom-control-label" for="show_password">Show Password</label>
+														<div class="col-sm-3">
+															<div class="form-group">
+																<input type="password" name="password" id="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('password') }}" readonly="">
+																{!! $errors->first('password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															</div>
+														</div>
+														<div class="col-sm-4">
+															<div class=" custom-control custom-checkbox mb-0 mt-2">
+																<input type="checkbox" onclick="showPassword('password')" id="show_password" class="custom-control-input" >
+																<label class="mb-0 custom-control-label" for="show_password">Show Password</label>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -158,53 +180,106 @@
 
 @push('scripts')
 <script type="text/javascript">
-	// Autocomplete ajax call
-	$('#employee_name').keyup(function(){ 
-		var employee_name = $(this).val();
-		if(employee_name != '')
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-				method:"POST",
-				url: '/employeeNameSearch',
-				data:{
-					employee_name:employee_name,
-					_token:_token
-				},
-				success:function(data){
-					$('#employee_name').removeClass('is-invalid');
-					$("#not_exist").remove();
 
-					if(data != ""){					
-						$('#employees_list').fadeIn();
-						$('#employees_list').html(data);
-					}else{
-						$('#email').val('');
-						$('#password').val('');
-						var exists = ($("#not_exist").length == 0);
-					    if (exists) {
-					        $('#employee_name').addClass('is-invalid');
-							$('#employees_list').fadeOut();
-							$('<span id="not_exist" class="invalid-feedback" role="alert">Employee does not exist</span>').insertAfter('#employee_name');
-					    }
-					}
-				}
-			});
-		} else{
-			$('#employees_list').html('');
-			$('#email').val('');
-			$('#password').val('');	        	
-		}
+	// enable/disable location_div
+	function display() {
+		if($('#generatePassword').is(':checked')) {
+	        $('#password_div').css("display", "block");
+	        // to set username
+			setUsername($('#employee_name').val());
+    		// to set password
+			var password = generatePassword();
+			$('#password').val(password);
+	    }else{
+	    	$('#password_div').css("display", "none");
+	    	$('#generatePassword').prop('checked', false);
+	    }		
+	}
+	
+	window.onload = function() {
+		if($('#employee_name').val()) {
+	    	// remove all validations msg
+			$('#employee_name').removeClass('is-invalid');
+		    $("#not_exist").remove();
+	    	// on load calling enable or disable function
+			display();
+			// calling validation_popup_msg
+			// validation_popup_msg();    		
+	    }		
+	}
+
+	function setUsername(employee_id){
+		// remove all validations msg
+	    $('#email').removeClass('is-invalid');
+	    $('#password').removeClass('is-invalid');
+	    $('#email').val('');
+		$('#password').val('');
+
+		var _token = $('input[name="_token"]').val();
+    	$.ajax({
+    		method:"POST",
+			url: '/getUsername',
+			dataType: 'json',
+    		data : {employee_id: employee_id, _token: _token},
+    		success:function(data){
+    			$('#email').val(data[0].email);
+    			$("#role").val(data[0].role_name).change();
+    		}
+    	});
+	}
+
+	$("#generatePassword").change(function() {
+	    $('#password').val('');
+	    if($('#employee_name').val()) {
+	    	// remove all validations msg
+			$('#employee_name').removeClass('is-invalid');
+		    $("#not_exist").remove();
+	    	// onchange calling enable or disable function
+    		display();    		
+	    } else{
+	    	$('#generatePassword').prop('checked', false);
+	    	var exists = ($("#not_exist").length == 0);
+		    if (exists) {
+		        $('#employee_name').addClass('is-invalid');
+				$('<span id="not_exist" class="invalid-feedback" role="alert">The name field is required.</span>').insertAfter('#emp_number');
+		    }
+	    }    	
 	});
 
-	$(document).on('click', '.employees', function(){
-		$('#employee_name').val($(this).text());
-		$('#email').val($(this).attr('emp_email'));
-		var password = generatePassword();
-		$('#password').val(password);	
-		$('#employees_list').fadeOut();
-		$('#employee_name').removeClass('is-invalid');
-		$("#not_exist").remove();
+	// Autocomplete ajax call
+	$('.employee_name').select2({
+		placeholder: 'Select a employee',
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+	$(document.body).on("change","#employee_name",function(){
+	    if($('#employee_name').val()) {
+	    	// remove all validations msg
+			$('#employee_name').removeClass('is-invalid');
+		    $("#not_exist").remove();
+    		// to set username and password
+			setUsername($('#employee_name').val());
+	    }
+	    
+		$('#generatePassword').prop('checked', false);
+		$('#password_div').css("display", "none");
+
+	 	$('#emp_number').val(this.value);
 	});
 
 	// show password
@@ -218,6 +293,7 @@
         }
     }
 
+    // auto_generate _password
 	function generatePassword() {
 		var passwordLength = 12;
 		var numberChars = "0123456789";

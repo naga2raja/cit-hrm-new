@@ -166,6 +166,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
     Route::post('/systemUsers/multiple-delete', 'Admin\UserManagement\SystemUserController@deleteMultiple');
     Route::post('/employeeNameSearch', 'Admin\UserManagement\SystemUserController@employeeNameSearch');
+    Route::post('/getUsername', 'Admin\UserManagement\SystemUserController@getUsername');
     
     // job_title
     Route::resource('/jobTitles', 'Admin\Job\JobTitles\JobTitlesController');
@@ -190,7 +191,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::post('/holidays/multiple-delete', 'Leave\Holidays\HolidaysController@deleteMultiple');
 
     Route::resource('/leaveEntitlement', 'Leave\Entitlements\LeaveEntitlementController'); // add
-    // Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
+    Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
 
     // employee
     Route::resource('/employees', 'Employee\EmployeeController');

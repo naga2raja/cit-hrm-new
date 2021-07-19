@@ -86,8 +86,15 @@
 												</div>
 											</div>
 											<div class="col-sm-3">
+												<!-- <div class="form-group">
+													<input type="text" name="employee" id="employee_name" class="form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" placeholder="Type for hints.." value="{{ old('employee') }}" autocomplete="off">
+													{!! $errors->first('employee', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<div id="employees_list" class="autocomplete"></div>
+													<input type="hidden" name="emp_number" id="emp_number" class="form-control">
+												</div> -->
+
 												<div class="form-group">										
-													<select class="employee_name form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" name="employee" id="employee_name" style="width: 100%">
+													<select class="employee_name form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" name="employee" id="employee_name" style="width: 100%" {{ (Request::get('employee_id')) ? 'readonly=""' : '' }}>
 														@if(Request::get('employee_id'))
 															<option selected="selected" id="{{ auth()->user()->id }}">{{ auth()->user()->name }}</option>
 														@endif
