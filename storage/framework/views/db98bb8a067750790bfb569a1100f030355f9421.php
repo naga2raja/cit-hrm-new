@@ -5,12 +5,15 @@
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<?php if(!Route::is(['add-employee','admin','calendar','company','contact-reports','create-review','custom-timeoff-approver','details','documents','edit-review','email-reports','employees-dashboard','employees-list','employees-offices-list','employees-offices','employees-team','employees','employment','forgot-password','leave-reports','leave','line-manager','login','manage-leadership','manage','payroll-admin','payroll-reports','payroll','profile-reviews','profile-settings','register','reports','reviews','security-reports','settings-timeoff','settings','super-admin','team-lead','team-member','time-off','work-from-home-reports'])): ?>
+		<?php if(!Route::is(['employees.create', 'employees.edit', 'employees.index', 'admin','calendar','company','contact-reports','create-review','custom-timeoff-approver','details','documents','edit-review','email-reports','employees-dashboard','employees-list','employees-offices-list','employees-offices','employees-team','employees','employment','forgot-password','leave-reports','leave','line-manager','login','manage-leadership','manage','payroll-admin','payroll-reports','payroll','profile-reviews','profile-settings','register','reports','reviews','security-reports','settings-timeoff','settings','super-admin','team-lead','team-member','time-off','work-from-home-reports'])): ?>
 		<title>Dashboard Page</title>
 		<?php endif; ?>
 		
-		<?php if(Route::is(['add-employee'])): ?>
-		<title>Add Employee Page</title>
+		<?php if(Route::is(['employees.create'])): ?>
+		<title>Add Employee</title>
+		<?php endif; ?>
+		<?php if(Route::is(['employees.edit'])): ?>
+		<title>Edit Employee</title>
 		<?php endif; ?>
 		<?php if(Route::is(['admin'])): ?>
 		<title>Manage Page</title>
@@ -45,14 +48,14 @@
 		<?php if(Route::is(['employees-dashboard'])): ?>
 		<title>index Page</title>
 		<?php endif; ?>
-		<?php if(Route::is(['employees-list'])): ?>
+		<?php if(Route::is(['employees'])): ?>
 		<title>Employees Page</title>
 		<?php endif; ?>
 		<?php if(Route::is(['employees-offices-list'])): ?>
 		<title>Employees Page</title>
 		<?php endif; ?>
-		<?php if(Route::is(['employees-offices'])): ?>
-		<title>Employees Page</title>
+		<?php if(Route::is(['employees.index'])): ?>
+		<title>Employees</title>
 		<?php endif; ?>
 		<?php if(Route::is(['employees-team'])): ?>
 		<title>Employees Page</title>
@@ -153,4 +156,8 @@
         <link rel="stylesheet" href="<?php echo e(assetUrl('plugins/fullcalendar/fullcalendar.min.css')); ?>">
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="<?php echo e(assetUrl('css/style.css')); ?>">
+		<!-- Multi select checkbox -->		
+
+        <script src="<?php echo e(asset('js/locations.js')); ?>"></script>        
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	</head><?php /**PATH D:\xampp\htdocs\cit-hrm-new\resources\views/layout/partials/head.blade.php ENDPATH**/ ?>
