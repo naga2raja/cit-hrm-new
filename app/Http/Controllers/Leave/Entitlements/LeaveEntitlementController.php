@@ -24,34 +24,56 @@ class LeaveEntitlementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // for employees entitlement list
-        $employees = []; $entitlement = [];
+      DB::connection()->enableQueryLog();
 
-        $leave_types = mLeaveType::get();
-        $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
+      $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'employees.*', 'm_leave_types.*')
+                  ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')
+                  ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
+                  ->selectRaw('employees.id as employee_id, CONCAT(first_name, " ", last_name) as employee_name')
+                  ->when(request()->filled('emp_number'), function($query) {
+                      $query->where('employees.id', request('emp_number'));
+                  })
+                  ->when(request()->filled('leave_type_id'), function($query) {
+                      $query->where('m_leave_entitlements.leave_type_id', request('leave_type_id'));
+                  })
 
-        if($leave_periods){
-            $year = date('Y');
-            $month = $leave_periods->start_month;
-            $date = $leave_periods->start_date;
-            $from_date = $year."-" .str_pad($month, 2, "0", STR_PAD_LEFT)."-".str_pad($date, 2, "0", STR_PAD_LEFT);
+                  ->when(request()->filled('from_date'), function ($query) {
+                      $query->where('m_leave_entitlements.from_date', '>=', request('from_date'));
+                  })
+                  ->when(request()->filled('to_date'), function ($query) {
+                      $query->where('m_leave_entitlements.to_date', '<=', request('to_date'));
+                  });
 
-            $end = new DateTime($from_date);
-            $end->modify('+1 years -1 days');
-            $end_date = $end->format('Y-m-d');
+      $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
+                     ->get();
+      // dd(DB::getQueryLog());
 
-            $leave_period_value = $from_date.' - '.$end_date;
-            $leave_period_name = $from_date.' - '.$end_date;
-        }else{
-            $from_date = "";
-            $end_date = "";
-            $leave_period_value = '';
-            $leave_period_name = 'No Leave Period';
-        }
+      $leave_types = mLeaveType::get();
+      $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
 
-        return view('leave/entitlements/emp_entitle_list', compact('employees', 'entitlement', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value'));
+      if($leave_periods){
+          $year = date('Y');
+          $month = $leave_periods->start_month;
+          $date = $leave_periods->start_date;
+          $from_date = $year."-" .str_pad($month, 2, "0", STR_PAD_LEFT)."-".str_pad($date, 2, "0", STR_PAD_LEFT);
+
+          $end = new DateTime($from_date);
+          $end->modify('+1 years -1 days');
+          $end_date = $end->format('Y-m-d');
+
+          $leave_period_value = $leave_periods->start_month.'-'.$leave_periods->start_date;
+          $leave_period_name = $from_date.' - '.$end_date;
+      }else{
+          $from_date = "";
+          $end_date = "";
+          $leave_period_value = '';
+          $leave_period_name = 'No Leave Period';
+      }
+
+      return view('leave/entitlements/emp_list', compact('entitlement', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value'));
     }
 
     /**
@@ -119,15 +141,20 @@ class LeaveEntitlementController extends Controller
         if($request->input('multiple_employee') == "on"){
             $employees = Employee::select('employees.*', 'm_company_locations.*')
                     ->join('m_company_locations', 'm_company_locations.id', 'employees.company_location_id')
-                    ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')
-                    ->when(filled(request()->filled('sub_unit_id')), function($query) {
-                        $query->where('m_company_locations.id', request('sub_unit_id'));
-                    })->selectRaw('employees.id as employee_id');
+                    ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id');
+
+                    if($request->input('sub_unit_id') != '0'){
+                        $employees->when(filled(request()->filled('sub_unit_id')), function($query) {
+                                        $query->where('m_company_locations.id', request('sub_unit_id'));
+                                    });
+                    }
 
                     if($request->input('location_id') != '0'){
-                        $employees->where('m_company_locations.country_id', request('location_id'));
+                        $employees->when(filled(request()->filled('location_id')), function($query) {
+                                        $query->where('m_company_locations.country_id', request('location_id'));
+                                    });
                     }
-                    $employees = $employees->get()->toArray();
+                    $employees = $employees->selectRaw('employees.id as employee_id')->get()->toArray();
         }
 
         $create_entitlements = [];
@@ -164,18 +191,18 @@ class LeaveEntitlementController extends Controller
         $msg = ""; $msg_type = "";
         if($create_entitlements){
             $msg_type = "success";
-            $msg = "'success', 'Leave Entitlements Added successfully'";
+            $msg = "Leave Entitlements Added Successfully";
         }
         else if($update_entitlements){
             $msg_type = "success";
             if(count($employees) > 1){
-                $msg = "The selected leave entitlement will be applied to the employees";
+                $msg = "The selected leave entitlement will be applied to ".count($employees)." employees";
             }else{
-                $msg = "Existing Entitlement value ".$isExists->no_of_days." will be updated to ".$no_of_days.".00";
+                $msg = "Existing Entitlement value ".$isExists->no_of_days." updated to ".$no_of_days.".00";
             }
         }else{
             $msg_type = "error";
-            $msg = "Failed, No employees match the selected filters";
+            $msg = "No employees match the selected filters";
         }
 
         return redirect()->route('leaveEntitlement.create')->with($msg_type, $msg);
