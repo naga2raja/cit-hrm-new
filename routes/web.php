@@ -250,6 +250,11 @@ Route::group(['middleware' => ['role:Employee|Admin']], function () {
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
 });
 
+Route::group(['middleware' => ['role:Admin|Manager|Employee']], function () {
+    //Leave
+    Route::get('leave-list', 'Leave\Leave\LeaveController@getLeaveList')->name('leave.list');
+});
+
 Route::resource('/punch', 'Time\Attendance\PunchInOutController');
 
 Route::get('/', 'HomeController@index')->name('index');

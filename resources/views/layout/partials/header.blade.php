@@ -331,7 +331,7 @@
                                             <a class="dropdown-item {{ Request::is('leave/create') ? 'active' : '' }}" href="{{ route('leave.create') }}">Apply Leave</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('leave.index') }}">My Leave</a>
+                                            <a class="dropdown-item {{ Request::is('leave') ? 'active' : '' }}" href="{{ route('leave.index') }}">My Leave</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*') ? 'active' : '' }}" href="#">Entitlements</a>
@@ -362,14 +362,14 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Leave List</a>
+                                            <a class="dropdown-item {{ Request::is('leave/list') ? 'active' : '' }}" href="{{ route('leave.list') }}">Leave List</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#">Assign Leave</a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="mr-1 {{ Request::is('leave') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('customers.*', 'projects.*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
                                     <ul class="dropdown-menu">
                                         <li>

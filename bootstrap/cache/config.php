@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:ptBHL/4jIsAcT/ejBVJNpA5uG+oFlLo/p/yAoG2dof0=',
+    'key' => 'base64:GrU0iMl5/jVNGiwjlClyM2SWr87YdOLsHAJKOvyT+vg=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -41,6 +41,7 @@
       24 => 'App\\Providers\\EventServiceProvider',
       25 => 'App\\Providers\\RouteServiceProvider',
       26 => 'Spatie\\Permission\\PermissionServiceProvider',
+      27 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     ),
     'aliases' => 
     array (
@@ -80,6 +81,7 @@
       'URL' => 'Illuminate\\Support\\Facades\\URL',
       'Validator' => 'Illuminate\\Support\\Facades\\Validator',
       'View' => 'Illuminate\\Support\\Facades\\View',
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
     ),
   ),
   'auth' => 
@@ -178,7 +180,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/cache/data',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -255,7 +257,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -265,7 +267,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -285,7 +287,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -300,7 +302,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -344,12 +346,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\app',
+        'root' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
+        'root' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -366,7 +368,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp\\htdocs\\cit-hrm-new\\public\\storage' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
+      'D:\\xampp\\htdocs\\cit-hrm-new\\public\\storage' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -400,13 +402,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -456,7 +458,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -512,7 +514,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\cit-hrm-new\\resources\\views/vendor/mail',
+        0 => 'D:\\xampp\\htdocs\\cit-hrm-new\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -639,7 +641,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/sessions',
+    'files' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -659,9 +661,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\cit-hrm-new\\resources\\views',
+      0 => 'D:\\xampp\\htdocs\\cit-hrm-new\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework\\views',
+    'compiled' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -693,10 +695,116 @@
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
   ),
+  'excel' => 
+  array (
+    'exports' => 
+    array (
+      'chunk_size' => 1000,
+      'pre_calculate_formulas' => false,
+      'strict_null_comparison' => false,
+      'csv' => 
+      array (
+        'delimiter' => ',',
+        'enclosure' => '"',
+        'line_ending' => '
+',
+        'use_bom' => false,
+        'include_separator_line' => false,
+        'excel_compatibility' => false,
+      ),
+      'properties' => 
+      array (
+        'creator' => '',
+        'lastModifiedBy' => '',
+        'title' => '',
+        'description' => '',
+        'subject' => '',
+        'keywords' => '',
+        'category' => '',
+        'manager' => '',
+        'company' => '',
+      ),
+    ),
+    'imports' => 
+    array (
+      'read_only' => true,
+      'ignore_empty' => false,
+      'heading_row' => 
+      array (
+        'formatter' => 'slug',
+      ),
+      'csv' => 
+      array (
+        'delimiter' => ',',
+        'enclosure' => '"',
+        'escape_character' => '\\',
+        'contiguous' => false,
+        'input_encoding' => 'UTF-8',
+      ),
+      'properties' => 
+      array (
+        'creator' => '',
+        'lastModifiedBy' => '',
+        'title' => '',
+        'description' => '',
+        'subject' => '',
+        'keywords' => '',
+        'category' => '',
+        'manager' => '',
+        'company' => '',
+      ),
+    ),
+    'extension_detector' => 
+    array (
+      'xlsx' => 'Xlsx',
+      'xlsm' => 'Xlsx',
+      'xltx' => 'Xlsx',
+      'xltm' => 'Xlsx',
+      'xls' => 'Xls',
+      'xlt' => 'Xls',
+      'ods' => 'Ods',
+      'ots' => 'Ods',
+      'slk' => 'Slk',
+      'xml' => 'Xml',
+      'gnumeric' => 'Gnumeric',
+      'htm' => 'Html',
+      'html' => 'Html',
+      'csv' => 'Csv',
+      'tsv' => 'Csv',
+      'pdf' => 'Dompdf',
+    ),
+    'value_binder' => 
+    array (
+      'default' => 'Maatwebsite\\Excel\\DefaultValueBinder',
+    ),
+    'cache' => 
+    array (
+      'driver' => 'memory',
+      'batch' => 
+      array (
+        'memory_limit' => 60000,
+      ),
+      'illuminate' => 
+      array (
+        'store' => NULL,
+      ),
+    ),
+    'transactions' => 
+    array (
+      'handler' => 'db',
+    ),
+    'temporary_files' => 
+    array (
+      'local_path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/laravel-excel',
+      'remote_disk' => NULL,
+      'remote_prefix' => NULL,
+      'force_resync_remote' => NULL,
+    ),
+  ),
   'trustedproxy' => 
   array (
     'proxies' => NULL,
-    'headers' => 94,
+    'headers' => 30,
   ),
   'tinker' => 
   array (

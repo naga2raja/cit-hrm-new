@@ -60,7 +60,8 @@
 										</div>
 										<div class="card-body">
 											<form method="POST" action="{{ route('leave.store') }}">
-												@csrf												
+												@csrf		
+												<input type="hidden" name="leave_entitlement_id" id="leave_entitlement_id">
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
@@ -71,7 +72,7 @@
 															<select class="form-control select {{ $errors->has('leave_type_id') ? 'is-invalid' : ''}}" name="leave_type_id" id="leave_type_id" required>
 																<option value="">Select Leave</option>
 																@foreach ($leaveType as $item)
-																	<option value="{{ $item->id }}">{{ $item->name }}</option>																	
+																	<option value="{{ $item->id }}" {{ (old('leave_type_id') == $item->id) ? 'selected' : '' }}>{{ $item->name }}</option>																	
 																@endforeach
 															</select>
 															{!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -80,7 +81,7 @@
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Remaining Leaves</label>
-															<input type="text" class="form-control {{ $errors->has('leave_balance') ? 'is-invalid' : ''}}" placeholder="-" readonly name="leave_balance" id="leave_balance">
+															<input type="text" class="form-control {{ $errors->has('leave_balance') ? 'is-invalid' : ''}}" placeholder="-" readonly name="leave_balance" id="leave_balance" value="{{ old('leave_balance') }}">
 															{!! $errors->first('leave_balance', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -89,14 +90,14 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label>From</label>
-															<input type='text' class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}}" id='datetimepicker4' name="from_date" required/>
+															<input type='text' class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}}" id='datetimepicker4' name="from_date" required value="{{ old('from_date') }}"/>
 															{!! $errors->first('from_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>To</label>
-															<input type='text' class="form-control {{ $errors->has('to_date') ? 'is-invalid' : ''}}" id='datetimepicker5' name="to_date" required/>
+															<input type='text' class="form-control {{ $errors->has('to_date') ? 'is-invalid' : ''}}" id='datetimepicker5' name="to_date" required value="{{ old('to_date') }}"/>
 															{!! $errors->first('to_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -108,12 +109,12 @@
 															Duration
 															<span class="text-danger">*</span>
 															</label>
-															<select class="form-control select {{ $errors->has('leave_duration') ? 'is-invalid' : ''}}" name="leave_duration" required>
+															<select class="form-control select {{ $errors->has('leave_duration') ? 'is-invalid' : ''}}" name="leave_duration" id="leave_duration" required>
 																<option value="">Select</option>
-																<option value="full day">Full Day</option>
-																<option value="half a day">Half a Day</option>
-																{{-- <option value="morning">First Half</option>
-																<option value="evening">Second Half</option> --}}
+																<option value="full day" {{ (old('leave_duration') == 'full day') ? 'selected' : '' }}>Full Day</option>
+																<!--<option value="half a day">Half a Day</option> -->
+																<option value="morning" {{ (old('leave_duration') == 'morning') ? 'selected' : '' }}>Morning</option>
+																<option value="evening" {{ (old('leave_duration') == 'evening') ? 'selected' : '' }}>Evening</option>
 															</select>
 															{!! $errors->first('leave_duration', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
@@ -121,7 +122,7 @@
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>Number of Days Leave</label>
-															<input type="text" class="form-control {{ $errors->has('number_of_days') ? 'is-invalid' : ''}}" placeholder="-" readonly name="number_of_days" id="number_of_days">
+															<input type="text" class="form-control {{ $errors->has('number_of_days') ? 'is-invalid' : ''}}" placeholder="-" readonly name="number_of_days" id="number_of_days" value="{{ old('number_of_days') }}">
 															{!! $errors->first('number_of_days', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -130,7 +131,7 @@
 													<div class="col-sm-12">
 														<div class="form-group mb-0">
 															<label>Reason</label>
-															<textarea class="form-control {{ $errors->has('reason') ? 'is-invalid' : ''}}" rows=4 required name="reason"></textarea>
+															<textarea class="form-control {{ $errors->has('reason') ? 'is-invalid' : ''}}" rows=4 required name="reason">{{ old('reason') }}</textarea>
 															{!! $errors->first('reason', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -272,17 +273,27 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
-		<!--Delete The Modal -->
-		<div class="modal fade" id="delete">
+		<!--show leave duration The Modal -->
+		<div class="modal fade" id="leave_duration_info">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 				
 					<!-- Modal body -->
 					<div class="modal-body">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title mb-3">Are You Sure Want to Delete?</h4>
-						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2" data-dismiss="modal">Delete</button>
+						<h4 class="modal-title mb-3">Leave Duration </h4>
+
+						<div class="alert alert-warning">
+							<p><b>Note:</b> Half a day Leave will be applied to the selected date range</p>
+						</div>
+						<br> 
+						<div style="text-align: center">
+							<button type="button" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2" data-dismiss="modal">OK</button>
+						</div>
+						<!-- 
+							<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
+							
+						-->
 					</div>
 				</div>
 			</div>
@@ -294,7 +305,22 @@
 		// $('#leave_balance').val('0');
 		$('#leave_type_id').on('change', function() {
 			getLeaveBalance();			
-		})
+		});
+
+		$('#leave_duration').on('change', function() {
+			numberOfDaysLeave();
+
+			var from_date = $('#datetimepicker4').val();
+			var to_date = $('#datetimepicker5').val();
+
+			var startDate = moment(from_date, 'DD/MM/YYYY');
+			var endDate = moment(to_date, 'DD/MM/YYYY');
+
+			if((startDate != endDate) && ($(this).val() == 'morning' || $(this).val() == 'evening')) {
+				$('#leave_duration_info').modal('show');
+			}
+			console.log($(this).val());
+		});
 
 		function getLeaveBalance() {
 			var leave_type_id = $("#leave_type_id option:selected").val();
@@ -307,7 +333,8 @@
 				contentType: 'application/json',
 				success: function(response){
 					console.log('response : ', response);
-					$('#leave_balance').val(response.leave_balance);									
+					$('#leave_balance').val(response.leave_balance);
+					$('#leave_entitlement_id').val(response.leave_entitlement_id);
 				}					
 			});
 		}
@@ -349,6 +376,12 @@
 			} else {	
 				diff = 0;			
 				console.log('please select correct date');
+			}
+
+			// check the leave for full day or half a day
+			var leave_duration = $('#leave_duration').val();
+			if(leave_duration == 'morning' || leave_duration == 'evening') {				
+				diff = diff * 0.5;
 			}
 			$('#number_of_days').val(diff);
 		}

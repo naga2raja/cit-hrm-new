@@ -19,7 +19,7 @@
                         <div class="col-lg-3 col-md-3 col-sm-3 col-6">
                             <div class="logo my-3 my-sm-0">
                                 <a href="index">
-                                    <img src="img/logo.png" alt="logo image" class="img-fluid" width="100">
+                                    <img src="<?php echo e(assetUrl('img/logo.png')); ?>" alt="logo image" class="img-fluid" width="100">
                                 </a>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                         <div class="user-info align-right dropdown d-inline-block header-dropdown">
                                             <a href="javascript:void(0)" data-toggle="dropdown" class=" menu-style dropdown-toggle">
                                                 <div class="user-avatar d-inline-block">
-                                                    <img src="img/profiles/img-6.jpg" alt="user avatar" class="rounded-circle img-fluid" width="55">
+                                                    <img src="<?php echo e(assetUrl('img/profiles/profile.png')); ?>" alt="user avatar" class="rounded-circle img-fluid" width="55">
                                                 </div>
                                             </a>
                                             <!-- Notifications -->
@@ -65,7 +65,7 @@
                                                     </span>
                                                 </a>
                                                 <?php endif; ?>
-                                                <a class="dropdown-item p-2" href="profile-settings">
+                                                <a class="dropdown-item p-2" href="<?php echo e(route('profile-settings')); ?>">
                                                     <span class="media align-items-center">
                                                         <span class="lnr lnr-cog mr-3"></span>
                                                         <span class="media-body text-truncate">
@@ -209,6 +209,28 @@
                                                 </span>
                                             </span>
                                         </a>
+
+                                        <?php if(auth()->check() && auth()->user()->hasRole('Admin')): ?>
+                                        <a class="p-2" href="/admin-page">
+                                            <span class="media align-items-center">
+                                                <span class="lnr lnr-users mr-3"></span>
+                                                <span class="media-body text-truncate text-left">
+                                                    <span class="text-truncate text-left">Admin demo</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        <?php endif; ?>
+                                        <?php if(auth()->check() && auth()->user()->hasRole('Employee')): ?>
+                                        <a class="p-2" href="/emp-page">
+                                            <span class="media align-items-center">
+                                                <span class="lnr lnr-users mr-3"></span>
+                                                <span class="media-body text-truncate text-left">
+                                                    <span class="text-truncate text-left">Employees Demo</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        <?php endif; ?>
+
                                     </div>
                                 </div>
                                 <!-- /Offcanvas menu --> 
@@ -219,33 +241,264 @@
             </div>
             <!-- /Top Header Section -->
             <!-- Slide Nav -->
-            <div class="header-wrapper d-none d-sm-none d-md-none d-lg-block">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
-                                <div class="append mr-auto my-0 my-md-0 mr-auto">
-                                    <ul class="list-group list-group-horizontal-md mr-auto">
-                                        <li class="mr-1 <?php echo e(Request::is('index','employees-dashboard') || request()->routeIs('index') ? 'active' : ''); ?>"><a href="<?php echo e(route('index')); ?>" class="btn-ctm-space text-dark header_class"><span class="lnr lnr-home pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Dashboard</span></a></li>
-                                        <?php if(auth()->check() && auth()->user()->hasRole('Admin')): ?>
-                                        <li class="mr-1 <?php echo e(Request::is('employees','add-employee','employees-list','employees-offices-list','employees-offices','employees-team') ? 'active' : ''); ?>"><a class="text-dark btn-ctm-space header_class" href="employees"><span class="lnr lnr-users pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Employees</span></a></li>
-                                        <li class="mr-1 <?php echo e(Request::is('company') ? 'active' : ''); ?>"><a class="text-dark btn-ctm-space " href="company"><span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Company</span></a></li>
-                                        <li class="mr-1 <?php echo e(Request::is('calendar') ? 'active' : ''); ?>"><a class="btn-ctm-space text-dark" href="calendar"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Calendar</span></a></li>                                        
-                                        <li class="mr-1 <?php echo e(Request::is('reports','contact-reports','email-reports','leave-reports','payroll-reports','security-reports','work-from-home-reports') ? 'active' : ''); ?>"><a class="btn-ctm-space text-dark" href="reports"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a></li>
-                                        <!--
-                                        <li class="mr-1 <?php echo e(Request::is('reviews','create-review','edit-review') ? 'active' : ''); ?>"><a class="text-dark btn-ctm-space" href="reviews"><span class="lnr lnr-star pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reviews</span></a></li>                                            
-                                        <li class="mr-1 <?php echo e(Request::is('manage','admin','custom-timeoff-approver','line-manager','manage-leadership','payroll-admin','super-admin','team-lead','team-member') ? 'active' : ''); ?>"><a class="btn-ctm-space text-dark" href="manage"><span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Manage</span></a></li>
-                                        <li class="mr-1 <?php echo e(Request::is('settings','details','documents','employment','payroll','profile-reviews','profile-settings','settings-timeoff','time-off') ? 'active' : ''); ?>"><a class="btn-ctm-space text-dark" href="settings"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a></li> -->
-                                        <?php endif; ?>
-                                        <li class="mr-1 <?php echo e(Request::is('leave') ? 'active' : ''); ?>"><a class="btn-ctm-space text-dark" href="#"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a></li>
-                                        <li class="mr-1 <?php echo e(Request::is('time') ? 'active' : ''); ?>"><a class="btn-ctm-space text-dark" href="#"><span class="lnr lnr-clock pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a></li>
+            <nav class="navbar navbar-expand-md navbar-hover">
+                <div class="collapse navbar-collapse header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom" id="navbarHover" >
+                    <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
+                        <div class="append mr-auto my-0 my-md-0 mr-auto">
+                            <ul class="navbar-nav list-group list-group-horizontal-md mr-auto">
+                                <li class="mr-1 <?php echo e(Request::is('','index','adminDashboard') ? 'active' : ''); ?>">
+                                    <?php if(auth()->check() && auth()->user()->hasRole('Admin')): ?>
+                                        <a class="nav-link" href="<?php echo e(route('adminDashboard')); ?>">                                            
+                                    <?php endif; ?>
+                                    <?php if(auth()->check() && auth()->user()->hasRole('Employee')): ?>
+                                        <a class="nav-link" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    <?php endif; ?>
+                                            <span class="lnr lnr-home pr-0 pr-lg-2"></span>
+                                            <span class="d-none d-lg-inline">Dashboard</span>
+                                        </a>
+                                </li>
+                                <?php if(auth()->check() && auth()->user()->hasRole('Admin')): ?>
+                                <li class="mr-1 nav-item dropdown <?php echo e(Request::is('systemUsers*','jobTitles*','payGrades*','jobCategory*') ? 'active' : ''); ?>">
+                                    <a class="nav-link dropdown-toggle" href="employees" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="lnr lnr-users pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Admin</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item <?php echo e(Request::is('systemUsers*') ? 'active' : ''); ?>" href="<?php echo e(route('systemUsers.index')); ?>">User Management</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle <?php echo e(Request::is('jobTitles*','payGrades*','jobCategory*') ? 'active' : ''); ?>" href="#">Job</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('jobTitles*') ? 'active' : ''); ?>" href="<?php echo e(route('jobTitles.index')); ?>">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('payGrades*') ? 'active' : ''); ?>" href="<?php echo e(route('payGrades.index')); ?>">Pay Grades</a>
+                                                </li>
+                                                <!-- <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li> -->
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('jobCategory*') ? 'active' : ''); ?>" href="<?php echo e(route('jobCategory.index')); ?>">Job Categories</a>
+                                                </li>
+                                                <!-- <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li> -->
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Organization</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('company.index')); ?>">General Information</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('locations.index')); ?>">Locations</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Qualifications</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('skills.index')); ?>">Skills</a>
+                                                </li>
+                                            </ul>
+                                        </li>
                                     </ul>
-                                </div>
-                            </div>
+                                </li>
+                                
+                                <li class="mr-1 nav-item dropdown <?php echo e(Request::is('employees*') ? 'active' : ''); ?>">
+                                    <a class="nav-link dropdown-toggle" href="company" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item <?php echo e(Request::is('employees') ? 'active' : ''); ?>" href="<?php echo e(route('employees.index')); ?>">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item <?php echo e(Request::is('employees/create') ? 'active' : ''); ?>" href="<?php echo e(route('employees.create')); ?>">Add Employee</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item <?php echo e(Request::is('employees-import') ? 'active' : ''); ?>" href="<?php echo e(route('employees.import')); ?>">Data Import</a>                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                <?php endif; ?>
+                                <li class="mr-1 <?php echo e(Request::is('leavePeriod*','leaveTypes*','holidays*', 'entitlements*', 'leave*') ? 'active' : ''); ?>">
+                                    <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item <?php echo e(Request::is('leave/create') ? 'active' : ''); ?>" href="<?php echo e(route('leave.create')); ?>">Apply Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="<?php echo e(route('leave.index')); ?>">My Leave</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle <?php echo e(Request::is('leaveEntitlement*') ? 'active' : ''); ?>" href="#">Entitlements</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('leaveEntitlement*') ? 'active' : ''); ?>" href="<?php echo e(route('leaveEntitlement.create')); ?>">Add Entitlements</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('entitlements*') ? 'active' : ''); ?>" href="<?php echo e(route('myEntitlements.index')); ?>">My Entitlements</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle <?php echo e(Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : ''); ?>" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('leavePeriod*') ? 'active' : ''); ?>" href="<?php echo e(route('leavePeriod.create')); ?>">Leave Period</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('leaveTypes*') ? 'active' : ''); ?>" href="<?php echo e(route('leaveTypes.index')); ?>">Leave Types</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item <?php echo e(Request::is('holidays*') ? 'active' : ''); ?>" href="<?php echo e(route('holidays.index')); ?>">Holidays</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Leave List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Assign Leave</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 <?php echo e(Request::is('leave') ? 'active' : ''); ?>">
+                                    <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Timesheets</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('mytimesheets.index')); ?>">My Timesheets</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employee Timesheets</a>
+                                                </li>                                              
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Attendance</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">My Records</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('punch.create')); ?>">Punch In/Out</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employee Records</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('configurations.index')); ?>">Configuration</a>
+                                                </li>                                                
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Project Info</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('customers.index')); ?>">Customers</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="<?php echo e(route('projects.index')); ?>">Projects</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 <?php echo e(Request::is('reviews','create-review','edit-review') ? 'active' : ''); ?>">
+                                    <a class="nav-link dropdown-toggle" href="reviews"><span class="lnr lnr-star pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">My Info</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <?php if(auth()->check() && auth()->user()->hasRole('Admin')): ?>
+                                <li class="mr-1 <?php echo e(Request::is('reports','contact-reports','email-reports','leave-reports','payroll-reports','security-reports','work-from-home-reports') ? 'active' : ''); ?>">
+                                    <a class="nav-link dropdown-toggle" href="reports"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Employee List</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Title</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Pay Grades</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Employment Status</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Job Categories</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Work Shifts</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mr-1 <?php echo e(Request::is('manage','admin','custom-timeoff-approver','line-manager','manage-leadership','payroll-admin','super-admin','team-lead','team-member') ? 'active' : ''); ?>">
+                                    <a class="btn-ctm-space text-dark" href="manage"><span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Biomatric Data</span></a>
+                                </li>
+                                <li class="mr-1 <?php echo e(Request::is('settings','details','documents','employment','payroll','profile-reviews','profile-settings','settings-timeoff','time-off') ? 'active' : ''); ?>">
+                                    <a class="btn-ctm-space text-dark" href="settings"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a>
+                                </li>
+                                <?php endif; ?>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
+            </nav>
             <!-- /Slide Nav -->
-        </header>
+        </header> 
         <!-- /Header --><?php /**PATH D:\xampp\htdocs\cit-hrm-new\resources\views/layout/partials/header.blade.php ENDPATH**/ ?>

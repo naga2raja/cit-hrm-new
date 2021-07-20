@@ -77,7 +77,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::7FVe2uqQuix6m4R6',
+            '_route' => 'generated::SMQLGJiOcZsajvW6',
           ),
           1 => NULL,
           2 => 
@@ -132,7 +132,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::ZoasKwJEzmGWVgFb',
+            '_route' => 'generated::N1FYkDpUhcizmGMt',
           ),
           1 => NULL,
           2 => 
@@ -187,7 +187,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::qFHRI82xs5FczzE5',
+            '_route' => 'generated::Xig52qiMHzi2y6BB',
           ),
           1 => NULL,
           2 => 
@@ -246,7 +246,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::aXF2FV1wh2JxfRo7',
+            '_route' => 'generated::oG0jyetAseK9DUwo',
           ),
           1 => NULL,
           2 => 
@@ -342,7 +342,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::boLEJySAOzEsmVWM',
+            '_route' => 'generated::iCtI2tbWPKlvJpzG',
           ),
           1 => NULL,
           2 => 
@@ -473,7 +473,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::ZdEhDN3QlVuZmEKs',
+            '_route' => 'generated::eMiEY4zBfNn4Dtkh',
           ),
           1 => NULL,
           2 => 
@@ -710,6 +710,118 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/holidays' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'holidays.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'holidays.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/holidays/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'holidays.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leaveEntitlement' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leaveEntitlement/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/employees' => 
       array (
         0 => 
@@ -795,6 +907,26 @@ app('router')->setCompiledRoutes(
           2 => 
           array (
             'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/employee-autocomplete-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::XmhA7mKRexlOkKfM',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
           ),
           3 => NULL,
           4 => false,
@@ -1421,13 +1553,181 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/mytimesheets' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/mytimesheets/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/emp-page' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::AVxxe5ToDTY0LQS4',
+            '_route' => 'generated::amkuEoxBphKi5mMs',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leave' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leave/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/myEntitlements' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'myEntitlements.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'myEntitlements.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/myEntitlements/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'myEntitlements.create',
           ),
           1 => NULL,
           2 => 
@@ -1483,7 +1783,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/p(?|a(?|ssword/reset/([^/]++)(*:37)|yGrade(?|s/(?|([^/]++)(?|(*:69)|/edit(*:81)|(*:88))|multiple\\-delete(*:112))|Currency/([^/]++)(?|(*:141)|/edit(*:154)|(*:162))))|rojects/(?|([^/]++)(?|(*:195)|/edit(*:208)|(*:216))|multiple\\-delete(*:241))|unch/([^/]++)(?|(*:266)|/edit(*:279)|(*:287)))|/s(?|ystemUsers/(?|([^/]++)(?|(*:327)|/edit(*:340)|(*:348))|multiple\\-delete(*:373))|kills/(?|([^/]++)(?|(*:402)|/edit(*:415)|(*:423))|multiple\\-delete(*:448)))|/job(?|Titles/(?|([^/]++)(?|(*:486)|/edit(*:499)|(*:507))|multiple\\-delete(*:532))|Category/(?|([^/]++)(?|(*:564)|/edit(*:577)|(*:585))|multiple\\-delete(*:610)))|/l(?|eave(?|Period/([^/]++)(?|(*:650)|/edit(*:663)|(*:671))|Types/([^/]++)(?|(*:697)|/edit(*:710)|(*:718)))|ocations/(?|([^/]++)(?|(*:751)|/edit(*:764)|(*:772))|multiple\\-delete(*:797)))|/employees/(?|([^/]++)(?|(*:832)|/edit(*:845)|(*:853))|multiple\\-delete(*:878))|/c(?|ustomers/(?|([^/]++)(?|(*:915)|/edit(*:928)|(*:936))|multiple\\-delete(*:961))|o(?|mpany/([^/]++)(?|(*:991)|/edit(*:1004)|(*:1013))|nfigurations/([^/]++)(?|(*:1047)|/edit(*:1061)|(*:1070))))|/activities/(?|([^/]++)(?|(*:1108)|/edit(*:1122)|(*:1131))|multiple\\-delete(*:1157)))/?$}sDu',
+      0 => '{^(?|/p(?|a(?|ssword/reset/([^/]++)(*:37)|yGrade(?|s/(?|([^/]++)(?|(*:69)|/edit(*:81)|(*:88))|multiple\\-delete(*:112))|Currency/([^/]++)(?|(*:141)|/edit(*:154)|(*:162))))|rojects/(?|([^/]++)(?|(*:195)|/edit(*:208)|(*:216))|multiple\\-delete(*:241))|unch/([^/]++)(?|(*:266)|/edit(*:279)|(*:287)))|/s(?|ystemUsers/(?|([^/]++)(?|(*:327)|/edit(*:340)|(*:348))|multiple\\-delete(*:373))|kills/(?|([^/]++)(?|(*:402)|/edit(*:415)|(*:423))|multiple\\-delete(*:448)))|/job(?|Titles/(?|([^/]++)(?|(*:486)|/edit(*:499)|(*:507))|multiple\\-delete(*:532))|Category/(?|([^/]++)(?|(*:564)|/edit(*:577)|(*:585))|multiple\\-delete(*:610)))|/l(?|eave(?|Period/([^/]++)(?|(*:650)|/edit(*:663)|(*:671))|Types/(?|([^/]++)(?|(*:700)|/edit(*:713)|(*:721))|multiple\\-delete(*:746))|Entitlement/([^/]++)(?|(*:778)|/edit(*:791)|(*:799))|/(?|([^/]++)(?|(*:823)|/edit(*:836)|(*:844))|leave\\-balance\\-ajax(*:873)))|ocations/(?|([^/]++)(?|(*:906)|/edit(*:919)|(*:927))|multiple\\-delete(*:952)))|/holidays/(?|([^/]++)(?|(*:986)|/edit(*:999)|(*:1007))|multiple\\-delete(*:1033))|/employees/(?|([^/]++)(?|(*:1068)|/edit(*:1082)|(*:1091))|multiple\\-delete(*:1117))|/c(?|ustomers/(?|([^/]++)(?|(*:1155)|/edit(*:1169)|(*:1178))|multiple\\-delete(*:1204))|o(?|mpany/([^/]++)(?|(*:1235)|/edit(*:1249)|(*:1258))|nfigurations/([^/]++)(?|(*:1292)|/edit(*:1306)|(*:1315))))|/activities/(?|([^/]++)(?|(*:1353)|/edit(*:1367)|(*:1376))|multiple\\-delete(*:1402))|/my(?|timesheets/([^/]++)(?|(*:1440)|/edit(*:1454)|(*:1463))|Entitlements/([^/]++)(?|(*:1497)|/edit(*:1511)|(*:1520))))/?$}sDu',
     ),
     3 => 
     array (
@@ -1604,7 +1904,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::U2XMhmL5A7uMZQN3',
+            '_route' => 'generated::3pLb2c1jRejFLK3H',
           ),
           1 => 
           array (
@@ -1801,7 +2101,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::WqFyXr0QTgHhyYhZ',
+            '_route' => 'generated::KaaacDlP8kK1MknB',
           ),
           1 => 
           array (
@@ -1998,7 +2298,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::nSCRn7mmB73OCZPb',
+            '_route' => 'generated::4FOBdaR03KDjBfrp',
           ),
           1 => 
           array (
@@ -2107,7 +2407,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::WZm2o1G9J8nOd6z3',
+            '_route' => 'generated::LNSbRcItuTQI6QiE',
           ),
           1 => 
           array (
@@ -2216,7 +2516,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::t24Mg9imIdScUztx',
+            '_route' => 'generated::2CPc5K9Dh8g9edXT',
           ),
           1 => 
           array (
@@ -2325,7 +2625,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::aqjaEuMHcpsL55ya',
+            '_route' => 'generated::wxLoGRyCeCFbm3LX',
           ),
           1 => 
           array (
@@ -2428,7 +2728,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      697 => 
+      700 => 
       array (
         0 => 
         array (
@@ -2451,7 +2751,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      710 => 
+      713 => 
       array (
         0 => 
         array (
@@ -2474,7 +2774,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      718 => 
+      721 => 
       array (
         0 => 
         array (
@@ -2516,7 +2816,225 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      751 => 
+      746 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::eDLSm4soefTAxFoL',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      778 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.show',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      791 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.edit',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      799 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.update',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      823 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.show',
+          ),
+          1 => 
+          array (
+            0 => 'leave',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      836 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.edit',
+          ),
+          1 => 
+          array (
+            0 => 'leave',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      844 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.update',
+          ),
+          1 => 
+          array (
+            0 => 'leave',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'leave',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      873 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::yBZYA17nDlbTpYg3',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      906 => 
       array (
         0 => 
         array (
@@ -2539,7 +3057,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      764 => 
+      919 => 
       array (
         0 => 
         array (
@@ -2562,7 +3080,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      772 => 
+      927 => 
       array (
         0 => 
         array (
@@ -2604,13 +3122,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      797 => 
+      952 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::gNuSjRhSFrhYwN54',
+            '_route' => 'generated::krqYTTEusLlGh3qa',
           ),
           1 => 
           array (
@@ -2625,7 +3143,116 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      832 => 
+      986 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'holidays.show',
+          ),
+          1 => 
+          array (
+            0 => 'holiday',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      999 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'holidays.edit',
+          ),
+          1 => 
+          array (
+            0 => 'holiday',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1007 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'holidays.update',
+          ),
+          1 => 
+          array (
+            0 => 'holiday',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'holidays.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'holiday',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1033 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::mqTa8QyJ999DSpNz',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1068 => 
       array (
         0 => 
         array (
@@ -2648,7 +3275,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      845 => 
+      1082 => 
       array (
         0 => 
         array (
@@ -2671,7 +3298,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      853 => 
+      1091 => 
       array (
         0 => 
         array (
@@ -2713,13 +3340,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      878 => 
+      1117 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::wrIo5XEYuKTeudmg',
+            '_route' => 'generated::NUD5QGFFtoDpl9NH',
           ),
           1 => 
           array (
@@ -2734,7 +3361,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      915 => 
+      1155 => 
       array (
         0 => 
         array (
@@ -2757,7 +3384,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      928 => 
+      1169 => 
       array (
         0 => 
         array (
@@ -2780,7 +3407,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      936 => 
+      1178 => 
       array (
         0 => 
         array (
@@ -2822,13 +3449,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      961 => 
+      1204 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::jl946sNC3ThIy1ug',
+            '_route' => 'generated::LBES1xaWPdqg3cHP',
           ),
           1 => 
           array (
@@ -2843,7 +3470,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      991 => 
+      1235 => 
       array (
         0 => 
         array (
@@ -2866,7 +3493,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1004 => 
+      1249 => 
       array (
         0 => 
         array (
@@ -2889,7 +3516,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1013 => 
+      1258 => 
       array (
         0 => 
         array (
@@ -2931,7 +3558,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1047 => 
+      1292 => 
       array (
         0 => 
         array (
@@ -2954,7 +3581,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1061 => 
+      1306 => 
       array (
         0 => 
         array (
@@ -2977,7 +3604,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1070 => 
+      1315 => 
       array (
         0 => 
         array (
@@ -3019,7 +3646,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1108 => 
+      1353 => 
       array (
         0 => 
         array (
@@ -3042,7 +3669,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1122 => 
+      1367 => 
       array (
         0 => 
         array (
@@ -3065,7 +3692,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1131 => 
+      1376 => 
       array (
         0 => 
         array (
@@ -3107,13 +3734,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1157 => 
+      1402 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::PTlyRqSa2v9XDsGW',
+            '_route' => 'generated::cnPNixgrlD0anNsg',
           ),
           1 => 
           array (
@@ -3127,7 +3754,183 @@ app('router')->setCompiledRoutes(
           5 => false,
           6 => NULL,
         ),
+      ),
+      1440 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.show',
+          ),
+          1 => 
+          array (
+            0 => 'mytimesheet',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1454 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.edit',
+          ),
+          1 => 
+          array (
+            0 => 'mytimesheet',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1463 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.update',
+          ),
+          1 => 
+          array (
+            0 => 'mytimesheet',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
         1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'mytimesheet',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1497 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'myEntitlements.show',
+          ),
+          1 => 
+          array (
+            0 => 'myEntitlement',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1511 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'myEntitlements.edit',
+          ),
+          1 => 
+          array (
+            0 => 'myEntitlement',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1520 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'myEntitlements.update',
+          ),
+          1 => 
+          array (
+            0 => 'myEntitlement',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'myEntitlements.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'myEntitlement',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        2 => 
         array (
           0 => NULL,
           1 => NULL,
@@ -3176,8 +3979,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'login' => 
     array (
@@ -3212,10 +4013,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::7FVe2uqQuix6m4R6' => 
+    'generated::SMQLGJiOcZsajvW6' => 
     array (
       'methods' => 
       array (
@@ -3235,7 +4034,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::7FVe2uqQuix6m4R6',
+        'as' => 'generated::SMQLGJiOcZsajvW6',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3247,8 +4046,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'logout' => 
     array (
@@ -3282,8 +4079,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'register' => 
     array (
@@ -3318,10 +4113,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::ZoasKwJEzmGWVgFb' => 
+    'generated::N1FYkDpUhcizmGMt' => 
     array (
       'methods' => 
       array (
@@ -3341,7 +4134,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::ZoasKwJEzmGWVgFb',
+        'as' => 'generated::N1FYkDpUhcizmGMt',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3353,8 +4146,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'password.email' => 
     array (
@@ -3388,8 +4179,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'password.reset' => 
     array (
@@ -3424,8 +4213,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'password.update' => 
     array (
@@ -3459,8 +4246,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'password.confirm' => 
     array (
@@ -3495,10 +4280,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::qFHRI82xs5FczzE5' => 
+    'generated::Xig52qiMHzi2y6BB' => 
     array (
       'methods' => 
       array (
@@ -3518,7 +4301,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::qFHRI82xs5FczzE5',
+        'as' => 'generated::Xig52qiMHzi2y6BB',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3530,8 +4313,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'index' => 
     array (
@@ -3566,8 +4347,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'home' => 
     array (
@@ -3602,10 +4381,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::aXF2FV1wh2JxfRo7' => 
+    'generated::oG0jyetAseK9DUwo' => 
     array (
       'methods' => 
       array (
@@ -3627,7 +4404,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::aXF2FV1wh2JxfRo7',
+        'as' => 'generated::oG0jyetAseK9DUwo',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3639,8 +4416,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'adminDashboard' => 
     array (
@@ -3676,8 +4451,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'systemUsers.index' => 
     array (
@@ -3713,8 +4486,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'systemUsers.create' => 
     array (
@@ -3750,8 +4521,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'systemUsers.store' => 
     array (
@@ -3786,8 +4555,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'systemUsers.show' => 
     array (
@@ -3823,8 +4590,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'systemUsers.edit' => 
     array (
@@ -3860,8 +4625,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'systemUsers.update' => 
     array (
@@ -3897,8 +4660,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'systemUsers.destroy' => 
     array (
@@ -3933,10 +4694,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::nSCRn7mmB73OCZPb' => 
+    'generated::4FOBdaR03KDjBfrp' => 
     array (
       'methods' => 
       array (
@@ -3957,7 +4716,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::nSCRn7mmB73OCZPb',
+        'as' => 'generated::4FOBdaR03KDjBfrp',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3969,10 +4728,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::boLEJySAOzEsmVWM' => 
+    'generated::iCtI2tbWPKlvJpzG' => 
     array (
       'methods' => 
       array (
@@ -3993,7 +4750,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::boLEJySAOzEsmVWM',
+        'as' => 'generated::iCtI2tbWPKlvJpzG',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4005,8 +4762,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobTitles.index' => 
     array (
@@ -4042,8 +4797,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobTitles.create' => 
     array (
@@ -4079,8 +4832,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobTitles.store' => 
     array (
@@ -4115,8 +4866,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobTitles.show' => 
     array (
@@ -4152,8 +4901,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobTitles.edit' => 
     array (
@@ -4189,8 +4936,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobTitles.update' => 
     array (
@@ -4226,8 +4971,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobTitles.destroy' => 
     array (
@@ -4262,10 +5005,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::t24Mg9imIdScUztx' => 
+    'generated::2CPc5K9Dh8g9edXT' => 
     array (
       'methods' => 
       array (
@@ -4286,7 +5027,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::t24Mg9imIdScUztx',
+        'as' => 'generated::2CPc5K9Dh8g9edXT',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4298,8 +5039,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGrades.index' => 
     array (
@@ -4335,8 +5074,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGrades.create' => 
     array (
@@ -4372,8 +5109,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGrades.store' => 
     array (
@@ -4408,8 +5143,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGrades.show' => 
     array (
@@ -4445,8 +5178,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGrades.edit' => 
     array (
@@ -4482,8 +5213,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGrades.update' => 
     array (
@@ -4519,8 +5248,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGrades.destroy' => 
     array (
@@ -4555,10 +5282,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::U2XMhmL5A7uMZQN3' => 
+    'generated::3pLb2c1jRejFLK3H' => 
     array (
       'methods' => 
       array (
@@ -4579,7 +5304,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::U2XMhmL5A7uMZQN3',
+        'as' => 'generated::3pLb2c1jRejFLK3H',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4591,10 +5316,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::ZdEhDN3QlVuZmEKs' => 
+    'generated::eMiEY4zBfNn4Dtkh' => 
     array (
       'methods' => 
       array (
@@ -4615,7 +5338,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::ZdEhDN3QlVuZmEKs',
+        'as' => 'generated::eMiEY4zBfNn4Dtkh',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4627,8 +5350,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.index' => 
     array (
@@ -4664,8 +5385,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.create' => 
     array (
@@ -4701,8 +5420,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.store' => 
     array (
@@ -4737,8 +5454,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.show' => 
     array (
@@ -4774,8 +5489,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.edit' => 
     array (
@@ -4811,8 +5524,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.update' => 
     array (
@@ -4848,8 +5559,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.destroy' => 
     array (
@@ -4884,8 +5593,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobCategory.index' => 
     array (
@@ -4921,8 +5628,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobCategory.create' => 
     array (
@@ -4958,8 +5663,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobCategory.store' => 
     array (
@@ -4994,8 +5697,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobCategory.show' => 
     array (
@@ -5031,8 +5732,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobCategory.edit' => 
     array (
@@ -5068,8 +5767,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobCategory.update' => 
     array (
@@ -5105,8 +5802,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'jobCategory.destroy' => 
     array (
@@ -5141,10 +5836,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::aqjaEuMHcpsL55ya' => 
+    'generated::wxLoGRyCeCFbm3LX' => 
     array (
       'methods' => 
       array (
@@ -5165,7 +5858,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::aqjaEuMHcpsL55ya',
+        'as' => 'generated::wxLoGRyCeCFbm3LX',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5177,8 +5870,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leavePeriod.index' => 
     array (
@@ -5214,8 +5905,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leavePeriod.create' => 
     array (
@@ -5251,8 +5940,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leavePeriod.store' => 
     array (
@@ -5287,8 +5974,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leavePeriod.show' => 
     array (
@@ -5324,8 +6009,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leavePeriod.edit' => 
     array (
@@ -5361,8 +6044,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leavePeriod.update' => 
     array (
@@ -5398,8 +6079,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leavePeriod.destroy' => 
     array (
@@ -5434,8 +6113,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leaveTypes.index' => 
     array (
@@ -5471,8 +6148,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leaveTypes.create' => 
     array (
@@ -5508,8 +6183,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leaveTypes.store' => 
     array (
@@ -5544,8 +6217,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leaveTypes.show' => 
     array (
@@ -5581,8 +6252,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leaveTypes.edit' => 
     array (
@@ -5618,8 +6287,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leaveTypes.update' => 
     array (
@@ -5655,8 +6322,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'leaveTypes.destroy' => 
     array (
@@ -5691,8 +6356,560 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
+    ),
+    'generated::eDLSm4soefTAxFoL' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leaveTypes/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::eDLSm4soefTAxFoL',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'holidays.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'holidays',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'holidays.index',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@index',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'holidays.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'holidays/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'holidays.create',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@create',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'holidays.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'holidays',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'holidays.store',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@store',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'holidays.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'holidays/{holiday}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'holidays.show',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@show',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'holidays.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'holidays/{holiday}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'holidays.edit',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@edit',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'holidays.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'holidays/{holiday}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'holidays.update',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@update',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'holidays.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'holidays/{holiday}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'holidays.destroy',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'generated::mqTa8QyJ999DSpNz' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'holidays/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::mqTa8QyJ999DSpNz',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leaveEntitlement.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'leaveEntitlement.index',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@index',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leaveEntitlement.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'leaveEntitlement.create',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@create',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leaveEntitlement.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leaveEntitlement',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'leaveEntitlement.store',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@store',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leaveEntitlement.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'leaveEntitlement.show',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@show',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leaveEntitlement.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'leaveEntitlement.edit',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@edit',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leaveEntitlement.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'leaveEntitlement.update',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@update',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leaveEntitlement.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'leaveEntitlement.destroy',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
     ),
     'employees.index' => 
     array (
@@ -5710,8 +6927,8 @@ app('router')->setCompiledRoutes(
           1 => 'role:Admin',
         ),
         'as' => 'employees.index',
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@index',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@index',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@index',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@index',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => '/',
         'where' => 
@@ -5728,8 +6945,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees.create' => 
     array (
@@ -5747,8 +6962,8 @@ app('router')->setCompiledRoutes(
           1 => 'role:Admin',
         ),
         'as' => 'employees.create',
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@create',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@create',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@create',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@create',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => '/',
         'where' => 
@@ -5765,8 +6980,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees.store' => 
     array (
@@ -5783,8 +6996,8 @@ app('router')->setCompiledRoutes(
           1 => 'role:Admin',
         ),
         'as' => 'employees.store',
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@store',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@store',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@store',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@store',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => '/',
         'where' => 
@@ -5801,8 +7014,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees.show' => 
     array (
@@ -5820,8 +7031,8 @@ app('router')->setCompiledRoutes(
           1 => 'role:Admin',
         ),
         'as' => 'employees.show',
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@show',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@show',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@show',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@show',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => '/',
         'where' => 
@@ -5838,8 +7049,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees.edit' => 
     array (
@@ -5857,8 +7066,8 @@ app('router')->setCompiledRoutes(
           1 => 'role:Admin',
         ),
         'as' => 'employees.edit',
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@edit',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@edit',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@edit',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@edit',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => '/',
         'where' => 
@@ -5875,8 +7084,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees.update' => 
     array (
@@ -5894,8 +7101,8 @@ app('router')->setCompiledRoutes(
           1 => 'role:Admin',
         ),
         'as' => 'employees.update',
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@update',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@update',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@update',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@update',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => '/',
         'where' => 
@@ -5912,8 +7119,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees.destroy' => 
     array (
@@ -5930,8 +7135,8 @@ app('router')->setCompiledRoutes(
           1 => 'role:Admin',
         ),
         'as' => 'employees.destroy',
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@destroy',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@destroy',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@destroy',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => '/',
         'where' => 
@@ -5948,10 +7153,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::wrIo5XEYuKTeudmg' => 
+    'generated::NUD5QGFFtoDpl9NH' => 
     array (
       'methods' => 
       array (
@@ -5965,14 +7168,14 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'role:Admin',
         ),
-        'uses' => 'App\\Http\\Controllers\\EmployeeController@deleteMultiple',
-        'controller' => 'App\\Http\\Controllers\\EmployeeController@deleteMultiple',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@deleteMultiple',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => NULL,
         'where' => 
         array (
         ),
-        'as' => 'generated::wrIo5XEYuKTeudmg',
+        'as' => 'generated::NUD5QGFFtoDpl9NH',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5984,8 +7187,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees.import' => 
     array (
@@ -6002,8 +7203,8 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'role:Admin',
         ),
-        'uses' => 'App\\Http\\Controllers\\ImportEmployeeController@index',
-        'controller' => 'App\\Http\\Controllers\\ImportEmployeeController@index',
+        'uses' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@index',
+        'controller' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@index',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => NULL,
         'where' => 
@@ -6021,8 +7222,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'employees-import' => 
     array (
@@ -6038,8 +7237,8 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'role:Admin',
         ),
-        'uses' => 'App\\Http\\Controllers\\ImportEmployeeController@import',
-        'controller' => 'App\\Http\\Controllers\\ImportEmployeeController@import',
+        'uses' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@import',
+        'controller' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@import',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => NULL,
         'where' => 
@@ -6057,8 +7256,41 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
+    ),
+    'generated::XmhA7mKRexlOkKfM' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employee-autocomplete-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@searchEmployeeAjax',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@searchEmployeeAjax',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::XmhA7mKRexlOkKfM',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
     ),
     'skills.index' => 
     array (
@@ -6094,8 +7326,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'skills.create' => 
     array (
@@ -6131,8 +7361,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'skills.store' => 
     array (
@@ -6167,8 +7395,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'skills.show' => 
     array (
@@ -6204,8 +7430,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'skills.edit' => 
     array (
@@ -6241,8 +7465,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'skills.update' => 
     array (
@@ -6278,8 +7500,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'skills.destroy' => 
     array (
@@ -6314,10 +7534,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::WZm2o1G9J8nOd6z3' => 
+    'generated::LNSbRcItuTQI6QiE' => 
     array (
       'methods' => 
       array (
@@ -6338,7 +7556,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::WZm2o1G9J8nOd6z3',
+        'as' => 'generated::LNSbRcItuTQI6QiE',
       ),
       'fallback' => false,
       'defaults' => 
@@ -6350,8 +7568,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'locations.index' => 
     array (
@@ -6387,8 +7603,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'locations.create' => 
     array (
@@ -6424,8 +7638,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'locations.store' => 
     array (
@@ -6460,8 +7672,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'locations.show' => 
     array (
@@ -6497,8 +7707,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'locations.edit' => 
     array (
@@ -6534,8 +7742,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'locations.update' => 
     array (
@@ -6571,8 +7777,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'locations.destroy' => 
     array (
@@ -6607,10 +7811,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::gNuSjRhSFrhYwN54' => 
+    'generated::krqYTTEusLlGh3qa' => 
     array (
       'methods' => 
       array (
@@ -6631,7 +7833,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::gNuSjRhSFrhYwN54',
+        'as' => 'generated::krqYTTEusLlGh3qa',
       ),
       'fallback' => false,
       'defaults' => 
@@ -6643,8 +7845,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers.index' => 
     array (
@@ -6680,8 +7880,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers.create' => 
     array (
@@ -6717,8 +7915,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers.store' => 
     array (
@@ -6753,8 +7949,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers.show' => 
     array (
@@ -6790,8 +7984,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers.edit' => 
     array (
@@ -6827,8 +8019,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers.update' => 
     array (
@@ -6864,8 +8054,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers.destroy' => 
     array (
@@ -6900,10 +8088,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::jl946sNC3ThIy1ug' => 
+    'generated::LBES1xaWPdqg3cHP' => 
     array (
       'methods' => 
       array (
@@ -6924,7 +8110,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::jl946sNC3ThIy1ug',
+        'as' => 'generated::LBES1xaWPdqg3cHP',
       ),
       'fallback' => false,
       'defaults' => 
@@ -6936,8 +8122,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects.index' => 
     array (
@@ -6973,8 +8157,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects.create' => 
     array (
@@ -7010,8 +8192,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects.store' => 
     array (
@@ -7046,8 +8226,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects.show' => 
     array (
@@ -7083,8 +8261,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects.edit' => 
     array (
@@ -7120,8 +8296,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects.update' => 
     array (
@@ -7157,8 +8331,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects.destroy' => 
     array (
@@ -7193,8 +8365,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'customers-search' => 
     array (
@@ -7229,8 +8399,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'projects-search' => 
     array (
@@ -7265,8 +8433,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'project-admin-search' => 
     array (
@@ -7301,8 +8467,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'project-save-customer' => 
     array (
@@ -7337,8 +8501,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'update-project' => 
     array (
@@ -7373,10 +8535,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::WqFyXr0QTgHhyYhZ' => 
+    'generated::KaaacDlP8kK1MknB' => 
     array (
       'methods' => 
       array (
@@ -7397,7 +8557,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::WqFyXr0QTgHhyYhZ',
+        'as' => 'generated::KaaacDlP8kK1MknB',
       ),
       'fallback' => false,
       'defaults' => 
@@ -7409,8 +8569,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'activities.index' => 
     array (
@@ -7446,8 +8604,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'activities.create' => 
     array (
@@ -7483,8 +8639,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'activities.store' => 
     array (
@@ -7519,8 +8673,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'activities.show' => 
     array (
@@ -7556,8 +8708,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'activities.edit' => 
     array (
@@ -7593,8 +8743,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'activities.update' => 
     array (
@@ -7630,8 +8778,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'activities.destroy' => 
     array (
@@ -7666,8 +8812,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'update-activity' => 
     array (
@@ -7702,10 +8846,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::PTlyRqSa2v9XDsGW' => 
+    'generated::cnPNixgrlD0anNsg' => 
     array (
       'methods' => 
       array (
@@ -7726,7 +8868,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::PTlyRqSa2v9XDsGW',
+        'as' => 'generated::cnPNixgrlD0anNsg',
       ),
       'fallback' => false,
       'defaults' => 
@@ -7738,8 +8880,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'company.index' => 
     array (
@@ -7775,8 +8915,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'company.create' => 
     array (
@@ -7812,8 +8950,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'company.store' => 
     array (
@@ -7848,8 +8984,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'company.show' => 
     array (
@@ -7885,8 +9019,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'company.edit' => 
     array (
@@ -7922,8 +9054,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'company.update' => 
     array (
@@ -7959,8 +9089,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'company.destroy' => 
     array (
@@ -7995,8 +9123,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'update-company-name' => 
     array (
@@ -8031,8 +9157,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'update-company-info' => 
     array (
@@ -8067,8 +9191,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'update-company-contact' => 
     array (
@@ -8103,8 +9225,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'configurations.index' => 
     array (
@@ -8140,8 +9260,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'configurations.create' => 
     array (
@@ -8177,8 +9295,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'configurations.store' => 
     array (
@@ -8213,8 +9329,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'configurations.show' => 
     array (
@@ -8250,8 +9364,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'configurations.edit' => 
     array (
@@ -8287,8 +9399,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'configurations.update' => 
     array (
@@ -8324,8 +9434,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'configurations.destroy' => 
     array (
@@ -8360,8 +9468,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'punch.index' => 
     array (
@@ -8396,8 +9502,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'punch.create' => 
     array (
@@ -8432,8 +9536,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'punch.store' => 
     array (
@@ -8467,8 +9569,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'punch.show' => 
     array (
@@ -8503,8 +9603,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'punch.edit' => 
     array (
@@ -8539,8 +9637,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'punch.update' => 
     array (
@@ -8575,8 +9671,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'punch.destroy' => 
     array (
@@ -8610,10 +9704,251 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
-    'generated::AVxxe5ToDTY0LQS4' => 
+    'mytimesheets.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'mytimesheets.index',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'mytimesheets.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'mytimesheets.create',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'mytimesheets.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'mytimesheets',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'mytimesheets.store',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'mytimesheets.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'mytimesheets.show',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@show',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'mytimesheets.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'mytimesheets.edit',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@edit',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'mytimesheets.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'mytimesheets.update',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@update',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'mytimesheets.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+        ),
+        'as' => 'mytimesheets.destroy',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'generated::amkuEoxBphKi5mMs' => 
     array (
       'methods' => 
       array (
@@ -8626,7 +9961,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee',
+          1 => 'role:Employee|Admin',
         ),
         'uses' => 'App\\Http\\Controllers\\HomeController@demoEmployee',
         'controller' => 'App\\Http\\Controllers\\HomeController@demoEmployee',
@@ -8635,7 +9970,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::AVxxe5ToDTY0LQS4',
+        'as' => 'generated::amkuEoxBphKi5mMs',
       ),
       'fallback' => false,
       'defaults' => 
@@ -8647,8 +9982,526 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
+    ),
+    'leave.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'leave.index',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@index',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leave.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'leave.create',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@create',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leave.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leave',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'leave.store',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@store',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leave.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave/{leave}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'leave.show',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@show',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leave.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave/{leave}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'leave.edit',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@edit',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leave.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'leave/{leave}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'leave.update',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@update',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'leave.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'leave/{leave}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'leave.destroy',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'generated::yBZYA17nDlbTpYg3' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leave/leave-balance-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveBalance',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveBalance',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::yBZYA17nDlbTpYg3',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'myEntitlements.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'myEntitlements',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'myEntitlements.index',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@index',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'myEntitlements.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'myEntitlements/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'myEntitlements.create',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@create',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'myEntitlements.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'myEntitlements',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'myEntitlements.store',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@store',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'myEntitlements.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'myEntitlements/{myEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'myEntitlements.show',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@show',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'myEntitlements.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'myEntitlements/{myEntitlement}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'myEntitlements.edit',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@edit',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'myEntitlements.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'myEntitlements/{myEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'myEntitlements.update',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@update',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+    ),
+    'myEntitlements.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'myEntitlements/{myEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Employee|Admin',
+        ),
+        'as' => 'myEntitlements.destroy',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
     ),
     'profile-settings' => 
     array (
@@ -8683,8 +10536,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
     'change-password' => 
     array (
@@ -8718,8 +10569,6 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
     ),
   ),
 )

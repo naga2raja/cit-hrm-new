@@ -29,7 +29,7 @@ class ApplyLeaveRequest extends FormRequest
             'from_date' => 'required|date_format:d/m/Y',
             'to_date' => 'required|date_format:d/m/Y|after_or_equal:from_date',
             'leave_duration' => 'required',
-            'number_of_days' => 'required|numeric|gt:0',
+            'number_of_days' => 'required|numeric|gt:0|lte:leave_balance',
             'reason' => 'required',
         ];
     }

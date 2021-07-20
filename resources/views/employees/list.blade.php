@@ -102,7 +102,11 @@
 													@foreach($employees as $employee)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="chk_user" value="{{ $employee->id }}">
+															@if($employee->user_id == auth()->user()->id || $employee->user_id == 1)
+
+															@else
+																<input type="checkbox" name="chk_user" value="{{ $employee->id }}">
+															@endif
 														</td>
 														<td>
 															<u><a href="{{ route('employees.edit', $employee->id) }}"> {{ $employee->employee_id }}  </a></u>
