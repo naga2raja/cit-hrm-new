@@ -52,28 +52,15 @@ class LeaveEntitlementController extends Controller
       // dd(DB::getQueryLog());
 
       $leave_types = mLeaveType::get();
-      $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
+      $leave_period = mLeaveEntitlement::select('from_date', 'to_date')
+                                          ->selectRaw('CONCAT(from_date, " - ", to_date) as leave_period')
+                                          ->distinct()
+                                          ->get();
 
-      if($leave_periods){
-          $year = date('Y');
-          $month = $leave_periods->start_month;
-          $date = $leave_periods->start_date;
-          $from_date = $year."-" .str_pad($month, 2, "0", STR_PAD_LEFT)."-".str_pad($date, 2, "0", STR_PAD_LEFT);
+      $from_date = @$leave_period[0]->from_date;
+      $to_date = @$leave_period[0]->to_date;
 
-          $end = new DateTime($from_date);
-          $end->modify('+1 years -1 days');
-          $end_date = $end->format('Y-m-d');
-
-          $leave_period_value = $leave_periods->start_month.'-'.$leave_periods->start_date;
-          $leave_period_name = $from_date.' - '.$end_date;
-      }else{
-          $from_date = "";
-          $end_date = "";
-          $leave_period_value = '';
-          $leave_period_name = 'No Leave Period';
-      }
-
-      return view('leave/entitlements/emp_list', compact('entitlement', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value'));
+      return view('leave/entitlements/emp_list', compact('entitlement', 'leave_types', 'leave_period', 'from_date', 'to_date'));
     }
 
     /**
