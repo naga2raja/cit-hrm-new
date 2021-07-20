@@ -341,6 +341,10 @@
 
 		$('#datetimepicker4, #datetimepicker5').datetimepicker({
 			format: 'DD/MM/YYYY',
+			locale:  moment.locale('en', {
+				week: { dow: 1 }
+			}),
+			daysOfWeekDisabled: [0,6],
 			icons: {
 				up: "fa fa-angle-up",
 				down: "fa fa-angle-down",

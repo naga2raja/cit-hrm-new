@@ -253,6 +253,9 @@
                                     @hasrole('Employee')
                                         <a class="nav-link" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                     @endrole
+                                    @hasrole('Manager')
+                                        <a class="nav-link" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    @endrole
                                             <span class="lnr lnr-home pr-0 pr-lg-2"></span>
                                             <span class="d-none d-lg-inline">Dashboard</span>
                                         </a>
@@ -333,20 +336,24 @@
                                         <li>
                                             <a class="dropdown-item {{ Request::is('leave') ? 'active' : '' }}" href="{{ route('leave.index') }}">My Leave</a>
                                         </li>
+                                        
                                         <li>
                                             <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*') ? 'active' : '' }}" href="#">Entitlements</a>
                                             <ul class="dropdown-menu">
+                                                @hasanyrole('Admin|Manager')
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('leaveEntitlement*') ? 'active' : '' }}" href="{{ route('leaveEntitlement.create') }}">Add Entitlements</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('entitlements*') ? 'active' : '' }}" href="{{ route('leaveEntitlement.index') }}">Employee Entitlements</a>
                                                 </li>
+                                                @endrole
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('entitlements*') ? 'active' : '' }}" href="{{ route('myEntitlements.index') }}">My Entitlements</a>
                                                 </li>
                                             </ul>
                                         </li>
+                                        @hasrole('Admin')
                                         <li>
                                             <a class="dropdown-item dropdown-toggle {{ Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : '' }}" href="#">Configuration</a>
                                             <ul class="dropdown-menu">
@@ -361,12 +368,16 @@
                                                 </li>
                                             </ul>
                                         </li>
+                                        @endrole
+
+                                        @hasanyrole('Admin|Manager')
                                         <li>
                                             <a class="dropdown-item {{ Request::is('leave/list') ? 'active' : '' }}" href="{{ route('leave.list') }}">Leave List</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#">Assign Leave</a>
                                         </li>
+                                        @endrole
                                     </ul>
                                 </li>
                                 <li class="mr-1 {{ Request::is('customers.*', 'projects.*') ? 'active' : '' }}">

@@ -241,18 +241,20 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
 });
 
-Route::group(['middleware' => ['role:Employee|Admin']], function () {
+Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     Route::get('/emp-page', 'HomeController@demoEmployee');
 
     //Leave
+    Route::get('leave-list', 'Leave\Leave\LeaveController@getLeaveList')->name('leave.list');
     Route::resource('/leave', 'Leave\Leave\LeaveController');
     Route::post('leave/leave-balance-ajax', 'Leave\Leave\LeaveController@getLeaveBalance');
+    Route::delete('leave/delete-leave', 'Leave\Leave\LeaveController@destroy')->name('leave.delete_modal');
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
 });
 
-Route::group(['middleware' => ['role:Admin|Manager|Employee']], function () {
+Route::group(['middleware' => ['role:Admin|Manager']], function () {
     //Leave
-    Route::get('leave-list', 'Leave\Leave\LeaveController@getLeaveList')->name('leave.list');
+    Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
 });
 
 Route::resource('/punch', 'Time\Attendance\PunchInOutController');

@@ -51,6 +51,12 @@
 							<div class="row">
                                 
 								<div class="col-md-12">
+									@if($message = Session::get('success'))
+										<div class="alert alert-success">
+											<p>{{$message}}</p>
+										</div>
+									@endif	
+
 									<div class="card ctm-border-radius shadow-sm">
 										<div class="card-header">
 											<h4 class="card-title mb-0">My Leaves</h4>
@@ -68,7 +74,7 @@
 																<th>Remaining Days</th>
 																<th>Notes</th>
 																<th>Status</th>
-																<th class="text-right">Action</th>
+																<th class="text-center">Action</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -86,10 +92,14 @@
                                                                     <td>  - </td>
                                                                     <td> {{ $leave->comments }}</td>
                                                                     <td> {{ $leave->leave_status }}</td>
-                                                                    <td> 
-                                                                        <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-                                                                            <span class="lnr lnr-trash"></span> Delete
-                                                                        </a> 
+                                                                    <td> 																		
+																		@if($leave->approval_level == 0)
+																			<!-- if employee want to delete can do it before manager approve/reject-->																			
+																			<a href="javascript:void(0);" onclick="showDeleteModal({{ $leave->id }})" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
+																				<span class="lnr lnr-trash"></span> Delete
+																			</a>
+																		@endif
+                                                                         
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -154,8 +164,14 @@
 					<div class="modal-body">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title mb-3">Are You Sure Want to Delete?</h4>
-						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2" data-dismiss="modal">Delete</button>
+
+						<form action="{{ route('leave.delete_modal')}}" method="post">
+							@method('DELETE')
+							@csrf
+							<input type="hidden" id="delete_id" name="delete_id">
+							<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Delete</button>
+						</form>						
 					</div>
 				</div>
 			</div>
@@ -186,5 +202,10 @@
 			previous: 'fa fa-angle-left'
 		}
 	});
+
+	function showDeleteModal(id) {
+		console.log(id);
+		$('#delete_id').val(id);
+	}
 	</script>
 @endsection
