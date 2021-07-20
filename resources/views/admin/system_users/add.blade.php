@@ -40,11 +40,6 @@
 														</div>
 													</div>
 													<div class="col-sm-3">
-														<!-- <div class="form-group">
-															<input type="text" name="name" id="employee_name2" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="Type for hints.." value="{{ old('name') }}" autocomplete="off">
-															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-															<div id="employees_list" class="autocomplete"></div>
-														</div> -->
 														<div class="form-group">										
 															<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%">
 															</select>
@@ -63,6 +58,7 @@
 													<div class="col-sm-3">
 														<div class="form-group">
 															<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}}" name="role" id="role">
+																<option value="">Select Role</option>
 		                                                        @foreach ($roles as $role)
 		                                                            <option value='{{ $role->name }}' {{ old('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
 		                                                        @endforeach
@@ -222,8 +218,8 @@
 			dataType: 'json',
     		data : {employee_id: employee_id, _token: _token},
     		success:function(data){
-    			$('#email').val(data[0].email);
-    			$("#role").val(data[0].role_name).change();
+    			$('#email').val(data.email);
+    			$("#role").val(data.role_name).change();
     		}
     	});
 	}
@@ -249,6 +245,7 @@
 	// Autocomplete ajax call
 	$('.employee_name').select2({
 		placeholder: 'Select a employee',
+		allowClear: true,
 		ajax: {
 			url: '/employee-autocomplete-ajax',
 			dataType: 'json',

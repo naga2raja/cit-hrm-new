@@ -324,7 +324,7 @@
                                     </ul>
                                 </li>
                                 @endrole
-                                <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*','holidays*', 'entitlements*', 'leave*') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*', 'holidays*', 'leaveEntitlement*', 'myEntitlements*', 'leave*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -334,16 +334,16 @@
                                             <a class="dropdown-item {{ Request::is('leave') ? 'active' : '' }}" href="{{ route('leave.index') }}">My Leave</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*') ? 'active' : '' }}" href="#">Entitlements</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*', 'myEntitlements*') ? 'active' : '' }}" href="#">Entitlements</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item {{ Request::is('leaveEntitlement*') ? 'active' : '' }}" href="{{ route('leaveEntitlement.create') }}">Add Entitlements</a>
+                                                    <a class="dropdown-item {{ Request::is('leaveEntitlement/create') ? 'active' : '' }}" href="{{ route('leaveEntitlement.create') }}">Add Entitlements</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item {{ Request::is('entitlements*') ? 'active' : '' }}" href="{{ route('leaveEntitlement.index') }}">Employee Entitlements</a>
+                                                    <a class="dropdown-item {{ Request::is('leaveEntitlement/index') ? 'active' : '' }}" href="{{ route('leaveEntitlement.index') }}">Employee Entitlements</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item {{ Request::is('entitlements*') ? 'active' : '' }}" href="{{ route('myEntitlements.index') }}">My Entitlements</a>
+                                                    <a class="dropdown-item {{ Request::is('myEntitlements*') ? 'active' : '' }}" href="{{ route('myEntitlements.index') }}">My Entitlements</a>
                                                 </li>
                                             </ul>
                                         </li>

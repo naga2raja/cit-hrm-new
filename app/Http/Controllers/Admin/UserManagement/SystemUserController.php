@@ -64,7 +64,7 @@ class SystemUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::orderBy('id', 'desc')->get();
+        $roles = Role::get();
         return view('admin/system_users/add', compact('roles'));
     }
 
@@ -263,12 +263,19 @@ class SystemUserController extends Controller
 
         $data = [];
         if($employee_id){
-            $data = User::select('users.*', 'employees.*', 'roles.name as role_name')
-                    ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
-                    ->join('roles', 'roles.id', 'model_has_roles.role_id')
-                    ->join('employees', 'employees.email', 'users.email')
-                    ->where('employees.id', $employee_id)
-                    ->get();
+            $employee = Employee::where('id', $employee_id)->first();
+
+            if($employee && $employee->user_id) {
+                $data = User::select('users.*', 'employees.*', 'roles.name as role_name')
+                        ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
+                        ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                        ->join('employees', 'employees.email', 'users.email')
+                        ->where('employees.id', $employee_id)
+                        ->first();                
+            } else {
+                $employee->role_name = 'Employee';
+                $data = $employee;
+            }
         }
         return response()->json($data);
     }

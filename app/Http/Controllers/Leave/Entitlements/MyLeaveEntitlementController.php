@@ -31,11 +31,14 @@ class MyLeaveEntitlementController extends Controller
         DB::connection()->enableQueryLog();
 
         $entitlement = [];
+        $leave_types = [];
+        $leave_period = [];
         if($employees){
-            $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_types.*')
+            $employees_id = $employees->id;
+            $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_entitlements.id as entitlement_id', 'm_leave_types.*', 'm_leave_types.name as leave_type_name')
                             ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
-                            ->when(filled($employees->id), function($query)use($employees_id) {
-                                $query->where('m_leave_entitlements.emp_number', $employees->id);
+                            ->when(filled($employees_id), function($query) use ($employees_id) {
+                                $query->where('m_leave_entitlements.emp_number', $employees_id);
                             })
                             ->when(request()->filled('leave_type_id'), function($query) {
                                 $query->where('m_leave_entitlements.leave_type_id', request('leave_type_id'));
@@ -48,33 +51,20 @@ class MyLeaveEntitlementController extends Controller
                             });
 
             $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
-                            ->paginate(1);
+                            ->get();
+
+            $leave_types = mLeaveType::get();
+            $leave_period = mLeaveEntitlement::select('from_date', 'to_date')
+                                            ->selectRaw('CONCAT(from_date, " - ", to_date) as leave_period')
+                                            ->when(filled($employees_id), function($query) use ($employees_id) {
+                                                $query->where('m_leave_entitlements.emp_number', $employees_id);
+                                            })
+                                            ->distinct()
+                                            ->get();
         }        
-        // dd(DB::getQueryLog());
+        // dd(DB::getQueryLog());        
 
-        $leave_types = mLeaveType::get();
-        $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
-
-        if($leave_periods){
-            $year = date('Y');
-            $month = $leave_periods->start_month;
-            $date = $leave_periods->start_date;
-            $from_date = $year."-" .str_pad($month, 2, "0", STR_PAD_LEFT)."-".str_pad($date, 2, "0", STR_PAD_LEFT);
-
-            $end = new DateTime($from_date);
-            $end->modify('+1 years -1 days');
-            $end_date = $end->format('Y-m-d');
-
-            $leave_period_value = $leave_periods->start_month.'-'.$leave_periods->start_date;
-            $leave_period_name = $from_date.' - '.$end_date;
-        }else{
-            $from_date = "";
-            $end_date = "";
-            $leave_period_value = '';
-            $leave_period_name = 'No Leave Period';
-        }
-
-        return view('leave/entitlements/list', compact('employees', 'entitlement', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value'));
+        return view('leave/entitlements/list', compact('entitlement', 'leave_types', 'leave_period'));
     }
 
     /**
@@ -127,7 +117,7 @@ class MyLeaveEntitlementController extends Controller
      * @param  \App\mLeaveEntitlement  $mLeaveEntitlement
      * @return \Illuminate\Http\Response
      */
-    public function updateupdate(Request $request, $id)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -141,5 +131,19 @@ class MyLeaveEntitlementController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            mLeaveEntitlement::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($entitlement) {
+                    $entitlement->delete();
+                });
+            return true;
+        } else {   
+            return false;
+        }       
     }
 }
