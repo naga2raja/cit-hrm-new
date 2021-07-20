@@ -4,81 +4,90 @@
 
 <div class="page-wrapper">
 				<div class="container-fluid">
-					<div class="row">						
-						<div class="col-xl-12 col-lg-12 col-md-12">
-							<div class="card shadow-sm ctm-border-radius border">
-								<div class="card-body align-center">
-									<form method="GET" action="{{ route('leaveEntitlement.index') }}">
-										<div class="row filter-row">
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-3">
-													<label>Employee Name <span class="text-danger">*</span></label>
-													<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%">
-														@if(Request::get('name'))
-															<option selected="selected" id="{{ Request::get('emp_number') }}">{{ Request::get('name') }}</option>
-														@endif
-													</select>
-													{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													<input type="hidden" name="emp_number" id="emp_number" class="form-control">
+					<div class="row">
+						<!-- left side -->
+						<div class=" col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+							<aside class="sidebar sidebar-user">
+								<div class="card shadow-sm ctm-border-radius">
+									<div class="card-header">
+										<h4 class="card-title mb-0 d-inline-block"><i class="fa fa-search mt-2"></i> Search</h4>
+									</div>
+									<div class="card-body">
+										<form method="GET" action="{{ route('leaveEntitlement.index') }}">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Employee Name <span class="text-danger">*</span></label>
+														<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%">
+															@if(Request::get('emp_name'))
+																<option selected="selected" id="{{ Request::get('emp_number') }}">{{ Request::get('emp_name'), old('name') }}</option>
+															@endif
+														</select>
+														{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														<input type="hidden" name="emp_number" id="emp_number" class="form-control">
+														<input type="hidden" name="emp_name" id="emp_name" class="form-control">
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Leave Period<span class="text-danger">*</span></label>
+														<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period" id="leave_period">
+															@foreach ($leave_period as $period)
+			                                                    <option value='{{ $period->leave_period }}' {{ Request::get('leave_period') == $period->leave_period ? 'selected' : '' }}>{{ $period->leave_period }}</option>
+			                                                @endforeach
+		                                                </select>
+		                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+		                                                <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ $from_date }}">
+		                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ $to_date }}">
+													</div>
 												</div>
 											</div>
 
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-3">
-													<label>Leave Period <span class="text-danger">*</span></label>
-													<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period">
-		                                                <option value='{{ $leave_period_value }}' {{ old('leave_period_value') == $leave_period_value ? 'selected' : '' }}>{{ $leave_period_name }}</option>
-	                                                </select>
-	                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-	                                                <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ $from_date }}">
-	                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ $end_date }}">
+											<div class="row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Leave Type <span class="text-danger">*</span></label>
+														<select class="form-control select" name="leave_type_id">
+		                                                    @foreach ($leave_types as $type)
+			                                                    <option value='{{ $type->id }}' {{ Request::get('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
+			                                                @endforeach
+		                                                </select>
+		                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													</div>
 												</div>
 											</div>
 
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
-													<label>Leave Type <span class="text-danger">*</span></label>
-													<select class="form-control select" name="leave_type_id">
-	                                                    @foreach ($leave_types as $type)
-		                                                    <option value='{{ $type->id }}' {{ old('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
-		                                                @endforeach
-	                                                </select>
-	                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"> Search </button>
 												</div>
-											</div>
-											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
-													<label></label>
-													<button type="submit" class="mt-1 btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Search </button>
-												</div> 
-											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
-													<label></label>
-													<a href="{{ route('leaveEntitlement.index') }}" class="mt-1 btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel </a>  
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<a href="{{ route('leaveEntitlement.index') }}" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"> Cancel </a>
 												</div>
-											</div>
-										
-										</div>
-									</form>
+											</div>												
+										</form>
+									</div>
 								</div>
-							</div>
+							</aside>
+						</div>
 
-							<div class="card shadow-sm ctm-border-radius border">
+						<!-- right side -->
+						<div class="col-xl-9 col-lg-8 col-md-12">
+							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-header">
 									<div class="row filter-row">
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
+										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-												<h4 class="card-title mb-0 ml-2 mt-2">My Leave Entitlements</h4>
+												<h4 class="card-title mb-0 ml-2 mt-2"><i class="fa fa-list"></i> Employee Leave Entitlements</h4>
 											</div>
 										</div>
 										@hasrole('Admin')
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
+											<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">  
 												<a href="{{ route('leaveEntitlement.create', 'employee_id=1') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
+											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">  
 												<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_entitlements_table','leaveEntitlement')"><i class="fa fa-trash"></i> Delete</button>
 											</div>
 										@endrole
@@ -163,7 +172,28 @@
 	});
 
 	$(document.body).on("change","#employee_name",function(){
+		// alert($('#select2-employee_name-container').text());
 	 	$('#emp_number').val(this.value);
+	 	var emp_name = $("#employee_name option:selected").html();
+	 	$('#emp_name').val(emp_name);
+	});
+
+	window.onload = function() {
+		var emp_number = $("#employee_name option:selected").prop('id');
+		$('#emp_number').val(emp_number);
+	 	var emp_name = $("#employee_name option:selected").html();
+	 	$('#emp_name').val(emp_name);
+	}
+
+	// on chnage of leave_period
+
+
+	$('#leave_period').on('change', function() {	  
+		var result = this.value.split(' - ');
+		if(result){
+			$('#from_date').val(result[0]);
+			$('#to_date').val(result[1]);
+		}
 	});
 </script>    
     <!-- <script src="{{ asset('js/system_users.js')}}"></script> -->

@@ -26,31 +26,30 @@ class MyLeaveEntitlementController extends Controller
     {
         $user_id = Auth::User()->id;
         $employees = Employee::where('user_id', $user_id)->first();
-        if($employees){
-            $employees_id = $employees->id;
-        }else{
-            $employees_id = '';
-        }
+        // dd($entitlement);
 
         DB::connection()->enableQueryLog();
 
-        $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_types.*')
-                    ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
-                    ->when(filled($employees_id), function($query)use($employees_id) {
-                        $query->where('m_leave_entitlements.emp_number', $employees_id);
-                    })
-                    ->when(request()->filled('leave_type_id'), function($query) {
-                        $query->where('m_leave_entitlements.leave_type_id', request('leave_type_id'));
-                    })
-                    ->when(request()->filled('from_date'), function($query) {
-                        $query->where('m_leave_entitlements.from_date', request('from_date'));
-                    })
-                    ->when(request()->filled('to_date'), function($query) {
-                        $query->where('m_leave_entitlements.to_date', request('to_date'));
-                    });
+        $entitlement = [];
+        if($employees){
+            $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_types.*')
+                            ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
+                            ->when(filled($employees->id), function($query)use($employees_id) {
+                                $query->where('m_leave_entitlements.emp_number', $employees->id);
+                            })
+                            ->when(request()->filled('leave_type_id'), function($query) {
+                                $query->where('m_leave_entitlements.leave_type_id', request('leave_type_id'));
+                            })
+                            ->when(request()->filled('from_date'), function($query) {
+                                $query->where('m_leave_entitlements.from_date', request('from_date'));
+                            })
+                            ->when(request()->filled('to_date'), function($query) {
+                                $query->where('m_leave_entitlements.to_date', request('to_date'));
+                            });
 
-        $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
-                       ->paginate(5);
+            $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
+                            ->paginate(1);
+        }        
         // dd(DB::getQueryLog());
 
         $leave_types = mLeaveType::get();
