@@ -96,14 +96,21 @@
 													@foreach ($users as $user)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="user_id" value="{{ $user->user_id }}">
+															@if($user->user_id != auth()->user()->id || $user->user_id == 1)
+																<input type="checkbox" name="user_id" value="{{ $user->user_id }}">
+															@endif
 														</td>
 														<td>
 															<h2><u><a href="{{ route('systemUsers.edit', $user->user_id) }}">{{ $user->email }}</a></u></h2>
 														</td>
 														<td>{{ $user->role_name }}</td>
 														<td>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</td>
-														<td>{{ $user->emp_status }}</td>
+														<td>
+															@if($user->emp_status == 'In active')
+																<a class="btn btn-outline-danger btn-sm"> Inactive </a>
+															@elseif($user->emp_status == 'Active')
+																<a class="btn  btn-outline-success btn-sm"> Active </a>
+															@endif
 													</tr>
 													@endforeach
 												@else

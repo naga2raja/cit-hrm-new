@@ -4,69 +4,79 @@
 
 <div class="page-wrapper">
 				<div class="container-fluid">
-					<div class="row">						
-						<div class="col-xl-12 col-lg-12 col-md-12">
-							<div class="card shadow-sm ctm-border-radius border">
-								<div class="card-body align-center">
-									<form method="GET" action="{{ route('myEntitlements.index') }}">
-										<div class="row filter-row">
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-3">
-													<label>Leave Period <span class="text-danger">*</span></label>
-													<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period">
-		                                                <option value='{{ $leave_period_value }}' {{ old('leave_period_value') == $leave_period_value ? 'selected' : '' }}>{{ $leave_period_name }}</option>
-	                                                </select>
-	                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-	                                                <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ $from_date }}">
-	                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ $end_date }}">
+					<div class="row">
+						<!-- left side -->
+						<div class=" col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+							<aside class="sidebar sidebar-user">
+								<div class="card shadow-sm ctm-border-radius">
+									<div class="card-header">
+										<h4 class="card-title mb-0 d-inline-block"> Search</h4>
+										<h4 class="float-right"><i class="fa fa-search"></i></h4>
+									</div>
+									<div class="card-body">
+										<form method="GET" action="{{ route('myEntitlements.index') }}">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Leave Period</label>
+														<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period" id="leave_period">
+															<option value="">Select Leave Period</option>
+															@foreach ($leave_period as $period)
+			                                                    <option value='{{ $period->leave_period }}' {{ Request::get('leave_period') == $period->leave_period ? 'selected' : '' }}>{{ $period->leave_period }}</option>
+			                                                @endforeach
+		                                                </select>
+		                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+		                                                <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ Request::get('from_date') }}">
+		                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ Request::get('to_date') }}">
+													</div>
 												</div>
 											</div>
 
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-3">
-													<label>Leave Type <span class="text-danger">*</span></label>
-													<select class="form-control select" name="leave_type_id">
-														<option value="">All</option>
-	                                                    @foreach ($leave_types as $type)
-		                                                    <option value='{{ $type->id }}' {{ old('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
-		                                                @endforeach
-	                                                </select>
-	                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											<div class="row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Leave Type</label>
+														<select class="form-control select" name="leave_type_id">
+															<option value="">All</option>
+		                                                    @foreach ($leave_types as $type)
+			                                                    <option value='{{ $type->id }}' {{ Request::get('leave_type_id') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+			                                                @endforeach
+		                                                </select>
+		                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													</div>
 												</div>
 											</div>
-											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
-													<label></label>
-													<button type="submit" class="mt-1 btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Search </button>
-												</div> 
-											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
-													<label></label>
-													<a href="{{ route('leaveEntitlement.index') }}" class="mt-1 btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel </a>  
+
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"> Search </button>
 												</div>
-											</div>
-										
-										</div>
-									</form>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<a href="{{ route('leaveEntitlement.index') }}" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"> Cancel </a>
+												</div>
+											</div>												
+										</form>
+									</div>
 								</div>
-							</div>
+							</aside>
+						</div>
+						<!-- left side end -->
 
-							<div class="card shadow-sm ctm-border-radius border">
+						<!-- right side -->
+						<div class="col-xl-9 col-lg-8 col-md-12">
+							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-header">
 									<div class="row filter-row">
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
+										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 												<h4 class="card-title mb-0 ml-2 mt-2">My Leave Entitlements</h4>
 											</div>
 										</div>
 										@hasrole('Admin')
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
+											<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
 												<a href="{{ route('leaveEntitlement.create', 'employee_id='.@$employees->id) }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
+											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
 												<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_entitlements_table','leaveEntitlement')"><i class="fa fa-trash"></i> Delete</button>
 											</div>
 										@endrole
@@ -77,7 +87,7 @@
 									<div class="table-responsive">
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr>
+												<tr class="bg-light">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_entitlements_table')">
 													</th>
@@ -89,19 +99,36 @@
 												</tr>
 											</thead>
 											<tbody id="list_entitlements_table">
+												@php
+													$total = 0;
+												@endphp
 												@if(count($entitlement) > 0)
 													@foreach ($entitlement as $row)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="user_id" value="{{ $row->id }}">
+															<input type="checkbox" name="user_id" value="{{ $row->entitlement_id }}">
 														</td>
-														<td>{{ $row->leave_type_id }}</td>
-														<!-- <td>{{ $row->id }}</td> -->
-														<td>{{ $row->from_date }}</td>
-														<td>{{ $row->to_date }}</td>
-														<td>{{ $row->no_of_days }}</td>
+														<td>{{ $row->leave_type_name }}</td>
+														<!-- <td>{{ $row->entitlement_id }}</td> -->
+														<td>
+															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->from_date }}</a></u></h2>
+														</td>
+														<td>
+															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->to_date }}</a></u></h2>
+														</td>
+														@php
+															$total = $total + $row->no_of_days;
+														@endphp
+														<td>
+															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->no_of_days }}</a></u></h2>
+														</td>
 													</tr>
 													@endforeach
+													<tr class="bg-light">
+														<th></th>
+														<th colspan="3"><i>Total</i></th>
+														<th>{{ number_format($total, 2) }}</th>
+													</tr>
 												@else
 													<tr>
 														<td colspan="6"><p class="text-center">No Data Found</p></td>
@@ -125,47 +152,15 @@
 
 @push('scripts')
 <script type="text/javascript">
-	// Autocomplete ajax call
-	$('#employee_name').keyup(function(){ 
-		var employee_name = $(this).val();
-		if(employee_name != '')
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-				method:"POST",
-				url: '/employeeNameSearch',
-				data:{
-					employee_name:employee_name,
-					_token:_token
-				},
-				success:function(data){
-					$('#employee_name').removeClass('is-invalid');
-					$("#not_exist").remove();
-
-					if(data != ""){					
-						$('#employees_list').fadeIn();
-						$('#employees_list').html(data);
-					}else{
-						var exists = ($("#not_exist").length == 0);
-					    if (exists) {
-					        $('#employee_name').addClass('is-invalid');
-							$('#employees_list').fadeOut();
-							$('<span id="not_exist" class="invalid-feedback" role="alert">Employee does not exist</span>').insertAfter('#employee_name');
-					    }
-					}
-				}
-			});
-		} else{
-			$('#employees_list').html('');	        	
+	// on change of leave_period
+	$('#leave_period').on('change', function() {	  
+		var result = this.value.split(' - ');
+		if(result){
+			$('#from_date').val(result[0]);
+			$('#to_date').val(result[1]);
 		}
 	});
 
-	$(document).on('click', '.employees', function(){
-		$('#employee_name').val($(this).text());
-		$('#employees_list').fadeOut();
-		$('#employee_name').removeClass('is-invalid');
-		$("#not_exist").remove();
-	});
 </script>    
     <!-- <script src="{{ asset('js/system_users.js')}}"></script> -->
 @endpush

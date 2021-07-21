@@ -12,72 +12,16 @@
 						<div class="card-header" id="basic1">
 							<h4 class="cursor-pointer mb-0">
 								<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
-									Add Leave Entitlement
+									Edit Leave Entitlement
 								</a>
 							</h4>
 						</div>
 						<div class="card-body p-0">
 							<div id="basic-one" class="collapse show ctm-padding" aria-labelledby="basic1" data-parent="#accordion-details">
 								
-								<form method="POST" action="{{ route('leaveEntitlement.store') }}" >
+								<form method="POST" action="{{ route('leaveEntitlement.update', $entitlement->entitlement_id) }}" >
 									@csrf
-									<div class="row">
-										<div class="col-sm-2">
-											<div class="form-group">
-												<label for="multiple_employee">Add to Multiple Employees</label>
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="form-group">
-												<input type="hidden" name="multiple_employee" value="off">
-												<input type="checkbox" name="multiple_employee" id="multiple_employee" {{ old('multiple_employee') == 'on' ? 'checked' : '' }}>
-											</div>
-										</div>
-									</div>
-
-									<div id="location_div" style="display: none;">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Location<span class="text-danger">*</span></label>
-												</div>
-											</div>
-											<div class="col-sm-3">
-												<div class="form-group">
-													<!-- <select class="form-control select" name="location_id">
-	                                                    <option value='0' {{ old('location_id') == '0' ? 'selected' : '' }}>All</option>
-	                                                    @foreach ($country as $row)
-		                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : '' }}>{{ $row->country }} - {{ $row->code }}</option>
-		                                                @endforeach
-	                                                </select> -->
-													<select class="form-control select" name="location_id">
-	                                                    <option value='0' {{ old('location_id') == '0' ? 'selected' : '' }}>All</option>
-	                                                    <option value='103' {{ old('location_id') == '103' ? 'selected' : '' }}>India</option>
-	                                                    <option value='112' {{ old('location_id') == '112' ? 'selected' : '' }}>Japan</option>
-	                                                </select>
-													{!! $errors->first('location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label class="float-right">Sub Unit <span class="text-danger">*</span></label>
-												</div>
-											</div>
-											<div class="col-sm-3">
-												<div class="form-group">
-													<select class="form-control select" name="sub_unit_id">
-	                                                    <option value='0' {{ old('sub_unit_id') == '0' ? 'selected' : '' }}>All</option>
-	                                                    @foreach ($company_location as $company)
-		                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : '' }}>{{ $company->company_name }}</option>
-		                                                @endforeach
-	                                                </select>
-													{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>										
-									</div>
-
+									@method('PUT')
 									<div id="employee_div">
 										<div class="row">
 											<div class="col-sm-2">
@@ -86,21 +30,10 @@
 												</div>
 											</div>
 											<div class="col-sm-3">
-												<!-- <div class="form-group">
-													<input type="text" name="employee" id="employee_name" class="form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" placeholder="Type for hints.." value="{{ old('employee') }}" autocomplete="off">
-													{!! $errors->first('employee', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													<div id="employees_list" class="autocomplete"></div>
-													<input type="hidden" name="emp_number" id="emp_number" class="form-control">
-												</div> -->
-
 												<div class="form-group">										
-													<select class="employee_name form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" name="employee" id="employee_name" style="width: 100%" {{ (Request::get('employee_id')) ? 'readonly=""' : '' }}>
-														@if(Request::get('employee_id'))
-															<option selected="selected" id="{{ auth()->user()->id }}">{{ auth()->user()->name }}</option>
-														@endif
-													</select>
+													<input type="text" name="employee" class="form-control" value="{{ $entitlement->employee_name }}" readonly="">
+													<input type="hidden" name="emp_number" value="{{ $entitlement->emp_number }}">
 													{!! $errors->first('employee', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													<input type="hidden" name="emp_number" id="emp_number" class="form-control" value="{{ (Request::get('employee_id')) ? $employees->id : '' }}">
 												</div>
 											</div>
 										</div>										
@@ -114,11 +47,8 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select" name="leave_type">
-                                                    @foreach ($leave_types as $type)
-	                                                    <option value='{{ $type->id }}' {{ old('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
-	                                                @endforeach
-                                                </select>
+												<input type="text" name="leave_type" class="form-control" value="{{ $entitlement->leave_type_name }}" readonly="">
+												<input type="hidden" name="leave_type_id" class="form-control" value="{{ $entitlement->leave_type_id }}">
                                                 {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -137,7 +67,7 @@
                                                 </select>
                                                 {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
                                                 <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ $from_date }}">
-                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ $end_date }}">
+                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ $to_date }}">
 											</div>
 										</div>
 									</div>
@@ -150,7 +80,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="number" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" value="{{ old('entitlement') }}" placeholder="" autocomplete="off">
+												<input type="number" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" value="{{ number_format($entitlement->no_of_days) }}" placeholder="" autocomplete="off">
 												{!! $errors->first('entitlement', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -170,7 +100,7 @@
 											<div class="row">
 												<div class="col-sm-6">
 													<div class="submit-section text-center btn-add">
-														<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+														<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
 													</div>
 												</div>
 												<div class="col-sm-6">
