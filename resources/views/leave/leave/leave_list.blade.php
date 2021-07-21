@@ -116,9 +116,11 @@
                                                                     <td> {{ $leave->comments }}</td>
                                                                     <td>
                                                                         @if($leave->approval_level == 1 && $leave->status == 2 ) 
-                                                                            Pending Approval Level 2
+                                                                            Pending Approval From Admin
+                                                                        @elseif($leave->approval_level == 2 && $leave->status == 2 ) 
+                                                                            <button class="btn btn-theme text-white"> Approved </button>
                                                                         @else
-                                                                        {{ $leave->leave_status }}
+                                                                            {{ $leave->leave_status }}
                                                                         @endif
                                                                        
                                                                     </td>
@@ -126,8 +128,8 @@
                                                                         <!--
                                                                         <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
                                                                             <span class="lnr lnr-trash"></span> Delete
-                                                                        </a> --> 
-                                                                        @if($leave->leave_status == 0)
+                                                                        </a> -->
+                                                                        @if( ($userRole == 'Manager' && $leave->approval_level == 0) || ($userRole == 'Admin' && $leave->approval_level == 1))
                                                                         <select class="form-control select" id="leave_{{ $leave->id }}" onchange="getLeaveStatus({{ $leave->id }})">
                                                                             <option value="">Select</option>
                                                                             @foreach ($leaveStatus as $item)
@@ -141,7 +143,7 @@
 
                                                             @if(!count($myLeaves)) 
                                                                 <tr>
-                                                                    <td colspan="8">
+                                                                    <td colspan="9">
                                                                         <div class="alert alert-danger"> No data found!</div>
                                                                     </td>
                                                                 </tr>
@@ -202,7 +204,7 @@
 						<h4 class="modal-title mb-3">Are You Sure Want to update the Status?</h4>
                         <form method="POST" action="{{ route('leave.action') }}">
                             @csrf                            
-                            <input type="text" id="leave_id_update" name="leave_id_update">
+                            <input type="hidden" id="leave_id_update" name="leave_id_update">
 						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
 						<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
                         </form>
@@ -271,22 +273,6 @@
             memo.push(e1)
             return memo;
         }, []);
-    }
-    
-
-    function updateLeaveStatus() {
-        // $.ajax({
-        //             method: 'POST',
-        //             url: '/employees/multiple-delete',
-        //             data: JSON.stringify({'delete_ids': selectedUserIds, "_token": "{{ csrf_token() }}" }),
-        //             dataType: "json",
-        //             contentType: 'application/json',
-        //             success: function(response){
-        //                 console.log('response : ', response);
-		// 				alert('deleted successfully!');
-		// 				window.location.reload();                        
-        //             }					
-        //         });
-    }
+    }    
 	</script>
 @endsection

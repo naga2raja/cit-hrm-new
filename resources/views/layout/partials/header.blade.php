@@ -310,7 +310,8 @@
                                         </li>
                                     </ul>
                                 </li>
-                                
+                                @endrole
+                                @hasrole('Admin|Manager')
                                 <li class="mr-1 nav-item dropdown {{ Request::is('employees*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="company" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
@@ -318,12 +319,14 @@
                                         <li>
                                             <a class="dropdown-item {{ Request::is('employees') ? 'active' : '' }}" href="{{ route('employees.index') }}">Employee List</a>
                                         </li>
+                                        @hasrole('Admin')
                                         <li>
                                             <a class="dropdown-item {{ Request::is('employees/create') ? 'active' : '' }}" href="{{ route('employees.create') }}">Add Employee</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item {{ Request::is('employees-import') ? 'active' : '' }}" href="{{ route('employees.import') }}">Data Import</a>                                            
                                         </li>
+                                        @endrole
                                     </ul>
                                 </li>
                                 @endrole
@@ -375,7 +378,7 @@
                                             <a class="dropdown-item {{ Request::is('leave/list') ? 'active' : '' }}" href="{{ route('leave.list') }}">Leave List</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Assign Leave</a>
+                                            <a class="dropdown-item" href="{{ route('leave.assign') }}">Assign Leave</a>
                                         </li>
                                         @endrole
                                     </ul>

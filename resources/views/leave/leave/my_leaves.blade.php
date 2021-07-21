@@ -91,7 +91,15 @@
 																	</td>
                                                                     <td>  - </td>
                                                                     <td> {{ $leave->comments }}</td>
-                                                                    <td> {{ $leave->leave_status }}</td>
+                                                                    <td> 
+																		@if($leave->approval_level == 1 && $leave->status == 2 ) 
+                                                                            Pending Approval From Admin
+                                                                        @elseif($leave->approval_level == 2 && $leave->status == 2 ) 
+                                                                            <button class="btn btn-theme text-white"> Approved </button>
+                                                                        @else
+                                                                        {{ $leave->leave_status }}
+                                                                        @endif
+																	</td>
                                                                     <td> 																		
 																		@if($leave->approval_level == 0)
 																			<!-- if employee want to delete can do it before manager approve/reject-->																			

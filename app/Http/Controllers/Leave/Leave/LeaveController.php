@@ -16,8 +16,10 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Mail;
 use App\Mail\ApplyLeaveRequestMail;
+use App\Mail\LeaveApproveStatus;
 use App\tEmployeeReportTo;
 use App\tLeaveComment;
+use App\mHoliday;
 
 class LeaveController extends Controller
 {
@@ -72,7 +74,8 @@ class LeaveController extends Controller
         $leaveEntitlements = mLeaveEntitlement::where('emp_number', $employeeId)->first();
         if($leaveEntitlements) {
             $leaveType = mLeaveType::all();
-            return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId'));            
+            $assignLeave = false;
+            return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave'));            
         } else {
             $message = 'Leave entitlements not added!';
             return view('leave/leave/error', compact('message'));
@@ -96,7 +99,7 @@ class LeaveController extends Controller
         // Convert the period to an array of dates
         $dates = $leaveDates->toArray();
 
-        $employee = Employee::where('user_id', Auth::user()->id)->first();
+        $employee = Employee::where('id', $request->employee_id)->first();
         $employeeId = $employee->id;
         
         $leaveEntitlements = mLeaveEntitlement::where('emp_number', $employeeId)
@@ -113,6 +116,11 @@ class LeaveController extends Controller
             return redirect()->back()->with('error', 'You applied leave already for the selected date');
         }
 
+        //check the leave is in Holidays
+        $isHoliday = $this->checkLeaveHasHolidays($dates);
+        if($isHoliday) {
+            return redirect()->back()->with("error", "Please don't apply leave for Holidays.");
+        }
         $managerEmails = [];
         //get reporting managers
         $reportTo = $this->getReportingManagers($employeeId);
@@ -147,6 +155,28 @@ class LeaveController extends Controller
             $lengthHour = 4;
         }
         
+        $leave_approval_level = 0;
+        $leave_status = 1;
+        $sendMailFlag = true;
+        if($request->assign_leave == 1 && Auth::user()->hasRole('Manager')) {
+            $leave_approval_level = 1;
+            $leave_status = 2;
+        } else if($request->assign_leave == 1 && Auth::user()->hasRole('Admin')) {
+            $leave_approval_level = 2;
+            $leave_status = 2;
+            $sendMailFlag = false;
+        } else {
+            //if no manager assigned notify admin to Approve
+            if(count($managerEmails) ) {
+                $leave_approval_level = 0;
+                if(Auth::user()->hasRole('Manager')) {
+                    $leave_approval_level = 1;
+                }                
+            } else {
+                $leave_approval_level = 1;
+            }
+        }
+
         // Iterate over the period
         foreach ($leaveDates as $date) {
             $leaveDate = $date->format('Y-m-d');
@@ -158,17 +188,8 @@ class LeaveController extends Controller
             $leave->length_days = $lengthDay;
             $leave->leave_duration = $request->leave_duration;
             $leave->entitlement_id = $request->leave_entitlement_id;
-            $leave->status = 1;
-
-            //if no manager assigned notify admin to Approve
-            if(count($managerEmails) ) {
-                $leave->approval_level = 0;
-                if(Auth::user()->hasRole('Manager')) {
-                    $leave->approval_level = 1;
-                }                
-            } else {
-                $leave->approval_level = 1;
-            }
+            $leave->status = $leave_status;
+            $leave->approval_level = $leave_approval_level;   
             $leave->leave_type_id = $request->leave_type_id;
             $leave->save();
         }
@@ -183,8 +204,8 @@ class LeaveController extends Controller
             'date'  =>  $fromDate . ' to '. $toDate
         ];        
         $managerEmails[] = ['name' => 'Admin', 'email' => 'cithrm@yopmail.com'];
-
-        Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
+        if($sendMailFlag)
+            Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
         
         return redirect()->back()->with('success', 'You applied successfully!');      
                 
@@ -254,22 +275,25 @@ class LeaveController extends Controller
     public function getLeaveList(Request $request)
     {
         $user = Auth::user();
+        $employee = Employee::where('user_id', Auth::user()->id)->first();
+        $employeeId = $employee->id;
+
         $empIds = [];
+        $userRole = 'Admin';
         if($user->hasRole('Manager')) {
-            $approval_level = [0,1];
+            $userRole = 'Manager';
+            $approval_level = [0,1,2];
             //Find Reporting Employees Ids
-            $reportTo = $this->getReportingEmployees(Auth::user()->id);
+            $reportTo = $this->getReportingEmployees($employeeId);
             if($reportTo)
                 $empIds = explode(',', $reportTo->reporting_manager_ids);
         } else {    
             // dd('Admin');
-            $approval_level = [1];
+            $approval_level = [1,2];
         }
 
         $leaveStatus = mLeaveStatus::whereIn('id', [2,4,5])->get();
 
-        $employee = Employee::where('user_id', Auth::user()->id)->first();
-        $employeeId = $employee->id;
         $myLeaves = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
             ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
             ->join('employees', 'employees.id', 't_leave_requests.employee_id')
@@ -296,7 +320,7 @@ class LeaveController extends Controller
             ->groupBy('t_leave_requests.id')
             ->paginate(10); 
 
-        return view('leave/leave/leave_list', compact('leaveStatus', 'myLeaves'));           
+        return view('leave/leave/leave_list', compact('leaveStatus', 'myLeaves', 'userRole'));           
     }
 
     public function getLeaveBalance(Request $request)
@@ -361,19 +385,24 @@ class LeaveController extends Controller
                 $updateArr['status'] = $status_id;
                 if($status_id == 2) {
                     $updateArr['approval_level'] = 1;
+                    if(Auth::user()->hasRole('Admin')) {
+                        $updateArr['approval_level'] = 2;
+                    }                    
                 }
                 //update in leaves table
                 tLeave::where('leave_request_id', $leave_request_id)->update($updateArr);
-                tLeaveRequest::where('id', $leave_request_id)->update([
-                    'status' => $status_id
-                ]);
+                $leaveRequest = tLeaveRequest::where('id', $leave_request_id)->first();
+                $leaveRequest->status = $status_id;
+                $leaveRequest->save();
 
                 $leaveStatus = mLeaveStatus::where('id', $status_id)->first();
 
+                $currentEmployeeDetails = $this->getEmployeeDetails(Auth::user()->id);
                 //update in leave comments table
                 tLeaveComment::insert(
                     [
                         'leave_id' => $leave_request_id,
+                        'employee_id' => $currentEmployeeDetails->id, //manager id
                         'comments' => 'Updated to '.$leaveStatus->name. 'By '.Auth::user()->name
                     ]
                 );
@@ -390,10 +419,60 @@ class LeaveController extends Controller
                         $entitlementDet->save();
                     }                    
                 }
+                //Send Email to Employee
+                $toEmails = [];
+                $leaveEmployeeDetails = $this->getEmployeeDetails($leaveRequest->employee_id);
+                $details = [
+                    'leave_date' => $leaveRequest->from_date.' to '. $leaveRequest->to_date,
+                    'message'  =>  'Updated to '.$leaveStatus->name. ' By '.Auth::user()->name,
+                    'employee_name' => $leaveEmployeeDetails->first_name.' '.$leaveEmployeeDetails->first_name
+                ];        
+                $toEmails[] = ['name' => $leaveEmployeeDetails->first_name.' '.$leaveEmployeeDetails->first_name, 'email' => $leaveEmployeeDetails->email];
+        
+                Mail::to($toEmails)->send(new LeaveApproveStatus($details));
+                
+
             }
 
             return redirect()->back()->with('success', 'You updated leave status successfully!');
         }
         return redirect()->back();
+    }
+
+    public function getEmployeeDetails($userId) {
+        return Employee::where('user_id', $userId)->first();
+    }
+
+    public function checkLeaveHasHolidays($dates)
+    {
+        $holiday = mHoliday::whereIn('date', $dates)->first();
+        $recurring = false;
+        //check for recurring dates
+        foreach($dates as $date)
+        {
+           $recurringHoliday = mHoliday::whereRaw('DATE_FORMAT(date, "%m%d") = '. date("md", strtotime($date)))
+                    ->where('recurring', 1)
+                    ->first();
+            if($recurringHoliday) {
+                $recurring = true;
+                break;
+            }
+        }
+        return ($holiday || $recurring) ? true : false;
+    }
+
+    public function assign()
+    {
+        $userId = Auth::user()->id;
+        $employee = Employee::where('user_id', $userId)->first();
+        if(!$employee)
+            return redirect('/');
+        
+        $assignLeave = true;
+        //check entitlement is assigned for the current user
+        $employeeId = $employee->id;
+        $leaveEntitlements = NULL; 
+        $leaveType = mLeaveType::all();
+        return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave'));                
     }
 }
