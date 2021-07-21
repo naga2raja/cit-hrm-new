@@ -253,6 +253,8 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     Route::post('leave/leave-balance-ajax', 'Leave\Leave\LeaveController@getLeaveBalance');
     Route::delete('leave/delete-leave', 'Leave\Leave\LeaveController@destroy')->name('leave.delete_modal');
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
+    
+    Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {

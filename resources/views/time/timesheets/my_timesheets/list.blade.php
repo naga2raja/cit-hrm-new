@@ -1,172 +1,124 @@
 @extends('layout.mainlayout')
 @section('content')
 <!-- Content -->
+<style type="text/css">
+	.bootstrap-datetimepicker-widget tr:hover {
+	    /*background-color: #eee;*/
+	}
+</style>
 <div class="page-wrapper">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+						<!-- left side -->
+						<div class=" col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
 							<aside class="sidebar sidebar-user">
-								<div class="card ctm-border-radius shadow-sm">
-									<div class="card-body py-4">
-										<div class="row">
-											<div class="col-md-12 mr-auto text-left">
-												<div class="custom-search input-group">
-													<div class="custom-breadcrumb">
-														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-															<li class="breadcrumb-item d-inline-block"><a href="index" class="text-dark">Time</a></li>
-															<li class="breadcrumb-item d-inline-block active">Timesheets</li>
-														</ol>
-														<h4 class="text-dark">My Timesheets</h4>
+								<div class="card shadow-sm ctm-border-radius">
+									<div class="card-header">
+										<h4 class="card-title mb-0 d-inline-block"> Search</h4>
+										<h4 class="float-right"><i class="fa fa-search"></i></h4>
+									</div>
+									<div class="card-body">
+										<form method="GET" action="{{ route('myEntitlements.index') }}">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Employee Name</label>
+														<input type="text" name="search" class="form-control">
+		                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+		                                                <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ Request::get('from_date') }}">
+		                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ Request::get('to_date') }}">
 													</div>
 												</div>
 											</div>
-										</div>
+
+											<div class="row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Search</label>
+														<input type="text" name="search" class="form-control">
+		                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"> Search </button>
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<a href="{{ route('leaveEntitlement.index') }}" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"> Cancel </a>
+												</div>
+											</div>												
+										</form>
 									</div>
-								</div>
-								<div class="card ctm-border-radius shadow-sm">
+									<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
 										<a href="javascript:void(0)" class="btn ctm-border-radius text-white btn-block btn-theme button-1" data-toggle="modal" data-target="#add_timesheet"><span><i class="fe fe-plus"></i></span> Create Timesheet</a>
 									</div>
 								</div>
+								</div>
 							</aside>
 						</div>
-				
+						<!-- left side end -->
+
+						<!-- right side -->				
 						<div class="col-xl-9 col-lg-8  col-md-12">
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card ctm-border-radius shadow-sm flex-fill">
-										<div class="card-header">
-											<h4 class="card-title mb-0">
-												Timesheets
-												<div class="fc-button-group float-right">
-													<button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left fc-state-active" id="daily_button">Daily</button>
-													<button type="button" class="fc-agendaWeek-button fc-button fc-state-default" id="weekly_button">Weekly</button>
-													<button type="button" class="fc-agendaDay-button fc-button fc-state-default fc-corner-right" id="monthly_button">Monthly</button>
-												</div>
-											</h4>
-										</div>
 										<div class="card-body">
-											<div class="row">
-												<div class="col-sm-4">
-													<div class="form-inline">
-														<div class="form-group">
-															<label>Date: </label>
-															<div class="input-group mb-3">
-																<div class="input-group-append">
-																	<button class="btn btn-theme text-white" type="button" id="search">
-																		<i class="fa fa-angle-left" aria-hidden="true" style="font-size: 25px;"></i>
-																	</button>
-																</div>
-																	<input class="form-control datetimepicker1" type="text" id="datetimepicker" name="datetimepicker">
-																	<input class="form-control month" type="text" id="month" name="month" style="display:none;">
-																	<input class="form-control week" type="text" id="week" name="week" style="display:none;">
-																<div class="input-group-append">
-																	<button class="btn btn-theme text-white" type="button" id="search">
-																		<i class="fa fa-angle-right" aria-hidden="true" style="font-size: 25px;"></i>
-																	</button>
-																</div>
+											<div class="col-md-12">
+												<div class="row">												
+													<div class="col-md-6">
+														<div class="form-inline">
+															<div id="daily_div">
+																<button type="button" class="btn btn-lg text-left" style="width: 100px;">Day:</button>
+																<button type="button" id="previous" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
+																<input type="text" name="date" id="datepicker" class="form-control datetimepicker" required="">
+																<button type="button" id="next" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
+															</div>
+															<div id="weekly_div" style="display: none;">
+																<button type="button" class="btn btn-lg text-left" style="width: 100px;">Week:</button>
+																<button type="button" id="previous" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
+																<input type="text" name="date" id="weeklyDatePicker" class="form-control " required="">
+																<button type="button" id="next" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
+															</div>
+															<div id="monthly_div" style="display: none;">
+																<button type="button" class="btn btn-lg text-left" style="width: 100px;">Month:</button>
+																<button type="button" id="previous" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
+																<input type="text" id="month" name="month" class="form-control month" >
+																<button type="button" id="next" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
 															</div>
 														</div>
 													</div>
-												</div>
-
-												<div class="col-sm-4"></div>
-
-												<div class="col-sm-4">
-													<div class="input-group mb-3">
-														<input type="text" class="form-control" placeholder="Search" id="search_input" name="search_input">
-														<div class="input-group-append">
-															<button class="btn btn-theme text-white" type="button" id="search">
-																<i class="fa fa-search" aria-hidden="true"></i>
-															</button>
-														</div>
+													<div class="col-md-6">
+														<div class="form-inline float-right">
+															<span class="mr-1">Search: </span>
+															<input type="text" name="search" class="mr-5 form-control float-right" required="" autocomplete="off">
+									                        <div class="btn-group">
+									                            <a id="daily_button" class="btn btn-sm btn-outline-primary fc-state-active" href="#timesheets/day/2021-07-12">Daily</a>
+									                            <a id="weekly_button" class="btn btn-sm btn-outline-primary" href="#timesheets/week/2021-07-01">Weekly</a>
+									                            <a id="monthly_button" class="btn btn-sm btn-outline-primary" href="#timesheets/month/2021-07-01">Monthly</a>
+									                        </div>
+										                </div>
 													</div>
 												</div>
-											</div>											
-										</div>
-									</div>									
-								</div>
-								<div class="col-md-12">
-									<div class="card ctm-border-radius shadow-sm flex-fill">
-										<div class="card-header">
-											<h4 class="card-title mb-0" id="timesheet_table_header">Daily Timesheets</h4>
-										</div>
-										<div class="card-body">
+											</div>
+
+											<hr><h4 class="card-title mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4><hr>
 											<div class="employee-timesheets">
 												<div class="table-responsive">
-													<table class="table custom-table mb-0 table-hover">
+													<table id="timesheets" class="table custom-table table-hover">
 														<thead>
-															<tr>
+															<tr class="bg-light">
 																<th>Employee</th>
 																<th>Project</th>
 																<th>Activity</th>
 																<th>Comments</th>
 																<th>Time spent</th>
-																<th class="text-center">Action</th>
 															</tr>
 														</thead>
-														<tbody>
-															<tr>
-																<td>
-																	<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>
-																	<h2><a href="employment">Danny Ward</a></h2>
-																</td>
-																<td>CIT-HRM</td>
-																<td>UI Designing</td>
-																<td>all screens</td>
-																<td>03:30</td>
-																<td class="text-right text-danger">
-																	<a href="javascript:void(0);" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#edit_timesheet">
-																		<span class="lnr lnr-pencil"></span> Edit
-																	</a>
-																	<a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																		<span class="lnr lnr-trash"></span> Delete
-																	</a>
-																</td>
-															</tr>
-															<tr>
-																<td>
-																	<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>
-																	<h2><a href="employment">Danny Ward</a></h2>
-																</td>
-																<td>CIT-HRM</td>
-																<td>DB schema Designing</td>
-																<td>MySQL</td>
-																<td>04:30</td>
-																<td class="text-right text-danger">
-																	<a href="javascript:void(0);" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#edit_timesheet">
-																		<span class="lnr lnr-pencil"></span> Edit
-																	</a>
-																	<a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																		<span class="lnr lnr-trash"></span> Delete
-																	</a>
-																</td>
-															</tr>
-															<tr>
-																<td>
-																	<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>
-																	<h2><a href="employment">Danny Ward</a></h2>
-																</td>
-																<td>CIT-HRM</td>
-																<td>Environment setup</td>
-																<td>installation and configuration</td>
-																<td>01:00</td>
-																<td class="text-right text-danger">
-																	<a href="javascript:void(0);" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#edit_timesheet">
-																		<span class="lnr lnr-pencil"></span> Edit
-																	</a>
-																	<a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																		<span class="lnr lnr-trash"></span> Delete
-																	</a>
-																</td>
-															</tr>
-															<tr>
-																<td></td>
-																<td></td>
-																<td></td>
-																<th>Total hours</th>
-																<th>09:00</th>
-															</tr>
+														<tbody id="list_timesheet_table">
 														</tbody>
 													</table>
 												</div>
@@ -182,8 +134,9 @@
 													</div>
 												</div>
 											</div>											
+
 										</div>
-									</div>
+									</div>									
 								</div>
 							</div>
 						</div>
@@ -199,213 +152,94 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
-		<!-- Add Timesheet Modal -->
-		<div id="add_timesheet" class="modal fade" role="dialog">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Create Timesheet</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-						<div class="modal-body">
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Date of timesheet <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input class="form-control datetimepicker" type="text" name="datetimepicker" id="datetimepicker">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Project <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Type for hints..." name="project" id="project" value="">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Activity <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Type for hints..." id="activity" name="activity" value="">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Hours spent <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="HH:MM" id="hours" name="hours" value="">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Note</label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<textarea class="form-control" rows="3" name="note"></textarea>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer justify-content-center">
-							<button type="button" class="btn btn-theme ctm-border-radius text-white save-event submit-btn button-1">Create</button>
-						</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Add Timesheet Modal -->
-
-		<!-- Edit Timesheet Modal -->
-		<div id="edit_timesheet" class="modal fade" role="dialog">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Edit Timesheet</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-						<div class="modal-body">
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Date of timesheet <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input class="form-control datetimepicker" type="text" name="datetimepicker" id="datetimepicker">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Project <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Type for hints..." name="edit_project" id="edit_project" value="">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Activity <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Type for hints..." id="edit_activity" name="edit_activity" value="">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Hours spent <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="HH:MM" id="edit_hours" name="edit_hours" value="">
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Note</label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-										<textarea class="form-control" rows="3" name="edit_note"></textarea>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer justify-content-center">
-							<button type="button" class="btn btn-theme ctm-border-radius text-white save-event submit-btn button-1">Update</button>
-						</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Edit Timesheet Modal -->
-		
 @endsection
 
 
 @push('scripts')
 <script type="text/javascript">
-	$('#datetimepicker1').datetimepicker({
-		format: "YYYY-MM-DD", 
-		maxDate: moment()
+
+	function setCurrentDate(){
+		var now = new Date();
+		var day = ("0" + now.getDate()).slice(-2);
+		var month = ("0" + (now.getMonth() + 1)).slice(-2);
+		var date = (day) + "/" + (month) + "/" + now.getFullYear() ;
+		$('#datepicker').val(date);
+	}
+
+	function LoadData(){
+		var date = $('#datepicker').val();
+		$.ajax({
+			method: 'POST',
+			url: '/mytimesheets/getMyTimeSheets-ajax',
+			data: JSON.stringify({'selected_date': date, '_token': '{{ csrf_token() }}' }),
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				// console.log('response : ', data);
+				
+				if(data.length > 0){
+		            console.log(data);
+		            var rows = '';
+		            data.forEach(function (row,index) {
+		              rows += '<tr>';
+		              rows += '<td>' + row.employee_name + '</td>';
+		              rows += '<td>' + row.project_name.project_name + '</td>';
+		              rows += '<td>' + row.activity_name.activity_name + '</td>';
+		              rows += '<td>' + row.comments + '</td>';
+		              rows += '<td>' + row.duration + '</td>';
+		            });
+		            $('#timesheets > tbody').html(rows);
+		        }
+			}
+		});
+	}
+
+	window.onload = function() {
+		setCurrentDate();
+		//Initialize the datePicker(I have taken format as mm-dd-yyyy, you can     //have your owh)
+		$("#weeklyDatePicker").datetimepicker({
+			format: 'MM-DD-YYYY'
+		});
+	   //Get the value of Start and End of Week
+	   $('#weeklyDatePicker').on('dp.change', function (e) {
+	   		var value = $("#weeklyDatePicker").val();
+	   		var firstDate = moment(value, "MM-DD-YYYY").day(0).format("DD/MM/YYYY");
+	   		var lastDate =  moment(value, "MM-DD-YYYY").day(6).format("DD/MM/YYYY");
+	   		$("#weeklyDatePicker").val(firstDate + " - " + lastDate);
+	   });   
+
+	   LoadData();
+	}
+
+	function PreviousDate(date){
+		// change format of input date
+		var formated_date = moment(date, "DD/MM/YYYY").format("YYYY/MM/DD");
+		var result = new Date(formated_date);
+		// to add 1 days from the selected date
+	    result.setDate(result.getDate() + -1);
+	    // change format as per the datepicker
+		var next_date = moment(result).format("DD/MM/YYYY")
+		$('#datepicker').val(next_date);
+	}
+
+	function NextDate(date){
+		// change format of input date
+		var formated_date = moment(date, "DD/MM/YYYY").format("YYYY/MM/DD");
+		var result = new Date(formated_date);
+		// to add 1 days from the selected date
+	    result.setDate(result.getDate() + +1);
+	    // change format as per the datepicker
+		var next_date = moment(result).format("DD/MM/YYYY")
+		$('#datepicker').val(next_date);
+	}	
+
+	$('#previous').click(function(){
+		PreviousDate($('#datepicker').val());
+	});
+	$('#next').click(function(){
+		NextDate($('#datepicker').val());
 	});
 
-	$('#datetimepicker').datetimepicker({
-		format: "YYYY-MM-DD", 
-		maxDate: moment()
-	});
-
-	$('#week').datetimepicker({
-		format: "YYYY-MM-DD", 
-		maxDate: moment()
-	});
 
 	$('#month').datetimepicker({
 		format: "YYYY-MM", 
@@ -413,34 +247,34 @@
 	});	
 
 	/* to display the specific calendars according to the button click */
-	$('#monthly_button').on('click', function(){
-		$('#daily_button').removeClass('fc-state-active');
-		$('#weekly_button').removeClass('fc-state-active');
-		$('#monthly_button').addClass('fc-state-active');
-		$('#datetimepicker').css('display', 'none');
-		$('#week').css('display', 'none');
-		$('#month').css('display', 'block');
-		$('#timesheet_table_header').text('Monthly Timesheets');
-	});
-
-	$('#daily_button').on('click', function(){
-		$('#monthly_button').removeClass('fc-state-active');
-		$('#weekly_button').removeClass('fc-state-active');
+	$('#daily_button').on('click', function(){		
 		$('#daily_button').addClass('fc-state-active');
-		$('#week').css('display', 'none');
-		$('#month').css('display', 'none');
-		$('#datetimepicker').css('display', 'block');
+		$('#weekly_button').removeClass('fc-state-active');
+		$('#monthly_button').removeClass('fc-state-active');
+		$('#daily_div').css('display', 'block');
+		$('#weekly_div').css('display', 'none');
+		$('#monthly_div').css('display', 'none');
 		$('#timesheet_table_header').text('Daily Timesheets');
 	});
 
 	$('#weekly_button').on('click', function(){
-		$('#monthly_button').removeClass('fc-state-active');
 		$('#daily_button').removeClass('fc-state-active');
 		$('#weekly_button').addClass('fc-state-active');
-		$('#month').css('display', 'none');
-		$('#datetimepicker').css('display', 'none');
-		$('#week').css('display', 'block');
+		$('#monthly_button').removeClass('fc-state-active');
+		$('#daily_div').css('display', 'none');
+		$('#weekly_div').css('display', 'block');
+		$('#monthly_div').css('display', 'none');
 		$('#timesheet_table_header').text('Weekly Timesheets');
+	});
+
+	$('#monthly_button').on('click', function(){
+		$('#daily_button').removeClass('fc-state-active');
+		$('#weekly_button').removeClass('fc-state-active');
+		$('#monthly_button').addClass('fc-state-active');
+		$('#daily_div').css('display', 'none');
+		$('#weekly_div').css('display', 'none');
+		$('#monthly_div').css('display', 'block');
+		$('#timesheet_table_header').text('Monthly Timesheets');
 	});
 </script>
 @endpush
