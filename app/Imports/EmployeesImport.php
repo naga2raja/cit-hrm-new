@@ -39,7 +39,7 @@ class EmployeesImport implements ToModel, WithStartRow
         $home_telephone = $row[14];
         $mobile = $row[15];
         //$isExists = User::where('email', $email)->first();
-        $isExistsEmployee = Employee::where('employee_id', $employee_id)->orWhere('email', $email)->first();
+        $isExistsEmployee = Employee::where('employee_id', $employee_id)->orWhere('email', $email)->withTrashed()->first();
 
        if($first_name && $last_name && $email && !$isExistsEmployee) {            
             // $user = new User;
@@ -59,6 +59,7 @@ class EmployeesImport implements ToModel, WithStartRow
             $employee->email = $email;
             $employee->employee_id = $employee_id;
             $employee->status = 'Active';
+            $employee->gender = $gender;
             $employee->created_by = Auth::User()->id;
             $employee->updated_by = Auth::User()->id;        
             $employee->save();
