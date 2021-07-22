@@ -73,20 +73,20 @@
 											<input type="text" class="form-control" placeholder="Last Name">
 										</div> -->
 										<div class="col-sm-4">
-											<p class="mb-2">First Name</p>
+											<p class="mb-2">First Name <span class="text-danger">*</span></p>
 												<div class="form-group">
 													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}">
 													{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 											<div class="col-sm-4">
-												<p class="mb-2">Middle Name</p>
+												<p class="mb-2">Middle Name <span class="text-danger">*</span></p>
 												<div class="form-group">
 													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}">
 												</div>
 											</div>
 											<div class="col-sm-4">
-												<p class="mb-2">Last Name</p>
+												<p class="mb-2">Last Name <span class="text-danger">*</span></p>
 												<div class="form-group">
 													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}">
 													{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -94,21 +94,21 @@
 											</div>
 
 										<div class="col-12 form-group">
-											<p class="mb-2">Email Address</p>
+											<p class="mb-2">Email Address <span class="text-danger">*</span></p>
 													<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}">
 													{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 										</div>
 
 										<div class="col-sm-6">
 											<div class="form-group">
-												<p class="mb-2">Employee Id</p>
+												<p class="mb-2">Employee Id <span class="text-danger">*</span></p>
 												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}">
 												{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<p class="mb-2">Status</p>
+												<p class="mb-2">Status <span class="text-danger">*</span></p>
 												<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}">
 													<option value="Active" {{old ('status', $employee->status) == 'Active' ? 'selected' : ''}}>Active</option>
 													<option value="In active" {{old ('status', $employee->status) == 'In active' ? 'selected' : ''}}>Inactive</option>
@@ -192,8 +192,15 @@
 											 <a href="{{ route('employees.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
 										</div>
 									</div>
-								-->
+								-->								
 
+									</div>
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
+											</div>
+										</div>
 									</div>
 
 							</div>

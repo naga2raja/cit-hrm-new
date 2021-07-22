@@ -44,6 +44,7 @@ width: 100% !important;
                 <tr>
                     <td class="content-cell">                        
                         <h1>Hello {{ $details['employee_name'] }}</h1>
+                        <br>
                         <p> Leave Date : {{ $details['leave_date'] }} </p>
                         <p> Leave Status: {{ $details['message'] }}</p>
                         <br>

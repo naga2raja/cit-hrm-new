@@ -75,7 +75,8 @@ class HolidaysController extends Controller
         if ($request->input('recurring') == "on") {
             $recurring = '1';
         }
-
+        $date = str_replace('/', '-', $request->date );
+        $date = date('Y-m-d', strtotime($date ));
         $holidays = mHoliday::create([
             'description'  => $request->input('description'),
             'date'  => date('Y-m-d', strtotime($date)),
