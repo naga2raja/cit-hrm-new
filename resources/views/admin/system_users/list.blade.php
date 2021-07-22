@@ -111,6 +111,7 @@
 															@elseif($user->emp_status == 'Active')
 																<a class="btn  btn-outline-success btn-sm"> Active </a>
 															@endif
+														</td>
 													</tr>
 													@endforeach
 												@else
