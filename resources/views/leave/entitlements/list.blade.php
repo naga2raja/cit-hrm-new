@@ -49,10 +49,10 @@
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"> Search </button>
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<a href="{{ route('leaveEntitlement.index') }}" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"> Cancel </a>
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
@@ -88,9 +88,11 @@
 										<table class="table custom-table table-hover">
 											<thead>
 												<tr class="bg-light">
+													@hasrole('Admin')
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_entitlements_table')">
 													</th>
+													@endrole
 													<th>Leave Type</th>
 													<!-- <th>Entitlement Type</th> -->
 													<th>Valid From</th>
@@ -105,9 +107,11 @@
 												@if(count($entitlement) > 0)
 													@foreach ($entitlement as $row)
 													<tr>
+														@hasrole('Admin')
 														<td class="text-center">
 															<input type="checkbox" name="user_id" value="{{ $row->entitlement_id }}">
 														</td>
+														@endrole
 														<td>{{ $row->leave_type_name }}</td>
 														<!-- <td>{{ $row->entitlement_id }}</td> -->
 														<td>
@@ -120,18 +124,23 @@
 															$total = $total + $row->no_of_days;
 														@endphp
 														<td>
-															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->no_of_days }}</a></u></h2>
+															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ number_format($row->no_of_days, 2) }}</a></u></h2>
 														</td>
 													</tr>
 													@endforeach
 													<tr class="bg-light">
+														@hasrole('Admin')
 														<th></th>
+														@endrole
 														<th colspan="3"><i>Total</i></th>
 														<th>{{ number_format($total, 2) }}</th>
 													</tr>
 												@else
 													<tr>
-														<td colspan="6"><p class="text-center">No Data Found</p></td>
+														@hasrole('Admin')
+														<td></td>
+														@endrole
+														<td colspan="5"><p class="text-center">No Data Found</p></td>
 													</tr>
 												@endif
 											</tbody>

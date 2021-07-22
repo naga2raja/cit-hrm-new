@@ -35,7 +35,7 @@ class LeaveEntitlementController extends Controller
         $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_entitlements.id as entitlement_id', 'employees.*', 'm_leave_types.*', 'm_leave_types.name as leave_type_name')
                     ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')
                     ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
-                    ->selectRaw('employees.id as employee_id, CONCAT(first_name, " ", last_name) as employee_name')
+                    ->selectRaw('employees.id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
                     ->when(request()->filled('emp_number'), function($query) {
                         $query->where('employees.id', request('emp_number'));
                     })
@@ -73,7 +73,7 @@ class LeaveEntitlementController extends Controller
         $employees = [];
         if($request->employee_id) {
             $employees = Employee::where('id', $request->employee_id)
-                                ->selectRaw('CONCAT(first_name, " ", last_name) as employee_name')
+                                ->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
                                 ->first();
         }
         // dd($employees);
@@ -239,12 +239,12 @@ class LeaveEntitlementController extends Controller
         $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_entitlements.id as entitlement_id', 'employees.*', 'm_leave_types.*', 'm_leave_types.name as leave_type_name')
                     ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')
                     ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
-                    ->selectRaw('employees.id as employee_id, CONCAT(first_name, " ", last_name) as employee_name')
+                    ->selectRaw('employees.id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
                     ->orderBy('m_leave_entitlements.from_date', 'asc')
                     ->find($id);
         // dd($entitlement);
 
-        return view('leave/entitlements/edit', compact('entitlement', 'leave_types', 'from_date', 'to_date', 'leave_period_name', 'leave_period_value'));
+        return view('leave/entitlements/edit', compact('entitlement', 'from_date', 'to_date', 'leave_period_name', 'leave_period_value'));
     }
 
     /**
