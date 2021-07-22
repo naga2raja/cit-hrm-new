@@ -137,16 +137,6 @@ class LeaveController extends Controller
             }
         }
 
-        // insert apply Leave
-        $leaveRequest = new tLeaveRequest;
-        $leaveRequest->employee_id = $employeeId;
-        $leaveRequest->leave_type_id = $request->leave_type_id;
-        $leaveRequest->from_date = date('Y-m-d', strtotime($fromDate));
-        $leaveRequest->to_date = date('Y-m-d', strtotime($toDate));
-        $leaveRequest->status = 1;
-        $leaveRequest->comments = $request->reason;
-        $leaveRequest->save();
-
         //find Leave Length days
         $lengthDay = 1;
         $lengthHour = 8;
@@ -176,6 +166,16 @@ class LeaveController extends Controller
                 $leave_approval_level = 1;
             }
         }
+
+        // insert apply Leave
+        $leaveRequest = new tLeaveRequest;
+        $leaveRequest->employee_id = $employeeId;
+        $leaveRequest->leave_type_id = $request->leave_type_id;
+        $leaveRequest->from_date = date('Y-m-d', strtotime($fromDate));
+        $leaveRequest->to_date = date('Y-m-d', strtotime($toDate));
+        $leaveRequest->status = $leave_status;
+        $leaveRequest->comments = $request->reason;
+        $leaveRequest->save();
 
         // Iterate over the period
         foreach ($leaveDates as $date) {

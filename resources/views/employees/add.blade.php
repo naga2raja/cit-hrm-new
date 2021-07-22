@@ -490,12 +490,24 @@
 
 	$('#datetimepicker1').datetimepicker({
 		format: "YYYY-MM-DD", 
-		maxDate: moment()
+		maxDate: moment(),
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		}
 	});
 
 	$('.datetimepicker2').datetimepicker({
 		format: "YYYY-MM-DD", 
-		maxDate: moment()
+		maxDate: moment(),
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		}
 	});
 
 	$("#user_profile_list a.list-group-item").click(function() {
