@@ -57,8 +57,10 @@
 												<i class="fa fa-users" aria-hidden="true"></i>
 											</div>
 											<div class="card-right">
-												<h4 class="card-title">Employees</h4>
-												<p class="card-text">700</p>
+												<a href="{{ route('employees.index') }}">
+													<h4 class="card-title">Employees</h4>
+													<p class="card-text">700</p>
+												</a>
 											</div>
 										</div>
 									</div>

@@ -377,4 +377,34 @@ class EmployeeController extends Controller
         }
         return response()->json($data);
     }
+
+    public function myInfo(Request $request)
+    {        
+        $employee = Employee::where('id', Auth::user()->id)->first();
+        $id = $employee->id;
+        
+        $contactInfo =  ContactDetails::where('user_id', $id)->first();
+                
+        $countries = mCountry::all();
+        $jobTitles = mJobTitle::all();
+        $jobCategories = mJobCategory::get();
+        $locations = mCompanyLocation::get();
+        $jobDetails = '';
+        if($employee && $employee->job_id) {
+            $jobDetails = mJobTitle::find($employee->job_id);
+        }
+
+        $reportTo = tEmployeeReportTo::join('employees', 't_employee_report_to.manager_id', 'employees.id')
+            ->where('t_employee_report_to.employee_id', $id)
+            ->selectRaw('employees.id as id, CONCAT(first_name, " ", last_name) as name')
+            ->groupBy('t_employee_report_to.manager_id')
+            ->get();
+        $assigned_managers = [];
+        foreach($reportTo as $manager) {
+            $assigned_managers[] = $manager->id;
+        } 
+        $assigned_managers = implode(',',  $assigned_managers);
+
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
+    }
 }
