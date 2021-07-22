@@ -118,8 +118,10 @@
                                                                         @if($leave->approval_level == 1 && $leave->status == 2 ) 
                                                                             Pending Approval From Admin
                                                                         @elseif($leave->approval_level == 2 && $leave->status == 2 ) 
-                                                                            <button class="btn btn-theme text-white"> Approved </button>
-                                                                        @else
+                                                                            <button class="btn btn-theme text-white"> Approved </button>                                                                        
+																		@elseif($leave->status == 4 || $leave->status == 5)
+																		<button class="btn btn-danger text-white"> {{ $leave->leave_status }} </button>
+																		@else
                                                                             {{ $leave->leave_status }}
                                                                         @endif
                                                                        

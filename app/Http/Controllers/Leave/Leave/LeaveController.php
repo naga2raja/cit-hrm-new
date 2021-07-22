@@ -75,7 +75,8 @@ class LeaveController extends Controller
         if($leaveEntitlements) {
             $leaveType = mLeaveType::all();
             $assignLeave = false;
-            return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave'));            
+            $holidays = $this->getHolidays();            
+            return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave', 'holidays'));            
         } else {
             $message = 'Leave entitlements not added!';
             return view('leave/leave/error', compact('message'));
@@ -473,6 +474,34 @@ class LeaveController extends Controller
         $employeeId = $employee->id;
         $leaveEntitlements = NULL; 
         $leaveType = mLeaveType::all();
-        return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave'));                
+        $holidays = $this->getHolidays();            
+        return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave', 'holidays'));
+    }
+
+    public function getHolidays()
+    {
+        $data = [];
+        $data['holidays'] = mHoliday::selectRaw('GROUP_CONCAT(date) as date')->first();
+
+        $currentYear = date('Y');
+        $nextYear = $currentYear+1;
+        $previousYear = $currentYear - 1;
+        $data['recurring_holidays'] = mHoliday::where('recurring', 1)
+                ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$previousYear.'-%m-%d")) as previous')
+                ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$nextYear.'-%m-%d")) as next')
+                ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$currentYear.'-%m-%d")) as current')
+                ->first();
+        $holidays = $data;
+        $disableHolidaysArr = [];
+        if($holidays) {                
+            $disableHolidaysArr1 = explode(',', $holidays['holidays']->date);
+            $disableHolidaysArr2 = explode(',', $holidays['recurring_holidays']->previous);
+            $disableHolidaysArr3 = explode(',', $holidays['recurring_holidays']->next);
+            $disableHolidaysArr4 = explode(',', $holidays['recurring_holidays']->current);
+            $disableHolidaysArr1 = array_merge($disableHolidaysArr1, $disableHolidaysArr2, $disableHolidaysArr3, $disableHolidaysArr4);
+            $disableHolidaysArr = $disableHolidaysArr1;
+        }
+                
+        return $disableHolidaysArr;
     }
 }

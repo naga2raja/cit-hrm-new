@@ -318,6 +318,19 @@
 				</div>
 			</div>
 		</div>
+
+		<div id="holidays_array" style="display: none;">{{ json_encode($holidays) }}</div>
+		<style>
+			td.day.disabled {
+				background: #f1bd06 !important;
+				color: #fff !important;
+				border-radius: 0px;
+			}
+			td.day.disabled.weekend {
+				background: none !important;
+				color: #777 !important;
+			}
+		</style>
 @endsection
 
 @section('my-scripts')
@@ -360,6 +373,13 @@
 			});
 		}
 
+		var holidayDates= [];
+		var existing_holidays = $('#holidays_array').html();
+		if(existing_holidays) {
+			holidayDates = JSON.parse(existing_holidays);
+			console.log('holidays', holidayDates);
+		}
+
 		$('#datetimepicker4, #datetimepicker5').datetimepicker({
 			format: 'DD/MM/YYYY',
 			locale:  moment.locale('en', {
@@ -371,7 +391,9 @@
 				down: "fa fa-angle-down",
 				next: 'fa fa-angle-right',
 				previous: 'fa fa-angle-left'
-			}
+			},
+			disabledDates: holidayDates,
+			debug: true,
 		});
 
 		$("#datetimepicker4, #datetimepicker5").datetimepicker().on('dp.change', function (e) {
