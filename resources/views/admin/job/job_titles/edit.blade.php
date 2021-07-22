@@ -18,7 +18,7 @@
 											<p>{{$message}}</p>
 										</div>
 									@endif
-									<form method="POST" action="{{ route('jobTitles.update', $jobs->id) }}">
+									<form method="POST" action="{{ route('jobTitles.update', $jobs->id) }}" enctype="multipart/form-data">
 										@csrf
 										@method('PUT')
 										<div class="row">
@@ -30,7 +30,7 @@
 											<div class="col-sm-4">
 												<div class="form-group">
 													<input type="text" name="job_title" class="form-control {{ $errors->has('job_title') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_title', $jobs->job_title) }}">
-													{!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													{!! $errors->first('job_title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -56,8 +56,18 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="file" name="job_specification" class="form-control" placeholder="">
-													<label class="ctm-text-sm">Accepts up to 1MB</label>
+													@if($jobs->job_specification)
+													<div id="preview_profile_image" style="max-width:200px;position: relative;">
+														<a href="{{ $jobs->job_specification }}" target="_blank">View Document</a>
+														<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editSpecDoc()"></a>
+														{!! $errors->first('job_specification', '<span class="error" style="width: 100%; margin-top: 0.25rem; font-size: 80%; color: #dc3545;" role="alert"><br> :message</span>') !!}
+													</div>	
+													@endif
+													<div id="upload_job_specification" style="{{ ($jobs->job_specification) ? 'display:none' : '' }}">
+														<input type="file" id="job_specification" name="job_specification" class="form-control {{ $errors->has('job_specification') ? 'is-invalid' : ''}}" placeholder="">
+														<label class="ctm-text-sm">Accepts up to 1MB</label>
+														{!! $errors->first('job_specification', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													</div>
 												</div>
 											</div>
 										</div>
@@ -83,8 +93,8 @@
 										<div class="row">
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
-												<button type="submit" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-refresh"></i> Update</button>
-												<a href="{{ route('jobTitles.index') }}" class="btn btn-danger text-white ctm-border-radius"><i class="fa fa-arrow-left"></i> Cancel</a>
+												<button type="submit" class="btn btn-theme text-white ctm-border-radius"></i> Update</button>
+												<a href="{{ route('jobTitles.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
 											</div>
 										</div>
 
@@ -101,4 +111,13 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
+@endsection
+
+@section('my-scripts')
+<script type="text/javascript">
+function editSpecDoc() {	
+	$('#preview_profile_image').hide();
+	$('#upload_job_specification').show();
+}
+</script>
 @endsection

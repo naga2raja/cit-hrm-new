@@ -13,7 +13,7 @@
 									</div>
 								</div>
 								<div class="card-body">
-									<form method="POST" action="{{ route('jobTitles.store') }}">
+									<form method="POST" action="{{ route('jobTitles.store') }}" enctype="multipart/form-data">
 										@csrf
 										<div class="row">
 											<div class="col-sm-2">
@@ -23,7 +23,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" name="job_title" class="form-control {{ $errors->has('job_title') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_title') }}">
+													<input type="text" name="job_title" required class="form-control {{ $errors->has('job_title') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_title') }}">
 													{!! $errors->first('job_title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -50,8 +50,9 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="file" name="job_specification" class="form-control" placeholder="">
+													<input type="file" name="job_specification" class="form-control {{ $errors->has('job_specification') ? 'is-invalid' : ''}}" placeholder="">
 													<label class="ctm-text-sm">Accepts up to 1MB</label>
+													{!! $errors->first('job_specification', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -77,7 +78,7 @@
 										<div class="row">
 											<div class="col-sm-2"></div>
 											<div class="col-sm-4 text-center">
-												<button type="submit" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-save"></i> Save</button>
+												<button type="submit" class="btn btn-theme text-white ctm-border-radius"><i class="fa fa-save"></i> Save</button>
 												<a href="{{ route('jobTitles.index') }}" class="btn btn-danger text-white ctm-border-radius"><i class="fa fa-arrow-left"></i> Cancel</a>
 											</div>
 										</div>

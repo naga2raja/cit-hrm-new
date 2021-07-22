@@ -43,15 +43,25 @@ class JobTitlesController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'job_title' => 'required'
+            'job_title' => 'required',
+            'job_specification' => 'max:1024|nullable'
         ]);
 
+        $jobSpecification = NULL;
+        if ($request->file('job_specification')) {
+            $imagePath = $request->file('job_specification');
+            $imageName = time().'_'.$imagePath->getClientOriginalName();
+
+            $path = $request->file('job_specification')->storeAs('uploads/job', $imageName, 'public');
+            $jobSpecification = '/storage/'.$path;
+        }
+        
         $user = mJobTitle::create([
             'name'  => $request->input('name'),
             'job_title' => $request->input('job_title'),
             'job_description' => $request->input('job_description'),
-            'job_specification' => $request->input('job_specification'),
-            'job_specification_filename' => $request->input('job_specification_filename'),            
+            'job_specification' => $jobSpecification, //$request->input('job_specification'),
+            //'job_specification_filename' => $request->input('job_specification_filename'),            
             'note' => $request->input('note'),
         ]);
 
@@ -92,14 +102,26 @@ class JobTitlesController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'job_title' => 'required'
+            'job_title' => 'required',
+            'job_specification' => 'max:1024|nullable'
         ]);
+
+        $jobSpecification = NULL;
+        if ($request->file('job_specification')) {
+            $imagePath = $request->file('job_specification');
+            $imageName = time().'_'.$imagePath->getClientOriginalName();
+
+            $path = $request->file('job_specification')->storeAs('uploads/job', $imageName, 'public');
+            $jobSpecification = '/storage/'.$path;
+        }
 
         $jobs = mJobTitle::find($id);
         $jobs->job_title = $request->input('job_title');
         $jobs->job_description = $request->input('job_description');
-        $jobs->job_specification = $request->input('job_specification');
-        $jobs->job_specification_filename = $request->input('job_specification_filename');
+        if($jobSpecification)
+            $jobs->job_specification = $jobSpecification; //$request->input('job_specification');
+            
+        // $jobs->job_specification_filename = $request->input('job_specification_filename');
         $jobs->note = $request->input('note');
         $jobs->save();
 

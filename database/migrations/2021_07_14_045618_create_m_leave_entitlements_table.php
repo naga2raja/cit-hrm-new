@@ -16,8 +16,8 @@ class CreateMLeaveEntitlementsTable extends Migration
         Schema::create('m_leave_entitlements', function (Blueprint $table) {
             $table->id();
             $table->integer('emp_number');
-            $table->decimal('no_of_days', 19,15);
-            $table->decimal('days_used', 8,4);
+            $table->decimal('no_of_days', 10,2);
+            $table->decimal('days_used', 10,2);
             $table->integer('leave_type_id');
             $table->date('from_date')->nullable();
             $table->date('to_date')->nullable();
