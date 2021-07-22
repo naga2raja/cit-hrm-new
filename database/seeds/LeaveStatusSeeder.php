@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class LeaveStatusSeed extends Seeder
+class LeaveStatusSeeder extends Seeder
 {
     /**
      * Run the database seeds.
