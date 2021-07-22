@@ -62,6 +62,26 @@
 											<form method="POST" action="{{ route('leave.store') }}">
 												@csrf		
 												<input type="hidden" name="leave_entitlement_id" id="leave_entitlement_id">
+												@if(@$assignLeave)													
+													<div class="row">
+														<div class="col-sm-6">
+															<div class="form-group">
+																<label>
+																Employee Name
+																<span class="text-danger">*</span>
+																</label>
+																<select class="form-control employee_auto_search select {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" required name="employee_id" id="employee_id" style="width: 100%">
+																</select>
+																{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+															</div>
+														</div>
+													</div>
+												@else
+													<input type="hidden" name="employee_id" id="employee_id" value="{{ $employeeId }}">
+												@endif
+
+												<input type="hidden" name="assign_leave" value="{{ (@$assignLeave) ? 1 : 0 }}">
+
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
@@ -324,11 +344,12 @@
 
 		function getLeaveBalance() {
 			var leave_type_id = $("#leave_type_id option:selected").val();
+			var employeeId = $("#employee_id").val();
 
 			$.ajax({
 				method: 'POST',
 				url: '/leave/leave-balance-ajax',
-				data: JSON.stringify({'leave_type_id': leave_type_id, 'employee_id' : '{{ $employeeId }}',  '_token': '{{ csrf_token() }}' }),
+				data: JSON.stringify({'leave_type_id': leave_type_id, 'employee_id' : employeeId,  '_token': '{{ csrf_token() }}' }),
 				dataType: "json",
 				contentType: 'application/json',
 				success: function(response){
@@ -405,7 +426,31 @@
 		// 	}).show();
 		// }
 
-		
+		$('.employee_auto_search').select2({
+			placeholder: 'Select a employee',
+			allowClear: true,
+			ajax: {
+				url: '/employee-autocomplete-ajax',
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+					return {
+						results:  $.map(data, function (item) {
+							return {
+								text: item.name,
+								id: item.id
+							}
+						})
+					};
+				},
+				cache: true
+			}		
+		});
+
+		$(document.body).on("change",".employee_auto_search",function(){
+			console.log('live', this.value);
+			getLeaveBalance();
+		});
 
 	</script>
 @endsection

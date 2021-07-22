@@ -196,13 +196,10 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
     Route::post('/myEntitlements/multiple-delete', 'Leave\LeaveType\MyLeaveEntitlementController@deleteMultiple');
 
-    // employee
-    Route::resource('/employees', 'Employee\EmployeeController');
+    // employee   
     Route::post('/employees/multiple-delete', 'Employee\EmployeeController@deleteMultiple');
     Route::get('/employees-import', 'Employee\ImportEmployeeController@index')->name('employees.import');
-    Route::post('/employees-import', 'Employee\ImportEmployeeController@import')->name('employees-import');
-    Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
-    
+    Route::post('/employees-import', 'Employee\ImportEmployeeController@import')->name('employees-import');    
 
     /* Admin/Qualifications/Skills */
     Route::resource('/skills', 'Admin\Qualifications\SkillsController');
@@ -258,8 +255,12 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {
+    //Employee
+    Route::resource('/employees', 'Employee\EmployeeController');
+    Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
+    Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');
 });
 
 Route::resource('/punch', 'Time\Attendance\PunchInOutController');

@@ -24,6 +24,7 @@ class ApplyLeaveRequest extends FormRequest
     public function rules()
     {
         return [
+            'employee_id' => 'required',
             'leave_type_id' => 'required',
             'leave_balance' => 'required|numeric|gt:0',
             'from_date' => 'required|date_format:d/m/Y',

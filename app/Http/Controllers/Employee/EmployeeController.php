@@ -15,6 +15,7 @@ use App\tEmployeeReportTo;
 use Auth;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Leave\Leave\LeaveController;
 
 class EmployeeController extends Controller
 {
@@ -43,6 +44,11 @@ class EmployeeController extends Controller
             $query->where('employees.status', request('status'));
         });
 
+        if(Auth::user()->hasRole('Manager')) {
+            $managerDet = Employee::where('user_id', Auth::user()->id)->first();
+            $employees = $employees->join('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id');
+            $employees = $employees->where('t_employee_report_to.manager_id', $managerDet->id);
+        }
 
         $employees = $employees->paginate(5);
         // dd($employees);
@@ -342,20 +348,32 @@ class EmployeeController extends Controller
 
     public function searchEmployeeAjax(Request $request)
     {
+        $leaveCtrl = new LeaveController;
     	$data = [];
 
         if($request->has('q')){
             $search = $request->q;
             $string = str_replace(' ', '', $search);
-            $data = Employee::select("id")
+            $data = Employee::select("employees.id")
                     ->selectRaw('CONCAT_WS (" ", first_name, last_name) as name')
-                    ->selectRaw('employee_id')
+                    ->selectRaw('employees.employee_id')
                     ->selectRaw('email')
             		->where('first_name','LIKE',"%$search%")
                     ->orWhere('middle_name','LIKE',"%$search%")
                     ->orWhere('last_name','LIKE',"%$search%")
-                    ->orwhere(DB::raw("CONCAT(first_name, middle_name, last_name)"), 'LIKE', "%$string%")
-            		->get();
+                    ->orwhere(DB::raw("CONCAT(first_name, middle_name, last_name)"), 'LIKE', "%$string%");
+            $empIds = [];
+            if(Auth::user()->hasRole('Manager')) {
+                $employee = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
+                $reportTo = $leaveCtrl->getReportingEmployees($employee->id);
+                
+                if($reportTo)
+                    $empIds = explode(',', $reportTo->reporting_manager_ids);
+                
+                $data = $data->join('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id')
+                    ->whereIn('employees.id', $empIds);
+            }            
+            $data = $data->groupBy('employees.id')->get();
         }
         return response()->json($data);
     }
