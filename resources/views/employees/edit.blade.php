@@ -13,24 +13,51 @@
 								<div class="col-md-12 mr-auto text-left">
 									<div class="custom-search input-group">
 										<div class="custom-breadcrumb">
+											@if(!Request::is('my-info'))
 											<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-												<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">Home</a></li>
-												<li class="breadcrumb-item d-inline-block active"><a href="{{ route('employees.index') }}">Employees</a></li>
+												<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">Home</a></li>												
+												<li class="breadcrumb-item d-inline-block active">
+													<a href="{{ route('employees.index') }}">Employees</a>
+												</li>												
 											</ol>
-											<h4 class="text-dark">Edit Employee</h4>
+											@endif
+											<h4 class="text-dark">
+												@if(Request::is('my-info'))
+													My Profile
+												@else
+													Edit Employee
+												@endif
+											</h4>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+
+					<div class="user-card card shadow-sm bg-white text-center ctm-border-radius">
+						<div class="user-info card-body">
+							<div class="user-avatar mb-4">
+								@if($employee->profile_photo)												
+									<img src="{{$employee->profile_photo}}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
+								@else
+									<img src="{{ assetUrl('img/profiles/img-13.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+								@endif								
+							</div>
+							<div class="user-details">
+								<h4><b>Hi {{ $employee->first_name }} {{ $employee->last_name }} </b></h4>
+								{{-- <p>{{ $employee->employee_id }}</p> --}}
+							</div>
+						</div>
+					</div>
+
 					<div class="card ctm-border-radius shadow-sm">
 						<div class="card-header">
 							<h4 class="card-title mb-0">Details Content</h4>
 						</div>
 						<div class="card-body">
 							<div id="user_profile_list" class="list-group border-none">
-								<a class="list-group-item list-group-item-action border-none" href="#personal">Personal Details</a>
+								<a class="list-group-item list-group-item-action border-none active" href="#personal">Personal Details</a>
 								<a class="list-group-item list-group-item-action border-none" href="#contact">Contact Details</a>
 								<a class="list-group-item list-group-item-action border-none" href="#jobDetails">Job Details</a>
 								<a class="list-group-item list-group-item-action border-none" href="#reportTo">Report To</a>
@@ -51,6 +78,7 @@
 			<form method="POST" action="{{ route('employees.update', $id) }}" enctype="multipart/form-data">
 				@csrf
 				{{ method_field('PUT') }}
+				<input type="hidden" name="my_info" value="{{ (Request::is('my-info')) ? 'yes' : 'no'}}">
 
 				<div class="accordion add-employee" id="accordion-details">
 					<div class="card shadow-sm ctm-border-radius">
@@ -95,14 +123,14 @@
 
 										<div class="col-12 form-group">
 											<p class="mb-2">Email Address <span class="text-danger">*</span></p>
-													<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}">
+													<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif>
 													{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 										</div>
 
 										<div class="col-sm-6">
 											<div class="form-group">
 												<p class="mb-2">Employee Id <span class="text-danger">*</span></p>
-												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}">
+												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}" @if(Request::is('my-info')) readonly @endif>
 												{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -287,27 +315,6 @@
 												<input type="email" class="form-control" placeholder="" name="alternate_email" value="{{ old('alternate_email', @$contactInfo->alternate_email) }}">
 											</div>
 										</div>
-
-										<!--
-										<div class="col-md-12 form-group">
-											<div class="cal-icon">
-												<input class="form-control datetimepicker cal-icon-input" type="text" placeholder="Start Date">
-											</div>
-										</div>
-										<div class="col-12 form-group">
-											<input type="text" class="form-control" placeholder="Job Title">
-										</div>
-										<div class="col-12 form-group mb-0">
-											<p class="mb-2">Employment Type</p>
-											<div class="custom-control custom-radio custom-control-inline">
-												<input type="radio" class="custom-control-input" id="Permanent" name="Permanent" checked>
-												<label class="custom-control-label" for="Permanent">Permanent</label>
-											</div>
-											<div class="custom-control custom-radio custom-control-inline">
-												<input type="radio" class="custom-control-input" id="Freelancer" name="Permanent">
-												<label class="custom-control-label" for="Freelancer">Freelancer</label>
-											</div>
-										</div> -->
 									</div>
 
 							</div>
@@ -328,7 +335,7 @@
 								<div class="row">
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Title</p>
-										<select class="form-control select" name="job_id" id="job_id">
+										<select class="form-control select" name="job_id" id="job_id" @if(Request::is('my-info')) disabled @endif>
 											<option value="">Select </option>
 											@foreach ($jobTitles as $job)
 												<option value="{{ $job->id }}" {{old ('job_id', @$employee->job_id) == $job->id ? 'selected' : ''}}> {{ $job->job_title }}</option>
@@ -342,7 +349,7 @@
 									</div>
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Category</p>
-										<select class="form-control select" name="job_category_id">
+										<select class="form-control select" name="job_category_id" @if(Request::is('my-info')) disabled @endif>
 											<option value="">Select </option>
 											@foreach ($jobCategories as $job)
 												<option value="{{ $job->id }}" {{old ('job_category_id', @$employee->job_category_id) == $job->id ? 'selected' : ''}}> {{ $job->name }}</option>
@@ -380,9 +387,11 @@
 						<div class="card-body p-0">
 							<div id="emp_report_to" class="collapse show ctm-padding" aria-labelledby="reportTo" data-parent="#accordion-details">
 								<div class="row">
+									@hasrole('Admin')
 									<div class="col-md-12 pull-right">
 										<a class="btn btn-theme button-1 text-white p-2" data-toggle="modal" data-target="#assign_manager" style="float: right;">Add</a>
 									</div>
+									@endrole 
 									
 									<input type="hidden" id="assigned_managers" name="assigned_managers" value="{{ $assigned_managers }}">
 									<div class="col-md-12 form-group">
@@ -390,7 +399,11 @@
 										<div id="selected_managers">
 											@if($reportTo)
 												@foreach ($reportTo as $manager)
-													{{ $manager->name }} <i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee({{ $manager->id }})"></i> <hr>
+													{{ $manager->name }} 
+													@hasrole('Admin')
+														<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee({{ $manager->id }})"></i>
+													@endrole
+													<hr>
 												@endforeach
 											@endif
 										</div>

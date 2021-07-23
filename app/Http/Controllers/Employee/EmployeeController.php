@@ -306,8 +306,12 @@ class EmployeeController extends Controller
                 $report->save();
             }
         }       
-
-        return redirect('employees')->with('success', 'Employee updated successfully');
+        if($request->my_info == 'yes') {
+            return redirect()->back()->with('success', 'Profile updated successfully');
+        } else {
+            return redirect('employees')->with('success', 'Employee updated successfully');
+        }
+        
     }
 
     /**
