@@ -112,4 +112,16 @@ class ActivitiesController extends Controller
             return false;
         }  
     }
+
+    public function getActivityName(Request $request)
+    {
+        $activity = [];
+        if($request->has('project_id')){
+            $project_id = $request->project_id;
+            $activity = tActivity::select('t_activities.*')
+                                    ->where('t_activities.project_id', $project_id)
+                                    ->get();
+        }
+        return response()->json($activity);
+    }
 }

@@ -10,33 +10,35 @@
 				<div class="container-fluid">
 					<div class="row">
 						<!-- left side -->
-						<div class=" col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
 							<aside class="sidebar sidebar-user">
-								<div class="card shadow-sm ctm-border-radius">
-									<div class="card ctm-border-radius shadow-sm">
-										<div class="card-body py-4">
-											<div class="row">
-												<div class="col-md-12 mr-auto text-left">
-													<div class="custom-search input-group">
-														<div class="custom-breadcrumb">
-															<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-																<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Time</a></li>
-																<li class="breadcrumb-item d-inline-block active">Timesheet</li>
-															</ol>
-															<h4 class="text-dark">My Timesheet</h4>
-														</div>
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body py-4">
+										<div class="row">
+											<div class="col-md-12 mr-auto text-left">
+												<div class="custom-search input-group">
+													<div class="custom-breadcrumb">
+														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
+															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Time</a></li>
+															<li class="breadcrumb-item d-inline-block active">Timesheet</li>
+														</ol>
+														<h4 class="text-dark">My Timesheet</h4>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<!-- <div class="card-header">
-										<h4 class="card-title mb-0 d-inline-block"> Search</h4>
-										<h4 class="float-right"><i class="fa fa-search"></i></h4>
-									</div> -->
-									<!-- <div class="card-body">
+								</div>
+								<!-- <div class="card ctm-border-radius shadow-sm">
+									<div class="card-body">
+										<a href="javascript:void(0)" class="btn ctm-border-radius text-white btn-block btn-theme button-1" data-toggle="modal" data-target="#add_event"><span><i class="fe fe-plus"></i></span> Create New</a>
+									</div>
+								</div> -->
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body">
+										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
 										<form method="GET" action="{{ route('myEntitlements.index') }}">
-											<div class="row filter-row">
+											<!-- <div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Employee Name</label>
@@ -46,7 +48,7 @@
 		                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ Request::get('to_date') }}">
 													</div>
 												</div>
-											</div>
+											</div> -->
 
 											<div class="row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
@@ -60,26 +62,21 @@
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"> Search </button>
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<a href="{{ route('leaveEntitlement.index') }}" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"> Cancel </a>
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
-									</div> -->
-									<div class="card ctm-border-radius shadow-sm">
-									<div class="card-body">
-										<a href="javascript:void(0)" class="btn ctm-border-radius text-white btn-block btn-theme button-1" data-toggle="modal" data-target="#add_timesheet"><span><i class="fe fe-plus"></i></span> Create Timesheet</a>
 									</div>
-								</div>
 								</div>
 							</aside>
 						</div>
 						<!-- left side end -->
 
 						<!-- right side -->				
-						<div class="col-xl-9 col-lg-8  col-md-12">
+						<div class="col-xl-9 col-lg-8 col-md-12">
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card ctm-border-radius shadow-sm flex-fill">
@@ -110,8 +107,6 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-inline float-right">
-															<span class="mr-1">Search: </span>
-															<input type="text" name="search" class="mr-5 form-control float-right" required="" autocomplete="off">
 									                        <div class="btn-group">
 									                            <a id="daily_button" class="btn btn-sm btn-outline-primary fc-state-active" href="javascript:void(0)">Daily</a>
 									                            <a id="weekly_button" class="btn btn-sm btn-outline-primary" href="javascript:void(0)">Weekly</a>
@@ -121,20 +116,36 @@
 													</div>
 												</div>
 											</div>
+										</div>
+									</div>
 
-											<hr><h4 class="card-title mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4><hr>
-											<div class="employee-timesheets">
-												<div class="table-responsive">
-													<table id="timesheets" class="table custom-table table-hover">
-														<thead>
-														</thead>
-														<tbody id="list_timesheet_table">
-														</tbody>
-													</table>
+									<div class="card shadow-sm ctm-border-radius">
+										<div class="card-header">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
+													<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
+													</div>
+												</div>										
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
+													<a href="{{ route('timesheets.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
+													<a id="edit_button" href="javascript:void(0)" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-edit"></i> Edit</a>
 												</div>
 											</div>
-											<hr>
+										</div>
 
+										<div class="card-body employee-timesheets">									
+											<div class="table-responsive">
+												<table id="timesheets" class="table custom-table table-hover">
+													<thead>
+													</thead>
+													<tbody id="list_timesheet_table">
+													</tbody>
+												</table>
+											</div>
+											<hr>
 											<div class="row">
 												<div class="col-sm-3 text-center">
 													<div class="row">
@@ -143,8 +154,7 @@
 														</div>
 													</div>
 												</div>
-											</div>											
-
+											</div>
 										</div>
 									</div>									
 								</div>
@@ -242,10 +252,13 @@
 		            tbody += '<td colspan="5">Total</td>';
 		            tbody += '<td>' + getHours(total) + ' hrs</td>';
 		            tbody += '</tr>';
+
+		            $("#edit_button").attr("href", "{{ route('mytimesheets.edit', "+row.employee_id+") }}");
 		        }else{
 		        	tbody += '<tr>';
 		        	tbody += '<td colspan="6"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
+		        	$("#edit_button").attr("href", "javascript:void(0)");
 		        }
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
