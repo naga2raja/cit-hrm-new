@@ -89,14 +89,14 @@
 												<div class="form-group">										
 													<select class="employee_name form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" name="employee" id="employee_name" style="width: 100%">
 														@if(Request::get('employee_id'))
-															<option selected="selected" id="{{ $employees->id }}">{{ $employees->employee_name }}</option>
+															<option selected="selected" id="{{ @$employees->id }}">{{ @$employees->employee_name }}</option>
 														@endif
 													</select>
 													{!! $errors->first('employee', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													<input type="hidden" name="emp_number" id="emp_number" class="form-control" value="{{ (Request::get('employee_id')) ? $employees->id : '' }}">
+													<input type="hidden" name="emp_number" id="emp_number" class="form-control" value="{{ (Request::get('employee_id')) ? @$employees->id : '' }}">
 												</div>
 											</div>
-										</div>										
+										</div>
 									</div>
 
 									<div class="row">
