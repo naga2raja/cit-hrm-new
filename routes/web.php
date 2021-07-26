@@ -237,8 +237,6 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/configurations', 'Time\Attendance\ConfigurationsController');
     /* Time/Attendance/PunchInOut */
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
-    /* Time/Timesheets/MyTimesheets */
-    Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
 });
 
 Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
@@ -251,14 +249,21 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     Route::delete('leave/delete-leave', 'Leave\Leave\LeaveController@destroy')->name('leave.delete_modal');
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
     Route::get('my-info', 'Employee\EmployeeController@myInfo')->name('myinfo');
-    
+
+    /* Time/Timesheets/MyTimesheets */
+    Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
     Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
+    // Employee Timesheets
+    Route::resource('/timesheets', 'Time\Timesheets\TimesheetsController');
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {
     //Employee
     Route::resource('/employees', 'Employee\EmployeeController');
     Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
+    Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax');
+    Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName');
+
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
     Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');

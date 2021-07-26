@@ -6,14 +6,28 @@
 				<div class="container-fluid">
 					<div class="row">
 						<!-- left side -->
-						<div class=" col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
 							<aside class="sidebar sidebar-user">
-								<div class="card shadow-sm ctm-border-radius">
-									<div class="card-header">
-										<h4 class="card-title mb-0 d-inline-block"> Search</h4>
-										<h4 class="float-right"><i class="fa fa-search"></i></h4>
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body py-4">
+										<div class="row">
+											<div class="col-md-12 mr-auto text-left">
+												<div class="custom-search input-group">
+													<div class="custom-breadcrumb">
+														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
+															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Leave</a></li>
+															<li class="breadcrumb-item d-inline-block active">Entitlements</li>
+														</ol>
+														<h4 class="text-dark">Employee Entitlements</h4>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
+								</div>
+								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
+										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
 										<form method="GET" action="{{ route('leaveEntitlement.index') }}">
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">

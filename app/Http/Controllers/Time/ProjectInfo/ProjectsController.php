@@ -296,4 +296,16 @@ class ProjectsController extends Controller
 
         return response()->json(['customer_name' => $customers->customer_name, 'customer_id' => $customers->id]);
     }
+
+    public function searchProjectAjax(Request $request)
+    {
+        $projects = [];
+        if($request->has('q')){
+            $project_name = $request->q;
+            $projects = mProject::select('m_projects.project_name', 'm_projects.id')
+                                    ->where('m_projects.project_name', 'like', "%{$project_name}%")
+                                    ->get();
+        }
+        return response()->json($projects);
+    }
 }
