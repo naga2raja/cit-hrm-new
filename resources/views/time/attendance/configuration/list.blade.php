@@ -20,6 +20,44 @@
 								@endif									
 									<form method="POST" action="{{ route('configurations.store') }}">
 										@csrf
+
+
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group">
+													<label>{{ $employeeConfig->action }} </label>
+												</div>
+											</div>
+											<div class="col-sm-2">
+												<div class="form-group">
+													<div class="custom-control custom-switch float-left">
+														<input type="checkbox" class="custom-control-input" name="enable_employee_checkbox" value="{{$employeeConfig->id}}" id="{{ 'customeSwitch'.$employeeConfig->id }}" @if($employeeConfig->action_flag != 0 && !$errors->has('employees') ){{'checked'}} @endif>
+														<label class="custom-control-label" for="{{ 'customeSwitch'.$employeeConfig->id }}"></label>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div id="employee_div" style="{{ ($employeeConfig->action_flag == 0 || $errors->has('employees')) ? 'display:block' : 'display:none' }}">
+											<div class="row">
+												<div class="col-sm-4">
+													<div class="form-group">
+														<!-- <label>Choose Employees</label> -->
+													</div>
+												</div>
+												<div class="col-sm-8">
+													<div class="form-group">										
+														<select class="employee_name form-control {{ $errors->has('employees') ? 'is-invalid' : ''}}" name="employees[]" id="employee_ids" multiple="multiple" style="width: 100%">
+															@foreach ($employees as $item)
+																<option value="{{ $item['id'] }}" selected> {{ $item['name'] }}</option>
+															@endforeach
+														</select>
+														{!! $errors->first('employees', '<span class="invalid-feedback" role="alert">:message</span>') !!}														
+													</div>
+												</div>
+											</div>
+										</div>
+
 										@foreach($configurations as $configure)
 											<div class="row">
 												<div class="col-sm-4">
@@ -29,7 +67,7 @@
 												</div>
 												<div class="col-sm-2">
 													<div class="form-group">
-														<div class="custom-control custom-switch float-right">
+														<div class="custom-control custom-switch float-left">
 															<input type="checkbox" class="custom-control-input" name="checkbox[]" value="{{$configure->id}}" id="{{ 'customeSwitch'.$configure->id }}" @if($configure->action_flag != 0){{'checked'}}@endif>
 															<label class="custom-control-label" for="{{ 'customeSwitch'.$configure->id }}"></label>
 														</div>
@@ -58,4 +96,42 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
+@endsection
+
+@section('my-scripts')
+
+<script type="text/javascript">
+
+$('#customeSwitch4').change(function() {
+        if(this.checked) {
+			$('#employee_div').hide();
+            console.log('hello');
+        } else {
+			$('#employee_div').show();
+		}
+              
+    });
+
+$('.employee_name').select2({
+		placeholder: 'Select a employee',
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+</script>
+	
 @endsection

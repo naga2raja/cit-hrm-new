@@ -393,7 +393,7 @@
 				previous: 'fa fa-angle-left'
 			},
 			disabledDates: holidayDates,
-			debug: true,
+			// debug: true,
 		});
 
 		$("#datetimepicker4, #datetimepicker5").datetimepicker().on('dp.change', function (e) {

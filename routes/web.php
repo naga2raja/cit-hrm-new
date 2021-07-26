@@ -242,6 +242,8 @@ Route::group(['middleware' => ['role:Admin']], function () {
 Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     Route::get('/emp-page', 'HomeController@demoEmployee');
 
+    Route::resource('/employees', 'Employee\EmployeeController');
+
     //Leave
     Route::get('leave-list', 'Leave\Leave\LeaveController@getLeaveList')->name('leave.list');
     Route::resource('/leave', 'Leave\Leave\LeaveController');
@@ -258,8 +260,7 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {
-    //Employee
-    Route::resource('/employees', 'Employee\EmployeeController');
+    //Employee    
     Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
     Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax');
     Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName');

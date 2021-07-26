@@ -37,7 +37,7 @@
 													<i class="fa fa-calendar" aria-hidden="true" style="font-size: 30px;"></i></h4>
 												</div> -->
 												<div class="input-group mb-3">
-													<input class="form-control datetimepicker" type="text" id="in_date" name="in_date" value="{{ $current_date }}">
+													<input class="form-control datetimepicker" type="text" id="in_date" name="in_date" value="{{ $current_date }}" @if($edit_date_time == 0) readonly @endif >
 													<input type="hidden" name="employee_id" value="{{$employee_id}}">
 													<div class="input-group-append">
 														<button class="btn btn-theme text-white" type="button" id="calendar_icon">
@@ -56,7 +56,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control time {{ $errors->has('in_time') ? 'is-invalid' : ''}}" name="in_time" id="in_time" value="{{ old('in_time') ? old('in_time') : '00:00' }}">
+													<input type="text" class="form-control time {{ $errors->has('in_time') ? 'is-invalid' : ''}}" name="in_time" id="in_time" value="{{ old('in_time', $current_time) }}" @if($edit_date_time == 0) readonly @endif >
                                                     {!! $errors->first('in_time', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>

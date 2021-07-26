@@ -278,15 +278,9 @@
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('payGrades*') ? 'active' : '' }}" href="{{ route('payGrades.index') }}">Pay Grades</a>
                                                 </li>
-                                                <!-- <li>
-                                                    <a class="dropdown-item" href="#">Employment Status</a>
-                                                </li> -->
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('jobCategory*') ? 'active' : '' }}" href="{{ route('jobCategory.index') }}">Job Categories</a>
-                                                </li>
-                                                <!-- <li>
-                                                    <a class="dropdown-item" href="#">Work Shifts</a>
-                                                </li> -->
+                                                </li>                                                
                                             </ul>
                                         </li>
                                         <li>
@@ -307,6 +301,9 @@
                                                     <a class="dropdown-item" href="{{ route('skills.index') }}">Skills</a>
                                                 </li>
                                             </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('configurations.index') }}">Punch In/Out Settings</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -401,19 +398,17 @@
                                             <a class="dropdown-item dropdown-toggle" href="#">Attendance</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">My Records</a>
+                                                    <a class="dropdown-item" href="{{ route('punch.index') }}">My Records</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('punch.create') }}">Punch In/Out</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="#">Employee Records</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('configurations.index') }}">Configuration</a>
-                                                </li>                                                
+                                                </li>                                                                                                
                                             </ul>
                                         </li>
+                                        @hasanyrole('Admin|Manager')
                                         <li>
                                             <a class="dropdown-item dropdown-toggle" href="#">Project Info</a>
                                             <ul class="dropdown-menu">
@@ -425,26 +420,7 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Job Title</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Pay Grades</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Employment Status</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Job Categories</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Work Shifts</a>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                        @endrole                                        
                                     </ul>
                                 </li>
                                 <li class="mr-1 {{ Request::is('my-info') ? 'active' : '' }}">

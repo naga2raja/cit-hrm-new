@@ -20,10 +20,10 @@ class CreateTPunchInOutsTable extends Migration
             $table->string('punch_in_note', 255);
             $table->string('punch_in_time_offset', 255);
             $table->datetime('punch_in_user_time');
-            $table->datetime('punch_out_utc_time');
-            $table->string('punch_out_note', 255);
-            $table->string('punch_out_time_offset', 255);
-            $table->datetime('punch_out_user_time');
+            $table->datetime('punch_out_utc_time')->nullable();
+            $table->string('punch_out_note', 255)->nullable();
+            $table->string('punch_out_time_offset', 255)->nullable();
+            $table->datetime('punch_out_user_time')->nullable();
             $table->string('state', 20);
             $table->timestamps();
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Time\Attendance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\mAttendanceConfigure;
+use App\Employee;
 use Auth;
 use App\Session;
 
@@ -17,8 +18,18 @@ class ConfigurationsController extends Controller
      */
     public function index()
     {
-        $configurations = mAttendanceConfigure::get();
-        return view('time/attendance/configuration/list', compact('configurations'));        
+        $configurations = mAttendanceConfigure::whereIn('id', [1,2,3])->get();
+        $employees = [];
+        $employeeConfig = mAttendanceConfigure::where('id', 4)->first();
+        if($employeeConfig) {
+            $employeeIdArr = explode(',', $employeeConfig->employee_ids);
+            $employees = Employee::whereIn('id', $employeeIdArr)
+                ->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) AS name')
+                ->get()
+                ->toArray();
+        }
+
+        return view('time/attendance/configuration/list', compact('configurations', 'employees', 'employeeConfig'));        
     }
 
     /**
@@ -37,22 +48,42 @@ class ConfigurationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
+        if(!$request->enable_employee_checkbox) {
+            $request->validate([
+                'employees' => 'required'
+            ]);            
+        }
         $checked_values = $request->input('checkbox');
-
         //set to zero before configuring
         $ids = array('1', '2', '3');
         $set_zero = mAttendanceConfigure::whereIn('id', $ids)->update([
                                         'action_flag' => 0
         ]);
 
-        // updating the flag
-        foreach($checked_values as $value){
-            $configure = mAttendanceConfigure::where('id', $value)
-                                            ->update([
-                                            'action_flag' => 1
-            ]);
+        $employees = NULL;
+        if($request->employees) {
+            $employees = implode(',', $request->employees);
         }
+        // updating the flag
+        if($checked_values) {
+            foreach($checked_values as $value){
+                $configure = mAttendanceConfigure::where('id', $value)->first();
+                if($value == 4) {
+                    //update employee ids
+                    $configure->employee_ids = $employees;
+                }
+                $configure->action_flag = 1;
+                $configure->save();
+            }
+        }
+        
+            $configureEmp = mAttendanceConfigure::where('id', 4)->first();
+            $configureEmp->employee_ids = ($request->enable_employee_checkbox) ? NULL : $employees;
+            $configureEmp->action_flag = ($request->enable_employee_checkbox) ? 1 : 0;
+            $configureEmp->save();
+        
+        
         return redirect()->back()->with('success', 'Configured successfully!');
     }
 
