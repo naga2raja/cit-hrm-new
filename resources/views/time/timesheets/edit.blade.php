@@ -40,7 +40,7 @@
 													<div class="col-sm-2">
 														<div class="form-group">
 															<div class="input-group mb-3">
-																<input type="text" name="date" id="timesheet_date" class="form-control" readonly="">
+																<input type="text" name="date" id="timesheet_date" class="form-control">
 																<div class="input-group-append">
 																	<button class="btn btn-white border" type="button" id="calendar_icon">
 																		<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -57,13 +57,10 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<select class="employee_name form-control {{ $errors->has('employee_name') ? 'is-invalid' : ''}}" name="employee_name" id="employee_name" required="" style="width: 100%" >
-																@if(Request::get('employee_id'))
-																	<option selected="selected" id="{{ @$employees->id }}">{{ @$employees->employee_name }}</option>
-																@endif
+															<select class="employee_name form-control {{ $errors->has('employee_name') ? 'is-invalid' : ''}}" name="employee_name" id="employee_name" required="" style="width: 100%">
 															</select>
 															{!! $errors->first('employee_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-															<input type="hidden" name="employee_id" id="employee_id" class="form-control" value="{{ (Request::get('employee_id')) ? Request::get('employee_id') : '' }}">
+															<input type="hidden" name="employee_id" id="employee_id" class="form-control">
 														</div>
 													</div>
 												</div>
@@ -81,40 +78,29 @@
 	              											</tr>
 														</thead>
 														<tbody>
-															@if(count($timesheet_item) == 0)
-																<?php $timesheet_item['name'] = 'test'; ?>
-															@endif
-															@if(count($timesheet_item) > 0)
-																@foreach ($timesheet_item as $row)
-																	<tr id="row_{{ $loop->index }}">
-			              												<td>
-			              													<select class="project_name form-control select2 {{ $errors->has('project_name') ? 'is-invalid' : ''}}" name="timeItem[{{ $loop->index }}][project_name]" id="project_name{{ $loop->index }}" required="" style="width: 100%">
-																			</select>
-																			{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-																			<input type="hidden" name="timeItem[{{ $loop->index }}][project_id]" id="project_id{{ $loop->index }}" class="form-control project_id">
-																		</td>
-			              												<td>
-			              													<select class="form-control activity_name select {{ $errors->has('activity_name') ? 'is-invalid' : ''}}" name="timeItem[{{ $loop->index }}][activity_name]" id="activity_name{{ $loop->index }}" required="" style="width: 100%">
-			              														<option value="">Select Activity Name</option>
-																			</select>
-																			{!! $errors->first('activity_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-																			<input type="hidden" name="timeItem[{{ $loop->index }}][activity_id]" id="activity_id{{ $loop->index }}" class="form-control activity_id">
-																		</td>
-			              												<td>
-			              													<input type="time" class="form-control {{ $errors->has('duration') ? 'is-invalid' : ''}}" name="timeItem[{{ $loop->index }}][duration]" id="duration{{ $loop->index }}" value="{{ old('duration') ? old('duration') : '' }}" placeholder="HH:MM" required="">
-						                                                    {!! $errors->first('duration', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-						                                                </td>
-			              												<td>
-			              													<textarea name="timeItem[{{ $loop->index }}][comments]" class="form-control" rows="1" width="200px"></textarea>
-			              												</td>
-			              												<td><button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius">X</button></td>
-			              											</tr>
-			              										@endforeach
-		              										@else
-																<tr>
-																	<td colspan="5"><p class="text-center">No Data Found</p></td>
-																</tr>
-															@endif															
+															<tr id="row_0">
+	              												<td>
+	              													<select class="project_name form-control select2 {{ $errors->has('project_name') ? 'is-invalid' : ''}}" name="timeItem[0][project_name]" id="project_name" required="" style="width: 100%">
+																	</select>
+																	{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+																	<input type="hidden" name="timeItem[0][project_id]" id="project_id" class="form-control project_id">
+																</td>
+	              												<td>
+	              													<select class="form-control activity_name select {{ $errors->has('activity_name') ? 'is-invalid' : ''}}" name="timeItem[0][activity_name]" id="activity_name" required="" style="width: 100%">
+	              														<option value="">Select Activity Name</option>
+																	</select>
+																	{!! $errors->first('activity_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+																	<input type="hidden" name="timeItem[0][activity_id]" id="activity_id" class="form-control activity_id">
+																</td>
+	              												<td>
+	              													<input type="time" class="form-control {{ $errors->has('duration') ? 'is-invalid' : ''}}" name="timeItem[0][duration]" id="duration" value="{{ old('duration') ? old('duration') : '' }}" placeholder="HH:MM" required="">
+				                                                    {!! $errors->first('duration', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+				                                                </td>
+	              												<td>
+	              													<textarea name="timeItem[0][comments]" class="form-control" rows="1" width="200px"></textarea>
+	              												</td>
+	              												<td><button type="button" name="add" id="add" class="btn btn-success text-white ctm-border-radius">Add Row</button></td>
+	              											</tr>															
 														</tbody>
 													</table>
 												</div>
@@ -132,10 +118,6 @@
 														</div>
 														<div class="col-sm-1">
 															<a href="{{ route('timesheets.index') }}" class="btn btn-secondary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
-														</div>
-
-														<div class="col-sm-1">
-															<button type="button" name="add" id="add" class="btn btn-success text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Add Row</button>
 														</div>
 													</div>
 												</div>
@@ -204,15 +186,9 @@
 	 	$('#employee_id').val(this.value);
 	});
 
-	var existingTimesheetCount = '{{ count($timesheet_item) }}';
-	existingTimesheetCount = (existingTimesheetCount) ? '{{ count($timesheet_item) }}' :  loadProjects() ;
-	console.log(existingTimesheetCount, 'existingTimesheetCount');
-	for(var k=0;k<existingTimesheetCount;k++) {
-		loadProjects(k);	
-	}
-	
+	loadProjects();
 	// Autocomplete ajax call
-	function loadProjects(i=0) {
+	function loadProjects(i='') {
 		$('#project_name'+i).select2({
 			placeholder: 'Select a project',
 			ajax: {
@@ -271,42 +247,25 @@
         alert(val);
 	});
 
-	function validation (j) {		
-		if(!$('#timesheet_date').val()){
-    		$('#timesheet_date').focus();
-    		return false;
-    	}
-    	else if(!$('#employee_name').val()){
-    		$('#employee_name').select2('open');
-    		return false;
-    	}
-    	else if(!$('#project_name'+j).val()){
-			$('#project_name'+j).select2('open');
-			return false;
-    	}
-    	else if(!$('#activity_name'+j).val()){
-    		$('#activity_name'+j).first().focus();
-    		return false;
-    	}
-    	else if(!$('#duration'+j).val()){
-    		$('#duration'+j).focus();
-    		return false;
-    	}else{
-    		return true;
-    	}
-	}
-
 	window.onload = function() {
-		// make readonly only if employee_id exist
-		@if(Request::get('employee_id'))
-			$("#employee_name").select2({disabled:'readonly'});
-		@endif readonly='true'
-		
-        var i = 0; var j = 0;
+        var i = 0; var j='';
         $('#add').click(function(){
-        	var valid = validation(j);       	
-        	
-        	if(valid){
+        	if(!$('#timesheet_date').val()){
+        		$('#timesheet_date').focus();
+        	}
+        	else if(!$('#employee_name').val()){
+        		$('#employee_name').select2('open');
+        	}
+        	else if(!$('#project_name'+j).val()){
+				$('#project_name'+j).select2('open');
+        	}
+        	else if(!$('#activity_name'+j).val()){
+        		$('#activity_name'+j).first().focus();
+        	}
+        	else if(!$('#duration'+j).val()){
+        		$('#duration'+j).focus();
+        	}
+        	else{        		
 	            i++; j++;
 	        	$rows = '';
 	        	$rows += '<tr id="row_'+i+'">';
@@ -340,11 +299,8 @@
     }        
 
     $(document).on('click','#timesheets .btn_remove', function(){
-    	var valid = validation($(this).attr("id"));
-    	if(valid){
-	        var button_id = $(this).attr("id");
-	        $("#row_"+button_id+"").remove();
-	    }
+        var button_id = $(this).attr("id");
+        $("#row_"+button_id+"").remove();
     });    
 
     $('#save').click(function(){
@@ -361,5 +317,5 @@
 		});
     });
 
-</script>
+</script>    
 @endpush

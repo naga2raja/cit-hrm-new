@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Employee;
 use App\tTimesheetItem;
+use App\tTimesheet;
 use APP\tActivity;
 use Carbon\Carbon;
 use DateTime;
@@ -42,7 +43,7 @@ class TimesheetsController extends Controller
         }
         // dd($my_timesheets);
 
-        return view('time/timesheets/my_timesheets/list', compact('my_timesheets'));
+        return view('time/timesheets/my_timesheets/list', compact('my_timesheets', 'employees'));
     }
 
     /**
@@ -50,9 +51,27 @@ class TimesheetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('time/timesheets/add');
+        $timesheet = [];
+        $timesheet_item = [];
+        if(($request->employee_id)&&($request->date)) {
+            $employees = Employee::where('id', $request->employee_id)
+                                ->selectRaw('id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
+                                ->first();
+            $timesheet = tTimesheet::where('start_date', $request->date)
+                                    ->where('employee_id', $employees->employee_id)
+                                    ->first();
+            if($timesheet){
+                $timesheet_item = tTimesheetItem::where('timesheet_id', $timesheet->id)
+                                            ->where('date', $request->date)
+                                            ->where('employee_id', $employees->employee_id)
+                                            ->get();
+            }
+        }
+        // dd($timesheet_item);
+
+        return view('time/timesheets/add', compact('timesheet', 'timesheet_item', 'employees'));
     }
 
     /**
@@ -64,40 +83,55 @@ class TimesheetsController extends Controller
     public function store(Request $request)
     {
         $data = array();
-        parse_str($request->data, $data);        
-        // dd($data['timeItem'][0]["'project_name'"]);
-        dd($data['date']);
+        // convert serialize to array
+        parse_str($request->data, $data);
+        // dd($data);
+
+        $date = str_replace('/', '-', $data['date']);
+        $date = date('Y-m-d', strtotime($date));
+        $employee_id = $data['employee_id'];
 
         // duplicate check
-        $isExists = tTimesheetItem::where('date', $data['date'])
-                                    ->where('employee_id', $data['employee_id'])
+        $TimesheetExists = tTimesheet::where('start_date', $date)
+                                    ->where('employee_id', $employee_id)
                                     ->first();
-        // if($isExists) {
-        //     // update
-        //     $msg = "User Updated";
-        //     $users = tTimesheetItem::find($isExists->id);
-        //     $users->name = $emp->name;
-        //     if($request->input('generatePassword') == 'on'){
-        //         $users->password = Hash::make($request->input('password'));
-        //         $msg .= " with Username: ".$request->input('email')." Password: ".$request->input('password');
-        //     }
-        //     $users->save();
-        //     $users->syncRoles($request->input('role'));
-        // }else{
-        //     // create
-        //     $user = User::create([
-        //         'name'  => $emp->name,
-        //         'email'  => $request->input('email'),
-        //         'password' => Hash::make($request->input('password'))
-        //     ]);
-        //     $user->assignRole($request->input('role'));
-        //     // update user_id in employee table
-        //     if($user){
-        //         $employee = Employee::where('email', $request->input('email'))
-        //                             ->update(array('user_id' => $user->id));
-        //     }
-        //     $msg = "User Added with Username: ".$request->input('email')." Password: ".$request->input('password');
-        // }
+        if($TimesheetExists) {
+            $timesheet_id = $TimesheetExists->id;
+            // Delete TimesheetItem
+            $TimesheetItem = tTimesheetItem::where('timesheet_id', $timesheet_id)
+                                ->where('date', $date)
+                                ->where('employee_id', $employee_id)
+                                ->delete();
+            
+        }else{
+            // create Timesheet
+            $timesheet = tTimesheet::create([
+                'employee_id'  => $employee_id,
+                'start_date'  =>  $date,
+                'end_date'  =>  $date,
+                'state'  => "PENDING"
+            ]);
+            $timesheet_id = $timesheet->id;
+        }
+        // create TimesheetItem
+        for ($i=0; $i < count($data['timeItem']); $i++) {
+            $project_id = $data['timeItem'][$i]['project_id'];
+            $activity_id = $data['timeItem'][$i]['activity_id'];
+            $duration = $data['timeItem'][$i]['duration'];
+            $comments = $data['timeItem'][$i]['comments'];            
+
+            $TimesheetItem = tTimesheetItem::create([
+                'timesheet_id'  => $timesheet_id,
+                'employee_id'  => $employee_id,
+                'date' => $date,
+                'project_id'  => $project_id,
+                'activity_id'  => $activity_id,
+                'duration'  => $duration,
+                'comments'  => $comments,
+            ]);
+        }
+
+        return redirect()->route('timesheets.index')->with('success', 'Timesheets Added successfully');
     }
 
     /**

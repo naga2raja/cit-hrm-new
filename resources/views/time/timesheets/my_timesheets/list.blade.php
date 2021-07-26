@@ -107,6 +107,8 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-inline float-right">
+															<input type="hidden" name="employee_id" id="employee_id" value="{{ auth()->user()->id }}">
+															<input type="hidden" name="key" id="key" value="">
 									                        <div class="btn-group">
 									                            <a id="daily_button" class="btn btn-sm btn-outline-primary fc-state-active" href="javascript:void(0)">Daily</a>
 									                            <a id="weekly_button" class="btn btn-sm btn-outline-primary" href="javascript:void(0)">Weekly</a>
@@ -122,16 +124,13 @@
 									<div class="card shadow-sm ctm-border-radius">
 										<div class="card-header">
 											<div class="row filter-row">
-												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
 													<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
-												</div>										
-												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-													<a href="{{ route('timesheets.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-													<a id="edit_button" href="javascript:void(0)" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-edit"></i> Edit</a>
+													<a id="edit_button" href="{{ route('timesheets.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-edit"></i> Edit</a>
 												</div>
 											</div>
 										</div>
@@ -180,7 +179,7 @@
 		var now = new Date();
 		var day = ("0" + now.getDate()).slice(-2);
 		var month = ("0" + (now.getMonth() + 1)).slice(-2);
-		var date = (day) + "/" + (month) + "/" + now.getFullYear() ;
+		var date = (day) + "/" + (month) + "/" + now.getFullYear();
 		$('#dailyDatePicker').val(date);
 	}
 
@@ -208,6 +207,7 @@
 	}
 
 	function LoadData(date, key){
+		$("#key").val(key);
 		$.ajax({
 			method: 'POST',
 			url: '/mytimesheets/getMyTimeSheets-ajax',
@@ -252,16 +252,37 @@
 		            tbody += '<td colspan="5">Total</td>';
 		            tbody += '<td>' + getHours(total) + ' hrs</td>';
 		            tbody += '</tr>';
-
-		            $("#edit_button").attr("href", "{{ route('mytimesheets.edit', "+row.employee_id+") }}");
 		        }else{
 		        	tbody += '<tr>';
 		        	tbody += '<td colspan="6"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
-		        	$("#edit_button").attr("href", "javascript:void(0)");
 		        }
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
+
+	        	var selected_date = '';
+		    	if(key == "daily"){
+		    		selected_date = moment($('#dailyDatePicker').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+		    	}else if(key == "weekly"){
+		    		var first = $('#weeklyDatePicker').val().split(" - ");
+					var selected_date = moment(first[0], "DD/MM/YYYY").format("YYYY-MM-DD");
+		    	}else if(key == "monthly"){
+		    		var current_month = moment($('#monthlyDatePicker').val(), "YYYY/MM").format("YYYY/MM/DD");
+		    		var now = new Date(current_month);
+		    		var today = new Date();
+					var day = ("0" + today.getDate()).slice(-2);
+					var month = ("0" + (now.getMonth() + 1)).slice(-2);
+					var selected_date = (day) + "-" + (month) + "-" + now.getFullYear() ;
+		    	}
+
+	            var url = '{{ route("timesheets.create", "employee_id=:id&date=:date") }}';
+	            var urlParams = new Array(
+	            		'employee_id=' + $('#employee_id').val(), 
+	            		'date='+ selected_date );
+
+				var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
+				console.log(url);
+	            $("#edit_button").attr("href", url);
 			}
 		});
 	}
@@ -472,5 +493,38 @@
 		$('#timesheet_table_header').text('Monthly Timesheets');
 		LoadData($('#monthlyDatePicker').val(),'monthly');
 	});
+
+  //   $('#edit_button').click(function(){
+  //   	var _token = $('input[name="_token"]').val();
+  //   	var employee_id = $('#employee_id').val();
+  //   	var key = $('#key').val();
+  //   	var date = '';
+
+  //   	if(key == "daily"){
+  //   		date = $('#dailyDatePicker').val();
+  //   	}else if(key == "weekly"){
+  //   		var first = $('#weeklyDatePicker').val().split(" - ");
+		// 	var date = moment(first[0], "DD/MM/YYYY").format("DD/MM/YYYY");
+  //   	}else if(key == "monthly"){
+  //   		var current_month = moment($('#monthlyDatePicker').val(), "YYYY/MM").format("YYYY/MM/DD");
+  //   		var now = new Date(current_month);
+  //   		var today = new Date();
+		// 	var day = ("0" + today.getDate()).slice(-2);
+		// 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+		// 	var date = (day) + "/" + (month) + "/" + now.getFullYear() ;
+  //   	}
+		
+  //   	$.ajax({
+  //   		method: 'POST',
+  //   		url: "{{ route('timesheets.create') }}",
+  //   		data: { 'employee_id': employee_id, 'date': date, '_token': '{{ csrf_token() }}' } ,
+  //   		success:function(data){
+  //   			console.log(data);
+  //   			alert("success");
+		//    	// window.location.href = data.url;
+		//    }
+		// });
+  //   });
+
 </script>
 @endpush
