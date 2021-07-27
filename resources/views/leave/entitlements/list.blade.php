@@ -129,10 +129,28 @@
 														<td>{{ $row->leave_type_name }}</td>
 														<!-- <td>{{ $row->entitlement_id }}</td> -->
 														<td>
-															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->from_date }}</a></u></h2>
+															<h2><u>
+																@hasrole('Admin')
+																	<a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">
+																@endrole
+																		{{ $row->from_date }}
+																@hasrole('Admin')
+																	</a>
+																@endrole
+															</u></h2>
 														</td>
 														<td>
-															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->to_date }}</a></u></h2>
+															<h2>
+																<u>
+																@hasrole('Admin')
+																	<a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">
+																@endrole																
+																		{{ $row->to_date }}
+																@hasrole('Admin')
+																	</a>
+																@endrole
+																</u>
+															</h2>
 														</td>
 														@php
 															$total = $total + $row->no_of_days;

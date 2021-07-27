@@ -257,6 +257,11 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
     // Employee Timesheets
     Route::resource('/timesheets', 'Time\Timesheets\TimesheetsController');
+
+    Route::resource('/punch', 'Time\Attendance\PunchInOutController');
+    Route::post('/punch/multiple-delete', 'Time\Attendance\PunchInOutController@deleteMultiple');    
+    Route::post('/punch/update-ajax', 'Time\Attendance\PunchInOutController@updateAjax')->name('punch.update-ajax');
+    Route::post('/punch/status-change', 'Time\Attendance\PunchInOutController@updateStatusAjax')->name('punch.submit');    
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {
@@ -267,10 +272,10 @@ Route::group(['middleware' => ['role:Admin|Manager']], function () {
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
-    Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');
-});
+    Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');    
 
-Route::resource('/punch', 'Time\Attendance\PunchInOutController');
+    Route::get('employee-records', 'Time\Attendance\PunchInOutController@getEmployeeRecords')->name('punch.employee-records');
+});
 
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/home', 'HomeController@index')->name('home');

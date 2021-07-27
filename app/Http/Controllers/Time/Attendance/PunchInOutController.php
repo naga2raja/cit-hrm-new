@@ -21,15 +21,22 @@ class PunchInOutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $leaveCtrl = new LeaveController;
         $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
         $employee_id = $currentEmployeeDetails->id;
-        $data = tPunchInOut::where('employee_id', $employee_id)
-            ->selectRaw('TIMESTAMPDIFF(MINUTE, punch_in_user_time, punch_out_user_time) as duration')
-            ->selectRaw('employee_id, punch_in_user_time, punch_out_user_time')
-            ->get();
+        $data = tPunchInOut::where('t_punch_in_outs.employee_id', $employee_id)
+            ->join('employees', 't_punch_in_outs.employee_id', 'employees.id')
+            ->selectRaw('TIMESTAMPDIFF(MINUTE, t_punch_in_outs.punch_in_user_time, t_punch_in_outs.punch_out_user_time) as duration')
+            ->selectRaw('t_punch_in_outs.id, t_punch_in_outs.employee_id, punch_in_user_time, punch_out_user_time, t_punch_in_outs.punch_in_note, t_punch_in_outs.punch_out_note, t_punch_in_outs.status')            
+            ->when(request()->filled('date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_punch_in_outs.punch_in_user_time, "%Y-%m-%d") = "'. $date.'"');
+            })
+            ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+            ->paginate(30);
         return view('time/attendance/punch/list', compact('data'));
     }
 
@@ -56,7 +63,7 @@ class PunchInOutController extends Controller
         $in_date = DateTime::createFromFormat('Y-m-d', date('Y-m-d')); 
         $in_date = $in_date->format('Y-m-d');        
         $isExists = tPunchInOut::where('employee_id', $employee_id)
-            ->whereRaw(' DATE_FORMAT(punch_in_utc_time, "%Y-%m-%d") = "'.$in_date.'" AND (DATE_FORMAT(punch_in_utc_time, "%Y-%m-%d") = "0000-00-00" OR DATE_FORMAT(punch_in_utc_time, "%Y-%m-%d") = NULL )')
+            ->whereRaw(' DATE_FORMAT(punch_in_utc_time, "%Y-%m-%d") = "'.$in_date.'" AND (DATE_FORMAT(punch_out_utc_time, "%Y-%m-%d") = "0000-00-00" OR DATE_FORMAT(punch_out_utc_time, "%Y-%m-%d") IS NULL )')
             ->first();
         if($isExists)
             return redirect()->route('punch.edit', $isExists->id);
@@ -102,6 +109,8 @@ class PunchInOutController extends Controller
             'punch_in_time_offset' => $time_diff,
             'punch_in_user_time' => (empty($login_date) ? '' : $login_date),
             'state' => 'PUNCHED IN',
+            'updated_by' => Auth::user()->id,
+            'created_by' => Auth::user()->id
         ]);        
 
         return redirect()->route('punch.edit', $punch_in->id)->with('success', 'Punched in successfully!' );
@@ -115,7 +124,10 @@ class PunchInOutController extends Controller
      */
     public function show($id)
     {
-
+        $data = tPunchInOut::where('id', $id)
+            ->selectRaw('id, employee_id, punch_in_note, punch_out_note, DATE_FORMAT(punch_in_user_time, "%d/%m/%Y") as punch_in, DATE_FORMAT(punch_out_user_time, "%d/%m/%Y") as punch_out, DATE_FORMAT(punch_in_user_time, "%H:%i") as in_time, DATE_FORMAT(punch_out_user_time, "%H:%i") as out_time ')
+            ->first();
+        return $data;
     }
 
     /**
@@ -189,6 +201,7 @@ class PunchInOutController extends Controller
         $punch->punch_out_time_offset = $time_diff;
         $punch->punch_out_user_time = $logout_date;
         $punch->state = 'PUNCHED OUT';
+        $punch->updated_by = Auth::user()->id;
         $punch->save();
 
         return redirect()->route('punch.create')->with('success', 'Punched out successfully!' );
@@ -234,5 +247,104 @@ class PunchInOutController extends Controller
         $out['manage_own_record'] = mAttendanceConfigure::where('id', 2)->pluck('action_flag')->first();
         $out['manage_emp_record'] = mAttendanceConfigure::where('id', 3)->pluck('action_flag')->first();
         return $out;
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        // deleteMultiple
+        if($request->delete_ids) {
+            tPunchInOut::whereIn('id', $request->delete_ids)
+                ->get()
+                ->map(function($emp) {
+                    $emp->delete();
+                });
+            return true;
+        } else {   
+            return false;
+        }
+    }
+
+    public function updateAjax(Request $request)
+    {
+        $id = $request->punch_id;
+        $punch_in_date = $request->punch_in_date;
+        $punch_out_date = $request->punch_out_date;
+
+        $in_date = DateTime::createFromFormat('d/m/Y', $punch_in_date);
+        $in_date = $in_date->format('Y-m-d');
+        $login_date = $in_date.' '.$request->in_time.':00';
+
+        $in_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
+        $in_utc_date->setTimezone('UTC'); //converts to UTC format
+        $in_time_diff = $in_utc_date->diff($login_date)->format('%H.%I');
+        $in_utc_date = $in_utc_date->toDateTimeString();
+
+
+        $out_date = DateTime::createFromFormat('d/m/Y', $punch_out_date);
+        $out_date = $out_date->format('Y-m-d');
+        $logout_date = $out_date.' '.$request->out_time.':00';
+
+        $out_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
+        $out_utc_date->setTimezone('UTC'); //converts to UTC format
+        $out_time_diff = $out_utc_date->diff($logout_date)->format('%H.%I');
+        $out_utc_date = $out_utc_date->toDateTimeString();
+
+
+        $punchInfo = tPunchInOut::where('id', $id)->first();
+        $punchInfo->punch_in_user_time = $login_date;
+        $punchInfo->punch_in_note = $request->punch_in_note;
+        $punchInfo->punch_in_time_offset = $in_time_diff;
+        $punchInfo->punch_in_user_time = $login_date;                
+        
+        $punchInfo->punch_out_user_time = $logout_date;
+        $punchInfo->punch_out_utc_time = $out_utc_date;
+        $punchInfo->punch_out_note = $request->punch_out_note;
+        $punchInfo->punch_out_time_offset = $out_time_diff;
+        $punchInfo->state = 'PUNCHED OUT';
+
+        $punchInfo->updated_by = Auth::user()->id;
+        $punchInfo->save();
+        return $punchInfo;
+    }
+
+    public function updateStatusAjax(Request $request) {        
+        $id = $request->id;
+        $punchInfo = tPunchInOut::where('id', $id)->first();
+        $comments = $punchInfo->comments;
+        $punchInfo->status = $request->status;
+        $punchInfo->updated_by = Auth::user()->id;
+        $punchInfo->comments = $comments. ' Sent to Approval on '. date("Y-m-d H:i a") .' by '.Auth::user()->name;
+        $punchInfo->save();
+        return $punchInfo;
+    }
+
+    public function getEmployeeRecords(Request $request) {
+        $user = Auth::user();
+        $leaveCtrl = new LeaveController;
+        $userRole = 'Admin'; $empIds = [];
+        if($user->hasRole('Manager')) {
+            $userRole = 'Manager';
+            //Find Reporting Employees Ids
+            $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        }
+
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
+        $employee_id = $currentEmployeeDetails->id;
+        $data = tPunchInOut::join('employees', 't_punch_in_outs.employee_id', 'employees.id')
+            ->selectRaw('TIMESTAMPDIFF(MINUTE, t_punch_in_outs.punch_in_user_time, t_punch_in_outs.punch_out_user_time) as duration')
+            ->selectRaw('t_punch_in_outs.id, t_punch_in_outs.employee_id, punch_in_user_time, punch_out_user_time, t_punch_in_outs.punch_in_note, t_punch_in_outs.punch_out_note, t_punch_in_outs.status')            
+            ->when(request()->filled('date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_punch_in_outs.punch_in_user_time, "%Y-%m-%d") = "'. $date.'"');
+            });        
+            if(count($empIds)) {
+                $data = $data->whereIn('t_punch_in_outs.employee_id', $empIds);
+            }
+            $data = $data->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+                    ->paginate(30);
+        return view('time/attendance/punch/list', compact('data'));
     }
 }

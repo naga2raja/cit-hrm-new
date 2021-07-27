@@ -403,9 +403,11 @@
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('punch.create') }}">Punch In/Out</a>
                                                 </li>
+                                                @hasanyrole('Admin|Manager')
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Employee Records</a>
-                                                </li>                                                                                                
+                                                    <a class="dropdown-item" href="{{ route('punch.employee-records') }}">Employee Records</a>
+                                                </li>                       
+                                                @endrole                                                                         
                                             </ul>
                                         </li>
                                         @hasanyrole('Admin|Manager')

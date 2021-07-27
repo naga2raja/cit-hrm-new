@@ -30,7 +30,7 @@
 									</div>
 									<div class="card-body">
 										<div id="user_profile_list" class="list-group border-none">
-											<a class="list-group-item list-group-item-action border-none" href="#personal">Personal Details</a>
+											<a class="list-group-item list-group-item-action border-none active" href="#personal">Personal Details</a>
 											<a class="list-group-item list-group-item-action border-none" href="#contact">Contact Details</a>
 											<a class="list-group-item list-group-item-action border-none" href="#jobDetails">Job Details</a>
 											<a class="list-group-item list-group-item-action border-none" href="#reportTo">Report To</a>
@@ -148,10 +148,8 @@
 			
 													<div class="col-md-6">
 														<div class="form-group">
-															<p class="mb-2">Date of Birth	</p>
-															<div class="cal-icon">
-																<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date" name="date_of_birth" value="{{ old('date_of_birth') }}" id="datetimepicker1">
-															</div>
+															<p class="mb-2">Date of Birth	</p>																														
+															<input autocomplete="off" type='text' class="form-control " id='datetimepicker1' name="date_of_birth" value="{{ old('date_of_birth') }}"/>
 														</div>
 													</div>
 
@@ -350,7 +348,7 @@
 											</div>
 											<div class="col-12 form-group">
 												<p class="mb-2">Date of Join</p>
-												<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date') }}">
+												<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date') }}">
 												
 											</div>
 											<div class="col-md-12 form-group mb-0">
@@ -460,6 +458,7 @@
 			cursor: pointer;
 			margin-left: 10px;
 		}
+		#datetimepicker1 + .bootstrap-datetimepicker-widget.dropdown-menu{ position: inherit;}
 		</style>
 		
 @endsection
@@ -496,7 +495,8 @@
 			down: "fa fa-angle-down",
 			next: 'fa fa-angle-right',
 			previous: 'fa fa-angle-left'
-		}
+		},
+		debug: false,
 	});
 
 	$('.datetimepicker2').datetimepicker({
