@@ -255,8 +255,9 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     /* Time/Timesheets/MyTimesheets */
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
     Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
-    // Employee Timesheets
+    // add Timesheets
     Route::resource('/timesheets', 'Time\Timesheets\TimesheetsController');
+    Route::post('/timesheets/getTimeSheets-ajax', 'Time\Timesheets\TimesheetsController@getTimeSheets');
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {

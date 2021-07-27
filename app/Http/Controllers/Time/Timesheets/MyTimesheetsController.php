@@ -29,11 +29,11 @@ class MyTimesheetsController extends Controller
 
         $my_timesheets = [];
         if($employees){
-            $employees_id = $employees->id;
+            $employee_id = $employees->id;
             $my_timesheets = tTimesheetItem::select('t_timesheet_items.*', 't_timesheet_items.id as timesheet_id', 'employees.*', 'employees.id as employee_id')
                     ->join('employees', 'employees.id', 't_timesheet_items.employee_id')
-                    ->when(filled($employees_id), function($query) use ($employees_id) {
-                        $query->where('t_timesheet_items.employee_id', $employees_id);
+                    ->when(filled($employee_id), function($query) use ($employee_id) {
+                        $query->where('t_timesheet_items.employee_id', $employee_id);
                     })
                     ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
                     ->with('projectName', 'activityName')
@@ -119,11 +119,11 @@ class MyTimesheetsController extends Controller
         if($employees){
             DB::connection()->enableQueryLog();
 
-            $employees_id = $employees->id;            
+            $employee_id = $employees->id;            
             $my_timesheets = tTimesheetItem::select('t_timesheet_items.*', 't_timesheet_items.id as timesheet_id', 'employees.*', 'employees.id as employee_id')
                     ->join('employees', 'employees.id', 't_timesheet_items.employee_id')
-                    ->when(filled($employees_id), function($query) use ($employees_id) {
-                        $query->where('t_timesheet_items.employee_id', $employees_id);
+                    ->when(filled($employee_id), function($query) use ($employee_id) {
+                        $query->where('t_timesheet_items.employee_id', $employee_id);
                     })
                     ->when(filled($date), function($query) use ($date, $key) {
                         if($key == "daily"){

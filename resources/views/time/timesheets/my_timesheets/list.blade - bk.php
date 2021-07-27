@@ -129,7 +129,8 @@
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
 												</div>
-												<div id="edit_button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
+													<a id="edit_button" href="{{ route('timesheets.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-edit"></i> Edit</a>
 												</div>
 											</div>
 										</div>
@@ -259,17 +260,28 @@
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
 
-		        $("#edit_button").remove();
 	        	var selected_date = '';
 		    	if(key == "daily"){
-		    		selected_date = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
-		    		var urlParams = new Array(
-					            		'employee_id=' + $('#employee_id').val(), 
-					            		'date='+ selected_date 
-		            				);
-		    		var button = $('<a id="edit_button" href="{{ route("timesheets.create") }}' + '?' + urlParams.join('&')+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-edit"></i> Edit</a>');
-		    		$("#edit_button_div").append(button);
+		    		selected_date = moment($('#dailyDatePicker').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+		    	}else if(key == "weekly"){
+		    		var first = $('#weeklyDatePicker').val().split(" - ");
+					var selected_date = moment(first[0], "DD/MM/YYYY").format("YYYY-MM-DD");
+		    	}else if(key == "monthly"){
+		    		var current_month = moment($('#monthlyDatePicker').val(), "YYYY/MM").format("YYYY/MM/DD");
+		    		var now = new Date(current_month);
+		    		var today = new Date();
+					var day = ("0" + today.getDate()).slice(-2);
+					var month = ("0" + (now.getMonth() + 1)).slice(-2);
+					var selected_date = (day) + "-" + (month) + "-" + now.getFullYear() ;
 		    	}
+
+	            var urlParams = new Array(
+	            		'employee_id=' + $('#employee_id').val(), 
+	            		'date='+ selected_date );
+
+				var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
+				console.log(url);
+	            $("#edit_button").attr("href", url);
 			}
 		});
 	}
@@ -439,7 +451,7 @@
 	});
 
 	$('#monthlyPrevious').on('click', function(){
-		PreviousMonth($('#monthlyDatePicker').val());
+		// PreviousMonth($('#monthlyDatePicker').val());
 		LoadData($('#monthlyDatePicker').val(),'monthly');
 	});
 	$('#monthlyNext').on('click', function(){
