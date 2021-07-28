@@ -112,6 +112,7 @@ class MyTimesheetsController extends Controller
         $user_id = Auth::User()->id;
         $employees = Employee::where('user_id', $user_id)->first();
 
+        $project_id = $request->project_id;
         $date = str_replace('/', '-', $request->selected_date);
         $key = $request->key;
 
@@ -120,10 +121,13 @@ class MyTimesheetsController extends Controller
             DB::connection()->enableQueryLog();
 
             $employee_id = $employees->id;            
-            $my_timesheets = tTimesheetItem::select('t_timesheet_items.*', 't_timesheet_items.id as timesheet_id', 'employees.*', 'employees.id as employee_id')
+            $my_timesheets = tTimesheetItem::select('t_timesheet_items.*', 't_timesheet_items.id as timesheet_id')
                     ->join('employees', 'employees.id', 't_timesheet_items.employee_id')
                     ->when(filled($employee_id), function($query) use ($employee_id) {
                         $query->where('t_timesheet_items.employee_id', $employee_id);
+                    })
+                    ->when(filled($project_id), function($query) use ($project_id) {
+                        $query->where('t_timesheet_items.project_id', $project_id);
                     })
                     ->when(filled($date), function($query) use ($date, $key) {
                         if($key == "daily"){
@@ -134,13 +138,13 @@ class MyTimesheetsController extends Controller
                             $week = explode(" - ", $date);
                             $from = date('Y-m-d', strtotime($week[0]));
                             $to = date('Y-m-d', strtotime($week[1]));
-                            $query->whereBetween('date', [$from, $to])->get();;
+                            $query->whereBetween('t_timesheet_items.date', [$from, $to])->get();;
                         }
                         else if($key == "monthly"){
                             $month = date('m', strtotime($date));
                             $year = date('Y', strtotime($date));
-                            $query->whereMonth('date', '=', $month)
-                                  ->whereYear('date', '=', $year);
+                            $query->whereMonth('t_timesheet_items.date', '=', $month)
+                                  ->whereYear('t_timesheet_items.date', '=', $year);
                         }
                     })
                     ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
@@ -148,6 +152,7 @@ class MyTimesheetsController extends Controller
                     ->orderBy('t_timesheet_items.date', 'asc')
                     ->get();
             // dd(DB::getQueryLog());
+            // dd($my_timesheets);
         }
         return response()->json($my_timesheets);
     }

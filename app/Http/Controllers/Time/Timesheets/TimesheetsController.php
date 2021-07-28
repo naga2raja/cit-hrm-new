@@ -23,25 +23,9 @@ class TimesheetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $employee_id = $request->input('employee_id');
-
-        $emp_timesheets = [];
-        // if($employee_id){
-        //     $emp_timesheets = tTimesheetItem::select('t_timesheet_items.*', 't_timesheet_items.id as timesheet_id', 'employees.*', 'employees.id as employee_id')
-        //             ->join('employees', 'employees.id', 't_timesheet_items.employee_id')
-        //             ->when(filled($employee_id), function($query) use ($employee_id) {
-        //                 $query->where('t_timesheet_items.employee_id', $employee_id);
-        //             })
-        //             ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
-        //             ->with('projectName', 'activityName')
-        //             ->orderBy('t_timesheet_items.date', 'asc')
-        //             ->get();
-        // }
-        // dd($emp_timesheets);
-
-        return view('time/timesheets/employee_timesheets/list', compact('emp_timesheets'));
+        return view('time/timesheets/employee_timesheets/list');
     }
 
     /**
@@ -115,26 +99,6 @@ class TimesheetsController extends Controller
             $timesheet_id = $timesheet->id;
         }
         // create TimesheetItem
-        // for ($i=0; $i < count($data['timeItem']); $i++) {
-        //     $project_id = $data['timeItem'][$i]['project_id'];
-        //     $activity_id = $data['timeItem'][$i]['activity_id'];
-        //     $comments = $data['timeItem'][$i]['comments'];
-        //     $duration = $data['timeItem'][$i]['duration'];
-
-        //     $time = explode(':', $duration);
-        //     $minute = ($time[0]*60) + ($time[1]);
-
-        //     $TimesheetItem = tTimesheetItem::create([
-        //         'timesheet_id'  => $timesheet_id,
-        //         'employee_id'  => $employee_id,
-        //         'date' => $date,
-        //         'project_id'  => $project_id,
-        //         'activity_id'  => $activity_id,
-        //         'comments'  => $comments,
-        //         'duration'  => $minute
-        //     ]);
-        // }
-
         $timeItem = $data['timeItem'];
         foreach ($timeItem as $row) {
             $project_id = $row['project_id'];
@@ -204,42 +168,44 @@ class TimesheetsController extends Controller
 
     }
 
-    public function getTimeSheets(Request $request){
+    public function getEmployeeTimeSheets(Request $request){
 
         $employee_id = $request->employee_id;
         $date = str_replace('/', '-', $request->selected_date);
         $key = $request->key;
 
         $timesheets = [];
-        DB::connection()->enableQueryLog();          
-        $timesheets = tTimesheetItem::select('t_timesheet_items.*', 't_timesheet_items.id as timesheet_id', 'employees.*', 'employees.id as employee_id')
-                ->join('employees', 'employees.id', 't_timesheet_items.employee_id')
+        DB::connection()->enableQueryLog();
+        $timesheets = tTimesheet::select('t_timesheets.*')
+                ->join('employees', 'employees.id', 't_timesheets.employee_id')
                 ->when(filled($employee_id), function($query) use ($employee_id) {
-                    $query->where('t_timesheet_items.employee_id', $employee_id);
+                    $query->where('t_timesheets.employee_id', $employee_id);
                 })
                 ->when(filled($date), function($query) use ($date, $key) {
                     if($key == "daily"){
                         $date = date('Y-m-d', strtotime($date));
-                        $query->where('t_timesheet_items.date', $date);
+                        $query->where('t_timesheets.start_date', $date);
                     }
                     else if($key == "weekly"){
                         $week = explode(" - ", $date);
                         $from = date('Y-m-d', strtotime($week[0]));
                         $to = date('Y-m-d', strtotime($week[1]));
-                        $query->whereBetween('date', [$from, $to])->get();;
+                        $query->whereBetween('t_timesheets.start_date', [$from, $to])->get();;
                     }
                     else if($key == "monthly"){
                         $month = date('m', strtotime($date));
                         $year = date('Y', strtotime($date));
-                        $query->whereMonth('date', '=', $month)
-                              ->whereYear('date', '=', $year);
+                        $query->whereMonth('t_timesheets.start_date', '=', $month)
+                              ->whereYear('t_timesheets.start_date', '=', $year);
                     }
                 })
                 ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
-                ->with('projectName', 'activityName')
-                ->orderBy('t_timesheet_items.date', 'asc')
+                ->with('allTimesheetItem')
+                ->orderBy('t_timesheets.start_date', 'asc')
+                ->orderBy('employees.id', 'asc')
                 ->get();
             // dd(DB::getQueryLog());
+            // dd($timesheets);
         return response()->json($timesheets);
     }
 }
