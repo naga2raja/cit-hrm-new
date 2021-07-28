@@ -321,6 +321,9 @@ class PunchInOutController extends Controller
     public function getEmployeeRecords(Request $request) {
         $user = Auth::user();
         $leaveCtrl = new LeaveController;
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
+        $employeeId = $currentEmployeeDetails->id;
+
         $userRole = 'Admin'; $empIds = [];
         if($user->hasRole('Manager')) {
             $userRole = 'Manager';
@@ -329,9 +332,7 @@ class PunchInOutController extends Controller
             if($reportTo)
                 $empIds = explode(',', $reportTo->reporting_manager_ids);
         }
-
-        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
-        $employee_id = $currentEmployeeDetails->id;
+        
         $data = tPunchInOut::join('employees', 't_punch_in_outs.employee_id', 'employees.id')
             ->selectRaw('TIMESTAMPDIFF(MINUTE, t_punch_in_outs.punch_in_user_time, t_punch_in_outs.punch_out_user_time) as duration')
             ->selectRaw('t_punch_in_outs.id, t_punch_in_outs.employee_id, punch_in_user_time, punch_out_user_time, t_punch_in_outs.punch_in_note, t_punch_in_outs.punch_out_note, t_punch_in_outs.status')            
