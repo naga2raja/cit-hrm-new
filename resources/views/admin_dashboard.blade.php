@@ -30,7 +30,8 @@
 											<img src="img/profiles/img-13.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
 										</div>
 										<div class="user-details">
-											<h4><b>Welcome @if (!Auth::guest()) {{ Auth::user()->name }} @endif</b></h4>
+											<h4><b>Welcome</b></h4>
+											<h4><b> @if (!Auth::guest()) {{ Auth::user()->name }} @endif</b></h4>
 											<p>{{ date('D, d M Y') }}</p>
 										</div>
 									</div>
@@ -38,8 +39,12 @@
 								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
 									<div class="card-body">
 										<ul class="list-group">
-											<li class="list-group-item text-center active button-5"><a href="index" class="text-white">Admin Dashboard</a></li>
-											<li class="list-group-item text-center button-6"><a class="text-dark" href="employees-dashboard">Employees Dashboard</a></li>
+											@hasrole('Admin')
+											<li class="list-group-item text-center active button-5"><a href="javascript:void(0)" class="text-white">Admin Dashboard</a></li>
+											@endrole
+											@hasrole('Employee')
+											<li class="list-group-item text-center button-6"><a class="text-dark" href="javascript:void(0)">Employees Dashboard</a></li>
+											@endrole
 										</ul>
 									</div>
 								</div>
@@ -59,7 +64,7 @@
 											<div class="card-right">
 												<a href="{{ route('employees.index') }}">
 													<h4 class="card-title">Employees</h4>
-													<p class="card-text">700</p>
+													<p class="card-text">{{ count($employees) }}</p>
 												</a>
 											</div>
 										</div>
@@ -72,8 +77,10 @@
 												<i class="fa fa-building-o"></i>
 											</div>
 											<div class="card-right">
-												<h4 class="card-title">Companies</h4>
-												<p class="card-text">30</p>
+												<a href="{{ route('company.index') }}">
+													<h4 class="card-title">Companies</h4>
+													<p class="card-text">{{ count($company) }}</p>
+												</a>
 											</div>
 										</div>
 									</div>
@@ -85,8 +92,10 @@
 												<i class="fa fa-suitcase" aria-hidden="true"></i>
 											</div>
 											<div class="card-right">
-												<h4 class="card-title">Leaves</h4>
-												<p class="card-text">3</p>
+												<a href="{{ route('leave.list') }}">
+													<h4 class="card-title">Leaves</h4>
+													<p class="card-text">{{ count($leave) }}</p>
+												</a>
 											</div>
 										</div>
 									</div>

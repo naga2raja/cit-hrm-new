@@ -119,8 +119,6 @@
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
 												</div>
-												<div id="edit_button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
-												</div>
 											</div>
 										</div>
 
@@ -200,12 +198,6 @@
 	 	$('#employee_id').val(this.value);
 	});
 
-	$('#search').click(function() {
-		var active = $('.fc-state-active').attr('id');
-		active = active.split("_");
-		LoadData($('#'+active[0]+'DatePicker').val(), active[0]);
-	});
-
 	var prevWeekValue = '';
 	function setCurrentDate(){
 		var now = new Date();
@@ -243,7 +235,7 @@
 		var employee_id = $("#employee_id").val();
 		$.ajax({
 			method: 'POST',
-			url: '/timesheets/getTimeSheets-ajax',
+			url: '/timesheets/getEmployeeTimeSheets-ajax',
 			data: JSON.stringify({'selected_date': date, 'employee_id': employee_id, 'key':key, '_token': '{{ csrf_token() }}' }),
 			dataType: "json",
 			contentType: 'application/json',
@@ -251,59 +243,71 @@
 				// console.log('response : ', data);
 				var thead = '<tr class="bg-light">';
 	              	thead += '<th>Employee</th>';
-	              	thead += '<th>Project</th>';
-	              	thead += '<th>Activity</th>';
-	              	thead += '<th>Comments</th>';
-	              	thead += '<th>Date</th>';
-	              	thead += '<th>Duration</th>';
+	              	thead += '<th>Timesheet Period</th>';
+	              	thead += '<th>Status</th>';
+	              	thead += '<th>Duration (HH:MM)</th>';
 	              	thead += '</tr>';
 	            var total = 0;
 				var tbody = '';
+				var selected_date = '';
 				if(data.length > 0){
 		            // console.log(data);
 		            data.forEach(function (row,index) {
+				    	if(key == "daily"){
+				    		selected_date = moment($('#dailyDatePicker').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+				    	}else if(key == "weekly"){
+				    		var first = $('#weeklyDatePicker').val().split(" - ");
+							var selected_date = moment(first[0], "DD/MM/YYYY").format("YYYY-MM-DD");
+				    	}else if(key == "monthly"){
+				    		var current_month = moment($('#monthlyDatePicker').val(), "YYYY/MM").format("YYYY/MM/DD");
+				    		var now = new Date(current_month);
+				    		var today = new Date();
+							var day = ("0" + today.getDate()).slice(-2);
+							var month = ("0" + (now.getMonth() + 1)).slice(-2);
+							var selected_date = (day) + "-" + (month) + "-" + now.getFullYear() ;
+				    	}
+
+		            	// enable edit link
+				    	var urlParams = new Array( 'employee_id=' + row.employee_id, 'date='+ selected_date );
+				    	var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
+
 		            	tbody += '<tr>';
-				        tbody += '<td>' + row.employee_name + '</td>';
-				        tbody += '<td>' + row.project_name.project_name + '</td>';
-				        tbody += '<td>' + row.activity_name.activity_name + '</td>';
-				        tbody += '<td>' + (row.comments ? row.comments : '-') + '</td>';
+				        tbody += '<td><h2><u><a href="'+url+'">' + row.employee_name + '</a></u></h2></td>';
 		              	if(key == "daily"){		            		
-				            tbody += '<td>' + moment(row.date).format("DD/MM/YYYY") + '</td>';
+				            tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
 			            }
 						else if(key == "weekly"){
-							tbody += '<td>' + moment(row.date).format("DD/MM/YYYY") + '</td>';
+							tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
 						}
 						else if(key == "monthly"){
-							tbody += '<td>' + moment(row.date).format("DD/MM/YYYY") + '</td>';
+							tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
 						}
-				        // calculating total minutes
-				        total = total + row.duration;
-				        tbody += '<td>' + getHours(row.duration) + ' hrs</td>';
+
+				        tbody += '<td>' + row.state + '</td>';
+						var duration = 0;
+						for (var i = 0; i < row.all_timesheet_item.length; i++) {
+						    duration += row.all_timesheet_item[i].duration << 0;
+						}
+						// console.log("duration", duration);
+						total += duration;
+						tbody += '<td>'+ getHours(duration) +' Hrs</td>';
 				        tbody += '</tr>';
 		            });
 		            tbody += '<tr class="bg-light font-weight-bold">';
-		            tbody += '<td colspan="5">Total</td>';
-		            tbody += '<td>' + getHours(total) + ' hrs</td>';
+		            tbody += '<td colspan="2"></td>';
+		            tbody += '<td class="text-center">Total :</td>';
+		            tbody += '<td>' + getHours(total) + ' Hrs</td>';
 		            tbody += '</tr>';
 		        }else{
 		        	tbody += '<tr>';
-		        	tbody += '<td colspan="6"><p class="text-center">No data found in selected date</p></td>';
+		        	tbody += '<td colspan="4"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
 		        }
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
 
 		        $("#edit_button").remove();
-	        	var selected_date = '';
-		    	if(key == "daily"){
-		    		selected_date = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
-		    		var urlParams = new Array(
-					            		'employee_id=' + $('#employee_id').val(), 
-					            		'date='+ selected_date 
-		            				);
-		    		var button = $('<a id="edit_button" href="{{ route("timesheets.create") }}' + '?' + urlParams.join('&')+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-edit"></i> Edit</a>');
-		    		$("#edit_button_div").append(button);
-		    	}
+	        	
 			}
 		});
 	}
@@ -315,6 +319,12 @@
 		// to load the data
 	   	LoadData($('#dailyDatePicker').val(),'daily');
 	}
+
+	$('#search').click(function() {
+		var active = $('.fc-state-active').attr('id');
+		active = active.split("_");
+		LoadData($('#'+active[0]+'DatePicker').val(), active[0]);
+	});
 
 	//Date picker's format
 	$("#dailyDatePicker").datetimepicker({

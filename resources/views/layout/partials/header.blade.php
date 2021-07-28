@@ -20,7 +20,7 @@
                             <div class="logo my-3 my-sm-0">
                                 <a href="index">
                                     <!-- <img src="{{ assetUrl('img/logo.png') }}" alt="logo image" class="img-fluid" width="100"> -->
-                                    <h1 class="img-fluid text-white"><i>CIT-HRM</i></h1>
+                                    <h2 class="img-fluid text-white">CIT-HRM</h2>
                                 </a>
                             </div>
                         </div>
@@ -391,7 +391,7 @@
                                                     <a class="dropdown-item {{ Request::is('mytimesheets*') ? 'active' : '' }}" href="{{ route('mytimesheets.index') }}">My Timesheets</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item {{ Request::is('timesheets*') ? 'active' : '' }}" href="{{ route('timesheets.index') }}">Employee Timesheets</a>
+                                                    <a class="dropdown-item {{ Request::is('timesheets') ? 'active' : '' }}" href="{{ route('timesheets.index') }}">Employee Timesheets</a>
                                                 </li>                                              
                                             </ul>
                                         </li>

@@ -161,7 +161,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::get('/admin-page', 'HomeController@demoAdmin');
 
     // admin_dashboard
-    Route::get('/adminDashboard', 'Admin\AdminController@index')->name('adminDashboard');
+    Route::get('/adminDashboard', 'HomeController@index')->name('adminDashboard');
     // system_user
     Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
     Route::post('/systemUsers/multiple-delete', 'Admin\UserManagement\SystemUserController@deleteMultiple');
@@ -256,7 +256,16 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
     Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
     // add Timesheets
-    Route::resource('/timesheets', 'Time\Timesheets\TimesheetsController');
+    Route::get('/timesheets.create', 'Time\Timesheets\TimesheetsController@create')->name('timesheets.create');
+    Route::post('/timesheets.store', 'Time\Timesheets\TimesheetsController@store')->name('timesheets.store');
+
+
+    //Employee autocomplete ajax
+    Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
+    //Project autocomplete ajax
+    Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax');
+    //Activity autocomplete ajax
+    Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName');
 
 
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
@@ -264,15 +273,11 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     Route::post('/punch/update-ajax', 'Time\Attendance\PunchInOutController@updateAjax')->name('punch.update-ajax');
     Route::post('/punch/status-change', 'Time\Attendance\PunchInOutController@updateStatusAjax')->name('punch.submit');    
 
-    Route::post('/timesheets/getTimeSheets-ajax', 'Time\Timesheets\TimesheetsController@getTimeSheets');
+    Route::post('/timesheets/getEmployeeTimeSheets-ajax', 'Time\Timesheets\TimesheetsController@getEmployeeTimeSheets');
 
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {
-    //Employee    
-    Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
-    Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax');
-    Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName');
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
@@ -280,6 +285,9 @@ Route::group(['middleware' => ['role:Admin|Manager']], function () {
 
     Route::get('employee-records', 'Time\Attendance\PunchInOutController@getEmployeeRecords')->name('punch.employee-records');
     Route::post('attendance-admin-action', 'Time\Attendance\PunchInOutController@adminAction')->name('punch.action');
+
+    // Employee Timesheet List
+    Route::get('/timesheets', 'Time\Timesheets\TimesheetsController@index')->name('timesheets.index');
 });
 
 Route::get('/', 'HomeController@index')->name('index');

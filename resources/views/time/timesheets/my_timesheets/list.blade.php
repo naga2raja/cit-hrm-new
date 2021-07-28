@@ -37,32 +37,22 @@
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="{{ route('myEntitlements.index') }}">
-											<!-- <div class="row filter-row">
-												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-													<div class="form-group">
-														<label>Employee Name</label>
-														<input type="text" name="search" class="form-control">
-		                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-		                                                <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ Request::get('from_date') }}">
-		                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ Request::get('to_date') }}">
-													</div>
-												</div>
-											</div> -->
-
+										<form method="GET" action="">
 											<div class="row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
-														<label>Search</label>
-														<input type="text" name="search" class="form-control">
-		                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														<label>Search Project</label>
+		                                                <select class="project_name form-control select2 has-error{{ $errors->has('project_name') ? 'is-invalid' : ''}}" name="project_name" id="project_name" required="" style="width: 100%">
+														</select>
+														{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														<input type="hidden" name="project_id" id="project_id" class="form-control" value="{{ Request::get('project_id') }}">
 													</div>
 												</div>
 											</div>
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
+													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
@@ -173,6 +163,33 @@
 
 @push('scripts')
 <script type="text/javascript">
+	// Project name autocomplete
+	$('#project_name').select2({
+		placeholder: 'Select a project',
+		ajax: {
+			url: '/project-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.project_name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+	$(document.body).on("change",".project_name",function(){
+		$('#project_id').val(this.value);
+		var pro_name = $("#project_name option:selected").html();
+	 	$('#pro_name').val(pro_name);
+	});
+
 	var prevWeekValue = '';
 	function setCurrentDate(){
 		var now = new Date();
@@ -207,10 +224,11 @@
 
 	function LoadData(date, key){
 		$("#key").val(key);
+		var project_id = $("#project_id").val();
 		$.ajax({
 			method: 'POST',
 			url: '/mytimesheets/getMyTimeSheets-ajax',
-			data: JSON.stringify({'selected_date': date, 'key':key, '_token': '{{ csrf_token() }}' }),
+			data: JSON.stringify({'selected_date': date, 'project_id': project_id, 'key':key, '_token': '{{ csrf_token() }}' }),
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
@@ -219,12 +237,12 @@
 	              	thead += '<th>Employee</th>';
 	              	thead += '<th>Project</th>';
 	              	thead += '<th>Activity</th>';
-	              	thead += '<th>Comments</th>';
 	              	thead += '<th>Date</th>';
 	              	thead += '<th>Duration</th>';
 	              	thead += '</tr>';
 	            var total = 0;
 				var tbody = '';
+				var button_name = "";
 				if(data.length > 0){
 		            // console.log(data);
 		            data.forEach(function (row,index) {
@@ -232,7 +250,7 @@
 				        tbody += '<td>' + row.employee_name + '</td>';
 				        tbody += '<td>' + row.project_name.project_name + '</td>';
 				        tbody += '<td>' + row.activity_name.activity_name + '</td>';
-				        tbody += '<td>' + (row.comments ? row.comments : '-') + '</td>';
+				        // tbody += '<td>' + (row.comments ? row.comments : '-') + '</td>';
 		              	if(key == "daily"){		            		
 				            tbody += '<td>' + moment(row.date).format("DD/MM/YYYY") + '</td>';
 			            }
@@ -248,13 +266,16 @@
 				        tbody += '</tr>';
 		            });
 		            tbody += '<tr class="bg-light font-weight-bold">';
-		            tbody += '<td colspan="5">Total</td>';
+		            tbody += '<td colspan="3"></td>';
+		            tbody += '<td class="text-center">Total :</td>';
 		            tbody += '<td>' + getHours(total) + ' hrs</td>';
 		            tbody += '</tr>';
+		            button_name = "<i class='fa fa-edit'></i> Edit";
 		        }else{
 		        	tbody += '<tr>';
-		        	tbody += '<td colspan="6"><p class="text-center">No data found in selected date</p></td>';
+		        	tbody += '<td colspan="5"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
+		        	button_name = "<i class='fa fa-plus'></i> Add";
 		        }
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
@@ -267,7 +288,7 @@
 					            		'employee_id=' + $('#employee_id').val(), 
 					            		'date='+ selected_date 
 		            				);
-		    		var button = $('<a id="edit_button" href="{{ route("timesheets.create") }}' + '?' + urlParams.join('&')+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-edit"></i> Edit</a>');
+		    		var button = $('<a id="edit_button" href="{{ route("timesheets.create") }}' + '?' + urlParams.join('&')+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">'+button_name+'</a>');
 		    		$("#edit_button_div").append(button);
 		    	}
 			}
@@ -281,6 +302,13 @@
 		// to load the data
 	   	LoadData($('#dailyDatePicker').val(),'daily');
 	}
+
+	// onclick of search
+	$('#search').click(function() {
+		var active = $('.fc-state-active').attr('id');
+		active = active.split("_");
+		LoadData($('#'+active[0]+'DatePicker').val(), active[0]);
+	});
 
 	//Date picker's format
 	$("#dailyDatePicker").datetimepicker({

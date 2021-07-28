@@ -8,8 +8,8 @@
 
         <div class="login-left">
             <!-- <img class="img-fluid" src="img/logo.png" alt="Logo"> -->
-            <h1 class="img-fluid text-white"><i>CIT-HRM</i></h1>
-            <p class="text-white">Cabc's Group India</p>
+            <h1 class="img-fluid text-white">CIT-HRM</h1>
+            <h6 class="text-white mt-1">Cabc's Group India</h6>
         </div>
 
         <div class="login-right">

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Carbon\Carbon;
 use App\User;
+use App\Employee;
+use App\mCompany;
+use App\tLeave;
 use App\Role;
 
 class AdminController extends Controller
@@ -31,7 +34,12 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         if($user->hasRole('Admin')){
-            return view('admin/admin_dashboard');  
+            $employees = Employee::get();
+            $company = mCompany::get();
+            $leave = tLeave::where('employee_id', $user->id)
+                            ->whereIn('status', [1,2,3])
+                            ->get();
+            return view('admin_dashboard', compact('employees', 'company', 'leave'));  
         } else {
             return view('employees-dashboard');            
         }

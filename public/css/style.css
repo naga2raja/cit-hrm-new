@@ -67,6 +67,13 @@ Version: 1.0
     box-shadow: 0px 0px 10px grey;
 }
 
+.logo-shadow{
+    text-shadow: -1px 1px 0 #fff,
+                  1px 1px 0 #fff,
+                  1px -1px 0 #fff,
+                 -1px -1px 0 #fff;
+}
+
 .bold {
     font: bold !important;
 }

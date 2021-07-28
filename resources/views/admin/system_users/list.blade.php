@@ -4,83 +4,126 @@
 
 <div class="page-wrapper">
 				<div class="container-fluid">
-					<div class="row">						
-						<div class="col-xl-12 col-lg-12 col-md-12">
-							<div class="card shadow-sm ctm-border-radius border">
-								<div class="card-body align-center">
-									<form method="GET" action="{{ route('systemUsers.index') }}">
-										<div class="row filter-row">
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-													<input type="text" name="email" class="form-control" placeholder="Username" value="{{ Request::get('email') }}" autocomplete="off">
+					<div class="row">
+						<!-- left side -->
+						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+							<aside class="sidebar sidebar-user">
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body py-4">
+										<div class="row">
+											<div class="col-md-12 mr-auto text-left">
+												<div class="custom-search input-group">
+													<div class="custom-breadcrumb">
+														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
+															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Leave</a></li>
+															<li class="breadcrumb-item d-inline-block active">Entitlements</li>
+														</ol>
+														<h4 class="text-dark">My Entitlements</h4>
+													</div>
 												</div>
 											</div>
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
-													<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}} select2-hidden-accessible" name="role" tabindex="-1" aria-hidden="true">
-															<option value="" selected="">User Role</option>
-															<option value="all" {{ Request::get('role') == 'all' ? 'selected' : '' }}>All</option>
-	                                                    @foreach ($roles as $role)
-	                                                        <option value='{{ $role->name }}' {{ Request::get('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
-	                                                    @endforeach
-	                                                </select>
-	                                                {!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-													<input type="text" name="name" id="employee_name" class="form-control" placeholder="Employee Name" value="{{ Request::get('name') }}" autocomplete="off">
-													<div id="employees_list" class="autocomplete"></div>
-												</div>
-											</div>
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2"> 
-												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
-													<select class="form-control select" name="status">
-														<option value="">Status</option>
-													    <option value='Active' {{ Request::get('status') == "Active" ? 'selected' : '' }}>Active</option>
-													    <option value='In active' {{ Request::get('status') == "In active" ? 'selected' : '' }}>In-active</option>
-													</select>
-												</div>
-											</div>
-											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-												<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Search </button>  
-											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-												<a href="{{ route('systemUsers.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel </a>  
-											</div>
-										
-										</div>
-									</form>
-								</div>
-							</div>
-
-							<div class="card shadow-sm ctm-border-radius border">
-								<div class="card-header">
-									<div class="row filter-row">
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
-											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-												<h4 class="card-title mb-0 ml-2 mt-2">System Users </h4>
-											</div>
-										</div>										
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
-											<a href="{{ route('systemUsers.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
-										</div>
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
-											<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_user_table','systemUsers')"><i class="fa fa-trash"></i> Delete</button>
 										</div>
 									</div>
 								</div>
-								
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body">
+										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
+										<form method="GET" action="{{ route('systemUsers.index') }}">
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Employee Name</label>
+														<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%" >
+															@if(Request::get('emp_name'))
+																<option selected="selected" id="{{ Request::get('employee_id') }}">{{ Request::get('emp_name'), old('name') }}</option>
+															@endif
+														</select>
+														{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}														
+														<input type="hidden" name="emp_name" id="emp_name" class="form-control">
+														<input type="hidden" name="employee_id" id="employee_id" value="{{ (Request::get('employee_id')) ? Request::get('employee_id') : '' }}">
+													</div>
+												</div>
+											</div>
+
+											<!-- <div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Username</label>
+														<input type="text" name="email" class="form-control" placeholder="Username" value="{{ Request::get('email') }}" autocomplete="off">
+		                                                {!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													</div>
+												</div>
+											</div> -->
+
+											<div class="row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Role</label>
+														<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}} select2-hidden-accessible" name="role" tabindex="-1" aria-hidden="true">
+																<option value="" selected="">User Role</option>
+																<option value="all" {{ Request::get('role') == 'all' ? 'selected' : '' }}>All</option>
+		                                                    @foreach ($roles as $role)
+		                                                        <option value='{{ $role->name }}' {{ Request::get('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
+		                                                    @endforeach
+		                                                </select>
+		                                                {!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													</div>
+												</div>
+											</div>
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Status</label>
+														<select class="form-control select" name="status">
+														    <option value='Active' {{ Request::get('status') == "Active" ? 'selected' : '' }}>Active</option>
+														    <option value='In active' {{ Request::get('status') == "In active" ? 'selected' : '' }}>In-active</option>
+														</select>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+												</div>
+											</div>												
+										</form>
+									</div>
+								</div>
+							</aside>
+						</div>
+						<!-- left side end -->
+
+						<!-- right side -->
+						<div class="col-xl-9 col-lg-8 col-md-12">
+							<div class="card shadow-sm ctm-border-radius">
+								<div class="card-header">
+									<div class="row filter-row">
+										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  
+											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+												<h4 class="card-title mb-0 ml-2 mt-2">System Users</h4>
+											</div>
+										</div>
+										@hasrole('Admin')
+											<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+												<a href="{{ route('systemUsers.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
+											</div>
+											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_user_table','systemUsers')"><i class="fa fa-trash"></i> Delete</button>
+											</div>
+										@endrole
+									</div>
+								</div>
 								<div class="card-body align-center">									
 									<div class="table-responsive">
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr>
+												<tr class="bg-light">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_user_table')">
 													</th>
@@ -152,47 +195,35 @@
 
 @push('scripts')
 <script type="text/javascript">
+
 	// Autocomplete ajax call
-	$('#employee_name').keyup(function(){ 
-		var employee_name = $(this).val();
-		if(employee_name != '')
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-				method:"POST",
-				url: '/employeeNameSearch',
-				data:{
-					employee_name:employee_name,
-					_token:_token
-				},
-				success:function(data){
-					$('#employee_name').removeClass('is-invalid');
-					$("#not_exist").remove();
-
-					if(data != ""){					
-						$('#employees_list').fadeIn();
-						$('#employees_list').html(data);
-					}else{
-						var exists = ($("#not_exist").length == 0);
-					    if (exists) {
-					        $('#employee_name').addClass('is-invalid');
-							$('#employees_list').fadeOut();
-							$('<span id="not_exist" class="invalid-feedback" role="alert">Employee does not exist</span>').insertAfter('#employee_name');
-					    }
-					}
-				}
-			});
-		} else{
-			$('#employees_list').html('');	        	
-		}
+	$('.employee_name').select2({
+		placeholder: 'Select a employee',
+		allowClear: true,
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
 	});
 
-	$(document).on('click', '.employees', function(){
-		$('#employee_name').val($(this).text());
-		$('#employees_list').fadeOut();
-		$('#employee_name').removeClass('is-invalid');
-		$("#not_exist").remove();
+	$(document.body).on("change","#employee_name",function(){
+	 	$('#employee_id').val(this.value);
+	 	var emp_name = $("#employee_name option:selected").html();
+	 	$('#emp_name').val(emp_name);
 	});
+
 
 	function validation_popup_msg(){
 		@if (Session::get('success'))

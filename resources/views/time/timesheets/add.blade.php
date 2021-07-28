@@ -124,8 +124,10 @@
 			              													<textarea name="timeItem[{{ $loop->index }}][comments]" class="form-control" rows="1" width="200px">{{ @$row->comments }}</textarea>
 			              												</td>
 			              												<td>
-			              													@if($loop->index != 0)
-			              													<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius">X</button>
+			              													@if($loop->index == 0)
+			              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Add Row</button>
+			              													@else
+			              														<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius">X</button>
 			              													@endif
 			              												</td>
 			              											</tr>
@@ -141,25 +143,29 @@
 												<hr>
 
 												<div class="col-sm-12 text-center">
-													<div class="row">
-														<div class="col-sm-10">
-															<div class="row">
-																<div class="col-sm-1">
-																	<div class="submit-section text-center btn-add">
-																		<button type="button" id="save" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
-																	</div>
-																</div>
-																<div class="col-sm-1">
-																	<button type="reset" class="btn btn-secondary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
-																</div>
-																<div class="col-sm-1">
-																	<a href="{{ route('timesheets.index') }}" class="btn btn-secondary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
-																</div>
+													<div class="row">														
+														<div class="col-sm-4">
+															<div class="col-sm-4">
+																@if($timesheet)
+																	@if($timesheet->state == "NOT-SUBMITTED")
+																	<button type="button" name="add" id="add" class="btn btn-success text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Submit</button>
+																	@endif
+																@endif
 															</div>
 														</div>
-														<div class="col-sm-2">
-															<div class="col-sm-10">
-																<button type="button" name="add" id="add" class="btn btn-success text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Add Row</button>
+														<div class="col-sm-8">
+															<div class="row">
+																<div class="col-sm-2">
+																	<div class="submit-section text-center btn-add">
+																		<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+																	</div>
+																</div>
+																<!-- <div class="col-sm-2">
+																	<button type="reset" class="btn btn-secondary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
+																</div> -->
+																<div class="col-sm-2">
+																	<a href="{{ url()->previous() }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -447,7 +453,7 @@
 			   data: { 'data': $('#timesheets_form').serialize(), '_token': '{{ csrf_token() }}' } ,
 			   success:function(data){
 			   	console.log(data);
-			   	// window.location.href = "{{ route('timesheets.index') }}";
+			   	window.location.href = "{{ url()->previous() }}";
 			  }
 			});
 	    }

@@ -23,7 +23,7 @@ class SystemUserController extends Controller
     public function index(Request $request)
     {        
         $username = $request->input('email');
-        $name = $request->input('name');
+        $employee_id = $request->input('employee_id');
         $role = $request->input('role');
         $status = $request->input('status');
         
@@ -37,10 +37,8 @@ class SystemUserController extends Controller
         if ($username) {
             $users->Where('users.email', 'like', "%$username%");
         }
-        if ($name) {
-            // remove the space in string
-            $string = str_replace(' ', '', $name);
-            $users->Where(DB::raw("CONCAT(employees.first_name, employees.middle_name, employees.last_name)"), 'LIKE', "%$string%");
+        if ($employee_id) {
+            $users->Where('employees.id', $employee_id);
         }
         if (($role)&&($role != "all")) {
             $users->Where('roles.name', $role);
