@@ -27,36 +27,47 @@
 								</div>
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
-                                                        <form method="GET">
-                                                            <div class="row">
-                                                                <div class="col-sm-12 leave-col mb-2">
-                                                                    <div>															
-                                                                        <input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Date" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 leave-col mb-2">
-                                                                    <div>
-                                                                        <input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Date" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 mb-2">
-                                                                    <div>
-                                                                        <select class="form-control select" name="status">
+                                                        <form method="GET" id="filter_form">
+															<div class="row filter-row">
+																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+																	<div class="form-group">
+																		<label>From Date</label>
+																		<input autocomplete="off" class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Date" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
+																	</div>
+																</div>
+															</div>
+
+															<div class="row filter-row">
+																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+																	<div class="form-group">
+																		<label>To Date</label>
+																		<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Date" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2">
+																	</div>
+																</div>
+															</div>															
+
+															<div class="row filter-row">
+																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+																	<div class="form-group">
+																		<label>Status</label>
+																		<select class="form-control select" name="status">
                                                                             <option value="">Status</option>
                                                                                 @foreach($leaveStatus as $status)
                                                                                     <option value="{{ $status->id }}"  {{ Request::get('status') == $status->id ? 'selected' : ''}}> {{ $status->name }}</option>
                                                                                 @endforeach																
                                                                         </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 mb-2">														
-                                                                    <button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" name="search"><span class="fa fa-search"></span> Search</button>                                                        
-                                                                </div>
-                                                                <div class="col-sm-12 mb-2">  
-                                                                    <a href="{{ route('leave.list') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-refresh"></span> Reset</a>
-                                                                </div>
-            
-                                                            </div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
+																	<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>													
+																</div>
+																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+																	<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('filter_form')"><i class="fa fa-refresh"></i> Reset </button>
+																</div>
+															</div>
                                                         </form>                                                   
 
 									</div>
@@ -82,12 +93,12 @@
 										<div class="card-header">
 											<h4 class="card-title mb-0">Leave List</h4>
 										</div>
-										<div class="card-body">
-											<div class="employee-office-table">
-												<div class="table-responsive">
-													<table class="table custom-table mb-0 table-hover">
+										<div class="card-body align-center">
+											<div class="">
+												<div class="table-responsive ">
+													<table class="table custom-table table-hover">
 														<thead>
-															<tr>
+															<tr class="bg-light">
                                                                 <th>Employee Name</th>
 																<th>Leave Type</th>
 																<th>From</th>

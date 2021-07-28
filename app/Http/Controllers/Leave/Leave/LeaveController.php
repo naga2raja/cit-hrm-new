@@ -152,7 +152,7 @@ class LeaveController extends Controller
         if($request->assign_leave == 1 && Auth::user()->hasRole('Manager')) {
             $leave_approval_level = 1;
             $leave_status = 2;
-        } else if($request->assign_leave == 1 && Auth::user()->hasRole('Admin')) {
+        } else if(Auth::user()->hasRole('Admin')) {
             $leave_approval_level = 2;
             $leave_status = 2;
             $sendMailFlag = false;

@@ -16,7 +16,7 @@
 													<div class="custom-breadcrumb">
 														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
 															<li class="breadcrumb-item d-inline-block"><a href="index" class="text-dark">Home</a></li>
-															<li class="breadcrumb-item d-inline-block active">Reviews</li>
+															<li class="breadcrumb-item d-inline-block active">Data Import</li>
 														</ol>
 														<h4 class="text-dark">Import Employee</h4>
 													</div>
@@ -54,7 +54,7 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<button type="button" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" data-dismiss="modal">Cancel</button>
+															<button type="button" class="btn btn-danger text-white ctm-border-radius p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</button>
 															<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Upload</button>
 														</div>
 													</div>

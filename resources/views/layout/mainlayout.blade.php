@@ -50,6 +50,12 @@
 	            }					
 	        });
 		}
+
+		function resetAllValues(formId) {
+			$('#'+formId).find('input:text').val('');
+			$('#'+formId).find('textarea').val('');
+			$('#'+formId).find('select').val('');
+		}
 	</script>
 	<!-- Common multiple delete end-->
 
