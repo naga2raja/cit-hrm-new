@@ -12,6 +12,8 @@ use App\Session;
 use Carbon\Carbon;
 use App\Employee;
 use App\Http\Controllers\Leave\Leave\LeaveController;
+use Mail;
+use App\Mail\AttendanceStatusMail;
 
 
 class PunchInOutController extends Controller
@@ -23,6 +25,7 @@ class PunchInOutController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         $leaveCtrl = new LeaveController;
         $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
         $employee_id = $currentEmployeeDetails->id;
@@ -37,7 +40,14 @@ class PunchInOutController extends Controller
             })
             ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
             ->paginate(30);
-        return view('time/attendance/punch/list', compact('data'));
+        
+        $userRole = 'Admin'; 
+        if($user->hasRole('Manager')) {
+            $userRole = 'Manager';
+        } elseif($user->hasRole('Employee')) {
+            $userRole = 'Employee';
+        }
+        return view('time/attendance/punch/list', compact('data', 'userRole'));
     }
 
     /**
@@ -125,7 +135,7 @@ class PunchInOutController extends Controller
     public function show($id)
     {
         $data = tPunchInOut::where('id', $id)
-            ->selectRaw('id, employee_id, punch_in_note, punch_out_note, DATE_FORMAT(punch_in_user_time, "%d/%m/%Y") as punch_in, DATE_FORMAT(punch_out_user_time, "%d/%m/%Y") as punch_out, DATE_FORMAT(punch_in_user_time, "%H:%i") as in_time, DATE_FORMAT(punch_out_user_time, "%H:%i") as out_time ')
+            ->selectRaw('id, employee_id, punch_in_note, punch_out_note, DATE_FORMAT(punch_in_user_time, "%d/%m/%Y") as punch_in, DATE_FORMAT(punch_out_user_time, "%d/%m/%Y") as punch_out, DATE_FORMAT(punch_in_user_time, "%H:%i") as in_time, DATE_FORMAT(punch_out_user_time, "%H:%i") as out_time, comments, status ')
             ->first();
         return $data;
     }
@@ -215,7 +225,9 @@ class PunchInOutController extends Controller
      */
     public function destroy($id)
     {
-
+        $employee = tPunchInOut::where('id', $id)->first();
+        $employee->delete();        
+        return redirect()->back()->with('success','Deleted Successfully');
     }
 
     public function checkPuchchInOutEnable()
@@ -254,6 +266,7 @@ class PunchInOutController extends Controller
         // deleteMultiple
         if($request->delete_ids) {
             tPunchInOut::whereIn('id', $request->delete_ids)
+                ->where('status', 0)
                 ->get()
                 ->map(function($emp) {
                     $emp->delete();
@@ -313,7 +326,7 @@ class PunchInOutController extends Controller
         $comments = $punchInfo->comments;
         $punchInfo->status = $request->status;
         $punchInfo->updated_by = Auth::user()->id;
-        $punchInfo->comments = $comments. ' Sent to Approval on '. date("Y-m-d H:i a") .' by '.Auth::user()->name;
+        $punchInfo->comments = $comments. '<br> <b>'.Auth::user()->name .'</b> - Sent to <b> Approval </b> on ' . getCurrentTime(); 
         $punchInfo->save();
         return $punchInfo;
     }
@@ -331,11 +344,13 @@ class PunchInOutController extends Controller
             $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
             if($reportTo)
                 $empIds = explode(',', $reportTo->reporting_manager_ids);
+        } else {
+            $empIds = $leaveCtrl->getReportingToAdminEmployees($user->id);
         }
         
         $data = tPunchInOut::join('employees', 't_punch_in_outs.employee_id', 'employees.id')
             ->selectRaw('TIMESTAMPDIFF(MINUTE, t_punch_in_outs.punch_in_user_time, t_punch_in_outs.punch_out_user_time) as duration')
-            ->selectRaw('t_punch_in_outs.id, t_punch_in_outs.employee_id, punch_in_user_time, punch_out_user_time, t_punch_in_outs.punch_in_note, t_punch_in_outs.punch_out_note, t_punch_in_outs.status')            
+            ->selectRaw('t_punch_in_outs.id, t_punch_in_outs.employee_id, punch_in_user_time, punch_out_user_time, t_punch_in_outs.punch_in_note, t_punch_in_outs.punch_out_note, t_punch_in_outs.status')
             ->when(request()->filled('date'), function ($query) {
                 $date = DateTime::createFromFormat('d/m/Y', request('date'));
                 $date = $date->format('Y-m-d');
@@ -345,7 +360,44 @@ class PunchInOutController extends Controller
                 $data = $data->whereIn('t_punch_in_outs.employee_id', $empIds);
             }
             $data = $data->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+                    ->where('t_punch_in_outs.status', '>', 0)
                     ->paginate(30);
-        return view('time/attendance/punch/list', compact('data'));
+        return view('time/attendance/punch/list', compact('data', 'userRole'));
     }
+
+    public function adminAction(Request $request)
+    {
+        $leaveCtrl = new LeaveController;
+        $userRole = 'Admin';
+        if(Auth::user()->hasRole('Manager'))
+            $userRole = 'Manager';
+
+        $attendanceStatusUpdateArr = (array) json_decode($request->punch_id_update);        
+        
+        if(count($attendanceStatusUpdateArr)) {
+            foreach($attendanceStatusUpdateArr as $punch) {
+                $punch_id = $punch->id;
+                $status_id = $punch->status_id;
+                $newPunchStatus = currentPunchStatus($status_id);
+
+                $punchInfo = tPunchInOut::where('id', $punch_id)->first();
+                $punchInfo->status = $status_id;
+                $punchInfo->comments = $punchInfo->comments . ' <hr> <b>'.Auth::user()->name .'('. $userRole .')</b> - Updated to <b>'. $newPunchStatus.'</b> on ' . getCurrentTime();
+                $punchInfo->save();
+
+                //Send Email to Employee
+                $toEmails = [];
+                $employeeDetails = $leaveCtrl->getEmployeeDetails($punchInfo->employee_id);
+                $details = [
+                    'date' => $punchInfo->punch_in_user_time.' to '. $punchInfo->punch_out_user_time,
+                    'message'  =>  'Updated to <b>'.$newPunchStatus. '</b> By '.Auth::user()->name,
+                    'employee_name' => $employeeDetails->first_name.' '.$employeeDetails->first_name
+                ]; 
+                $toEmails[] = ['name' => $employeeDetails->first_name.' '.$employeeDetails->first_name, 'email' => $employeeDetails->email];
+                Mail::to($toEmails)->send(new AttendanceStatusMail($details));                
+            }
+        }
+        return redirect()->back()->with('success', 'You updated Attendance status successfully!');
+    }
+
 }

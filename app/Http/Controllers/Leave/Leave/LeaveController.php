@@ -365,6 +365,26 @@ class LeaveController extends Controller
         return $data;
     }
 
+    public function getReportingToAdminEmployees($adminId)
+    {
+        $data1 = tEmployeeReportTo::where('manager_id', $adminId)
+            ->selectRaw('GROUP_CONCAT(employee_id) as reporting_manager_ids')
+            ->first();
+        
+        $data2 = Employee::leftJoin('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id')
+        ->whereNull('t_employee_report_to.manager_id')
+        ->selectRaw('GROUP_CONCAT(employees.id) as reporting_manager_ids')
+        ->where('user_id', '!=', $adminId)
+        ->first();
+        $out1 = []; $out2 = [];
+        if($data1)
+            $out1 = explode(',', $data1->reporting_manager_ids);
+        if($data2)
+            $out2 = explode(',', $data2->reporting_manager_ids);
+
+        return (array_merge($out1, $out2));
+    }
+
     public function getReportingManagers($employeeId)
     {
         $data = tEmployeeReportTo::where('employee_id', $employeeId)

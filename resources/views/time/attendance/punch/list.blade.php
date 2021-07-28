@@ -18,7 +18,7 @@
 															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Leave</a></li>
 															<li class="breadcrumb-item d-inline-block active">Attendance</li>
 														</ol>
-														<h4 class="text-dark">My Records</h4>
+														<h4 class="text-dark">{{ Request::is('employee-records') ? 'Employee' : 'My' }} Records </h4>
 													</div>
 												</div>
 											</div>
@@ -27,7 +27,7 @@
 								</div>
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
-										<h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr>
+										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
 										<form method="GET" action="#">
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
@@ -65,7 +65,7 @@
 									<div class="row filter-row">
 										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-												<h4 class="card-title mb-0 ml-2 mt-2">My Records</h4>
+												<h4 class="card-title mb-0 ml-2 mt-2">{{ Request::is('employee-records') ? 'Employee' : 'My' }} Records</h4>
 											</div>
 										</div>
 										
@@ -80,6 +80,13 @@
 								
 								<div class="card-body align-center">									
 									<div class="table-responsive">
+										@if($message = Session::get('success'))
+										<div class="col-md-12">
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
+											</div>
+										</div>
+										@endif
 										<table class="table custom-table table-hover">
 											<thead>
 												<tr class="bg-light">
@@ -88,9 +95,9 @@
 													</th>
 													<th> Name </th>
 													<th>Punch in</th>													
-													<th>Punch in Note</th>
+													{{-- <th>Punch in Note</th> --}}
 													<th>Punch out</th>
-													<th>Punch out Note</th>
+													{{-- <th>Punch out Note</th> --}}
                                                     <th>Duration</th>
 													<th>Status</th>
 													<th>Action</th>
@@ -103,19 +110,19 @@
                                                         <td class="text-center">
                                                             <input type="checkbox" name="id" value="{{ $item->id }}">
                                                         </td>
-														<td> {{ $item->emp_name }}</td>
+														<td> <u><a href="#" onclick="showAttendanceInfo({{ $item->id }})"> {{ $item->emp_name }} </a></u> </td>
                                                         <td>
                                                             <h2><a href="#" onclick="showAttendanceInfo({{ $item->id }})"> {{ $item->punch_in_user_time }} </a></h2>
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <h2>{{ $item->punch_in_note }}</h2>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <h2>{{ $item->punch_out_user_time }}</h2>
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <h2>{{ $item->punch_out_note }}</h2>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <h2>{{ hoursAndMins($item->duration) }}</h2>
                                                         </td>
@@ -124,20 +131,28 @@
 														</td>
 														<td>
 															
-																@if($item->status > 0)
-																@hasrole('Admin|Manager')
-																	<select class="form-control select" onchange="getAttendanceStatus({{ $item->id }})">
-																		<option>Select</option>
+																@if($item->status != 0 && ($userRole == 'Manager' || $userRole == 'Admin'))		
+																	@if($item->status == 1 || ($item->employee_id == 1) )														
+																	<select class="form-control select" id="punch_{{ $item->id }}" onchange="getAttendanceStatus({{ $item->id }})">
+																		<option value=''>Select</option>
 																		@foreach (punchStatus() as $key => $value)
 																			@if($key > 1)
 																				<option value="{{ $key }}"> {{ $value }}</option>
 																			@endif
 																		@endforeach
 																	</select>
-																@endrole
-
+																	@endif
 																@else
-																	<button class="btn btn-theme text-white" onclick="submitForApprove('{{ $item->id }}')">Submit </button>	
+																	@if($item->status == 0)
+																		<div style="display: flex;">
+																			<button class="btn  btn-outline-success btn-sm" onclick="submitForApprove('{{ $item->id }}')">Submit </button>	
+																			<form onsubmit="return confirm('Are you sure?')" action="{{ route('punch.destroy', $item->id)}}" method="post" style="margin-left: 5px;">
+																				@method('DELETE')
+																				@csrf
+																				<button class="btn  btn-outline-danger btn-sm" type="submit"> Delete </button>
+																			</form>
+																		</div>	
+																	@endif																
 																@endif
 															
 														</td>
@@ -146,13 +161,13 @@
 
 												@if(!count($data)) 
 													<tr>
-														<td colspan="9">
+														<td colspan="7">
 															<div class="alert alert-danger"> No data found!</div>
 														</td>
 													</tr>
 												@endif
 												<tr>
-													<td colspan="9">
+													<td colspan="7">
 														<div class="d-flex justify-content-center">
 															{{ $data->links() }}
 														</div>
@@ -161,6 +176,7 @@
 																										
 											</tbody>
 										</table>
+										<button type="button" class="btn btn-theme button-1 text-white pull-right p-2" style="display: none;" id="approve_action" data-toggle="modal" data-target="#approve_modal">Save</button>
 									</div>
 								</div>
 							</div>							
@@ -169,6 +185,26 @@
 				</div>
 			</div>
 			<!--/Content-->			
+		</div>
+
+		<!--Approve The Modal -->
+		<div class="modal fade" id="approve_modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+				
+					<!-- Modal body -->
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title mb-3">Are You Sure Want to update the Status?</h4>
+                        <form method="POST" action="{{ route('punch.action') }}">
+                            @csrf                            
+                            <input type="hidden" id="punch_id_update" name="punch_id_update">
+						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
+                        </form>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<!-- Modal -->
@@ -267,11 +303,37 @@
 												</div>
 											</div>
 										</div>
-										<hr>
 
+										<div class="row">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Status</label>
+												</div>
+											</div>
+											<div class="col-sm-8">
+												<div class="form-group">
+													<div id="punch_status">-</div>													
+												</div>
+											</div>
+										</div>
 
-						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
+										<div class="row">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Logs: </label>
+												</div>
+											</div>
+											<div class="col-sm-8">
+												<div id="attendance_action_log"></div>
+											</div>
+										</div>
+										<hr>							
+							<div class="row" id="action_buttons">				
+								<div class="col-md-12 text-center">	
+									<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
+								</div>
+							</div>
                         </form>
 					</div>
 				</div>
@@ -290,8 +352,16 @@
 
 	function showAttendanceInfo(punch_id)
 	{
+		$('#action_buttons').hide();
 		$('#punch_id').val(punch_id);
+		$('#attendance_action_log').html('');
 		var punch_in_note, punch_out_note, punch_in_date, punch_out_date, in_time, out_time = '';
+		var attendanceStatus = [];
+		attendanceStatus['0'] = 'Not submitted';
+        attendanceStatus['1'] = 'Submitted';
+		attendanceStatus['2'] = 'Approved';
+		attendanceStatus['3'] = 'Rejected';        
+
 		$.ajax({
 			method: 'GET',
 			url: '/punch/'+ punch_id,			
@@ -311,7 +381,10 @@
 				$('#punch_out_note').val(punch_out_note);
 				$('#in_time').val(in_time);
 				$('#out_time').val(out_time);
-
+				$('#attendance_action_log').html(response.comments);
+				if(response.status == 0)
+					$('#action_buttons').show();
+				$('#punch_status').html(attendanceStatus[response.status]);
 				$('#showInfo').modal({
 					backdrop: 'static',
 					keyboard: false
@@ -357,8 +430,29 @@
 		});
 	}
 
-	function getAttendanceStatus(leave_id) {
-        console.log(leave_id, 'getAttendanceStatus');
+	var punchRecordsArray = [];
+	function getAttendanceStatus(punch_id) {      
+		$('#approve_action').hide();
+		var status_id = $('#punch_'+punch_id).val();
+		// console.log(punch_id, 'getAttendanceStatus', status_id);
+		if(status_id == '') {
+            punchRecordsArray = punchRecordsArray.filter(function( obj ) {
+				return obj.id != punch_id;
+			});
+        }
+		punchRecordsArray.forEach(function(value,index){
+			if(value.id == punch_id)		
+				punchRecordsArray.splice(index,1);		
+		});
+
+		if(status_id)
+            punchRecordsArray.push({'id': punch_id, 'status_id': status_id});
+        
+		if(punchRecordsArray.length)
+			$('#approve_action').show();
+		
+		$('#punch_id_update').val(JSON.stringify(punchRecordsArray));
+		console.log(punch_id, 'result', punchRecordsArray);
     }
 </script>   
 @endpush

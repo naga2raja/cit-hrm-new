@@ -93,7 +93,7 @@
 																<th>From</th>
 																<th>To</th>
 																<th>Days</th>
-																<th>Remaining Days</th>
+																{{-- <th>Remaining Days</th> --}}
 																<th>Notes</th>
 																<th>Status</th>
 																<th class="text-right">Action</th>
@@ -111,8 +111,7 @@
                                                                     <td> {{ $leave->to_date }}</td>
                                                                     <td> 
 																		{{ ($leave->leave_days+1) * $leave->length_days }} ({{ $leave->leave_duration }})
-																	</td>
-                                                                    <td>  - </td>
+																	</td>                                                                    
                                                                     <td> {{ $leave->comments }}</td>
                                                                     <td>
                                                                         @if($leave->approval_level == 1 && $leave->status == 2 ) 
@@ -145,7 +144,7 @@
 
                                                             @if(!count($myLeaves)) 
                                                                 <tr>
-                                                                    <td colspan="9">
+                                                                    <td colspan="8">
                                                                         <div class="alert alert-danger"> No data found!</div>
                                                                     </td>
                                                                 </tr>

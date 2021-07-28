@@ -279,6 +279,7 @@ Route::group(['middleware' => ['role:Admin|Manager']], function () {
     Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');    
 
     Route::get('employee-records', 'Time\Attendance\PunchInOutController@getEmployeeRecords')->name('punch.employee-records');
+    Route::post('attendance-admin-action', 'Time\Attendance\PunchInOutController@adminAction')->name('punch.action');
 });
 
 Route::get('/', 'HomeController@index')->name('index');

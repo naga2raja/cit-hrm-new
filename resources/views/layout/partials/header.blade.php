@@ -401,9 +401,11 @@
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('punch.index') }}">My Records</a>
                                                 </li>
+                                                @if(isPunchInEnabled())
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('punch.create') }}">Punch In/Out</a>
                                                 </li>
+                                                @endif
                                                 @hasanyrole('Admin|Manager')
                                                 <li>
                                                     <a class="dropdown-item" href="{{ route('punch.employee-records') }}">Employee Records</a>
