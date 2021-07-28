@@ -7,7 +7,9 @@
     <div class="loginbox shadow-sm">
 
         <div class="login-left">
-            <img class="img-fluid" src="img/logo.png" alt="Logo">
+            <!-- <img class="img-fluid" src="img/logo.png" alt="Logo"> -->
+            <h1 class="img-fluid text-white"><i>CIT-HRM</i></h1>
+            <p class="text-white">Cabc's Group India</p>
         </div>
 
         <div class="login-right">
