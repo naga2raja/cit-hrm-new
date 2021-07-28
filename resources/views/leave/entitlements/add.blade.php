@@ -108,6 +108,7 @@
 										<div class="col-sm-3">
 											<div class="form-group">
 												<select class="form-control select" name="leave_type">
+													<option value="">Select Leave Type</option>
                                                     @foreach ($leave_types as $type)
 	                                                    <option value='{{ $type->id }}' {{ old('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
 	                                                @endforeach
@@ -167,7 +168,7 @@
 													</div>
 												</div>
 												<div class="col-sm-6">
-													<a href="{{ route('leaveEntitlement.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													<a href="{{ route('leaveEntitlement.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>

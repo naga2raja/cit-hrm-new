@@ -247,15 +247,15 @@
                     <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
                         <div class="append mr-auto my-0 my-md-0 mr-auto">
                             <ul class="navbar-nav list-group list-group-horizontal-md mr-auto">
-                                <li class="mr-1 {{ Request::is('','index','adminDashboard') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('/','index','adminDashboard') ? 'active' : '' }}">
                                     @hasrole('Admin')
                                         <a class="nav-link" href="{{ route('adminDashboard') }}">                                            
                                     @endrole
                                     @hasrole('Employee')
-                                        <a class="nav-link" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                        <a class="nav-link" href="{{ route('index') }}"> 
                                     @endrole
                                     @hasrole('Manager')
-                                        <a class="nav-link" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                        <a class="nav-link" href="{{ route('index') }}"> 
                                     @endrole
                                             <span class="lnr lnr-home pr-0 pr-lg-2"></span>
                                             <span class="d-none d-lg-inline">Dashboard</span>

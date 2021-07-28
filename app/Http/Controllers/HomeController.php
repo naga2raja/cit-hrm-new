@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user->hasRole('Admin')){
+        if($user->hasRole('Admin|Manager')){
             $employees = Employee::get();
             $company = mCompany::get();
             $leave = tLeave::where('employee_id', $user->id)

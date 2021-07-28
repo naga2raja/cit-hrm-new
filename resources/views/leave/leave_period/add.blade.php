@@ -8,7 +8,7 @@
 
 			<div class="col-xl-12 col-lg-12 col-md-12">
 				<div class="accordion add-employee" id="accordion-details">
-					<div class="card shadow-sm ctm-border-radius">
+					<div class="card shadow-sm ctm-border-radius border">
 						<div class="card-header" id="basic1">
 							<h4 class="cursor-pointer mb-0">
 								<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
@@ -135,18 +135,15 @@
 											<div class="row">
 												<div class="col-sm-6">
 													<div class="submit-section text-center btn-add">
-
 														@if(count($leave_period) > 0)
 															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
 														@else
 															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
-														@endif
-
-														
+														@endif														
 													</div>
 												</div>
 												<div class="col-sm-6">
-													<a href="{{ route('systemUsers.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													<a href="{{ route('leave.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>

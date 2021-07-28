@@ -63,7 +63,8 @@ class HolidaysController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'description' => 'required'
+            'description' => 'required',
+            'date' => 'required'
         ]);
 
         $date = '';
@@ -124,7 +125,8 @@ class HolidaysController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'description' => 'required'
+            'description' => 'required',
+            'date' => 'required'
         ]);
 
         $date = '';

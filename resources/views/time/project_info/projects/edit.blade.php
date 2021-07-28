@@ -26,7 +26,7 @@
 													<label>Customer Name <span class="text-danger">*</span></label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 	                                    			<input type="hidden" name="customer" id="customer" value="{{ $projects[0]->customer_id }}">
 													<input type="text" class="form-control {{ $errors->has('customer') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="customer_name" value="{{ old('customer_name', $projects[0]->customer_name) }}" id="customer_name" autocomplete="off" disabled="disabled">
@@ -44,10 +44,10 @@
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
-													<label>Name <span class="text-danger">*</span></label>
+													<label>Project Name <span class="text-danger">*</span></label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="" name="project_name" id="project_name" value="{{ old('project_name', $projects[0]->project_name) }}" disabled="disabled">
 													{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -61,7 +61,7 @@
 													<label>Project Admin </label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 	                                    			<input type="hidden" name="admin_id" id="admin_id" value="{{ $projects[0]->admin_id }}">
 													<input type="text" class="form-control {{ $errors->has('project_admin') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="project_admin" value="{{ old('project_admin', $projects[0]->admin_name) }}" autocomplete="off" id="project_admin" disabled="disabled">
@@ -79,7 +79,7 @@
 													<label>Description </label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 													<textarea class="form-control {{ $errors->has('project_description') ? 'is-invalid' : ''}}" rows="3" disabled="disabled" id="project_description" name="project_description">{{ old('project_description', $projects[0]->project_description) }}</textarea>{!! $errors->first('project_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
@@ -97,13 +97,19 @@
 
 										<div class="row">
 											<div class="col-sm-2"></div>
-											<div class="col-sm-4 text-center">
-												<a class="btn btn-success text-white ctm-border-radius" id="update" data-action="0">Edit</a>
-												<!-- <a class="btn btn-success text-white ctm-border-radius" id="update">Update</a> -->
-												<a href="{{ route('projects.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+											<div class="col-sm-3 text-center">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="submit-section text-center btn-add">
+															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<a href="{{ route('projects.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													</div>
+												</div>
 											</div>
 										</div>
-
 									</form>
 								</div>
 							</div>

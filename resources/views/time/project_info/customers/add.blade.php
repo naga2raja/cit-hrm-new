@@ -21,7 +21,7 @@
 													<label>Name <span class="text-danger">*</span></label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 													<input type="text" class="form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" placeholder="" name="customer_name" value="{{ old('customer_name') }}">
                                                     {!! $errors->first('customer_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -35,7 +35,7 @@
 													<label>Description</label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="form-group">
 													<textarea class="form-control {{ $errors->has('customer_description') ? 'is-invalid' : ''}}" rows="3" name="customer_description">{{ old('customer_description') }}</textarea>
 													{!! $errors->first('customer_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -54,12 +54,19 @@
 
 										<div class="row">
 											<div class="col-sm-2"></div>
-											<div class="col-sm-4 text-center">
-												<button href="javascript:void(0);" class="btn btn-success text-white ctm-border-radius" type="submit">Save</button>
-												<a href="{{ route('customers.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+											<div class="col-sm-3 text-center">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="submit-section text-center btn-add">
+															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<a href="{{ route('customers.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													</div>
+												</div>
 											</div>
 										</div>
-
 									</form>
 								</div>
 							</div>

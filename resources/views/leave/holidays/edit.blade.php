@@ -55,7 +55,8 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="text" name="date" class="form-control datetimepicker" value="{{ old('date', $holidays[0]->holiday_date) }}">
+												<input type="text" name="date" class="form-control datetimepicker {{ $errors->has('date') ? 'is-invalid' : ''}}" value="{{ old('date', $holidays[0]->holiday_date) }}" required="">
+												{!! $errors->first('date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
 									</div>
@@ -106,7 +107,7 @@
 													</div>
 												</div>
 												<div class="col-sm-6">
-													<a href="{{ route('holidays.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													<a href="{{ route('holidays.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>

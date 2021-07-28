@@ -5,53 +5,78 @@
 <div class="page-wrapper">
 				<div class="container-fluid">
 					<div class="row">						
-						<div class="col-xl-12 col-lg-12 col-md-12">
-							<div class="card shadow-sm ctm-border-radius border">
-								<div class="card-body align-center">
-									<form method="GET" id="holidays_search" action="{{ route('holidays.index') }}">
-										<div class="row filter-row">
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-													<label> From Date </label>
-													<input type="text" name="from_date" id="from_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('from_date') }}">
+						<!-- left side -->
+						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+							<aside class="sidebar sidebar-user">
+								<div class="card ctm-border-radius shadow-sm border">
+									<div class="card-body py-4">
+										<div class="row">
+											<div class="col-md-12 mr-auto text-left">
+												<div class="custom-search input-group">
+													<div class="custom-breadcrumb">
+														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
+															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Leave</a></li>
+															<li class="breadcrumb-item d-inline-block active">Configuration</li>
+														</ol>
+														<h4 class="text-dark">Holidays</h4>
+													</div>
 												</div>
 											</div>
-
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-													<label> To Date </label>
-													<input type="text" name="to_date" id="to_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('to_date') }}">
-												</div>
-											</div>
-											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
-												<label class="mb-4"></label>
-												<button type="button" id="search" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Search </button>  
-											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
-												<label class="mb-4"></label>
-												<a href="{{ route('holidays.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel </a>  
-											</div>
-										
 										</div>
-									</form>
+									</div>
 								</div>
-							</div>
+								<div class="card ctm-border-radius shadow-sm border">
+									<div class="card-body">
+										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
+										<form method="GET" id="holidays_search" action="{{ route('holidays.index') }}">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>From Date</label>
+														<input type="text" name="from_date" id="from_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('from_date') }}">
+													</div>
+												</div>
+											</div>
 
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>To Date</label>
+														<input type="text" name="to_date" id="to_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('to_date') }}">
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button id="search"  type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+												</div>
+											</div>												
+										</form>
+									</div>
+								</div>
+							</aside>
+						</div>
+						<!-- left side end -->
+
+						<!-- right side -->
+						<div class="col-xl-9 col-lg-8 col-md-12">
 							<div class="card shadow-sm ctm-border-radius border">
 								<div class="card-header">
 									<div class="row filter-row">
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
+										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 												<h4 class="card-title mb-0 ml-2 mt-2">Holidays List </h4>
 											</div>
 										</div>										
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
+										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
 											<a href="{{ route('holidays.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 										</div>
-										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-1">  
-											<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_holiday_table','holidays')"><i class="fa fa-trash"></i> Delete</button>
+										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
+											<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_holiday_table','holidays')"><i class="fa fa-trash"></i> Delete</button>
 										</div>
 									</div>
 								</div>
