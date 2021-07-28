@@ -22,7 +22,7 @@
 															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Time</a></li>
 															<li class="breadcrumb-item d-inline-block active">Timesheet</li>
 														</ol>
-														<h4 class="text-dark">My Timesheet</h4>
+														<h4 class="text-dark">Employee Timesheet</h4>
 													</div>
 												</div>
 											</div>
@@ -37,32 +37,22 @@
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="{{ route('myEntitlements.index') }}">
-											<!-- <div class="row filter-row">
+										<form method="GET" action="">
+											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Employee Name</label>
-														<input type="text" name="search" class="form-control">
-		                                                {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-		                                                <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ Request::get('from_date') }}">
-		                                                <input type="hidden" name="to_date" id="to_date" class="form-control" value="{{ Request::get('to_date') }}">
-													</div>
-												</div>
-											</div> -->
-
-											<div class="row">
-												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-													<div class="form-group">
-														<label>Search</label>
-														<input type="text" name="search" class="form-control">
-		                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														<select class="employee_name form-control {{ $errors->has('employee_name') ? 'is-invalid' : ''}}" name="employee_name" id="employee_name" required="" style="width: 100%" >
+														</select>
+														{!! $errors->first('employee_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														<input type="hidden" name="employee_id" id="employee_id" class="form-control" value="{{ (Request::get('employee_id')) ? Request::get('employee_id') : '' }}">
 													</div>
 												</div>
 											</div>
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
+													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
@@ -138,8 +128,19 @@
 											<div class="table-responsive">
 												<table id="timesheets" class="table custom-table table-hover">
 													<thead>
+														<tr class="bg-light">
+		              										<th>Employee</th>
+		              										<th>Project</th>
+		              										<th>Activity</th>
+		              										<th>Comments</th>
+		              										<th>Date</th>
+		              										<th>Duration</th>
+		              									</tr>
 													</thead>
 													<tbody id="list_timesheet_table">
+														<tr>
+															<td colspan="6"><p class="text-center">No data found</p></td>
+														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -173,6 +174,38 @@
 
 @push('scripts')
 <script type="text/javascript">
+	// Autocomplete ajax call
+	$('.employee_name').select2({
+		placeholder: 'Select a employee',
+		allowClear: true,
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+	$(document.body).on("change","#employee_name",function(){
+	 	$('#employee_id').val(this.value);
+	});
+
+	$('#search').click(function() {
+		var active = $('.fc-state-active').attr('id');
+		active = active.split("_");
+		LoadData($('#'+active[0]+'DatePicker').val(), active[0]);
+	});
+
 	var prevWeekValue = '';
 	function setCurrentDate(){
 		var now = new Date();
@@ -207,10 +240,11 @@
 
 	function LoadData(date, key){
 		$("#key").val(key);
+		var employee_id = $("#employee_id").val();
 		$.ajax({
 			method: 'POST',
-			url: '/mytimesheets/getMyTimeSheets-ajax',
-			data: JSON.stringify({'selected_date': date, 'key':key, '_token': '{{ csrf_token() }}' }),
+			url: '/timesheets/getTimeSheets-ajax',
+			data: JSON.stringify({'selected_date': date, 'employee_id': employee_id, 'key':key, '_token': '{{ csrf_token() }}' }),
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
@@ -327,12 +361,11 @@
 		LoadData($('#dailyDatePicker').val(),'daily');
 	});
 
-
 	$('#weeklyDatePicker').click(function() {
 		var value = $("#weeklyDatePicker").val();
 		$("#weeklyDatePicker").val(prevWeekValue);
 		console.log(prevWeekValue, 'value', value);
-	})
+	});
 	//Get the value of Start and End of Week
    	$('#weeklyDatePicker').on('dp.change', function(e) {
    		prevWeekValue = $("#weeklyDatePicker").val();
@@ -480,38 +513,6 @@
 		$('#timesheet_table_header').text('Monthly Timesheets');
 		LoadData($('#monthlyDatePicker').val(),'monthly');
 	});
-
-  //   $('#edit_button').click(function(){
-  //   	var _token = $('input[name="_token"]').val();
-  //   	var employee_id = $('#employee_id').val();
-  //   	var key = $('#key').val();
-  //   	var date = '';
-
-  //   	if(key == "daily"){
-  //   		date = $('#dailyDatePicker').val();
-  //   	}else if(key == "weekly"){
-  //   		var first = $('#weeklyDatePicker').val().split(" - ");
-		// 	var date = moment(first[0], "DD/MM/YYYY").format("DD/MM/YYYY");
-  //   	}else if(key == "monthly"){
-  //   		var current_month = moment($('#monthlyDatePicker').val(), "YYYY/MM").format("YYYY/MM/DD");
-  //   		var now = new Date(current_month);
-  //   		var today = new Date();
-		// 	var day = ("0" + today.getDate()).slice(-2);
-		// 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
-		// 	var date = (day) + "/" + (month) + "/" + now.getFullYear() ;
-  //   	}
-		
-  //   	$.ajax({
-  //   		method: 'POST',
-  //   		url: "{{ route('timesheets.create') }}",
-  //   		data: { 'employee_id': employee_id, 'date': date, '_token': '{{ csrf_token() }}' } ,
-  //   		success:function(data){
-  //   			console.log(data);
-  //   			alert("success");
-		//    	// window.location.href = data.url;
-		//    }
-		// });
-  //   });
 
 </script>
 @endpush

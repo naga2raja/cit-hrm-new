@@ -19,7 +19,8 @@
                         <div class="col-lg-3 col-md-3 col-sm-3 col-6">
                             <div class="logo my-3 my-sm-0">
                                 <a href="index">
-                                    <img src="{{ assetUrl('img/logo.png') }}" alt="logo image" class="img-fluid" width="100">
+                                    <!-- <img src="{{ assetUrl('img/logo.png') }}" alt="logo image" class="img-fluid" width="100"> -->
+                                    <h1 class="img-fluid text-white"><i>CIT-HRM</i></h1>
                                 </a>
                             </div>
                         </div>
@@ -328,7 +329,7 @@
                                 </li>
                                 @endrole
                                 <li class="mr-1 {{ Request::is('leavePeriod*','leaveTypes*', 'holidays*', 'leaveEntitlement*', 'myEntitlements*', 'leave*') ? 'active' : '' }}">
-                                    <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)"><span class="lnr lnr-calendar-full pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Leave</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item {{ Request::is('leave/create') ? 'active' : '' }}" href="{{ route('leave.create') }}">Apply Leave</a>
@@ -338,7 +339,7 @@
                                         </li>
                                         
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*', 'myEntitlements*') ? 'active' : '' }}" href="#">Entitlements</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*', 'myEntitlements*') ? 'active' : '' }}" href="javascript:void(0)">Entitlements</a>
                                             <ul class="dropdown-menu">
                                                 @hasanyrole('Admin|Manager')
                                                 <li>
@@ -355,7 +356,7 @@
                                         </li>
                                         @hasrole('Admin')
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : '' }}" href="#">Configuration</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : '' }}" href="javascript:void(0)">Configuration</a>
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('leavePeriod*') ? 'active' : '' }}" href="{{ route('leavePeriod.create') }}">Leave Period</a>
@@ -380,17 +381,17 @@
                                         @endrole
                                     </ul>
                                 </li>
-                                <li class="mr-1 {{ Request::is('customers.*', 'projects.*') ? 'active' : '' }}">
-                                    <a class="nav-link dropdown-toggle" href="leave"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
+                                <li class="mr-1 {{ Request::is('mytimesheets*', 'timesheets*') ? 'active' : '' }}">
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Timesheets</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('mytimesheets*', 'timesheets*') ? 'active' : '' }}" href="#">Timesheets</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('mytimesheets.index') }}">My Timesheets</a>
+                                                    <a class="dropdown-item {{ Request::is('mytimesheets*') ? 'active' : '' }}" href="{{ route('mytimesheets.index') }}">My Timesheets</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Employee Timesheets</a>
+                                                    <a class="dropdown-item {{ Request::is('timesheets*') ? 'active' : '' }}" href="{{ route('timesheets.index') }}">Employee Timesheets</a>
                                                 </li>                                              
                                             </ul>
                                         </li>

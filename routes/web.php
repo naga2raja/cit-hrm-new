@@ -255,13 +255,17 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
     /* Time/Timesheets/MyTimesheets */
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
     Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
-    // Employee Timesheets
+    // add Timesheets
     Route::resource('/timesheets', 'Time\Timesheets\TimesheetsController');
+
 
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
     Route::post('/punch/multiple-delete', 'Time\Attendance\PunchInOutController@deleteMultiple');    
     Route::post('/punch/update-ajax', 'Time\Attendance\PunchInOutController@updateAjax')->name('punch.update-ajax');
     Route::post('/punch/status-change', 'Time\Attendance\PunchInOutController@updateStatusAjax')->name('punch.submit');    
+
+    Route::post('/timesheets/getTimeSheets-ajax', 'Time\Timesheets\TimesheetsController@getTimeSheets');
+
 });
 
 Route::group(['middleware' => ['role:Admin|Manager']], function () {
