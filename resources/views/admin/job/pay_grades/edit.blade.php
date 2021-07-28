@@ -7,7 +7,7 @@
 					<div class="row">
 						<div class="col-xl-12 col-lg-12 col-md-12">
 							<div class="accordion add-employee" id="accordion-details">
-								<div class="card shadow-sm ctm-border-radius">
+								<div class="card shadow-sm ctm-border-radius border">
 									<div class="card-header" id="basic1">
 										<h4 class="cursor-pointer mb-0">
 											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
@@ -75,7 +75,7 @@
 					<div class="row">
 						<div class="col-xl-12 col-lg-12 col-md-12">
 							<div class="accordion add-employee" id="accordion-details">
-								<div class="card shadow-sm ctm-border-radius">
+								<div class="card shadow-sm ctm-border-radius border">
 									<div class="card-header" id="basic1">
 										<h4 class="cursor-pointer mb-0">
 											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
@@ -112,13 +112,13 @@
 														</div>
 													</div>
 
-													<div class="col-sm-2 leave-col">
+													<div class="col-sm-1 leave-col">
 														<div class="form-group">
 															<br>
-															<button type="submit" class="mt-2 btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+															<button type="submit" class="mt-2 btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-save"></i> Save</button>
 														</div>
 													</div>
-													<div class="col-sm-2 leave-col">
+													<div class="col-sm-1 leave-col">
 														<div class="form-group">
 															<br>
 															<a id="currency_hide" href="javascript:void(0)" class="mt-2 btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
@@ -145,67 +145,72 @@
 
 				<!-- Currency List -->
 				<div class="container-fluid">
-					<div class="row">					
-						<div class="col-xl-12 col-lg-8  col-md-12">
-							<div class="card ctm-border-radius shadow-sm border">
-								<div class="card-header shadow-sm">
-									<div class="text-left ml-3">
-										<h4 class="card-title mb-0">Assigned Currencies</h4>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="mb-3">
-										<a id="currency_show" class="btn btn-success text-white ctm-border-radius"><i class="fa fa-plus"></i> Add</a>
-										<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius"><i class="fa fa-trash"></i> Delete</a>
-									</div>
-									<div class="employee-office-table">
-										<div class="table-responsive">
-											@if($message = Session::get('currency_success'))
-												<div class="alert alert-success">
-													<p>{{$message}}</p>
-												</div>
-											@endif
-											<table class="table custom-table mb-0 table-hover table-striped table-bordered">
-												<thead>
-													<tr class="bg-blue-header text-white">
-														<th class="text-center">
-															<input type="checkbox" name="">
-														</th>
-														<th>Currency</th>
-														<th>Minimum Salary</th>
-														<th>Maximum Salary</th>
-													</tr>
-												</thead>
-												<tbody>
-													@if(count($grade_currency) > 0)
-														@foreach ($grade_currency as $row)
-															<tr>
-																<td class="text-center">
-																	<input type="checkbox" name="currency_id" value="{{ $row->currency_id }}">
-																</td>
-																<td>
-																	<h2>
-																		<u><a href="javascript:void(0);" >
-																			{{ $row->currencyName->currency_name }}
-																		</a></u>
-																	</h2>
-																</td>
-																<td>{{ $row->min_salary }}</td>
-																<td>{{ $row->max_salary }}</td>
-															</tr>
-														@endforeach
-													@else
-														<tr>
-															<td colspan="5"><div class="alert alert-danger text-center">No Currency for this Grade !</div></td>
-														</tr>
-													@endif
-												</tbody>
-											</table>
+					<div class="row">
+						<div class="col-xl-12 col-lg-8 col-md-12">
+							<div class="card shadow-sm ctm-border-radius border">
+								<div class="card-header">
+									<div class="row filter-row">
+										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-10">  
+											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+												<h4 class="card-title mb-0 ml-2 mt-2">Assigned Currencies</h4>
+											</div>
 										</div>
+										@hasrole('Admin')
+											<div class="col-sm-6 col-md-2 col-lg-2 col-xl-1">
+												<a id="currency_show" href="javascript:void(0)" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
+											</div>
+											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-1">
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_pay_grade_currency_table','payGradeCurrency')"><i class="fa fa-trash"></i> Delete</button>
+											</div>
+										@endrole
 									</div>
 								</div>
-							</div>
-							
+								<div class="card-body align-center">
+									<div class="table-responsive">
+										@if($message = Session::get('currency_success'))
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
+											</div>
+										@endif
+										<table class="table custom-table table-hover">
+											<thead>
+												<tr class="bg-light">
+													<th class="text-center">
+														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_pay_grade_currency_table')">
+													</th>
+													<th>Currency</th>
+													<th>Minimum Salary</th>
+													<th>Maximum Salary</th>
+												</tr>
+											</thead>
+											<tbody id="list_pay_grade_currency_table">
+												@if(count($grade_currency) > 0)
+													@foreach ($grade_currency as $row)
+														<tr>
+															<td class="text-center">
+																<input type="checkbox" name="pay_grade_id" value="{{ $row->pay_grade_id }}">
+															</td>
+															<td>
+																<h2>
+																	<u><a href="javascript:void(0);" >
+																		{{ $row->currencyName->currency_name }}
+																	</a></u>
+																</h2>
+															</td>
+															<td>{{ $row->min_salary }}</td>
+															<td>{{ $row->max_salary }}</td>
+														</tr>
+													@endforeach
+												@else
+													<tr>
+														<td colspan="5"><p class="text-center">No Currency for this Grade !</p></td>
+													</tr>
+												@endif
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>							
 						</div>
 					</div>
 				</div>

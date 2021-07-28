@@ -177,6 +177,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::post('/currencyNameSearch', 'Admin\Job\PayGrades\PayGradesController@currencyNameSearch');
     // payGradecurrency
     Route::resource('/payGradeCurrency', 'Admin\Job\PayGrades\PayGradeCurrencyController');
+    Route::post('/payGradeCurrency/multiple-delete', 'Admin\Job\PayGrades\PayGradeCurrencyController@deleteMultiple');
     // job_categories
     Route::resource('/jobCategory', 'Admin\Job\JobCategories\JobCategoryController');
     Route::post('/jobCategory/multiple-delete', 'Admin\Job\JobCategories\JobCategoryController@deleteMultiple');

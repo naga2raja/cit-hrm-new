@@ -78,10 +78,11 @@
 										</div>
 										<div class="card-body">
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-7">
+													<h5 class="text-primary"><i class="fa fa-info-circle"></i> Details:</h5>
 													@if($company && $company->incorporation_date)
 														<p><span class="text-primary">Incorporation Date : </span>
-															{{ $company->incorporation_date }}														
+															{{ $company->incorporation_date }}
 														</p>
 													@endif
 
@@ -96,23 +97,35 @@
 													@endif
 													</p>
 												</div>
-												<div class="col-md-6">
-													<p>
-														<span class="text-primary">Address:</span><br>
+												<div class="col-md-5">
+													<h5 class="text-primary"><i class="fa fa-home"></i> Address:</h5>
+													<p class="ml-3">
 														@if($company)
-															{{ $company->address_street_1 }}
-															{{ $company->address_street_2 }}
-															{{ $company->city }}
-															{{ $company->state_province }}
-															{{ $company->country }}
+															{{ $company->address_street_1 }}{{ "," }}<br>
+															{{ $company->address_street_2 }}{{ "," }}<br>
+															{{ $company->city }}{{ ", " }}
+															{{ $company->state_province }}<br>
+															{{ $company->country }} {{ " - " }}
 															{{ $company->zip_code }}
 														@endif
 													</p>
 													
 												</div>
 											</div>
+											<hr>
 											<div class="text-center mt-3">
-												<button class="btn btn-theme text-white ctm-border-radius button-1" data-toggle="modal" data-target="#add-information">Add </button>
+												<div class="col-sm-12">
+													<div class="row">
+														<div class="col-sm-3"></div>
+														<div class="col-sm-6">
+															@if($company) 
+																<button type="button" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" data-toggle="modal" data-target="#add-information"><i class="fa fa-edit"></i> Edit Company </button>
+															@else
+																<button type="button" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" data-toggle="modal" data-target="#add-information"><i class="fa fa-plus"></i> Add Company </button>
+															@endif
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>

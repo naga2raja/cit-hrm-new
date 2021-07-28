@@ -8,7 +8,7 @@
 						<!-- left side -->
 						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
 							<aside class="sidebar sidebar-user">
-								<div class="card ctm-border-radius shadow-sm">
+								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body py-4">
 										<div class="row">
 											<div class="col-md-12 mr-auto text-left">
@@ -25,7 +25,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="card ctm-border-radius shadow-sm">
+								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
 										<form method="GET" action="{{ route('systemUsers.index') }}">
@@ -101,7 +101,7 @@
 
 						<!-- right side -->
 						<div class="col-xl-9 col-lg-8 col-md-12">
-							<div class="card shadow-sm ctm-border-radius">
+							<div class="card shadow-sm ctm-border-radius border">
 								<div class="card-header">
 									<div class="row filter-row">
 										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  

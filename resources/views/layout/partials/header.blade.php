@@ -262,7 +262,7 @@
                                         </a>
                                 </li>
                                 @hasrole('Admin')
-                                <li class="mr-1 nav-item dropdown {{ Request::is('systemUsers*','jobTitles*','payGrades*','jobCategory*') ? 'active' : '' }}">
+                                <li class="mr-1 nav-item dropdown {{ Request::is('systemUsers*','jobTitles*','payGrades*','jobCategory*','company*', 'locations*', 'skills*','configurations*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="employees" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="lnr lnr-users pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Admin</span>
                                     </a>
@@ -285,26 +285,26 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Organization</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('company*', 'locations*') ? 'active' : '' }}" href="#">Organization</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('company.index') }}">General Information</a>
+                                                    <a class="dropdown-item {{ Request::is('company*') ? 'active' : '' }}" href="{{ route('company.index') }}">General Information</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('locations.index') }}">Locations</a>
+                                                    <a class="dropdown-item {{ Request::is('locations*') ? 'active' : '' }}" href="{{ route('locations.index') }}">Locations</a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Qualifications</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('skills*') ? 'active' : '' }}" href="#">Qualifications</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('skills.index') }}">Skills</a>
+                                                    <a class="dropdown-item {{ Request::is('skills*') ? 'active' : '' }}" href="{{ route('skills.index') }}">Skills</a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('configurations.index') }}">Punch In/Out Settings</a>
+                                            <a class="dropdown-item {{ Request::is('configurations*') ? 'active' : '' }}" href="{{ route('configurations.index') }}">Punch In/Out Settings</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -390,9 +390,11 @@
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('mytimesheets*') ? 'active' : '' }}" href="{{ route('mytimesheets.index') }}">My Timesheets</a>
                                                 </li>
+                                                @hasrole('Admin|Manager')
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('timesheets') ? 'active' : '' }}" href="{{ route('timesheets.index') }}">Employee Timesheets</a>
-                                                </li>                                              
+                                                </li>
+                                                @endrole                                             
                                             </ul>
                                         </li>
                                         <li>

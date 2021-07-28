@@ -103,4 +103,19 @@ class PayGradeCurrencyController extends Controller
     {
         //
     }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            tPayGradeCurrency::whereIn('pay_grade_id', $request->delete_ids)
+                ->get()
+                ->map(function($pay_currency) {
+                    $pay_currency->delete();
+                });
+                
+            return true;
+        } else {   
+            return false;
+        }       
+    }
 }

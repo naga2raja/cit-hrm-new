@@ -155,12 +155,19 @@
 
 										<div class="row">
 											<div class="col-sm-2"></div>
-											<div class="col-sm-4 text-center">
-												<button href="javascript:void(0);" class="btn btn-success text-white ctm-border-radius" type="submit">Save</button>
-												<a href="{{ route('locations.index') }}" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+											<div class="col-sm-3 text-center">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="submit-section text-center btn-add">
+															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<a href="{{ route('locations.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													</div>
+												</div>
 											</div>
 										</div>
-
 									</form>
 								</div>
 							</div>
