@@ -503,11 +503,16 @@
 				-->
 				</div>
 				<div class="row">
+					
+						<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">																			
+							<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
+						</div>
+						<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">									
+							<a href="{{ route('employees.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
+						</div>
 					<div class="col-12">
 						<div class="submit-section text-center btn-add">
-							<!-- <button class="btn btn-theme text-white ctm-border-radius button-1">Add Team Member</button> -->
-							<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
-							<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
+							
 						</div>
 					</div>
 				</div>

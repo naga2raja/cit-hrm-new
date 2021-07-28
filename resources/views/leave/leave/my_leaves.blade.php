@@ -4,49 +4,84 @@
 			<!-- Content -->
 			<div class="page-wrapper">
 				<div class="container-fluid">
-					<div class="row">					
+					<div class="row">	
 						
-						<div class="col-xl-12 col-lg-12 col-md-12">
-
-                            <div class="row">
-								<div class="col-md-12">
-									<div class="card ctm-border-radius shadow-sm">
-										<div class="card-body">
-											<form method="GET">
-												<div class="row">
-													<div class="col-sm-2 leave-col">
-														<div>															
-                                                            <input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Date" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
-														</div>
+						<!-- left side -->
+						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+							<aside class="sidebar sidebar-user">
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body py-4">
+										<div class="row">
+											<div class="col-md-12 mr-auto text-left">
+												<div class="custom-search input-group">
+													<div class="custom-breadcrumb">
+														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
+															<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">Home</a></li>
+															<li class="breadcrumb-item d-inline-block active">Leave</li>
+														</ol>
+														<h4 class="text-dark">My Leaves</h4>
 													</div>
-													<div class="col-sm-2 leave-col">
-														<div>
-															<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Date" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2">
-														</div>
-													</div>
-													<div class="col-sm-2">
-														<div>
-															<select class="form-control select" name="status">
-																<option value="">Status</option>
-                                                                    @foreach($leaveStatus as $status)
-                                                                        <option value="{{ $status->id }}"  {{ Request::get('status') == $status->id ? 'selected' : ''}}> {{ $status->name }}</option>
-                                                                    @endforeach																
-															</select>
-														</div>
-													</div>
-													<div class="col-sm-2">														
-														<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" name="search"><span class="fa fa-search"></span> Search</button>                                                        
-                                                    </div>
-                                                    <div class="col-sm-2">  
-                                                        <a href="{{ route('leave.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-refresh"></span> Reset</a>
-                                                    </div>
-
 												</div>
-											</form>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body">
+										<form method="GET" id="filter_form">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>From Date</label>
+														<input autocomplete="off" class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Date" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
+													</div>
+												</div>
+											</div>
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>To Date</label>
+														<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Date" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2" autocomplete="off">
+													</div>
+												</div>
+											</div>
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Status</label>
+														<select class="form-control select" name="status">
+															<option value="">Status</option>
+																@foreach($leaveStatus as $status)
+																	<option value="{{ $status->id }}"  {{ Request::get('status') == $status->id ? 'selected' : ''}}> {{ $status->name }}</option>
+																@endforeach																
+														</select>
+													</div>
+												</div>
+											</div>										
+
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>													
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('filter_form')"><i class="fa fa-refresh"></i> Reset </button>
+												</div>
+											</div>
+
+										</form>
+
+									</div>
+								</div>
+
+							</aside>
+						</div>
+						<!-- Left side End -->
+
+						
+						<div class="col-xl-9 col-lg-8 col-md-12">                            
 
 							<div class="row">
                                 
@@ -62,25 +97,21 @@
 											<h4 class="card-title mb-0">My Leaves</h4>
 										</div>
 										<div class="card-body">
-											<div class="employee-office-table">
+											<div class="">
 												<div class="table-responsive">
-													<table class="table custom-table mb-0 table-hover">
+													<table class="table custom-table table-hover">
 														<thead>
-															<tr>
+															<tr class="bg-light">
 																<th>Leave Type</th>
 																<th>From</th>
 																<th>To</th>
-																<th>Days</th>
-																<th>Remaining Days</th>
+																<th>Days</th>																
 																<th>Notes</th>
 																<th>Status</th>
 																<th class="text-center">Action</th>
 															</tr>
 														</thead>
 														<tbody>
-
-                                                            
-
                                                             @foreach ($myLeaves as $leave)
                                                                 <tr>                                                                    
                                                                     <td> {{ $leave->name }}</td>
@@ -88,8 +119,7 @@
                                                                     <td> {{ $leave->to_date }}</td>
                                                                     <td> 
 																		{{ ($leave->leave_days+1) * $leave->length_days }} ({{ $leave->leave_duration }})
-																	</td>
-                                                                    <td>  - </td>
+																	</td>                                                                    
                                                                     <td> {{ $leave->comments }}</td>
                                                                     <td> 
 																		@if($leave->approval_level == 1 && $leave->status == 2 ) 
@@ -114,14 +144,14 @@
 
                                                             @if(!count($myLeaves)) 
                                                                 <tr>
-                                                                    <td colspan="8">
+                                                                    <td colspan="7">
                                                                         <div class="alert alert-danger"> No data found!</div>
                                                                     </td>
                                                                 </tr>
                                                             @endif
 
                                                             <tr>
-                                                                <td colspan="8">
+                                                                <td colspan="7">
                                                                     <div class="d-flex justify-content-center">
                                                                         {{ $myLeaves->links() }}
                                                                     </div>

@@ -5,73 +5,105 @@
 			<div class="page-wrapper">
 				<div class="container-fluid">
 					<div class="row">
-						
-						<div class="col-xl-12 col-lg-8  col-md-12">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="card ctm-border-radius shadow-sm border">
-										<!-- <div class="card-header">
-											<h4 class="card-title mb-0">Employees</h4>
-										</div> -->
-										<div class="card-body">
-											<form method="GET">
-												<div class="row">
-													<div class="col-sm-3 leave-col">
-														<div>
-															<!-- <label>Employee Name</label> -->
-															<input type="text" class="form-control" placeholder="First/Middle/Last Name" name="employee_name" value="{{ Request::get('employee_name') }}">
-														</div>
-													</div>
-													<div class="col-sm-2 leave-col">
-														<div>
-															<!-- <label>Employee Id</label> -->
-															<input type="text" class="form-control" placeholder="Employee Id" name="employee_id" value="{{ Request::get('employee_id') }}">
-														</div>
-													</div>
-													<div class="col-sm-2 leave-col">
-														<div>
-															<!-- <label>Email</label> -->
-															<input type="text" class="form-control" placeholder="Email" name="email" value="{{ Request::get('email') }}">
-														</div>
-													</div>
-													<div class="col-sm-2">
-														<div>
-															<!-- <label>
-															Status
-															<span class="text-danger">*</span>
-															</label> -->
-															<select class="form-control select" name="status">
-																<option value="">Status</option>
-																<option value="Active"  {{ Request::get('status') == 'Active' ? 'selected' : ''}}>Active</option>
-																<option value="Inactive" {{ Request::get('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-sm-3">														
-														<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" name="search"><span class="fa fa-search"></span> Search</button>
-														<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-refresh"></span> Reset</a>
+						<!-- left side -->
+						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+							<aside class="sidebar sidebar-user">
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body py-4">
+										<div class="row">
+											<div class="col-md-12 mr-auto text-left">
+												<div class="custom-search input-group">
+													<div class="custom-breadcrumb">
+														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
+															<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">PIM</a></li>
+															<li class="breadcrumb-item d-inline-block active">Employees</li>
+														</ol>
+														<h4 class="text-dark">Employees</h4>
 													</div>
 												</div>
-												<div class="row">
-																										
-												</div>
-											</form>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="card ctm-border-radius shadow-sm border">
+
+								<div class="card ctm-border-radius shadow-sm">
+									<div class="card-body">
+										<form method="GET" id="filter_form">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Employee Name</label>
+														<input type="text" class="form-control" placeholder="First/Middle/Last Name" name="employee_name" value="{{ Request::get('employee_name') }}">
+													</div>
+												</div>
+											</div>
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Employee Id</label>
+														<input type="text" class="form-control" placeholder="Employee Id" name="employee_id" value="{{ Request::get('employee_id') }}">
+													</div>
+												</div>
+											</div>
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Email</label>
+														<input type="text" class="form-control" placeholder="Email" name="email" value="{{ Request::get('email') }}">
+													</div>
+												</div>
+											</div>
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Status</label>
+														<select class="form-control select" name="status">
+															<option value="">Status</option>
+															<option value="Active"  {{ Request::get('status') == 'Active' ? 'selected' : ''}}>Active</option>
+															<option value="Inactive" {{ Request::get('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
+														</select>
+													</div>
+												</div>
+											</div>											
+
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('filter_form')"><i class="fa fa-refresh"></i> Reset </button>
+												</div>
+											</div>
+
+										</form>
+
+									</div>
+								</div>
+
+							</aside>
+						</div>
+						<!-- Left side End -->
+
+						<div class="col-xl-9 col-lg-8 col-md-12">
+							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-header">
-									<div class="row">
-										<div class="col-md-8">
-											<h4 class="card-title mb-0">Employees</h4>
-										</div>
-										<div class="col-md-4">
-											<div class="text-right">
-												<a href="{{ route('employees.create') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-plus"></span> Add</a>
-												<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll()"><span class="fa fa-trash"></span> Delete</button>
+									<div class="row filter-row">
+										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  
+											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+												<h4 class="card-title mb-0 ml-2 mt-2"> Employees </h4>
 											</div>
 										</div>
+										@hasrole('Admin')
+											<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+												<a href="{{ route('employees.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-plus"></span> Add</a>												
+											</div>
+											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAllSelected()"><i class="fa fa-trash"></i> Delete</button>
+											</div>
+										@endrole
 									</div>
 									
 								</div>
@@ -86,7 +118,7 @@
 										<div class="table-responsive">
 											<table class="table custom-table table-hover" >
 												<thead>
-													<tr>
+													<tr class="bg-light">
 														<th class="text-center">
 															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll()">
 														</th>
@@ -134,11 +166,15 @@
 															<div style="text-align: center;">
 															<!-- <a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->id) }}"><i class="fa fa-pencil"></i></a> -->
 
+															@if($employee->user_id == auth()->user()->id || $employee->user_id == 1)
+
+															@else
 															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->id)}}" method="post">
 																@method('DELETE')
 																@csrf
 																<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
 															 </form>
+															@endif
 															<!-- <a class="btn-sm btn-success" href="{{ route('employees.show', $employee->id) }}"><i class="fa fa-eye"></i></a> -->
 															</div>
 														</td>
@@ -242,7 +278,7 @@
 			}                
 		}
 
-		function deleteAll() {
+		function deleteAllSelected() {
 			var selectedUserIds = [];
 			$('#list_emp_table input[type="checkbox"]:checked').each(function(){
 				var selected_user_ids = $(this).val();
