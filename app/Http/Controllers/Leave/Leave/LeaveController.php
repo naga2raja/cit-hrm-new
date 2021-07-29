@@ -205,7 +205,7 @@ class LeaveController extends Controller
             'date'  =>  $fromDate . ' to '. $toDate
         ];        
         $managerEmails[] = ['name' => 'Admin', 'email' => 'cithrm@yopmail.com'];
-        if($sendMailFlag)
+        // if($sendMailFlag)
             // Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
         
         return redirect()->back()->with('success', 'You applied successfully!');      
