@@ -41,8 +41,8 @@
 								@if($employee->profile_photo)												
 									<img src="{{$employee->profile_photo}}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
 								@else
-									<img src="{{ assetUrl('img/profiles/img-13.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
-								@endif								
+									<img src="{{ assetUrl('img/profiles/admin.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+								@endif
 							</div>
 							<div class="user-details">
 								<h4><b>Hi {{ $employee->first_name }} {{ $employee->last_name }} </b></h4>
