@@ -101,7 +101,7 @@
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="submit-section text-center btn-add">
-															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
+															<button id="update" type="button" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Edit</button>
 														</div>
 													</div>
 													<div class="col-sm-6">
@@ -141,16 +141,21 @@
 													<label>Activity <span class="text-danger">*</span></label>
 													<input type="hidden" name="project_id" value="{{ $projects[0]->id }}">
 													<input type="hidden" name="activity_id" id="activity_id" value="">
-													<input type="text" name="activity_name" id="activity_name" class="form-control {{ $errors->has('activity_name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('activity_name') }}">
+													<input type="text" name="activity_name" id="activity_name" class="form-control {{ $errors->has('activity_name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('activity_name') }}" required="">
 													{!! $errors->first('activity_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 
-											<div class="col-sm-2 leave-col">
+											<div class="col-sm-1 leave-col">
 												<div class="form-group">
-													<label>.</label><br>
-													<a class="btn btn-success text-white ctm-border-radius" id="save_activity" data-action=""></a>
-													<a id="activity_hide" class="btn btn-danger text-white ctm-border-radius">Cancel</a>
+													<br>
+													<button type="button" id="save_activity" class="mt-2 btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-save"></i> Save</button>
+												</div>
+											</div>
+											<div class="col-sm-1 leave-col">
+												<div class="form-group">
+													<br>
+													<a id="activity_hide" href="javascript:void(0)" class="mt-2 btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>
@@ -175,55 +180,63 @@
 				<div class="container-fluid">
 					<div class="row">					
 						<div class="col-xl-12 col-lg-8  col-md-12">
-							<div class="card ctm-border-radius shadow-sm border">
-								<form>
-									@csrf
-									@method('DELETE')
-									<div class="card-header">
-										<div class="text-left ml-3">
-											<h4 class="card-title mb-0">Activities</h4>
-											<hr>
-											<a id="activity_show" class="btn btn-success text-white ctm-border-radius"><span class="fa fa-plus"></span> Add</a>
-											<button class="btn btn-danger text-white ctm-border-radius" onclick="deleteAll('list_activities_table','activities')"><span class="fa fa-trash"></span> Delete</button>
-										</div>
-									</div>
-									<div class="card-body">
-										<div class="employee-office-table">
-											<div class="table-responsive">
-												<table class="table custom-table mb-0 table-hover table-striped table-bordered">
-													<thead>
-														<tr class="bg-blue-header text-white">
-															<th class="text-center">
-																<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_activities_table')">
-															</th>
-															<th>Activity Name</th>
-														</tr>
-													</thead>
-													<tbody id="list_activities_table">
-														@if(count($activities) > 0)
-															@foreach ($activities as $activity)
-															<tr>
-																<td class="text-center">
-																	<input type="checkbox" name="delete_ids" id="delete_ids" value="{{ $activity->id }}">
-																</td>
-																<td>
-																	<h2><u><a id="{{ $activity->id }}" name="{{$activity->activity_name}}" onclick="edit_activity(this.id, this.name)">{{$activity->activity_name}}</a></u></h2>
-																</td>
-															</tr>
-															@endforeach
-														@else
-															<tr>
-																<td colspan="5"><div class="alert alert-danger text-center">No activities found!</div></td>
-															</tr>
-														@endif
-													</tbody>
-												</table>
+
+							<div class="card shadow-sm ctm-border-radius border">
+								<div class="card-header">
+									<div class="row filter-row">
+										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-10">  
+											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+												<h4 class="card-title mb-0 ml-2 mt-2">Activities</h4>
 											</div>
 										</div>
+										@hasrole('Admin')
+											<div class="col-sm-6 col-md-2 col-lg-2 col-xl-1">
+												<a id="activity_show" href="javascript:void(0)" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
+											</div>
+											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-1">
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_activities_table','activities')"><i class="fa fa-trash"></i> Delete</button>
+											</div>
+										@endrole
 									</div>
-								</form>
-							</div>
-							
+								</div>
+								<div class="card-body align-center">
+									<div class="table-responsive">
+										@if($message = Session::get('success'))
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
+											</div>
+										@endif
+										<table class="table custom-table table-hover">
+											<thead>
+												<tr class="bg-light">
+													<th class="text-center" style="width: 10%">
+														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_activities_table')">
+													</th>
+													<th>Activity Name</th>
+												</tr>
+											</thead>
+											<tbody id="list_activities_table">
+												@if(count($activities) > 0)
+													@foreach ($activities as $activity)
+													<tr>
+														<td class="text-center">
+															<input type="checkbox" name="delete_ids" id="delete_ids" value="{{ $activity->id }}">
+														</td>
+														<td>
+															<h2><u><a id="{{ $activity->id }}" name="{{$activity->activity_name}}" onclick="edit_activity(this.id, this.name)">{{$activity->activity_name}}</a></u></h2>
+														</td>
+													</tr>
+													@endforeach
+												@else
+													<tr>
+														<td colspan="5"><p class="text-center">No activities found!</p></td>
+													</tr>
+												@endif
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>							
 						</div>
 					</div>
 				</div>
@@ -318,20 +331,25 @@
 		
 		$('#save_activity').on('click', function(){
 			var action = $(this).attr('data-action');
-			if(action == '0'){
-				var project_id = $('input[name="project_id"]').val();
-				var activity_name = $('input[name="activity_name"]').val();
-				$.ajax({
-				   url:"{{ route('activities.store') }}",
-				   method:"POST",
-				   data:JSON.stringify({project_id:project_id, activity_name:activity_name,  "_token": "{{ csrf_token() }}"}),
-				   dataType: "json",
-				   contentType: 'application/json',
-				   success:function(data){
-				   	console.log(data);
-				   	window.location.href = data.url;
-				  }
-				});
+			$('#activity_name').removeClass('is-invalid');
+			if(action == '0'){				
+				if($('#activity_name').val() != ""){
+					var project_id = $('input[name="project_id"]').val();
+					var activity_name = $('input[name="activity_name"]').val();
+					$.ajax({
+					   url:"{{ route('activities.store') }}",
+					   method:"POST",
+					   data:JSON.stringify({project_id:project_id, activity_name:activity_name,  "_token": "{{ csrf_token() }}"}),
+					   dataType: "json",
+					   contentType: 'application/json',
+					   success:function(data){
+					   	console.log(data);
+					   	window.location.href = data.url;
+					  }
+					});
+				}else{
+					$('#activity_name').addClass('is-invalid');
+				}				
 			} else{
 				var activity_id = $('input[name="activity_id"]').val();
 				var project_id = $('input[name="project_id"]').val();
@@ -348,8 +366,6 @@
 				  }
 				});
 			}
-
-			
 		});
 
 		$('#update').on('click', function(){

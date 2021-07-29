@@ -64,7 +64,7 @@ class MyLeaveEntitlementController extends Controller
         }        
         // dd(DB::getQueryLog());        
 
-        return view('leave/entitlements/list', compact('entitlement', 'leave_types', 'leave_period'));
+        return view('leave/entitlements/list', compact('entitlement', 'leave_types', 'leave_period', 'employees'));
     }
 
     /**

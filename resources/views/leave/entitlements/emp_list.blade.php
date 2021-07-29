@@ -155,12 +155,13 @@
 													@endforeach
 													<tr class="bg-light">
 														<th></th>
-														<th colspan="4"><i>Total</i></th>
+														<th colspan="3"></th>
+														<th>Total :</th>
 														<th>{{ number_format($total, 2) }}</th>
 													</tr>
 												@else
 													<tr>
-														<td colspan="6"><p class="text-center">No Data Found</p></td>
+														<td colspan="6"><p class="text-center">No Data Found !</p></td>
 													</tr>
 												@endif
 											</tbody>

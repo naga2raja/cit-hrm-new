@@ -119,6 +119,8 @@
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
 												</div>
+												<div id="button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
+												</div>
 											</div>
 										</div>
 
@@ -198,6 +200,31 @@
 	 	$('#employee_id').val(this.value);
 	});
 
+	function compareDate(date){
+		var start_day = moment(date, "DD/MM/YYYY").format("DD");
+		var start_month = moment(date, "DD/MM/YYYY").format("MM");
+		var start_year = moment(date, "DD/MM/YYYY").format("YYYY");
+
+		var now = new Date();
+		var end_day = ("0" + now.getDate()).slice(-2);
+		var end_month = ("0" + (now.getMonth() + 1)).slice(-2);
+		var end_year = now.getFullYear();
+
+		if(start_year <= end_year){
+			if(start_month <= end_month){
+				if(start_day <= end_day){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
 	var prevWeekValue = '';
 	function setCurrentDate(){
 		var now = new Date();
@@ -244,8 +271,9 @@
 				var thead = '<tr class="bg-light">';
 	              	thead += '<th>Employee</th>';
 	              	thead += '<th>Timesheet Period</th>';
-	              	thead += '<th>Status</th>';
 	              	thead += '<th>Duration (HH:MM)</th>';
+	              	thead += '<th>Status</th>';
+	              	thead += '<th>Action</th>';
 	              	thead += '</tr>';
 	            var total = 0;
 				var tbody = '';
@@ -253,61 +281,64 @@
 				if(data.length > 0){
 		            // console.log(data);
 		            data.forEach(function (row,index) {
-				    	if(key == "daily"){
-				    		selected_date = moment($('#dailyDatePicker').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
-				    	}else if(key == "weekly"){
-				    		var first = $('#weeklyDatePicker').val().split(" - ");
-							var selected_date = moment(first[0], "DD/MM/YYYY").format("YYYY-MM-DD");
-				    	}else if(key == "monthly"){
-				    		var current_month = moment($('#monthlyDatePicker').val(), "YYYY/MM").format("YYYY/MM/DD");
-				    		var now = new Date(current_month);
-				    		var today = new Date();
-							var day = ("0" + today.getDate()).slice(-2);
-							var month = ("0" + (now.getMonth() + 1)).slice(-2);
-							var selected_date = (day) + "-" + (month) + "-" + now.getFullYear() ;
-				    	}
-
 		            	// enable edit link
-				    	var urlParams = new Array( 'employee_id=' + row.employee_id, 'date='+ selected_date );
+				    	var urlParams = new Array( 'employee_id=' + row.employee_id, 'date='+ row.start_date );
 				    	var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
 
 		            	tbody += '<tr>';
 				        tbody += '<td><h2><u><a href="'+url+'">' + row.employee_name + '</a></u></h2></td>';
-		              	if(key == "daily"){		            		
-				            tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
-			            }
-						else if(key == "weekly"){
-							tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
-						}
-						else if(key == "monthly"){
-							tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
-						}
-
-				        tbody += '<td>' + row.state + '</td>';
-						var duration = 0;
+		              	tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
+				        var duration = 0;
 						for (var i = 0; i < row.all_timesheet_item.length; i++) {
 						    duration += row.all_timesheet_item[i].duration << 0;
 						}
-						// console.log("duration", duration);
 						total += duration;
 						tbody += '<td>'+ getHours(duration) +' Hrs</td>';
+
+						var status ='';
+		              	if(row.state == '0'){
+		              		status = 'Not Submitted';
+		              	}else if(row.state == '1'){
+		              		status = 'Pending';
+		              	}else if(row.state == '2'){
+		              		status = 'Submitted';
+		              	}
+				        tbody += '<td>' + status + '</td>';
+				        var action = '';
+			            if(row.state == 0){
+			            	action += '<div style="display: flex;">';
+							action += '<form onsubmit="return confirm("Are you sure?")" action="" method="post" style="margin-left: 5px;">';
+							action += '<button class="btn btn-outline-danger btn-sm" type="submit" > Delete </button>';
+							action += '</form>';
+							action += '</div>';
+				    	}
+				    	tbody += '<td>' + action + '</td>';
 				        tbody += '</tr>';
 		            });
-		            tbody += '<tr class="bg-light font-weight-bold">';
-		            tbody += '<td colspan="2"></td>';
-		            tbody += '<td class="text-center">Total :</td>';
-		            tbody += '<td>' + getHours(total) + ' Hrs</td>';
-		            tbody += '</tr>';
+		            // tbody += '<tr class="bg-light font-weight-bold">';
+		            // tbody += '<td></td>';
+		            // tbody += '<td class="text-center">Total :</td>';
+		            // tbody += '<td>' + getHours(total) + ' Hrs</td>';
+		            // tbody += '<td></td>';
 		        }else{
 		        	tbody += '<tr>';
 		        	tbody += '<td colspan="4"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
 		        }
+		        $("#button_div").empty(); //cache it
+		        if(key == "daily"){
+		        	if(compareDate($('#dailyDatePicker').val())){
+			    		selected_date = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
+			    		var urlParams = new Array('date='+ selected_date );
+			    		var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
+			    		// append add button
+			            var add_button = $('<a id="add_button" href="'+url+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>');
+			    		$("#button_div").append(add_button);
+			    	}
+		    	}
+
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
-
-		        $("#edit_button").remove();
-	        	
 			}
 		});
 	}

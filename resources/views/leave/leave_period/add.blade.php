@@ -84,16 +84,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<label id="end_date">
-													@if(count($leave_period) > 0)
-														@php 
-															$start_month = DateTime::createFromFormat('!m', $leave_period[0]->start_month);
-															$monthName = $start_month->format('F');
-														@endphp
-
-														{{ $monthName }} {{ $leave_period[0]->start_date  }} (Following Year)
-													@endif 
-												</label>
+												<label id="end_date"></label>
 											</div>
 										</div>
 									</div>
@@ -106,18 +97,7 @@
 										</div>
 										<div class="col-sm-4">
 											<div class="form-group">
-												<label id="leave_period">
-													@if(count($leave_period) > 0)
-															@php 
-																$start_month = DateTime::createFromFormat('!m', $leave_period[0]->start_month);
-																$from = $start_month->format('F');
-																$ym = date('Y-m', strtotime($from));
-																$d = $leave_period[0]->start_date;
-															@endphp
-
-															{{ $ym }}-{{ $d }} to 
-														@endif 
-												</label>
+												<label id="leave_period"></label>
 											</div>
 										</div>
 									</div>
@@ -190,21 +170,23 @@
 		// get the day from month(number)
 		var year = new Date().getFullYear();
 		var month = $('#start_month').val();
-		var date = $('#start_date').val();
+		var day = $('#start_date').val();
+
+		var from_date = moment(year+" "+month+" "+day).format('Y-MM-DD');
 
 		// to add 11 months and 31 days from the selected date
-		var new_date = addMonths(new Date(year,month-1,date), 11);
-		var month_number = moment(new_date).format('MMMM');
-		var month_name = moment(new_date).format('MM');
+		var calculated_date = addMonths(new Date(year,month-1,day), 11);
 
-		// to get no. of days in month
-		var end_date = daysInMonth(month_name);
+		var end_year = moment(calculated_date).format('Y');
+		var end_month_name = moment(calculated_date).format('MMMM');
+		var end_month_number = moment(calculated_date).format('MM');
+		// to get no. of days in end month
+		var end_day = daysInMonth(end_month_number);
 
-		var from_date = moment(year+" "+month+" "+date).format('Y-MM-DD');
-		var to_date = moment(year+1 +" "+month_number+" "+end_date).format('Y-MM-DD');
+		var to_date = moment(end_year+" "+end_month_number+" "+end_day).format('Y-MM-DD');
 
-		$('#end_date').html(""+month_number+" "+end_date+" (Following Year)");
-		$('#leave_period').html(from_date+' - '+to_date);
+		$('#end_date').html(""+end_month_name+" "+end_day+" ("+end_year+")");
+		$('#leave_period').html(from_date+' to '+to_date);
 	}
 
 	function setMonthDate() {		
