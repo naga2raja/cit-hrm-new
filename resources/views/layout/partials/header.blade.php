@@ -467,8 +467,10 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="mr-1 {{ Request::is('manage','admin','custom-timeoff-approver','line-manager','manage-leadership','payroll-admin','super-admin','team-lead','team-member') ? 'active' : '' }}">
-                                    <a class="btn-ctm-space text-dark" href="manage"><span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Biomatric Data</span></a>
+                                <li class="mr-1 {{ Request::is('import-biometric-data') ? 'active' : '' }}">
+                                    <a class="btn-ctm-space {{ Request::is('import-biometric-data') ? 'active' : '' }}" href="{{ route('upload.biometric') }}">
+                                        <span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Biomatric Data</span>
+                                    </a>
                                 </li>
                                 <li class="mr-1 {{ Request::is('settings','details','documents','employment','payroll','profile-reviews','profile-settings','settings-timeoff','time-off') ? 'active' : '' }}">
                                     <a class="btn-ctm-space text-dark" href="settings"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a>

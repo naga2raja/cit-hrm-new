@@ -155,7 +155,7 @@ Route::get('/password/reset', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => ['role:Admin']], function () {
+Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::get('/', 'HomeController@index')->name('index');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/admin-page', 'HomeController@demoAdmin');
@@ -238,9 +238,10 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('/configurations', 'Time\Attendance\ConfigurationsController');
     /* Time/Attendance/PunchInOut */
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
+    Route::get('import-biometric-data', 'Biometric\BiometricImportController@index')->name('upload.biometric');
 });
 
-Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
+Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function () {
     Route::get('/emp-page', 'HomeController@demoEmployee');
 
     Route::resource('/employees', 'Employee\EmployeeController');
@@ -278,7 +279,7 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager']], function () {
 
 });
 
-Route::group(['middleware' => ['role:Admin|Manager']], function () {
+Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
