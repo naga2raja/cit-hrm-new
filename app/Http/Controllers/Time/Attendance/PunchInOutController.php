@@ -135,7 +135,7 @@ class PunchInOutController extends Controller
     public function show($id)
     {
         $data = tPunchInOut::where('id', $id)
-            ->selectRaw('id, employee_id, punch_in_note, punch_out_note, DATE_FORMAT(punch_in_user_time, "%d/%m/%Y") as punch_in, DATE_FORMAT(punch_out_user_time, "%d/%m/%Y") as punch_out, DATE_FORMAT(punch_in_user_time, "%H:%i") as in_time, DATE_FORMAT(punch_out_user_time, "%H:%i") as out_time, comments, status ')
+            ->selectRaw('id, employee_id, punch_in_note, punch_out_note, DATE_FORMAT(punch_in_user_time, "%d/%m/%Y") as punch_in, DATE_FORMAT(punch_out_user_time, "%d/%m/%Y") as punch_out, DATE_FORMAT(punch_in_user_time, "%H:%i") as in_time, DATE_FORMAT(punch_out_user_time, "%H:%i") as out_time, comments, status, created_at ')
             ->first();
         return $data;
     }
@@ -375,19 +375,25 @@ class PunchInOutController extends Controller
         $attendanceStatusUpdateArr = (array) json_decode($request->punch_id_update);        
         
         if(count($attendanceStatusUpdateArr)) {
+            $comments = $request->comments;
             foreach($attendanceStatusUpdateArr as $punch) {
                 $punch_id = $punch->id;
                 $status_id = $punch->status_id;
                 $newPunchStatus = currentPunchStatus($status_id);
+                $feedbackComment = '';
+                if($comments) {
+                    $feedbackComment .= '<br> Feedback: '.$comments;
+                }
 
                 $punchInfo = tPunchInOut::where('id', $punch_id)->first();
                 $punchInfo->status = $status_id;
-                $punchInfo->comments = $punchInfo->comments . ' <hr> <b>'.Auth::user()->name .'('. $userRole .')</b> - Updated to <b>'. $newPunchStatus.'</b> on ' . getCurrentTime();
+                $punchInfo->comments = $punchInfo->comments . ' <hr> <b>'.Auth::user()->name .'('. $userRole .')</b> - Updated to <b>'. $newPunchStatus.'</b> on ' . getCurrentTime() .' '.$feedbackComment;
                 $punchInfo->save();
 
                 //Send Email to Employee
                 $toEmails = [];
-                $employeeDetails = $leaveCtrl->getEmployeeDetails($punchInfo->employee_id);
+                $employeeDetails = Employee::where('id', $punchInfo->employee_id)->first();
+                // dd($employeeDetails, $punchInfo->employee_id);
                 $details = [
                     'date' => $punchInfo->punch_in_user_time.' to '. $punchInfo->punch_out_user_time,
                     'message'  =>  'Updated to <b>'.$newPunchStatus. '</b> By '.Auth::user()->name,

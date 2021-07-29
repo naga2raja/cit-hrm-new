@@ -199,6 +199,15 @@
                         <form method="POST" action="{{ route('punch.action') }}">
                             @csrf                            
                             <input type="hidden" id="punch_id_update" name="punch_id_update">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group mb-2">
+										<label>Your Comments:</label>
+										<textarea class="form-control " rows="3" id="comments" name="comments"></textarea>										
+									</div>
+								</div>
+							</div>
+
 						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
 						<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
                         </form>
@@ -316,6 +325,18 @@
 												</div>
 											</div>
 										</div>
+										<div class="row">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Created at</label>
+												</div>
+											</div>
+											<div class="col-sm-8">
+												<div class="form-group">
+													<div id="leave_created_at">-</div>													
+												</div>
+											</div>
+										</div>
 
 										<div class="row">
 											<div class="col-sm-3">
@@ -328,10 +349,10 @@
 											</div>
 										</div>
 										<hr>							
-							<div class="row" id="action_buttons">				
+							<div class="row">				
 								<div class="col-md-12 text-center">	
 									<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
+									<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2"  id="action_buttons">Save</button>
 								</div>
 							</div>
                         </form>
@@ -382,6 +403,7 @@
 				$('#in_time').val(in_time);
 				$('#out_time').val(out_time);
 				$('#attendance_action_log').html(response.comments);
+				$('#leave_created_at').html(moment(response.created_at).utcOffset("+05:30").format('YYYY-MM-DD hh:MM a'));
 				if(response.status == 0)
 					$('#action_buttons').show();
 				$('#punch_status').html(attendanceStatus[response.status]);

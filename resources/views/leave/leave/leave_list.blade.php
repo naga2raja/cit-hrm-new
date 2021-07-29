@@ -105,7 +105,7 @@
 																<th>To</th>
 																<th>Days</th>
 																{{-- <th>Remaining Days</th> --}}
-																<th>Notes</th>
+																{{-- <th>Notes</th> --}}
 																<th>Status</th>
 																<th class="text-right">Action</th>
 															</tr>
@@ -116,14 +116,14 @@
 
                                                             @foreach ($myLeaves as $leave)
                                                                 <tr>
-                                                                    <td> {{ $leave->emp_name }}</td>                                                                    
+                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}' )"> {{ $leave->emp_name }} </a> </td>  
                                                                     <td> {{ $leave->name }}</td>
                                                                     <td> {{ $leave->from_date }}</td>
                                                                     <td> {{ $leave->to_date }}</td>
                                                                     <td> 
 																		{{ ($leave->leave_days+1) * $leave->length_days }} ({{ $leave->leave_duration }})
 																	</td>                                                                    
-                                                                    <td> {{ $leave->comments }}</td>
+                                                                    {{-- <td> {{ $leave->comments }}</td> --}}
                                                                     <td>
                                                                         @if($leave->approval_level == 1 && $leave->status == 2 ) 
                                                                             Pending Approval From Admin
@@ -155,14 +155,14 @@
 
                                                             @if(!count($myLeaves)) 
                                                                 <tr>
-                                                                    <td colspan="8">
+                                                                    <td colspan="7">
                                                                         <div class="alert alert-danger"> No data found!</div>
                                                                     </td>
                                                                 </tr>
                                                             @endif
 
                                                             <tr>
-                                                                <td colspan="8">
+                                                                <td colspan="7">
                                                                     <div class="d-flex justify-content-center">
                                                                         {{ $myLeaves->links() }}
                                                                     </div>
@@ -217,6 +217,14 @@
                         <form method="POST" action="{{ route('leave.action') }}">
                             @csrf                            
                             <input type="hidden" id="leave_id_update" name="leave_id_update">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group mb-2">
+										<label>Your Comments:</label>
+										<textarea class="form-control " rows="3" id="comments" name="comments"></textarea>										
+									</div>
+								</div>
+							</div>
 						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
 						<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
                         </form>

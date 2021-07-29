@@ -220,7 +220,28 @@ class LeaveController extends Controller
      */
     public function show($id)
     {
-        //
+        //$employeeId = $employee->id;
+        $myLeaves = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
+            ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
+            ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
+            ->join('employees', 'employees.id', 't_leave_requests.employee_id')
+            ->where('t_leave_requests.id', $id)
+            ->select('t_leave_requests.*', 'm_leave_types.name', 't_leaves.leave_duration', 't_leaves.length_days', 't_leaves.approval_level')
+            ->selectRaw('datediff(t_leave_requests.to_date, t_leave_requests.from_date) as leave_days, m_leave_status.name as leave_status')
+            ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+            ->selectRaw('(IF (t_leaves.approval_level =1 && t_leaves.status = 2, "Pending Approval From Admin", 
+            IF(approval_level =2 && t_leaves.status = 2, "Approved", m_leave_status.name)  )) AS my_status')
+            ->first();
+        
+        $allComments = tLeaveComment::join('t_leave_requests', 't_leave_requests.id', 't_leave_comments.leave_id')
+            ->join('employees', 'employees.id', 't_leave_comments.employee_id')
+            ->where('t_leave_comments.leave_id', $id)
+            ->selectRaw('t_leave_comments.*, CONCAT(employees.first_name, " ", employees.last_name) as manager_name, DATE_FORMAT(t_leave_comments.created_at, "%Y-%m-%d %h:%i %p") as action_date')
+            ->orderBy('t_leave_comments.id', 'DESC')
+            ->get()
+            ->toArray();
+        
+            return ['comments' => $allComments, 'info' => $myLeaves];
     }
 
     /**
@@ -395,9 +416,10 @@ class LeaveController extends Controller
     }
 
     public function adminAction(Request $request)
-    {
+    {        
         $leaveStatusUpdateArr = (array) json_decode($request->leave_id_update);
         if(count($leaveStatusUpdateArr)) {
+            $comments = $request->comments;
             foreach ($leaveStatusUpdateArr as $leave) {
                 $leave_request_id = $leave->id;
                 $status_id = $leave->status_id;
@@ -424,9 +446,19 @@ class LeaveController extends Controller
                     [
                         'leave_id' => $leave_request_id,
                         'employee_id' => $currentEmployeeDetails->id, //manager id
-                        'comments' => 'Updated to '.$leaveStatus->name. 'By '.Auth::user()->name
+                        'comments' => 'Updated to '.$leaveStatus->name. ' By '.Auth::user()->name
                     ]
                 );
+                if($comments) {
+                    // Insert Feedback comments
+                    tLeaveComment::insert(
+                        [
+                            'leave_id' => $leave_request_id,
+                            'employee_id' => $currentEmployeeDetails->id, //manager id
+                            'comments' => 'Feedback: '. $comments
+                        ]
+                    );
+                }                
                 
                 //if cancelled or rejected update in the entitlement table
                 if($status_id > 3) {
