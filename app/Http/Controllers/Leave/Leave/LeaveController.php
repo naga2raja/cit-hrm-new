@@ -206,7 +206,7 @@ class LeaveController extends Controller
         ];        
         $managerEmails[] = ['name' => 'Admin', 'email' => 'cithrm@yopmail.com'];
         if($sendMailFlag)
-            Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
+            // Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
         
         return redirect()->back()->with('success', 'You applied successfully!');      
                 
@@ -450,7 +450,7 @@ class LeaveController extends Controller
                 ];        
                 $toEmails[] = ['name' => $leaveEmployeeDetails->first_name.' '.$leaveEmployeeDetails->first_name, 'email' => $leaveEmployeeDetails->email];
         
-                Mail::to($toEmails)->send(new LeaveApproveStatus($details));
+                // Mail::to($toEmails)->send(new LeaveApproveStatus($details));
                 
 
             }

@@ -209,7 +209,7 @@
 	//check if row id already exists
 	 	if(arrayData.length != 0){
 		 	arrayData.forEach(function(value,index){
-		 		alert(value.project_id+" = "+project_id);
+		 		// alert(value.project_id+" = "+project_id);
 		 	// 	if(value.row_id == row_id) {
 				//    arrayData.splice(index,3);
 				//    arrayData.push({'row_id':row_id, 'project_id':project_id, 'activity_id': activity_id});

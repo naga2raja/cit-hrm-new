@@ -101,11 +101,11 @@
 													<h5 class="text-primary"><i class="fa fa-home"></i> Address:</h5>
 													<p class="ml-3">
 														@if($company)
-															{{ $company->address_street_1 }}{{ "," }}<br>
-															{{ $company->address_street_2 }}{{ "," }}<br>
-															{{ $company->city }}{{ ", " }}
-															{{ $company->state_province }}<br>
-															{{ $company->country }} {{ " - " }}
+															{{ ($company->address_street_1) ? $company->address_street_1 . ', ' : '' }} <br>
+															{{ ($company->address_street_2) ? $company->address_street_2 . ',' : '' }} 
+															{{ ($company->city) ? $company->city . ',' : '' }}
+															{{ ($company->state_province) ? $company->state_province . ',' : '' }}<br>
+															{{ ($company->country) ? $company->country .' - ' : '' }}
 															{{ $company->zip_code }}
 														@endif
 													</p>
