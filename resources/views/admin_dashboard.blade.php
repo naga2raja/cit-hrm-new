@@ -27,7 +27,7 @@
 								<div class="user-card card shadow-sm bg-white text-center ctm-border-radius">
 									<div class="user-info card-body">
 										<div class="user-avatar mb-4">
-											<img src="img/profiles/profile.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+											<img src="img/profiles/admin.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
 										</div>
 										<div class="user-details">
 											<h4><b>Welcome</b></h4>

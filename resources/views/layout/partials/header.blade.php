@@ -51,7 +51,12 @@
                                         <div class="user-info align-right dropdown d-inline-block header-dropdown">
                                             <a href="javascript:void(0)" data-toggle="dropdown" class=" menu-style dropdown-toggle">
                                                 <div class="user-avatar d-inline-block">
-                                                    <img src="{{ assetUrl('img/profiles/profile.jpg') }}" alt="user avatar" class="rounded-circle img-fluid" width="55">
+                                                    @hasrole('Admin|Manager')
+                                                        <img src="{{ assetUrl('img/profiles/admin.jpg') }}" alt="user avatar" class="rounded-circle img-fluid" width="55">
+                                                    @endrole
+                                                    @hasrole('Employee')
+                                                        <img src="{{ assetUrl('img/profiles/profile.jpg') }}" alt="user avatar" class="rounded-circle img-fluid" width="55">
+                                                    @endrole
                                                 </div>
                                             </a>
                                             <!-- Notifications -->
