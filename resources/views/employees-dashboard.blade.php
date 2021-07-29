@@ -26,11 +26,11 @@
 								<div class="user-card card shadow-sm bg-white text-center ctm-border-radius">
 									<div class="user-info card-body">
 										<div class="user-avatar mb-4">
-											<img src="img/profiles/img-6.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+											<img src="img/profiles/profile.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
 										</div>
 										<div class="user-details">
-											<h4><b>Welcome Maria</b></h4>
-											<p>Sun, 29 Nov 2019</p>
+											<h4><b>Welcome @if (!Auth::guest()) {{ Auth::user()->name }} @endif</b></h4>
+											<p>{{ date('D, d M Y') }}</p>
 										</div>
 									</div>
 								</div>
@@ -38,8 +38,12 @@
 								
 									<div class="card-body">
 										<ul class="list-group">
-											<li class="list-group-item text-center button-6"><a href="index" class="text-dark">Admin Dashboard</a></li>
-											<li class="list-group-item text-center active button-5"><a class="text-white" href="employees-dashboard">Employees Dashboard</a></li>
+											@hasrole('Admin')
+											<li class="list-group-item text-center active button-5"><a href="javascript:void(0)" class="text-white">Admin Dashboard</a></li>
+											@endrole
+											@hasrole('Employee')
+											<li class="list-group-item text-center active button-5"><a class="text-white" href="javascript:void(0)">Employees Dashboard</a></li>
+											@endrole
 										</ul>
 									</div>
 								</div>
