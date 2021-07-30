@@ -119,12 +119,17 @@
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
 												</div>
-												<div id="edit_button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
+												<div id="button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
 												</div>
 											</div>
 										</div>
 
-										<div class="card-body employee-timesheets">									
+										<div class="card-body employee-timesheets">
+											@if($message = Session::get('success'))
+												<div class="alert alert-success">
+													<p>{{$message}}</p>
+												</div>
+											@endif
 											<div class="table-responsive">
 												<table id="timesheets" class="table custom-table table-hover">
 													<thead>
@@ -190,6 +195,31 @@
 	 	$('#pro_name').val(pro_name);
 	});
 
+	function compareDate(date){
+		var start_day = moment(date, "DD/MM/YYYY").format("DD");
+		var start_month = moment(date, "DD/MM/YYYY").format("MM");
+		var start_year = moment(date, "DD/MM/YYYY").format("YYYY");
+
+		var now = new Date();
+		var end_day = ("0" + now.getDate()).slice(-2);
+		var end_month = ("0" + (now.getMonth() + 1)).slice(-2);
+		var end_year = now.getFullYear();
+
+		if(start_year <= end_year){
+			if(start_month <= end_month){
+				if(start_day <= end_day){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
 	var prevWeekValue = '';
 	function setCurrentDate(){
 		var now = new Date();
@@ -235,62 +265,85 @@
 				// console.log('response : ', data);
 				var thead = '<tr class="bg-light">';
 	              	thead += '<th>Employee</th>';
-	              	thead += '<th>Project</th>';
-	              	thead += '<th>Activity</th>';
-	              	thead += '<th>Date</th>';
-	              	thead += '<th>Duration</th>';
+	              	thead += '<th>Timesheet Period</th>';
+	              	thead += '<th>Duration (HH:MM)</th>';
+	              	thead += '<th>Status</th>';
+	              	thead += '<th>Action</th>';
 	              	thead += '</tr>';
 	            var total = 0;
 				var tbody = '';
-				var button_name = "";
+				var selected_date = '';
 				if(data.length > 0){
 		            // console.log(data);
 		            data.forEach(function (row,index) {
+		        		$("#button_div").empty(); //cache it
+
+		            	// enable edit link
+				    	var urlParams = new Array( 'employee_id=' + row.employee_id, 'date='+ row.start_date );
+				    	var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
+
 		            	tbody += '<tr>';
-				        tbody += '<td>' + row.employee_name + '</td>';
-				        tbody += '<td>' + row.project_name.project_name + '</td>';
-				        tbody += '<td>' + row.activity_name.activity_name + '</td>';
-				        // tbody += '<td>' + (row.comments ? row.comments : '-') + '</td>';
-		              	if(key == "daily"){		            		
-				            tbody += '<td>' + moment(row.date).format("DD/MM/YYYY") + '</td>';
-			            }
-						else if(key == "weekly"){
-							tbody += '<td>' + moment(row.date).format("DD/MM/YYYY") + '</td>';
+				        tbody += '<td><h2><u><a href="'+url+'">' + row.employee_name + '</a></u></h2></td>';
+		              	tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
+						var duration = 0;
+						for (var i = 0; i < row.all_timesheet_item.length; i++) {
+						    duration += row.all_timesheet_item[i].duration << 0;
 						}
-						else if(key == "monthly"){
-							tbody += '<td>' + moment(row.date).format("DD/MM/YYYY") + '</td>';
-						}
-				        // calculating total minutes
-				        total = total + row.duration;
-				        tbody += '<td>' + getHours(row.duration) + ' hrs</td>';
+						total += duration;
+						tbody += '<td>'+ getHours(duration) +' Hrs</td>';
+
+						var status ='';
+		              	if(row.state == '0'){
+		              		status = 'Not Submitted';
+		              	}else if(row.state == '1'){
+		              		status = 'Pending';
+		              	}else if(row.state == '2'){
+		              		status = 'Submitted';
+		              	}
+				        tbody += '<td>' + status + '</td>';
+				        var action = '';
+			            if(row.state == 0){
+			            	action += '<div style="display: flex;">';
+			            	action += '<button class="btn  btn-outline-success btn-sm" onclick="submitForApprove('+row.id+')">Submit </button>';
+
+			            	var route = '{{ route("mytimesheets.destroy", ":id") }}';
+								route = route.replace(':id', row.id);
+							action += '<form id="" onsubmit="return confirm("Are you sure?")" action='+route+' method="post" style="margin-left: 5px;"> ';
+							action += '<input type="hidden" name="_method" value="DELETE">';
+							action += '<input type="hidden" name="_token" value="{{ @csrf_token() }}">';
+							action += '<button class="btn btn-outline-danger btn-sm" type="submit" > Delete </button>';
+							action += '</form>';
+							action += '</div>';
+				    	}
+				    	tbody += '<td>' + action + '</td>';
 				        tbody += '</tr>';
 		            });
-		            tbody += '<tr class="bg-light font-weight-bold">';
-		            tbody += '<td colspan="3"></td>';
-		            tbody += '<td class="text-center">Total :</td>';
-		            tbody += '<td>' + getHours(total) + ' hrs</td>';
-		            tbody += '</tr>';
-		            button_name = "<i class='fa fa-edit'></i> Edit";
+		            // tbody += '<tr class="bg-light font-weight-bold">';
+		            // tbody += '<td></td>';
+		            // tbody += '<td class="text-center">Total :</td>';
+		            // tbody += '<td>' + getHours(total) + ' Hrs</td>';
+		            // tbody += '<td></td>';
+		            tbody += '</tr>';		            
 		        }else{
 		        	tbody += '<tr>';
-		        	tbody += '<td colspan="5"><p class="text-center">No data found in selected date</p></td>';
+		        	tbody += '<td colspan="4"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
-		        	button_name = "<i class='fa fa-plus'></i> Add";
+
+		        	$("#button_div").empty(); //cache it
+		        	var selected_date = '';
+			    	if(key == "daily"){
+			    		if(compareDate($('#dailyDatePicker').val())){
+				    		selected_date = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
+				    		var urlParams = new Array('employee_id=' + $('#employee_id').val(), 'date='+ selected_date );
+				    		var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
+				    		// append add button
+				            var add_button = $('<a id="add_button" href="'+url+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>');
+				    		$("#button_div").append(add_button);
+				    	}
+			    	}
 		        }
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
-
-		        $("#edit_button").remove();
-	        	var selected_date = '';
-		    	if(key == "daily"){
-		    		selected_date = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
-		    		var urlParams = new Array(
-					            		'employee_id=' + $('#employee_id').val(), 
-					            		'date='+ selected_date 
-		            				);
-		    		var button = $('<a id="edit_button" href="{{ route("timesheets.create") }}' + '?' + urlParams.join('&')+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">'+button_name+'</a>');
-		    		$("#edit_button_div").append(button);
-		    	}
 			}
 		});
 	}
@@ -349,12 +402,10 @@
         }
 	});
 
-
 	$('#dailyDatePicker').on('dp.change', function(e){
 		// Load table data
 		LoadData($('#dailyDatePicker').val(),'daily');
 	});
-
 
 	$('#weeklyDatePicker').click(function() {
 		var value = $("#weeklyDatePicker").val();
@@ -509,37 +560,23 @@
 		LoadData($('#monthlyDatePicker').val(),'monthly');
 	});
 
-  //   $('#edit_button').click(function(){
-  //   	var _token = $('input[name="_token"]').val();
-  //   	var employee_id = $('#employee_id').val();
-  //   	var key = $('#key').val();
-  //   	var date = '';
+	function submitForApprove(id) {
+		if (!confirm("Do you want to submit for approval?")){
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: '{{ route("punch.submit") }}',
+			data: { 'id': id, 'status': 1, '_token': '{{ csrf_token() }}' }, // serializes the form's elements.
+			success: function(data)
+			{
+				console.log(data); // show response from the php script.
+				alert('Submited successfully!');
+				window.location.reload();
 
-  //   	if(key == "daily"){
-  //   		date = $('#dailyDatePicker').val();
-  //   	}else if(key == "weekly"){
-  //   		var first = $('#weeklyDatePicker').val().split(" - ");
-		// 	var date = moment(first[0], "DD/MM/YYYY").format("DD/MM/YYYY");
-  //   	}else if(key == "monthly"){
-  //   		var current_month = moment($('#monthlyDatePicker').val(), "YYYY/MM").format("YYYY/MM/DD");
-  //   		var now = new Date(current_month);
-  //   		var today = new Date();
-		// 	var day = ("0" + today.getDate()).slice(-2);
-		// 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
-		// 	var date = (day) + "/" + (month) + "/" + now.getFullYear() ;
-  //   	}
-		
-  //   	$.ajax({
-  //   		method: 'POST',
-  //   		url: "{{ route('timesheets.create') }}",
-  //   		data: { 'employee_id': employee_id, 'date': date, '_token': '{{ csrf_token() }}' } ,
-  //   		success:function(data){
-  //   			console.log(data);
-  //   			alert("success");
-		//    	// window.location.href = data.url;
-		//    }
-		// });
-  //   });
+			}
+		});
+	}
 
 </script>
 @endpush

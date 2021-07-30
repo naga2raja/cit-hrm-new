@@ -90,10 +90,13 @@
 													<select class="employee_name form-control {{ $errors->has('employee') ? 'is-invalid' : ''}}" name="employee" id="employee_name" style="width: 100%">
 														@if(Request::get('employee_id'))
 															<option selected="selected" id="{{ @$employees->id }}">{{ @$employees->employee_name }}</option>
+														@elseif(old('emp_name'))
+															<option selected="selected" id="{{ old('emp_number') }}">{{ old('emp_name') }}</option>
 														@endif
 													</select>
 													{!! $errors->first('employee', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 													<input type="hidden" name="emp_number" id="emp_number" class="form-control" value="{{ (Request::get('employee_id')) ? @$employees->id : '' }}">
+													<input type="hidden" name="emp_name" id="emp_name" class="form-control" value="{{ old('emp_name') }}">
 												</div>
 											</div>
 										</div>
@@ -107,13 +110,13 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select" name="leave_type">
+												<select class="form-control select {{ $errors->has('leave_type') ? 'is-invalid' : ''}}" name="leave_type">
 													<option value="">Select Leave Type</option>
                                                     @foreach ($leave_types as $type)
 	                                                    <option value='{{ $type->id }}' {{ old('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
 	                                                @endforeach
                                                 </select>
-                                                {!! $errors->first('leave_type_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+                                                {!! $errors->first('leave_type', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
 									</div>									
@@ -168,7 +171,7 @@
 													</div>
 												</div>
 												<div class="col-sm-6">
-													<a href="{{ route('leaveEntitlement.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													<a href="{{ url()->previous() }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>
@@ -238,6 +241,11 @@
 		display();
 		// calling validation_popup_msg
 		validation_popup_msg();
+
+		var emp_number = $("#employee_name option:selected").prop('id');
+		$('#emp_number').val(emp_number);
+	 	var emp_name = $("#employee_name option:selected").html();
+	 	$('#emp_name').val(emp_name);
 	}
 
 	$("#multiple_employee").change(function() {
@@ -268,6 +276,8 @@
 
 	$(document.body).on("change","#employee_name",function(){
 	 	$('#emp_number').val(this.value);
+	 	var emp_name = $("#employee_name option:selected").html();
+	 	$('#emp_name').val(emp_name);
 	});
 
 

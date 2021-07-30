@@ -260,6 +260,7 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function
     // add Timesheets
     Route::get('/timesheets.create', 'Time\Timesheets\TimesheetsController@create')->name('timesheets.create');
     Route::post('/timesheets.store', 'Time\Timesheets\TimesheetsController@store')->name('timesheets.store');
+    // Route::post('/timesheets.destroy', 'Time\Timesheets\TimesheetsController@destroy')->name('timesheets.destroy');
 
 
     //Employee autocomplete ajax

@@ -94,7 +94,7 @@ class TimesheetsController extends Controller
                 'employee_id'  => $employee_id,
                 'start_date'  =>  $date,
                 'end_date'  =>  $date,
-                'state'  => "PENDING"
+                'state'  => "0"
             ]);
             $timesheet_id = $timesheet->id;
         }
@@ -120,7 +120,7 @@ class TimesheetsController extends Controller
             ]);
         }
 
-        return redirect()->route('timesheets.index')->with('success', 'Timesheets Added successfully');
+        return response()->json($TimesheetItem);
     }
 
     /**
