@@ -113,9 +113,20 @@ class MyTimesheetsController extends Controller
         return redirect()->back()->with('success','Deleted Successfully');
     }
 
+    public function updateStatusAjax(Request $request) {
+        $id = $request->id;
+        $timesheetInfo = tTimesheet::where('id', $id)->first();
+        $comments = $timesheetInfo->comments;
+        $timesheetInfo->status = $request->status;
+        $timesheetInfo->updated_by = Auth::user()->id;
+        $timesheetInfo->comments = $comments. '<br> <b>'.Auth::user()->name .'</b> - Sent to <b> Approval </b> on ' . getCurrentTime(); 
+        $timesheetInfo->save();
+        return $timesheetInfo;
+    }
+
     public function getMyTimeSheets(Request $request){
-        $user_id = Auth::User()->id;
-        $employees = Employee::where('user_id', $user_id)->first();
+        $user = Auth::user();
+        $employees = Employee::where('user_id', Auth::user()->id)->first();
 
         $project_id = $request->project_id;
         $date = str_replace('/', '-', $request->selected_date);
@@ -127,36 +138,39 @@ class MyTimesheetsController extends Controller
 
             $employee_id = $employees->id;            
             $my_timesheets = tTimesheet::select('t_timesheets.*')
-                ->join('employees', 'employees.id', 't_timesheets.employee_id')
-                ->when(filled($employee_id), function($query) use ($employee_id) {
-                    $query->where('t_timesheets.employee_id', $employee_id);
-                })
-                ->when(filled($date), function($query) use ($date, $key) {
-                    if($key == "daily"){
-                        $date = date('Y-m-d', strtotime($date));
-                        $query->where('t_timesheets.start_date', $date);
-                    }
-                    else if($key == "weekly"){
-                        $week = explode(" - ", $date);
-                        $from = date('Y-m-d', strtotime($week[0]));
-                        $to = date('Y-m-d', strtotime($week[1]));
-                        $query->whereBetween('t_timesheets.start_date', [$from, $to])->get();;
-                    }
-                    else if($key == "monthly"){
-                        $month = date('m', strtotime($date));
-                        $year = date('Y', strtotime($date));
-                        $query->whereMonth('t_timesheets.start_date', '=', $month)
-                              ->whereYear('t_timesheets.start_date', '=', $year);
-                    }
-                })
-                ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
-                ->with('allTimesheetItem')
-                ->orderBy('t_timesheets.start_date', 'asc')
-                ->orderBy('employees.id', 'asc')
-                ->get();
-            // dd(DB::getQueryLog());
-            // dd($my_timesheets);
+                                ->join('employees', 'employees.id', 't_timesheets.employee_id')
+                                ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                                ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                                ->when(filled($employee_id), function($query) use ($employee_id) {
+                                    $query->where('t_timesheets.employee_id', $employee_id);
+                                })
+                                ->when(filled($date), function($query) use ($date, $key) {
+                                    if($key == "daily"){
+                                        $date = date('Y-m-d', strtotime($date));
+                                        $query->where('t_timesheets.start_date', $date);
+                                    }
+                                    else if($key == "weekly"){
+                                        $week = explode(" - ", $date);
+                                        $from = date('Y-m-d', strtotime($week[0]));
+                                        $to = date('Y-m-d', strtotime($week[1]));
+                                        $query->whereBetween('t_timesheets.start_date', [$from, $to])->get();;
+                                    }
+                                    else if($key == "monthly"){
+                                        $month = date('m', strtotime($date));
+                                        $year = date('Y', strtotime($date));
+                                        $query->whereMonth('t_timesheets.start_date', '=', $month)
+                                              ->whereYear('t_timesheets.start_date', '=', $year);
+                                    }
+                                })
+                                ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
+                                ->selectRaw('employees.user_id, roles.name as role_name')
+                                ->with('allTimesheetItem')
+                                ->orderBy('t_timesheets.start_date', 'asc')
+                                ->orderBy('employees.id', 'asc')
+                                ->get();
+                                // dd(DB::getQueryLog());
         }
+
         return response()->json($my_timesheets);
     }
 }

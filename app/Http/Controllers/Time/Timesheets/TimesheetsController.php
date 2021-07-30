@@ -10,6 +10,7 @@ use App\Employee;
 use App\tTimesheetItem;
 use App\tTimesheet;
 use APP\tActivity;
+use App\Http\Controllers\Leave\Leave\LeaveController;
 use Carbon\Carbon;
 use DateTime;
 use Session;
@@ -173,39 +174,98 @@ class TimesheetsController extends Controller
         $employee_id = $request->employee_id;
         $date = str_replace('/', '-', $request->selected_date);
         $key = $request->key;
+        $leaveCtrl = new LeaveController;
+
+        $user = Auth::user();
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails($user->id);
+        $employeeId = $currentEmployeeDetails->id;
+        $empIds = [];
+        if($user->hasRole('Manager')) {
+            $userRole = 'Manager';
+            //Find Reporting Employees Ids
+            $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        } else {
+          //admin
+            $userRole = 'Admin';
+            $empIds = $leaveCtrl->getReportingToAdminEmployees($user->id);
+        }
 
         $timesheets = [];
         DB::connection()->enableQueryLog();
         $timesheets = tTimesheet::select('t_timesheets.*')
-                ->join('employees', 'employees.id', 't_timesheets.employee_id')
-                ->when(filled($employee_id), function($query) use ($employee_id) {
-                    $query->where('t_timesheets.employee_id', $employee_id);
-                })
-                ->when(filled($date), function($query) use ($date, $key) {
-                    if($key == "daily"){
-                        $date = date('Y-m-d', strtotime($date));
-                        $query->where('t_timesheets.start_date', $date);
-                    }
-                    else if($key == "weekly"){
-                        $week = explode(" - ", $date);
-                        $from = date('Y-m-d', strtotime($week[0]));
-                        $to = date('Y-m-d', strtotime($week[1]));
-                        $query->whereBetween('t_timesheets.start_date', [$from, $to])->get();;
-                    }
-                    else if($key == "monthly"){
-                        $month = date('m', strtotime($date));
-                        $year = date('Y', strtotime($date));
-                        $query->whereMonth('t_timesheets.start_date', '=', $month)
-                              ->whereYear('t_timesheets.start_date', '=', $year);
-                    }
-                })
-                ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
-                ->with('allTimesheetItem')
-                ->orderBy('t_timesheets.start_date', 'asc')
-                ->orderBy('employees.id', 'asc')
-                ->get();
-            // dd(DB::getQueryLog());
-            // dd($timesheets);
+                              ->join('employees', 'employees.id', 't_timesheets.employee_id')
+                              ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                              ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                              ->when(filled($employee_id), function($query) use ($employee_id) {
+                                  $query->where('t_timesheets.employee_id', $employee_id);
+                              })
+                              ->when(filled($date), function($query) use ($date, $key) {
+                                  if($key == "daily"){
+                                      $date = date('Y-m-d', strtotime($date));
+                                      $query->where('t_timesheets.start_date', $date);
+                                  }
+                                  else if($key == "weekly"){
+                                      $week = explode(" - ", $date);
+                                      $from = date('Y-m-d', strtotime($week[0]));
+                                      $to = date('Y-m-d', strtotime($week[1]));
+                                      $query->whereBetween('t_timesheets.start_date', [$from, $to])->get();;
+                                  }
+                                  else if($key == "monthly"){
+                                      $month = date('m', strtotime($date));
+                                      $year = date('Y', strtotime($date));
+                                      $query->whereMonth('t_timesheets.start_date', '=', $month)
+                                            ->whereYear('t_timesheets.start_date', '=', $year);
+                                  }
+                              });
+                              if(count($empIds)) {
+                                $timesheets = $timesheets->whereIn('t_timesheets.employee_id', $empIds);
+                              }  
+                              $timesheets = $timesheets->where('t_timesheets.status', '!=', 0)
+                              ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
+                              ->selectRaw('employees.user_id, roles.name as role_name')
+                              ->with('allTimesheetItem')
+                              ->orderBy('t_timesheets.start_date', 'asc')
+                              ->orderBy('employees.id', 'asc')
+                              ->get();
+        // dd(DB::getQueryLog());
+        // dd($timesheets);
         return response()->json($timesheets);
+    }
+
+    public function adminAction(Request $request)
+    {
+        $leaveCtrl = new LeaveController;
+        $userRole = 'Admin';
+        if(Auth::user()->hasRole('Manager'))
+            $userRole = 'Manager';
+
+        $timesheetStatusUpdateArr = (array) json_decode($request->timesheet_id_update);        
+        
+        if(count($timesheetStatusUpdateArr)) {
+            foreach($timesheetStatusUpdateArr as $timesheet) {
+                $timesheet_id = $timesheet->id;
+                $status_id = $timesheet->status_id;
+                $newtimesheetStatus = currentTimesheetStatus($status_id);
+
+                $timesheetInfo = tTimesheet::where('id', $timesheet_id)->first();
+                $timesheetInfo->status = $status_id;
+                $timesheetInfo->comments = $timesheetInfo->comments . ' <hr> <b>'.Auth::user()->name .'('. $userRole .')</b> - Updated to <b>'. $newtimesheetStatus.'</b> on ' . getCurrentTime();
+                $timesheetInfo->save();
+
+                //Send Email to Employee
+                // $toEmails = [];
+                // $employeeDetails = $leaveCtrl->getEmployeeDetails($timesheetInfo->employee_id);
+                // $details = [
+                //     'date' => $timesheetInfo->timesheet_in_user_time.' to '. $timesheetInfo->timesheet_out_user_time,
+                //     'message'  =>  'Updated to <b>'.$newtimesheetStatus. '</b> By '.Auth::user()->name,
+                //     'employee_name' => $employeeDetails->first_name.' '.$employeeDetails->first_name
+                // ]; 
+                // $toEmails[] = ['name' => $employeeDetails->first_name.' '.$employeeDetails->first_name, 'email' => $employeeDetails->email];
+                // Mail::to($toEmails)->send(new AttendanceStatusMail($details));
+            }
+        }
+        return redirect()->back()->with('success', 'Timesheet Status Updated Successfully!');
     }
 }
