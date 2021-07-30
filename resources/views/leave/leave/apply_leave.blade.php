@@ -24,19 +24,36 @@
 										</div>
 									</div>
 								</div>
+
+								@if(Request::is('leave/create'))
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-header">
 										<div class="d-inline-block">
-											<h4 class="card-title mb-0">Recent Leaves</h4>
+											<h4 class="card-title mb-0">Your Leaves Info</h4>
 											{{-- <p class="mb-0 ctm-text-sm">Head Office</p> --}}
 										</div>
 									</div>
 									<div class="card-body">
-										<h4 class="card-title">Members</h4>
-										<a href="employment"><span class="avatar" data-toggle="tooltip" data-placement="top" title="Danny Ward"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></span></a>
-										<a href="employment"><span class="avatar" data-toggle="tooltip" data-placement="top" title="Linda Craver"><img class="img-fluid" alt="avatar image" src="img/profiles/img-4.jpg"></span></a>										
+										@if($leavesInfo = currentUserLeaveBalance())
+										<table class="table">
+											<tr>
+												{{-- <th>Type</th> --}}
+												<th>Allowance</th>
+												<th>Taken</th>
+												<th>Balance</th>
+											</tr>
+											@foreach ($leavesInfo as $leave)
+												<tr>													
+													<td> {{ $leave->name }} - {{ $leave->no_of_days }} </td>
+													<td> {{ $leave->days_used }} </td>
+													<td> {{ $leave->remaining_days }} </td>
+												</tr>
+											@endforeach
+										</table>
+										@endif
 									</div>
 								</div>
+								@endif
 								
 							</aside>
 						</div>

@@ -94,3 +94,16 @@ if (! function_exists('assetUrl')) {
         $conf = DB::table('m_attendance_configures')->where('id', 2)->first();
         return $conf->action_flag;
     }
+
+    function currentUserLeaveBalance() {
+        $userId = getEmployeeId(Auth::User()->id);
+        $today = date('Y-m-d');
+        $leaves = DB::table('m_leave_types')
+            ->join('m_leave_entitlements', 'm_leave_entitlements.leave_type_id', 'm_leave_types.id')
+            ->where('m_leave_entitlements.emp_number', $userId)
+            ->where('m_leave_entitlements.from_date', '<=', $today)
+            ->where('m_leave_entitlements.to_date', '>=', $today)
+            ->selectRaw('m_leave_types.name, m_leave_entitlements.no_of_days, m_leave_entitlements.days_used, (m_leave_entitlements.no_of_days - m_leave_entitlements.days_used) as remaining_days')
+            ->get();
+        return $leaves;
+    }

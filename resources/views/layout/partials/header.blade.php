@@ -439,33 +439,9 @@
                                     <a class="nav-link {{ Request::is('my-info') ? 'active' : '' }}" href="{{ route('myinfo') }}"><span class="lnr lnr-star pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">My Info</span></a>                                    
                                 </li>
                                 @hasrole('Admin')
-                                <li class="mr-1 {{ Request::is('reports','contact-reports','email-reports','leave-reports','payroll-reports','security-reports','work-from-home-reports') ? 'active' : '' }}">
-                                    <a class="nav-link dropdown-toggle" href="reports"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Employee List</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Configuration</a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Job Title</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Pay Grades</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Employment Status</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Job Categories</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">Work Shifts</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                <li class="mr-1 {{ Request::is('reports') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('reports.index') }}"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a>
+                                    
                                 </li>
                                 <li class="mr-1 {{ Request::is('import-biometric-data') ? 'active' : '' }}">
                                     <a class="nav-link btn-ctm-space {{ Request::is('import-biometric-data') ? 'active' : '' }}" href="{{ route('upload.biometric') }}">

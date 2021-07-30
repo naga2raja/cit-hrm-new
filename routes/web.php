@@ -292,6 +292,8 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
 
     // Employee Timesheet List
     Route::get('/timesheets', 'Time\Timesheets\TimesheetsController@index')->name('timesheets.index');
+    //Reports
+    Route::get('/reports', 'Reports\ReportsController@index')->name('reports.index');
 });
 
 Route::get('/', 'HomeController@index')->name('index');
