@@ -40,9 +40,18 @@
 											<div class="col-sm-2">
 												<div class="form-group">
 													<div class="input-group mb-3">
-														<input type="text" name="date" id="timesheet_date" class="form-control" value="{{ date('d-m-Y', strtotime(Request::get('date'))) }}">
+														@if(Request::get('date'))
+															@php 
+																$timesheet_date = date('d-m-Y', strtotime(Request::get('date')));
+															@endphp
+														@else
+															@php 
+																$timesheet_date = date('d-m-Y');
+															@endphp
+														@endif
+														<input type="text" name="date" id="timesheet_date" class="form-control" value="{{ $timesheet_date }}" readonly="">
 														<div class="input-group-append">
-															<button class="btn btn-white border" type="button" id="calendar_icon">
+															<button class="btn btn-light border" type="button" id="calendar_icon">
 																<i class="fa fa-calendar" aria-hidden="true"></i>
 															</button>
 														</div>
@@ -119,9 +128,9 @@
 	              												</td>
 	              												<td>
 	              													@if($loop->index == 0)
-	              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Add Row</button>
+	              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ ($timesheet->comments) ? 'disabled' : '' }}>Add Row</button>
 	              													@else
-	              														<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius">X</button>
+	              														<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius" {{ ($timesheet->comments) ? 'disabled' : '' }}>X</button>
 	              													@endif
 	              												</td>
 	              											</tr>
@@ -136,6 +145,24 @@
 										</div>
 										<hr>
 
+
+
+										@if(($timesheet)&&($timesheet->comments))
+											<div class="border">
+												<div class="card-header" id="basic2">
+													<h4 class="cursor-pointer mb-0">Timesheet Log</h4>
+												</div>
+												<div class="card-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<div>{!! substr($timesheet->comments, 4) !!}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<br>
+										@endif
+
 										<div class="col-sm-12 text-center">
 											<div class="row">														
 												<div class="col-sm-4"></div>
@@ -143,7 +170,7 @@
 													<div class="row">
 														<div class="col-sm-2">
 															<div class="submit-section text-center btn-add">
-																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ ($timesheet->comments) ? 'disabled' : '' }}> Save</button>
 															</div>
 														</div>
 														<!-- <div class="col-sm-2">
@@ -157,11 +184,12 @@
 											</div>
 										</div>
 									</form>
+
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>					
 			</div>
 		</div>
 	</div>
@@ -191,18 +219,39 @@
 @push('scripts')
 <script type="text/javascript">
 
+	function compareDate(date){
+		var start_day = moment(date, "DD/MM/YYYY").format("DD");
+		var start_month = moment(date, "DD/MM/YYYY").format("MM");
+		var start_year = moment(date, "DD/MM/YYYY").format("YYYY");
+
+		var now = new Date();
+		var end_day = ("0" + now.getDate()).slice(-2);
+		var end_month = ("0" + (now.getMonth() + 1)).slice(-2);
+		var end_year = now.getFullYear();
+
+		if(start_year <= end_year){
+			if(start_month <= end_month){
+				if(start_day <= end_day){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
 	function getUniqueActivityName(row_id, project_id, activity_id){
 	//check if row id already exists
 	 	if(arrayData.length != 0){
 		 	arrayData.forEach(function(value,index){
 		 		// alert(value.project_id+" = "+project_id);
-		 	// 	if(value.row_id == row_id) {
-				//    arrayData.splice(index,3);
-				//    arrayData.push({'row_id':row_id, 'project_id':project_id, 'activity_id': activity_id});
-				// }
-
 				if(value.project_id == project_id && value.activity_id == activity_id ) {
 					// console.log('exists', arrayData);
+					// alert(row_id);
 					// alert("Already exist");
 			   }else{
 					// alert("add");
@@ -232,7 +281,7 @@
 			week: { dow: 1 }
 		}),		
 		maxDate: moment(),
-		date: "{{ date('Y-m-d', strtotime(Request::get('date'))) }}",
+		date: "{{ (Request::get('date')) ? date('Y-m-d', strtotime(Request::get('date'))) : date('Y-m-d') }}",
         icons: {
             up: "fa fa-angle-up",
             down: "fa fa-angle-down",
@@ -332,9 +381,7 @@
 	 	var project_id = $(row_id+' .project_id').val();
 	 	var activity_id = this.value;
 
-	 	getUniqueActivityName(row_id, project_id, activity_id);
-
-	 	
+	 	getUniqueActivityName(row_id, project_id, activity_id);	 	
 	});
 
 	function validation (j) {
@@ -372,7 +419,7 @@
 	window.onload = function() {
 		// make readonly only if employee_id exist
 		@if(Request::get('employee_id'))
-			$("#employee_name").select2({disabled:'readonly'});
+			$("#employee_name").select2({ disabled:'readonly' });
 		@endif
 
 	    $('#add').click(function(){

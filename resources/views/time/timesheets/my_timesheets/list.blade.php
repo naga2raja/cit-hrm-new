@@ -149,7 +149,7 @@
 												</div>
 											</div>
 										</div>
-									</div>									
+									</div>	
 								</div>
 							</div>
 						</div>
@@ -293,25 +293,34 @@
 						tbody += '<td>'+ getHours(duration) +' Hrs</td>';
 
 						var status ='';
-		              	if(row.state == '0'){
+		              	if(row.status == '0'){
 		              		status = 'Not Submitted';
-		              	}else if(row.state == '1'){
-		              		status = 'Pending';
-		              	}else if(row.state == '2'){
-		              		status = 'Submitted';
+		              	}else if(row.status == '1'){
+		              		status = '<b><span class="text-warning"> Submitted </span></b>';
+		              	}else if(row.status == '2'){
+		              		status = '<b><span class="text-success"> Approved </span></b>';
+		              	}else if(row.status == '3'){
+		              		status = '<b><span class="text-danger"> Rejected </span></b>';
 		              	}
-				        tbody += '<td>' + status + '</td>';
+				        tbody += '<td><b>' + status + '</b></td>';
+
 				        var action = '';
-			            if(row.state == 0){
+				        if((row.status != 0)&&(row.role_name == 'Admin')){
+				        	action += '<select class="form-control select" data-minimum-results-for-search="Infinity" onchange="getTimeSheetStatus('+ row.id+')" id="timesheet_'+ row.id+'">';
+							action += '<option value="">Select Action</option>';
+							action += '<option value="2">Approve</option>';
+							action += '<option value="3">Reject</option>';
+							action += '</select>';
+				        }else if(row.status == 0){
 			            	action += '<div style="display: flex;">';
 			            	action += '<button class="btn  btn-outline-success btn-sm" onclick="submitForApprove('+row.id+')">Submit </button>';
 
 			            	var route = '{{ route("mytimesheets.destroy", ":id") }}';
 								route = route.replace(':id', row.id);
-							action += '<form id="" onsubmit="return confirm("Are you sure?")" action='+route+' method="post" style="margin-left: 5px;"> ';
+							action += '<form id="form_'+row.id+'" action='+route+' method="post" style="margin-left: 5px;"> ';
 							action += '<input type="hidden" name="_method" value="DELETE">';
 							action += '<input type="hidden" name="_token" value="{{ @csrf_token() }}">';
-							action += '<button class="btn btn-outline-danger btn-sm" type="submit" > Delete </button>';
+							action += '<button id="delete_button" onclick="deleteTimesheet(this)" class="btn btn-outline-danger btn-sm delete_button" type="button"> Delete </button>';
 							action += '</form>';
 							action += '</div>';
 				    	}
@@ -566,16 +575,23 @@
 		}
 		$.ajax({
 			type: "POST",
-			url: '{{ route("punch.submit") }}',
-			data: { 'id': id, 'status': 1, '_token': '{{ csrf_token() }}' }, // serializes the form's elements.
+			url: '{{ route("mytimesheets.submit") }}',
+			data: { 'id': id, 'status': 1, '_token': '{{ csrf_token() }}' },
 			success: function(data)
 			{
 				console.log(data); // show response from the php script.
 				alert('Submited successfully!');
 				window.location.reload();
-
 			}
 		});
+	}
+
+	function deleteTimesheet(elem) {
+		if (!confirm("Do you sure?")){
+			return false;
+		}
+		var form_id = $(elem).closest("form").attr('id');
+		$('#'+form_id).submit();
 	}
 
 </script>

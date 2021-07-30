@@ -35,6 +35,18 @@ if (! function_exists('assetUrl')) {
         return $status[$index];
     }
 
+    function currentTimesheetStatus($index)
+    {
+        $status = [
+            '0' => 'Not submitted',
+            '1' => 'Submitted',
+            '2' => 'Approved',
+            '3' => 'Rejected'
+        ];
+
+        return $status[$index];
+    }
+
     function punchStatus()
     {
         $status = [

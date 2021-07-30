@@ -256,6 +256,7 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function
 
     /* Time/Timesheets/MyTimesheets */
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
+    Route::post('/mytimesheets/status-change', 'Time\Timesheets\MyTimesheetsController@updateStatusAjax')->name('mytimesheets.submit');
     Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
     // add Timesheets
     Route::get('/timesheets.create', 'Time\Timesheets\TimesheetsController@create')->name('timesheets.create');
@@ -291,6 +292,9 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
 
     // Employee Timesheet List
     Route::get('/timesheets', 'Time\Timesheets\TimesheetsController@index')->name('timesheets.index');
+    Route::post('timesheets-admin-action', 'Time\Timesheets\TimesheetsController@adminAction')->name('timesheets.action');
+
+
 });
 
 Route::get('/', 'HomeController@index')->name('index');

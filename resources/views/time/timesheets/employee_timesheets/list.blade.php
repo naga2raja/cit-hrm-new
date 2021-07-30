@@ -126,20 +126,26 @@
 
 										<div class="card-body employee-timesheets">									
 											<div class="table-responsive">
+												@if($message = Session::get('success'))
+													<div class="col-md-12">
+														<div class="alert alert-success">
+															<p>{{ $message }}</p>
+														</div>
+													</div>
+												@endif
 												<table id="timesheets" class="table custom-table table-hover">
 													<thead>
-														<tr class="bg-light">
+														 <tr class="bg-light">
 		              										<th>Employee</th>
-		              										<th>Project</th>
-		              										<th>Activity</th>
-		              										<th>Comments</th>
-		              										<th>Date</th>
-		              										<th>Duration</th>
+		              										<th>Timesheet</th>
+		              										<th>Duration (HH:MM)</th>
+		              										<th>Status</th>
+		              										<th>Action</th>
 		              									</tr>
 													</thead>
 													<tbody id="list_timesheet_table">
 														<tr>
-															<td colspan="6"><p class="text-center">No data found</p></td>
+															<td colspan="5"><p class="text-center">No data found in selected date</p></td>
 														</tr>
 													</tbody>
 												</table>
@@ -150,6 +156,13 @@
 													<div class="row">
 														<div class="col-sm-6">
 															<button class="btn btn-theme text-white ctm-border-radius button-1" type="button">Export</button>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-9">
+													<div class="row">
+														<div class="col-sm-11 float-right">
+															<button type="button" class="btn btn-theme button-1 text-white pull-right p-2" id="approve_action" data-toggle="modal" data-target="#approve_modal" style="display: none;" ><i class="fa fa-save"></i> Save</button>
 														</div>
 													</div>
 												</div>
@@ -166,6 +179,45 @@
 			
 		</div>
 		<!-- Inner Wrapper -->
+
+		<!--Approve The Modal -->
+		<div class="modal fade" id="approve_modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+				
+					<!-- Modal body -->
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title mb-3">Are you sure want to update the status?</h4>
+                        <form method="POST" action="{{ route('timesheets.action') }}">
+                            @csrf                            
+                            <input type="hidden" id="timesheet_id_update" name="timesheet_id_update">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group mb-2">
+										<label>Your Comments:</label>
+										<textarea class="form-control " rows="3" id="comments" name="comments"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-4">
+											<button type="submit" class="btn btn-theme button-1 ctm-border-radius btn-block text-white text-center mb-2">Save</button>
+										</div>
+										<div class="col-sm-4">
+											<button type="button" class="btn btn-danger ctm-border-radius btn-block text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
+										</div>
+									</div>
+								</div>
+							</div>						
+                        </form>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
@@ -296,22 +348,25 @@
 						tbody += '<td>'+ getHours(duration) +' Hrs</td>';
 
 						var status ='';
-		              	if(row.state == '0'){
+		              	if(row.status == '0'){
 		              		status = 'Not Submitted';
-		              	}else if(row.state == '1'){
-		              		status = 'Pending';
-		              	}else if(row.state == '2'){
-		              		status = 'Submitted';
+		              	}else if(row.status == '1'){
+		              		status = '<b><span class="text-warning"> Submitted </span></b>';
+		              	}else if(row.status == '2'){
+		              		status = '<b><span class="text-success"> Approved </span></b>';
+		              	}else if(row.status == '3'){
+		              		status = '<b><span class="text-danger"> Rejected </span></b>';
 		              	}
-				        tbody += '<td>' + status + '</td>';
+				        tbody += '<td><b>' + status + '</b></td>';
+
 				        var action = '';
-			            if(row.state == 0){
-			            	action += '<div style="display: flex;">';
-							action += '<form onsubmit="return confirm("Are you sure?")" action="" method="post" style="margin-left: 5px;">';
-							action += '<button class="btn btn-outline-danger btn-sm" type="submit" > Delete </button>';
-							action += '</form>';
-							action += '</div>';
-				    	}
+			            if((row.status != 0) && (row.status != 2) && (row.status == 1)  ){
+				        	action += '<select class="form-control select" data-minimum-results-for-search="Infinity" onchange="getTimeSheetStatus('+ row.id+')" id="timesheet_'+ row.id+'">';
+							action += '<option value="">Select Action</option>';
+							action += '<option value="2">Approve</option>';
+							action += '<option value="3">Reject</option>';
+							action += '</select>';
+				        }
 				    	tbody += '<td>' + action + '</td>';
 				        tbody += '</tr>';
 		            });
@@ -339,6 +394,7 @@
 
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
+		        $('.select').select2();
 			}
 		});
 	}
@@ -554,6 +610,37 @@
 		$('#timesheet_table_header').text('Monthly Timesheets');
 		LoadData($('#monthlyDatePicker').val(),'monthly');
 	});
+
+	var timesheetRecordsArray = [];
+	function getTimeSheetStatus(timesheet_id) {      
+		$('#approve_action').hide();
+		var status_id = $('#timesheet_'+timesheet_id).val();
+		// remove from array if empty
+		if(status_id == '') {
+            timesheetRecordsArray = timesheetRecordsArray.filter(function( obj ) {
+				return obj.id != timesheet_id;
+			});
+        }
+		timesheetRecordsArray.forEach(function(value,index){
+			if(value.id == timesheet_id)		
+				timesheetRecordsArray.splice(index,1);		
+		});
+
+		if(status_id)
+            timesheetRecordsArray.push({'id': timesheet_id, 'status_id': status_id});
+        
+		if(timesheetRecordsArray.length)
+			$('#approve_action').show();
+		
+		$('#timesheet_id_update').val(JSON.stringify(timesheetRecordsArray));
+		console.log(timesheet_id, 'result', timesheetRecordsArray);
+    }
+
+    // function currentTimesheetStatus(index)
+    // {
+    //     var status = new Array("Not submitted", "Submitted", "Approved", "Rejected");
+    //     return status[index];
+    // }
 
 </script>
 @endpush
