@@ -38,11 +38,11 @@
 
 										@if($message = Session::get('success'))
 										<div class="alert alert-success">
-											<p>{{$message}}</p>
+											<p>{{ $message }}</p>
 										</div>
 										@endif
 										
-											<form method="POST" enctype="multipart/form-data" action="">
+											<form method="POST" enctype="multipart/form-data" action="{{ route('attendance.import') }}">
 												@csrf
 												<div class="row">
 													<div class="col-md-12">
@@ -71,48 +71,93 @@
 												</div>
 											</form>
 
-											@if($results = Session::get('results'))
+											@if(@$output = Session::get('output'))
 											<div class="card shadow-sm ctm-border-radius">
 												<div class="card-body align-center">
 													<div class="employee-office-table">
 														<div class="table-responsive">
 															<h4>Results</h4>
-															<table class="table custom-table table-hover">
+
+															<!-- After Import, Success/error Message will be displayed Here -->
+															<div class="row">
+																<?php
+																	if(count($output['errors'])) {
+																		echo '<div class="col-md-12"><div class="alert alert-danger mt-3"> <p>Below Records are Failed to Import</p></div></div> ';
+																	}
+
+																	if(count($output['emp_not_found'])) {
+																		echo '<div class="col-md-12">
+																		<h4 style="color:red;padding: 20px 15px 5px 0px">Below Records Employee Id not present in database</h4>';
+																		echo '<table class="table  table-hover">
 																<thead>
-																	<tr>
+																	<tr class="bg-light">
 																		<th>Name</th>
 																		<th>Email</th>
+																		<th>Date</th>
 																		<th>Status</th>
 																	</tr>
 																</thead>
-																<tbody>
-																@if(@$results['success'])	
-																	@foreach (@$results['success'] as $item)		
-																			<tr>
-																				<td>	
-																					<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>																				
-																					<h2><a href="#">{{ $item['name'] }} </a></h2>
-																				</td>
-																				<td> {{ $item['email'] }}</td>
-																				<td> <span class="btn btn-outline-success text-dark btn-sm">Success</span></td>
-																			</tr>
-																	@endforeach
-																@endif
+																<tbody>';                    
+																		foreach ($output['emp_not_found'] as $value) {
+																			echo '<tr><td>'.$value[0].'</td><td>'.$value[4].'</td><td>'.$value[1].'</td><td><span class="btn btn-outline-danger text-dark btn-sm">Failed</span></td> </tr>';
+																		}
+																		echo '</table> </div> <hr>';
+																	}
 
-																@if(@$results['failed'])	
-																	@foreach (@$results['failed'] as $item)		
-																			<tr>
-																				<td>
-																					<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>
-																					<h2><a href="employment">{{ $item['name'] }} </a></h2>
-																				</td>
-																				<td> {{ $item['email'] }}</td>
-																				<td> <span class="btn btn-outline-danger text-dark btn-sm">Failed</span></td>
-																			</tr>
-																	@endforeach
-																@endif
-																</tbody>
-															</table>
+																	if(count($output['punch_out_missing'])) {
+																		echo '<div class="col-md-12">
+																		<h4 style="color:red;padding: 20px 15px 5px 0px">Below Records Punch out time is not inserted</h4>';
+																		echo '<table class="table   table-hover"> <thead>
+																	<tr class="bg-light">
+																		<th>Name</th>
+																		<th>Email</th>
+																		<th>Date</th>
+																		<th>Status</th>
+																	</tr>
+																</thead>
+																<tbody>';                  
+																		foreach ($output['punch_out_missing'] as $value) {
+																			echo '<tr><td>'.$value[0].'</td><td>'.$value[4].'</td><td>'.$value[1].'</td><td><span class="btn btn-outline-danger text-dark btn-sm">Failed</span></td> </tr>';
+																		}
+																		echo '</table> </div> <hr>';
+																	}
+
+																	if(count($output['punch_in_missing'])) {
+																		echo '<div class="row">
+																		<h4 style="color:red;padding: 20px 15px 5px 0px">Below Records Punch out time is not inserted</h4>';
+																		echo '<table class="table table-hover"> <thead>
+																	<tr class="bg-light">
+																		<th>Name</th>
+																		<th>Email</th>
+																		<th>Date</th>
+																		<th>Status</th>
+																	</tr>
+																</thead>
+																<tbody>'; 
+																		foreach ($output['punch_in_missing'] as $value) {
+																			echo '<tr><td>'.$value[0].'</td><td>'.$value[4].'</td><td>'.$value[1].'</td><td><span class="btn btn-outline-danger text-dark btn-sm">Failed</span></td> </tr>';
+																		}
+																		echo '</table> </div> <hr>';
+																	}
+
+																	if(count($output['success'])) {
+																		echo '<div class="col-md-12">
+																		<h4 style="color:green;padding: 20px 15px 5px 0px">Below Records inserted Successfully</h4>';
+																		echo '<table class="table  table-hover"> <thead>
+																	<tr class="bg-light">
+																		<th>Employee Id</th>
+																		<th>Name</th>
+																		<th>Date</th>
+																		<th>Status</th>
+																	</tr>
+																</thead>
+																<tbody>'; 
+																		foreach ($output['success'] as $value) {
+																			echo '<tr><td>'.$value[0].'</td><td>'.$value[4].'</td><td>'.$value[1].'</td><td><span class="btn btn-outline-success text-dark btn-sm">Success</span></td> </tr>';
+																		}
+																		echo '</table> </div> <hr>';
+																	}
+																?>																	
 														</div>
 													</div>
 												</div>

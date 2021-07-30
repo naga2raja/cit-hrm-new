@@ -34,6 +34,7 @@
 										</div>
 									</div>
 								</div>
+								<!--
 								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white p-4 mb-4 card">
 									<ul class="list-group">
 										<li class="list-group-item text-center button-6"><a href="employment" class="text-dark">Employement</a></li>
@@ -44,7 +45,7 @@
 										<li class="list-group-item text-center button-6"><a href="profile-reviews" class="text-dark">Reviews</a></li>
 										<li class="list-group-item text-center button-5 active"><a class="text-white" href="profile-settings">Settings</a></li>
 									</ul>
-								</div>
+								</div> -->
 							</aside>
 						</div>
 				

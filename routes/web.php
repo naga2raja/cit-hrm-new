@@ -239,6 +239,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     /* Time/Attendance/PunchInOut */
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
     Route::get('import-biometric-data', 'Biometric\BiometricImportController@index')->name('upload.biometric');
+    Route::post('import-biometric-data', 'Biometric\BiometricImportController@import')->name('attendance.import');
 });
 
 Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function () {

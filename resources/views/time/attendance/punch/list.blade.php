@@ -68,13 +68,16 @@
 												<h4 class="card-title mb-0 ml-2 mt-2">{{ Request::is('employee-records') ? 'Employee' : 'My' }} Records</h4>
 											</div>
 										</div>
-										
+										@if(isPunchInEnabled())
                                         <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                             <a href="{{ route('punch.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
                                         </div>
+										@endif
+										@if( (attendanceDeleteEnabled() && $userRole == 'Manager') || (employeeDeleteEnabled() && $userRole == 'Employee') || $userRole == 'Admin' )
                                         <div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
                                             <button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_myrecords_table', 'punch')"><i class="fa fa-trash"></i> Delete</button>
                                         </div>
+										@endif
 									</div>                                    
 								</div>
 								
@@ -131,8 +134,8 @@
 														</td>
 														<td>
 															
-																@if($item->status != 0 && ($userRole == 'Manager' || $userRole == 'Admin'))		
-																	@if($item->status == 1 || ($item->employee_id == 1) )														
+																@if($item->status != 0 && ($userRole == 'Manager' || $userRole == 'Admin'))																		
+																	@if( ($item->status == 1 && $item->employee_id == 1) || ($userRole == 'Admin' && $item->status == 1) || ($userRole == 'Manager' && getEmployeeId(Auth::user()->id) != $item->employee_id && $item->status == 1)  )	
 																	<select class="form-control select" id="punch_{{ $item->id }}" onchange="getAttendanceStatus({{ $item->id }})">
 																		<option value=''>Select</option>
 																		@foreach (punchStatus() as $key => $value)

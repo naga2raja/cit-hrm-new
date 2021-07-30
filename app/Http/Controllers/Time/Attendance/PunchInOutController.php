@@ -39,6 +39,7 @@ class PunchInOutController extends Controller
                 $query->whereRaw('DATE_FORMAT(t_punch_in_outs.punch_in_user_time, "%Y-%m-%d") = "'. $date.'"');
             })
             ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+            ->orderBy('t_punch_in_outs.id', 'DESC')
             ->paginate(30);
         
         $userRole = 'Admin'; 
@@ -214,7 +215,7 @@ class PunchInOutController extends Controller
         $punch->updated_by = Auth::user()->id;
         $punch->save();
 
-        return redirect()->route('punch.create')->with('success', 'Punched out successfully!' );
+        return redirect()->route('punch.index')->with('success', 'Punched out successfully!' );
     }
 
     /**
@@ -361,6 +362,7 @@ class PunchInOutController extends Controller
             }
             $data = $data->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
                     ->where('t_punch_in_outs.status', '>', 0)
+                    ->orderBy('t_punch_in_outs.id', 'DESC')
                     ->paginate(30);
         return view('time/attendance/punch/list', compact('data', 'userRole'));
     }

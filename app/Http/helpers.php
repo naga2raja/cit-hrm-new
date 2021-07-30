@@ -77,3 +77,20 @@ if (! function_exists('assetUrl')) {
         
         // return Auth::user()->id;
     }
+
+    function getEmployeeId($userId) {
+        $employee = DB::table('employees')->where('user_id', $userId)->first();
+        return $employee->id;
+    }
+
+    function attendanceDeleteEnabled() {
+        // Supervisor can add/edit/delete attendance records of subordinates
+        $conf = DB::table('m_attendance_configures')->where('id', 3)->first();
+        return $conf->action_flag;
+    }
+
+    function employeeDeleteEnabled() {
+        // Employee can edit/delete own attendance records
+        $conf = DB::table('m_attendance_configures')->where('id', 2)->first();
+        return $conf->action_flag;
+    }
