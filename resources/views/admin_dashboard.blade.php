@@ -232,15 +232,19 @@
 											<a href="employees" class="dash-card float-right mb-0 text-primary">Manage Team </a>
 										</div>
 										<div class="card-body">
-											<div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img src="img/profiles/img-6.jpg" alt="Maria Cotton" class="img-fluid"></div>
-												<div class="media-body">
-													<h6 class="m-0">Maria Cotton</h6>
-													<p class="mb-0 ctm-text-sm">PHP</p>
-												</div>
-											</div>
-											<hr>
-											<div class="media mb-3">
+											@if($data['team_leads'])
+												@foreach($data['team_leads'] as $team_leads)
+													<div class="media mb-3">
+														<div class="e-avatar avatar-online mr-3"><img src="img/profiles/img-6.jpg" alt="Maria Cotton" class="img-fluid"></div>
+														<div class="media-body">
+															<h6 class="m-0">{{ $team_leads->team_lead }}</h6>
+															<p class="mb-0 ctm-text-sm">{{ $team_leads->project_name }} Team Lead</p>
+														</div>
+													</div>
+													<hr>
+												@endforeach
+											@endif
+											<!-- <div class="media mb-3">
 												<div class="e-avatar avatar-online mr-3"><img class="img-fluid" src="img/profiles/img-5.jpg" alt="Linda Craver"></div>
 												<div class="media-body">
 													<h6 class="m-0">Danny Ward</h6>
@@ -270,7 +274,7 @@
 													<h6 class="m-0">John Gibbs</h6>
 													<p class="mb-0 ctm-text-sm">Business</p>
 												</div>
-											</div>
+											</div> -->
 										</div>
 									</div>
 								</div>
@@ -350,60 +354,31 @@
 										</div>
 										<div class="card-body recent-activ">
 											<div class="recent-comment">
-												<a href="javascript:void(0)" class="dash-card text-danger">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Mon, 16 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Fri, 20 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Wed, 25 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Fri, 27 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Tue, 31 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
+												@if($data['upcoming_leaves'])
+													@foreach($data['upcoming_leaves'] as $upcoming_leaves)
+														@if($upcoming_leaves->status == '5')
+															<?php $class = "danger"; $status = "Cancelled" ?>
+														@elseif($upcoming_leaves->status == '4')
+															<?php $class = "danger"; $status = "Rejected" ?>
+														@elseif($upcoming_leaves->status == '2')
+															<?php $class = "success"; $status = "Approved" ?>
+														@elseif($upcoming_leaves->status == '1')
+															<?php $class = "warning"; $status = "Pending" ?>
+														@endif
+
+														<a href="javascript:void(0)" class="dash-card text-{{ $class }}">
+															<div class="dash-card-container">
+																<div class="dash-card-icon">
+																	<i class="fa fa-suitcase"></i>
+																</div>
+																<div class="dash-card-content">
+																	<h6 class="mb-0">{{ date('D, d F Y', strtotime($upcoming_leaves->date)) }} {{ '('.$upcoming_leaves->leaveTypeName->name.')' }} - <span class="ctm-text-sm">{{ $status }}</span></h6>
+																</div>
+															</div>
+														</a>
+													<hr>
+													@endforeach
+												@endif
 											</div>
 										</div>
 									</div>

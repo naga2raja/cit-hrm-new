@@ -114,12 +114,15 @@
 									<div class="card shadow-sm ctm-border-radius">
 										<div class="card-header">
 											<div class="row filter-row">
-												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
 													<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
 												</div>
 												<div id="button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
+													<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('timesheets','mytimesheets')"><i class="fa fa-trash"></i> Delete</button>
 												</div>
 											</div>
 										</div>
@@ -250,6 +253,9 @@
 			success: function(data){
 				// console.log('response : ', data);
 				var thead = '<tr class="bg-light">';
+					thead += '<th class="text-center">';
+					thead += '<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick=SelectAll("timesheets")>';
+					thead += '</th>';
 	              	thead += '<th>Employee</th>';
 	              	thead += '<th>Timesheet Period</th>';
 	              	thead += '<th>Duration (HH:MM)</th>';
@@ -269,6 +275,11 @@
 				    	var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
 
 		            	tbody += '<tr>';
+		            	if(row.status == '0'){
+		            		tbody += '<td><input type="checkbox" name="timesheet_id" value='+row.id+'></td>'
+		            	}else{
+		            		tbody += '<td></td>';
+		            	}
 				        tbody += '<td><h2><u><a href="'+url+'">' + row.employee_name + '</a></u></h2></td>';
 		              	tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
 						var duration = 0;
@@ -321,7 +332,7 @@
 		            tbody += '</tr>';		            
 		        }else{
 		        	tbody += '<tr>';
-		        	tbody += '<td colspan="4"><p class="text-center">No data found in selected date</p></td>';
+		        	tbody += '<td colspan="6"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
 
 		        	$("#button_div").empty(); //cache it

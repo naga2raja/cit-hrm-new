@@ -28,7 +28,7 @@ class ProjectsController extends Controller
         
         DB::connection()->enableQueryLog(); 
 
-        $projects = mProject::select(DB::raw('GROUP_CONCAT( DISTINCT m_customers.customer_name) as customer_name'),DB::raw("CONCAT(employees.first_name,' ',employees.middle_name,' ',employees.last_name) as admin_name"), 'm_projects.id as project_id', 'm_projects.project_name as project_name')
+        $projects = mProject::select(DB::raw('GROUP_CONCAT( DISTINCT m_customers.customer_name) as customer_name'),DB::raw("CONCAT_WS (' ', first_name, middle_name, last_name) as admin_name"), 'm_projects.id as project_id', 'm_projects.project_name as project_name')
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
                 ->leftjoin('employees', 'employees.id', 't_project_admins.admin_id');
@@ -112,7 +112,7 @@ class ProjectsController extends Controller
     {
         DB::connection()->enableQueryLog(); 
 
-        $projects = $projects = mProject::select('m_projects.id','m_projects.project_name', 'm_projects.project_description', 'm_projects.customer_id', 'm_customers.customer_name', 't_project_admins.admin_id',DB::raw("CONCAT(employees.first_name,' ',employees.middle_name,' ',employees.last_name) as admin_name"))
+        $projects = mProject::select('m_projects.id','m_projects.project_name', 'm_projects.project_description', 'm_projects.customer_id', 'm_customers.customer_name', 't_project_admins.admin_id',DB::raw("CONCAT_WS (' ', first_name, middle_name, last_name) as admin_name"))
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
                 ->leftjoin('employees', 'employees.id', 't_project_admins.admin_id')
