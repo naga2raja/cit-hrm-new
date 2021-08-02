@@ -32,15 +32,26 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user->hasRole('Admin|Manager')){
-            $employees = Employee::get();
-            $company = mCompany::get();
-            $leave = tLeave::where('employee_id', $user->id)
+        $my_data = Employee::where('id', $user->id)->first();
+        $data = [];
+        if($user->hasRole('Admin|Manager')){            
+            $employees_count = Employee::count();
+            $company_count = mCompany::count();
+            $leave_count = tLeave::where('employee_id', $user->id)
                             ->whereIn('status', [1,2,3])
-                            ->get();
-            return view('admin_dashboard', compact('employees', 'company', 'leave')); 
+                            ->count();
+            $data = [
+                'my_data'  => $my_data,
+                'employees_count'  => $employees_count,
+                'company_count'   => $company_count,
+                'leave_count' => $leave_count
+            ];
+            return view('admin_dashboard', compact('data'));
         } else {
-            return view('employees-dashboard');            
+            $data = [
+                'my_data'  => $my_data
+            ];
+            return view('employees_dashboard', compact('data'));
         }
     }
 

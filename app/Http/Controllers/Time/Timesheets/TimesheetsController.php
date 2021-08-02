@@ -90,14 +90,23 @@ class TimesheetsController extends Controller
                                 ->delete();
             
         }else{
-            // create Timesheet
-            $timesheet = tTimesheet::create([
-                'employee_id'  => $employee_id,
-                'start_date'  =>  $date,
-                'end_date'  =>  $date,
-                'state'  => "0"
-            ]);
-            $timesheet_id = $timesheet->id;
+          if(Auth::User()->id == $employee_id) {
+            $status = '0';
+            $comments = '<b>'.Auth::user()->name.'</b> - Saved Timesheet on ' . getCurrentTime();
+          }else if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){
+            $status = '2';
+            $comments = '<b>'.Auth::user()->name .'('. Auth::user()->roles[0]->name .')</b> - Send to <b>'. $newtimesheetStatus.'</b> on ' . getCurrentTime();
+          }
+          // create Timesheet
+          $timesheet = tTimesheet::create([
+              'employee_id'  => $employee_id,
+              'start_date'  =>  $date,
+              'end_date'  =>  $date,
+              'status'  => $status,
+              'comments' => $comments,
+              'created_by' => Auth::user()->id
+          ]);
+          $timesheet_id = $timesheet->id;
         }
         // create TimesheetItem
         $timeItem = $data['timeItem'];
@@ -251,6 +260,7 @@ class TimesheetsController extends Controller
 
                 $timesheetInfo = tTimesheet::where('id', $timesheet_id)->first();
                 $timesheetInfo->status = $status_id;
+                $timesheetInfo->updated_by = Auth::user()->id;
                 $timesheetInfo->comments = $timesheetInfo->comments . ' <hr> <b>'.Auth::user()->name .'('. $userRole .')</b> - Updated to <b>'. $newtimesheetStatus.'</b> on ' . getCurrentTime();
                 $timesheetInfo->save();
 

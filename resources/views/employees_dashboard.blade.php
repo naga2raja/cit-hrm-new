@@ -26,10 +26,17 @@
 								<div class="user-card card shadow-sm bg-white text-center ctm-border-radius">
 									<div class="user-info card-body">
 										<div class="user-avatar mb-4">
-											<img src="img/profiles/profile.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+											@if($data['my_data']->profile_photo)												
+												<img src="{{ $data['my_data']->profile_photo }}" alt="{{ $data['my_data']->first_name }}" class="img-fluid rounded-circle" width="100">
+											@else
+												<img src="{{ assetUrl('img/profiles/profile.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+											@endif
 										</div>
 										<div class="user-details">
-											<h4><b>Welcome @if (!Auth::guest()) {{ Auth::user()->name }} @endif</b></h4>
+											<h4><b>Welcome</b></h4>
+											<h4>
+												<b>@if (!Auth::guest()) {{ Auth::user()->name }} @endif</b>					
+											</h4>
 											<p>{{ date('D, d M Y') }}</p>
 										</div>
 									</div>

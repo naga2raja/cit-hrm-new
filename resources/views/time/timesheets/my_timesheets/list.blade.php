@@ -196,25 +196,11 @@
 	});
 
 	function compareDate(date){
-		var start_day = moment(date, "DD/MM/YYYY").format("DD");
-		var start_month = moment(date, "DD/MM/YYYY").format("MM");
-		var start_year = moment(date, "DD/MM/YYYY").format("YYYY");
+		var start = moment(date, "DD/MM/YYYY").format("YYYY/MM/DD");
+		var end = moment(new Date(), "DD/MM/YYYY").format("YYYY/MM/DD");
 
-		var now = new Date();
-		var end_day = ("0" + now.getDate()).slice(-2);
-		var end_month = ("0" + (now.getMonth() + 1)).slice(-2);
-		var end_year = now.getFullYear();
-
-		if(start_year <= end_year){
-			if(start_month <= end_month){
-				if(start_day <= end_day){
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
+		if(start <= end){
+			return true;
 		}else{
 			return false;
 		}

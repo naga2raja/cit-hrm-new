@@ -128,9 +128,9 @@
 	              												</td>
 	              												<td>
 	              													@if($loop->index == 0)
-	              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ ($timesheet->comments) ? 'disabled' : '' }}>Add Row</button>
+	              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ (@$timesheet->comments) ? 'disabled' : '' }}>Add Row</button>
 	              													@else
-	              														<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius" {{ ($timesheet->comments) ? 'disabled' : '' }}>X</button>
+	              														<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius" {{ (@$timesheet->comments) ? 'disabled' : '' }}>X</button>
 	              													@endif
 	              												</td>
 	              											</tr>
@@ -170,7 +170,7 @@
 													<div class="row">
 														<div class="col-sm-2">
 															<div class="submit-section text-center btn-add">
-																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ ($timesheet->comments) ? 'disabled' : '' }}> Save</button>
+																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ (@$timesheet->comments) ? 'disabled' : '' }}> Save</button>
 															</div>
 														</div>
 														<!-- <div class="col-sm-2">
@@ -220,25 +220,11 @@
 <script type="text/javascript">
 
 	function compareDate(date){
-		var start_day = moment(date, "DD/MM/YYYY").format("DD");
-		var start_month = moment(date, "DD/MM/YYYY").format("MM");
-		var start_year = moment(date, "DD/MM/YYYY").format("YYYY");
+		var start = moment(date, "DD/MM/YYYY").format("YYYY/MM/DD");
+		var end = moment(new Date(), "DD/MM/YYYY").format("YYYY/MM/DD");
 
-		var now = new Date();
-		var end_day = ("0" + now.getDate()).slice(-2);
-		var end_month = ("0" + (now.getMonth() + 1)).slice(-2);
-		var end_year = now.getFullYear();
-
-		if(start_year <= end_year){
-			if(start_month <= end_month){
-				if(start_day <= end_day){
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
+		if(start <= end){
+			return true;
 		}else{
 			return false;
 		}
@@ -487,7 +473,7 @@
 			   data: { 'data': $('#timesheets_form').serialize(), '_token': '{{ csrf_token() }}' } ,
 			   success:function(data){
 			   	console.log(data);
-			   	// $('.success').text("Timesheets Updated successfully");
+			   	alert("Timesheets Updated successfully");
 			   	window.location.href = "{{ url()->previous() }}";
 			  }
 			});

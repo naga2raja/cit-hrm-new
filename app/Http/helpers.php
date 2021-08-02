@@ -13,6 +13,15 @@ if (! function_exists('assetUrl')) {
     }
 }
 
+    function getProfileImage(){
+        $user = Auth::user();
+        $data = DB::table('employees')
+                    ->where('id', $user->id)
+                    ->selectRaw('profile_photo')
+                    ->first();
+        return $data->profile_photo;
+    }
+
     function hoursAndMins($time, $format = '%02d:%02d')
     {
         if ($time < 1) {

@@ -17,7 +17,7 @@
 															<li class="breadcrumb-item d-inline-block"><a href="index" class="text-dark">Home</a></li>
 															<li class="breadcrumb-item d-inline-block active">Dashboard</li>
 														</ol>
-														<h4 class="text-dark">Admin Dashboard</h4>
+														<h4 class="text-dark">{{ @Auth::user()->roles[0]->name }} Dashboard</h4>
 													</div>
 												</div>
 											</div>
@@ -27,11 +27,19 @@
 								<div class="user-card card shadow-sm bg-white text-center ctm-border-radius">
 									<div class="user-info card-body">
 										<div class="user-avatar mb-4">
-											<img src="img/profiles/admin.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+											@if($data['my_data']->profile_photo)												
+												<img src="{{ $data['my_data']->profile_photo }}" alt="{{ $data['my_data']->first_name }}" class="img-fluid rounded-circle" width="100">
+											@else
+												<img src="{{ assetUrl('img/profiles/admin.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+											@endif
 										</div>
 										<div class="user-details">
 											<h4><b>Welcome</b></h4>
-											<h4><b> @if (!Auth::guest()) {{ Auth::user()->name }} @endif</b></h4>
+											<h4>
+												<b>@if (!Auth::guest()) {{ Auth::user()->name }} @endif</b>
+												@if (!Auth::user()->hasrole('Employee')) {{ '('.Auth::user()->roles[0]->name.')' }} @endif
+												
+											</h4>
 											<p>{{ date('D, d M Y') }}</p>
 										</div>
 									</div>
@@ -39,12 +47,7 @@
 								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
 									<div class="card-body">
 										<ul class="list-group">
-											@hasrole('Admin')
-											<li class="list-group-item text-center active button-5"><a href="javascript:void(0)" class="text-white">Admin Dashboard</a></li>
-											@endrole
-											@hasrole('Employee')
-											<li class="list-group-item text-center active button-5"><a class="text-white" href="javascript:void(0)">Employees Dashboard</a></li>
-											@endrole
+											<li class="list-group-item text-center active button-5"><a href="javascript:void(0)" class="text-white">{{ @Auth::user()->roles[0]->name }} Dashboard</a></li>
 										</ul>
 									</div>
 								</div>
@@ -64,7 +67,7 @@
 											<div class="card-right">
 												<a href="{{ route('employees.index') }}">
 													<h4 class="card-title">Employees</h4>
-													<p class="card-text">{{ count($employees) }}</p>
+													<p class="card-text">{{ $data['employees_count'] }}</p>
 												</a>
 											</div>
 										</div>
@@ -79,7 +82,7 @@
 											<div class="card-right">
 												<a href="{{ route('company.index') }}">
 													<h4 class="card-title">Companies</h4>
-													<p class="card-text">{{ count($company) }}</p>
+													<p class="card-text">{{ $data['company_count'] }}</p>
 												</a>
 											</div>
 										</div>
@@ -94,7 +97,7 @@
 											<div class="card-right">
 												<a href="{{ route('leave.list') }}">
 													<h4 class="card-title">Leaves</h4>
-													<p class="card-text">{{ count($leave) }}</p>
+													<p class="card-text">{{ $data['leave_count'] }}</p>
 												</a>
 											</div>
 										</div>

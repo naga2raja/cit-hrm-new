@@ -371,11 +371,12 @@ class EmployeeController extends Controller
                 $employee = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
                 $reportTo = $leaveCtrl->getReportingEmployees($employee->id);
                 
-                if($reportTo)
+                if($reportTo){
                     $empIds = explode(',', $reportTo->reporting_manager_ids);
+                }
                 
                 $data = $data->join('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id')
-                    ->whereIn('employees.id', $empIds);
+                             ->whereIn('employees.id', $empIds);
             }            
             $data = $data->groupBy('employees.id')->get();
         }

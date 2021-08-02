@@ -123,8 +123,8 @@
 
 										<div class="col-12 form-group">
 											<p class="mb-2">Email Address <span class="text-danger">*</span></p>
-													<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif>
-													{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif>
+											{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 										</div>
 
 										<div class="col-sm-6">
@@ -179,10 +179,10 @@
 											
 												<p class="mb-2">Profile image</p>
 												@if($employee->profile_photo)
-												<div id="preview_profile_image" style="max-width:200px;position: relative;">
-													<img src="{{$employee->profile_photo}}" style="max-width:100%">
-													<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editImage()"></a>
-												</div>	
+													<div id="preview_profile_image" style="max-width:150px;position: relative;">
+														<img src="{{$employee->profile_photo}}" style="max-width:100%">
+														<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editImage()"></a>
+													</div>	
 												@endif
 												<div class="form-group" style="{{ ($employee->profile_photo) ? 'display:none' : '' }}" id="upload_profile_image">
 													<input type='file' name="profile_photo" class="{{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" />

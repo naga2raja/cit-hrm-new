@@ -122,7 +122,7 @@ class PunchInOutController extends Controller
             'state' => 'PUNCHED IN',
             'updated_by' => Auth::user()->id,
             'created_by' => Auth::user()->id
-        ]);        
+        ]);
 
         return redirect()->route('punch.edit', $punch_in->id)->with('success', 'Punched in successfully!' );
     }
