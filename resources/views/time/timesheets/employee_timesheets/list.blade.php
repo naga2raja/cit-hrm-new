@@ -363,7 +363,7 @@
 		            // tbody += '<td></td>';
 		        }else{
 		        	tbody += '<tr>';
-		        	tbody += '<td colspan="4"><p class="text-center">No data found in selected date</p></td>';
+		        	tbody += '<td colspan="5"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
 		        }
 		        $("#button_div").empty(); //cache it
