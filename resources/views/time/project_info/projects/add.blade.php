@@ -58,10 +58,50 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-	                                    			<input type="hidden" name="admin_id" id="admin_id" value="">
+													<select class="admin_id form-control {{ $errors->has('admin_id') ? 'is-invalid' : ''}}" name="admin_id" id="admin_id" style="width: 100%">
+														
+													</select>
+													{!! $errors->first('admin_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
+													
+	                                    			{{-- <input type="hidden" name="admin_id" id="admin_id" value="">
 													<input type="text" class="form-control {{ $errors->has('project_admin') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="project_admin" value="{{ old('project_admin') }}" autocomplete="off" id="project_admin">
-													{!! $errors->first('project_admin', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
-													<div id="project_admins_list" class="autocomplete"></div>
+													<div id="project_admins_list" class="autocomplete"></div> --}}
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-2">
+												<div class="form-group">
+													<label>Project Managers </label>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="form-group">
+	                                    			<select class="managers form-control {{ $errors->has('managers') ? 'is-invalid' : ''}}" name="managers[]" id="manager_ids" multiple="multiple" style="width: 100%">
+														@foreach ($managers as $item)
+															<option value="{{ $item['id'] }}" selected> {{ $item['name'] }}</option>
+														@endforeach
+													</select>
+													{!! $errors->first('managers', '<span class="invalid-feedback" role="alert">:message</span>') !!}														
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-2">
+												<div class="form-group">
+													<label>Project Employees </label>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="form-group">
+	                                    			<select class="employee_name form-control {{ $errors->has('employees') ? 'is-invalid' : ''}}" name="employees[]" id="employee_ids" multiple="multiple" style="width: 100%">
+														@foreach ($employees as $item)
+															<option value="{{ $item['id'] }}" selected> {{ $item['name'] }}</option>
+														@endforeach
+													</select>
+													{!! $errors->first('employees', '<span class="invalid-feedback" role="alert">:message</span>') !!}														
 												</div>
 											</div>
 										</div>
@@ -250,5 +290,25 @@
     function pass_admin_id(id){
     	document.getElementById('admin_id').value = id;
     }
+
+	$('.employee_name, .managers, #admin_id').select2({
+		placeholder: 'Select',
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
 </script>
 @endpush

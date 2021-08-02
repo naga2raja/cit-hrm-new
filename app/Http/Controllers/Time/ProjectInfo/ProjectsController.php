@@ -12,6 +12,8 @@ use App\tActivity;
 use Auth;
 use App\Session;
 use DB;
+use App\tProjectManager;
+use App\tProjectEmployee;
 
 class ProjectsController extends Controller
 {
@@ -28,7 +30,7 @@ class ProjectsController extends Controller
         
         DB::connection()->enableQueryLog(); 
 
-        $projects = mProject::select(DB::raw('GROUP_CONCAT( DISTINCT m_customers.customer_name) as customer_name'),DB::raw("CONCAT(employees.first_name,' ',employees.middle_name,' ',employees.last_name) as admin_name"), 'm_projects.id as project_id', 'm_projects.project_name as project_name')
+        $projects = mProject::select(DB::raw('GROUP_CONCAT( DISTINCT m_customers.customer_name) as customer_name'),DB::raw("CONCAT_WS(' ', employees.first_name, employees.middle_name, employees.last_name) as admin_name"), 'm_projects.id as project_id', 'm_projects.project_name as project_name')
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
                 ->leftjoin('employees', 'employees.id', 't_project_admins.admin_id');
@@ -57,7 +59,9 @@ class ProjectsController extends Controller
     public function create()
     {
         // $countries = mCountry::get();
-        return view('time/project_info/projects/add');
+        $employees = [];
+        $managers = [];
+        return view('time/project_info/projects/add', compact('employees', 'managers'));
     }
 
     /**
@@ -87,6 +91,15 @@ class ProjectsController extends Controller
                 'admin_id' => $request->admin_id
             ]);
         }
+
+        $managers = $request->managers;
+        if($managers) {
+            $this->insertProjectManagers($project->id, $managers);
+        }
+        $employees = $request->employees;
+        if($employees) {
+            $this->insertProjectEmployees($project->id, $employees);
+        }
         
         return redirect()->route('projects.index')->with('success', 'Project added successfully');
     }
@@ -112,7 +125,7 @@ class ProjectsController extends Controller
     {
         DB::connection()->enableQueryLog(); 
 
-        $projects = $projects = mProject::select('m_projects.id','m_projects.project_name', 'm_projects.project_description', 'm_projects.customer_id', 'm_customers.customer_name', 't_project_admins.admin_id',DB::raw("CONCAT(employees.first_name,' ',employees.middle_name,' ',employees.last_name) as admin_name"))
+        $projects = $projects = mProject::select('m_projects.id','m_projects.project_name', 'm_projects.project_description', 'm_projects.customer_id', 'm_customers.customer_name', 't_project_admins.admin_id',DB::raw("CONCAT_WS(' ', employees.first_name,' ',employees.middle_name,' ',employees.last_name) as admin_name"))
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
                 ->leftjoin('employees', 'employees.id', 't_project_admins.admin_id')
@@ -121,9 +134,11 @@ class ProjectsController extends Controller
                 ->groupby('m_projects.id')
                        ->get();
 
-        $activities = tActivity::where('project_id', $id)->get();
-
-        return view('time/project_info/projects/edit', compact('projects', 'activities'));
+        $activities = tActivity::where('project_id', $id)->get();       
+        $employees = $this->getProjectAssignedUsers($id, 'employees');
+        $managers = $this->getProjectAssignedUsers($id, 'managers');
+        
+        return view('time/project_info/projects/edit', compact('projects', 'activities', 'employees', 'managers'));
     }
 
     /**
@@ -155,6 +170,12 @@ class ProjectsController extends Controller
             ]);
         }
 
+        $managers = (array) $request->managers;
+        $this->insertProjectManagers($request->project_id, $managers);
+        
+        $employees = (array) $request->employees;
+        $this->insertProjectEmployees($request->project_id, $employees);
+        
         return response()->json(['project', $project]);
     }
 
@@ -307,5 +328,49 @@ class ProjectsController extends Controller
                                     ->get();
         }
         return response()->json($projects);
+    }
+
+    public function insertProjectManagers($projectId, $managerIds) {        
+        tProjectManager::where('project_id', $projectId)->delete();
+        if(count($managerIds)) {
+            foreach($managerIds as $employeeId) {
+                $insertArr = [ 
+                        'project_id' => $projectId,
+                        'employee_id' => $employeeId
+                    ]; 
+                tProjectManager::insert($insertArr);
+            }           
+             
+        }        
+        return true;
+    }
+
+    public function insertProjectEmployees($projectId, $employeeIds) {
+        $insertArr = [];
+        tProjectEmployee::where('project_id', $projectId)->delete();
+        if(count($employeeIds)) {
+            foreach($employeeIds as $employeeId) {
+                $insertArr = [ 
+                        'project_id' => $projectId,
+                        'employee_id' => $employeeId
+                    ]; 
+                tProjectEmployee::insert($insertArr);
+            }
+        }
+        return true;
+    }
+
+    public function getProjectAssignedUsers($projectId, $type)
+    {
+        if($type == 'employees') {
+            $out = Employee::join('t_project_employees', 't_project_employees.employee_id', 'employees.id');
+        } else {
+            $out = Employee::join('t_project_managers', 't_project_managers.employee_id', 'employees.id');
+        }        
+        $out = $out->where('project_id', $projectId)
+                ->selectRaw('employees.id, CONCAT_WS (" ", first_name, middle_name, last_name) AS name')
+                ->get()
+                ->toArray();
+        return $out;
     }
 }
