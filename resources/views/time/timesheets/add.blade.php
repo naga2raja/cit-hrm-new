@@ -128,9 +128,13 @@
 	              												</td>
 	              												<td>
 	              													@if($loop->index == 0)
-	              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ (@$timesheet->comments) ? 'disabled' : '' }}>Add Row</button>
+		              													@if(@$timesheet->status == 0)
+		              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Add Row</button>
+	              														@endif
 	              													@else
-	              														<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius" {{ (@$timesheet->comments) ? 'disabled' : '' }}>X</button>
+	              														@if(@$timesheet->status == 0)
+	              															<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius">X</button>
+	              														@endif
 	              													@endif
 	              												</td>
 	              											</tr>
@@ -145,7 +149,27 @@
 										</div>
 										<hr>
 
-
+										<div class="col-sm-12 text-center">
+											<div class="row">														
+												<div class="col-sm-5"></div>
+												<div class="col-sm-7">
+													<div class="row">
+														@if(@$timesheet->status == 0)
+														<div class="col-sm-2">
+															<div class="submit-section text-center btn-add">
+																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+															</div>
+														</div>
+														@endif
+														<div class="col-sm-2">
+															<div class="submit-section text-center btn-add">
+																<a href="{{ url()->previous() }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 
 										@if(($timesheet)&&($timesheet->comments))
 											<div class="border">
@@ -155,34 +179,13 @@
 												<div class="card-body">
 													<div class="row">
 														<div class="col-sm-12">
-															<div>{!! substr($timesheet->comments, 4) !!}</div>
+															<div>{!! $timesheet->comments !!}</div>
 														</div>
 													</div>
 												</div>
 											</div>
 											<br>
 										@endif
-
-										<div class="col-sm-12 text-center">
-											<div class="row">														
-												<div class="col-sm-4"></div>
-												<div class="col-sm-8">
-													<div class="row">
-														<div class="col-sm-2">
-															<div class="submit-section text-center btn-add">
-																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" {{ (@$timesheet->comments) ? 'disabled' : '' }}> Save</button>
-															</div>
-														</div>
-														<!-- <div class="col-sm-2">
-															<button type="reset" class="btn btn-secondary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
-														</div> -->
-														<div class="col-sm-2">
-															<a href="{{ url()->previous() }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
 									</form>
 
 								</div>

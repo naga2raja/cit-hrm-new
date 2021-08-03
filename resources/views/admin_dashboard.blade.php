@@ -34,12 +34,8 @@
 											@endif
 										</div>
 										<div class="user-details">
-											<h4><b>Welcome</b></h4>
-											<h4>
-												<b>@if (!Auth::guest()) {{ Auth::user()->name }} @endif</b>
-												@if (!Auth::user()->hasrole('Employee')) {{ '('.Auth::user()->roles[0]->name.')' }} @endif
-												
-											</h4>
+											<h4>Welcome</h4>
+											<h4><b>@if (!Auth::guest()) {{ Auth::user()->name }} @endif</b></h4>
 											<p>{{ date('D, d M Y') }}</p>
 										</div>
 									</div>
@@ -228,53 +224,17 @@
 									<!-- Team Leads List -->
 									<div class="card flex-fill team-lead shadow-sm">
 										<div class="card-header">
-											<h4 class="card-title mb-0 d-inline-block">Team Leads </h4>
-											<a href="employees" class="dash-card float-right mb-0 text-primary">Manage Team </a>
+											<h4 class="card-title mb-0 d-inline-block">
+											@hasrole('Admin')
+												Team Leads
+											@endrole
+											@hasrole('Manager')
+												Team Info
+											@endrole
+											</h4>
+											<a href="{{ route('projects.index') }}" class="dash-card float-right mb-0 text-primary">Manage Team </a>
 										</div>
-										<div class="card-body">
-											@if($data['team_leads'])
-												@foreach($data['team_leads'] as $team_leads)
-													<div class="media mb-3">
-														<div class="e-avatar avatar-online mr-3"><img src="img/profiles/img-6.jpg" alt="Maria Cotton" class="img-fluid"></div>
-														<div class="media-body">
-															<h6 class="m-0">{{ $team_leads->team_lead }}</h6>
-															<p class="mb-0 ctm-text-sm">{{ $team_leads->project_name }} Team Lead</p>
-														</div>
-													</div>
-													<hr>
-												@endforeach
-											@endif
-											<!-- <div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img class="img-fluid" src="img/profiles/img-5.jpg" alt="Linda Craver"></div>
-												<div class="media-body">
-													<h6 class="m-0">Danny Ward</h6>
-													<p class="mb-0 ctm-text-sm">Design</p>
-												</div>
-											</div>
-											<hr>
-											<div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img src="img/profiles/img-4.jpg" alt="Linda Craver" class="img-fluid"></div>
-												<div class="media-body">
-													<h6 class="m-0">Linda Craver</h6>
-													<p class="mb-0 ctm-text-sm">IOS</p>
-												</div>
-											</div>
-											<hr>
-											<div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img class="img-fluid" src="img/profiles/img-3.jpg" alt="Linda Craver"></div>
-												<div class="media-body">
-													<h6 class="m-0">Jenni Sims</h6>
-													<p class="mb-0 ctm-text-sm">Android</p>
-												</div>
-											</div>
-											<hr>
-											<div class="media">
-												<div class="e-avatar avatar-offline mr-3"><img class="img-fluid" src="img/profiles/img-2.jpg" alt="Linda Craver"></div>
-												<div class="media-body">
-													<h6 class="m-0">John Gibbs</h6>
-													<p class="mb-0 ctm-text-sm">Business</p>
-												</div>
-											</div> -->
+										<div class="card-body" id="team_leads">
 										</div>
 									</div>
 								</div>
@@ -350,35 +310,10 @@
 									<div class="card flex-fill today-list shadow-sm">
 										<div class="card-header">
 											<h4 class="card-title mb-0 d-inline-block">Your Upcoming Leave</h4>
-											<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
+											<a href="javascript:void(0)" id="refresh_upcoming_leave" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ">
-											<div class="recent-comment">
-												@if($data['upcoming_leaves'])
-													@foreach($data['upcoming_leaves'] as $upcoming_leaves)
-														@if($upcoming_leaves->status == '5')
-															<?php $class = "danger"; $status = "Cancelled" ?>
-														@elseif($upcoming_leaves->status == '4')
-															<?php $class = "danger"; $status = "Rejected" ?>
-														@elseif($upcoming_leaves->status == '2')
-															<?php $class = "success"; $status = "Approved" ?>
-														@elseif($upcoming_leaves->status == '1')
-															<?php $class = "warning"; $status = "Pending" ?>
-														@endif
-
-														<a href="javascript:void(0)" class="dash-card text-{{ $class }}">
-															<div class="dash-card-container">
-																<div class="dash-card-icon">
-																	<i class="fa fa-suitcase"></i>
-																</div>
-																<div class="dash-card-content">
-																	<h6 class="mb-0">{{ date('D, d F Y', strtotime($upcoming_leaves->date)) }} {{ '('.$upcoming_leaves->leaveTypeName->name.')' }} - <span class="ctm-text-sm">{{ $status }}</span></h6>
-																</div>
-															</div>
-														</a>
-													<hr>
-													@endforeach
-												@endif
+											<div class="recent-comment" id="upcoming_leaves">
 											</div>
 										</div>
 									</div>
@@ -395,3 +330,112 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+
+	// Team Leads data
+	function LoadTeamLeads(){
+		$.ajax({
+			method: 'GET',
+			url: '/getTeamLeads-ajax',
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				// console.log('TeamLeads : ', data);
+				var leads = '';
+				if(data.length > 0){
+		            data.forEach(function (row,index) {
+		            	leads += '<div class="media mb-3">';
+		            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+						leads += '<div class="media-body">';
+						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
+						var designation = '';
+						if(row.role_name == "Manager"){
+							designation = "Team Manager";
+						}else{
+							designation = "Team Member";
+						}
+						leads += '<p class="mb-0 ctm-text-sm">' +row.project_name+ ' Project (' +designation+ ')</p>';
+						leads += '</div></div>';
+						if (index !== data.length - 1) {
+							leads += '<hr>';
+						}						
+		        	});	            
+		        }else{
+		        	leads += '<div class="media mb-3">';
+		        	leads += '<h6 class="m-0 ctm-text-sm">No Team Data</h6>';
+		        	leads += '</div><hr>';
+		        }
+		        $('#team_leads').html(leads);
+			}
+		});
+	}
+
+	// upcoming leave data
+	function LoadUpcomingLeave(){
+		$.ajax({
+			method: 'GET',
+			url: '/getUpcomingLeaves-ajax',
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				console.log('response : ', data);
+				var leaves = '';
+				if(data.length > 0){
+		            data.forEach(function (row,index) {
+		            	if(row.status == '5'){
+							var class_name = "danger"; var status = "Cancelled";
+		            	}else if(row.status == '4'){
+							var class_name = "danger"; var status = "Rejected";
+						}else if(row.status == '2'){
+							var class_name = "success"; var status = "Approved";
+						}else if(row.status == '1'){
+							var class_name = "warning"; var status = "Pending";
+						}
+
+		            	leaves += '<div class="notice-board">';
+		            	leaves += '<div class="dash-card-icon text-'+class_name+'">';
+						leaves += '<i class="fa fa-suitcase"></i></div>';
+						leaves += '<div class="notice-body">';
+						leaves += '<h6 class="mb-0">';
+						leaves += row.from_date;
+						if(row.from_date != row.to_date){
+							leaves += " - "+row.to_date;
+						}
+						leaves += '<span class="ctm-text-sm"> ('+ row.name+ ')</span>';
+						leaves += '</h6>';
+						leaves += '<span class="ctm-text-sm">';
+						leaves += (row.leave_days+1) * row.length_days+ ' ('+row.leave_duration+') | '+status+'</span>';
+						leaves += '</div></div>';
+						if (index !== data.length - 1) {
+							leaves += '<hr>';
+						}
+		        	});	            
+		        }else{
+		        	leaves += '<div class="notice-board">';
+					leaves += '<h6 class="mb-0 ctm-text-sm">No Upcoming Leave</h6>';
+		        	leaves += '</div><hr>';
+		        }
+		        $('#upcoming_leaves').html(leaves);
+			}
+		});
+	}
+
+	// onclick of refresh_upcoming_leave
+	$('#refresh_upcoming_leave').click(function() {
+		// to load upcoming leave data
+	   	LoadUpcomingLeave();
+	});
+
+	window.onload = function() {
+		
+		// to load Team Leads data
+	   	LoadTeamLeads();
+		// to load Upcoming leave data
+	   	LoadUpcomingLeave();
+	}
+
+</script>
+@endpush

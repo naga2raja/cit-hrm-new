@@ -51,12 +51,7 @@
                                         <div class="user-info align-right dropdown d-inline-block header-dropdown">
                                             <a href="javascript:void(0)" data-toggle="dropdown" class=" menu-style dropdown-toggle">
                                                 <div class="user-avatar d-inline-block">
-                                                    @hasrole('Admin|Manager')
-                                                        <img src="{{ getProfileImage() }}" alt="user avatar" class="rounded-circle img-fluid" width="55">
-                                                    @endrole
-                                                    @hasrole('Employee')
-                                                        <img src="{{ assetUrl('img/profiles/profile.jpg') }}" alt="user avatar" class="rounded-circle img-fluid" width="55">
-                                                    @endrole
+                                                    <img src="{{ getProfileImage() }}" alt="user avatar" class="rounded-circle img-fluid" width="55">
                                                 </div>
                                             </a>
                                             <!-- Notifications -->

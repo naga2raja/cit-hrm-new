@@ -162,6 +162,13 @@
 														<td colspan="5"><p class="text-center">No Data Found</p></td>
 													</tr>
 												@endif
+													<tr>
+														<td colspan="5">
+															<div class="d-flex justify-content-center">
+																{{ $users->links() }}
+															</div>
+														</td>
+													</tr>
 											</tbody>
 										</table>
 									</div>

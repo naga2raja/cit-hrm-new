@@ -113,6 +113,25 @@ class MyTimesheetsController extends Controller
         return redirect()->back()->with('success','Deleted Successfully');
     }
 
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            tTimesheet::whereIn('id', $request->delete_ids)
+                        ->get()
+                        ->map(function($timesheet) {
+                            $timesheet->delete();
+                        });
+            tTimesheetItem::whereIn('timesheet_id', $request->delete_ids)
+                        ->get()
+                        ->map(function($timesheet_item) {
+                            $timesheet_item->delete();
+                        });
+            return true;
+        } else {
+            return false;
+        }       
+    }
+
     public function updateStatusAjax(Request $request) {
         $id = $request->id;
         $timesheetInfo = tTimesheet::where('id', $id)->first();
@@ -138,11 +157,15 @@ class MyTimesheetsController extends Controller
 
             $employee_id = $employees->id;            
             $my_timesheets = tTimesheet::select('t_timesheets.*')
+                                ->join('t_timesheet_items', 't_timesheet_items.timesheet_id', 't_timesheets.id')
                                 ->join('employees', 'employees.id', 't_timesheets.employee_id')
                                 ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
                                 ->join('roles', 'roles.id', 'model_has_roles.role_id')
                                 ->when(filled($employee_id), function($query) use ($employee_id) {
                                     $query->where('t_timesheets.employee_id', $employee_id);
+                                })
+                                ->when(filled($project_id), function($query) use ($project_id) {
+                                    $query->where('t_timesheet_items.project_id', $project_id);
                                 })
                                 ->when(filled($date), function($query) use ($date, $key) {
                                     if($key == "daily"){
@@ -167,6 +190,7 @@ class MyTimesheetsController extends Controller
                                 ->with('allTimesheetItem')
                                 ->orderBy('t_timesheets.start_date', 'asc')
                                 ->orderBy('employees.id', 'asc')
+                                ->groupBy('t_timesheets.id')
                                 ->get();
                                 // dd(DB::getQueryLog());
         }

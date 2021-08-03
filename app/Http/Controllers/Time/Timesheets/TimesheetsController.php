@@ -178,6 +178,25 @@ class TimesheetsController extends Controller
 
     }
 
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            tTimesheet::whereIn('id', $request->delete_ids)
+                        ->get()
+                        ->map(function($timesheet) {
+                            $timesheet->delete();
+                        });
+            tTimesheetItem::whereIn('timesheet_id', $request->delete_ids)
+                        ->get()
+                        ->map(function($timesheet_item) {
+                            $timesheet_item->delete();
+                        });
+            return true;
+        } else {
+            return false;
+        }       
+    }
+
     public function getEmployeeTimeSheets(Request $request){
 
         $employee_id = $request->employee_id;
