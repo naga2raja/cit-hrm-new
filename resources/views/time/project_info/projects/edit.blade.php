@@ -3,8 +3,9 @@
 <!-- Content -->
 
 			<div class="page-wrapper">
-				<div class="container-fluid">
-					<div class="row">					
+				<div class="container-fluid">				
+
+					<div class="row">
 						<div class="col-xl-12 col-lg-8  col-md-12">
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
@@ -13,6 +14,10 @@
 									</div>
 								</div>
 								<div class="card-body">
+									<div id="alert_success_message_info" style="display: none;">
+										<div class="alert alert-success"><p> Project Info Updated Successfully </p></div>
+									</div>
+
 									@if($message = Session::get('success'))
 										<div class="alert alert-success">
 											<p>{{$message}}</p>
@@ -63,10 +68,51 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-	                                    			<input type="hidden" name="admin_id" id="admin_id" value="{{ $projects[0]->admin_id }}">
-													<input type="text" class="form-control {{ $errors->has('project_admin') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="project_admin" value="{{ old('project_admin', $projects[0]->admin_name) }}" autocomplete="off" id="project_admin" disabled="disabled">
-													{!! $errors->first('project_admin', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
+													<select class="admin_id form-control {{ $errors->has('admin_id') ? 'is-invalid' : ''}}" name="admin_id" id="admin_id" style="width: 100%" disabled>
+														<option value="{{ $projects[0]->admin_id }}" selected> {{ $projects[0]->admin_name }}</option>														
+													</select>
+													{!! $errors->first('admin_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
+													
+	                                    			{{-- <input type="hidden" name="admin_id" id="admin_id" value="{{ $projects[0]->admin_id }}">
+													<input type="text" class="form-control {{ $errors->has('project_admin') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="project_admin" value="{{ old('project_admin', $projects[0]->admin_name) }}" autocomplete="off" id="project_admin" disabled="disabled">													
 													<div id="project_admins_list" class="autocomplete"></div>
+													 --}}
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-2">
+												<div class="form-group">
+													<label>Project Managers </label>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="form-group">
+	                                    			<select class="managers form-control {{ $errors->has('managers') ? 'is-invalid' : ''}}" name="managers[]" id="manager_ids" multiple="multiple" style="width: 100%" disabled>
+														@foreach ($managers as $item)
+															<option value="{{ $item['id'] }}" selected> {{ $item['name'] }}</option>
+														@endforeach
+													</select>
+													{!! $errors->first('managers', '<span class="invalid-feedback" role="alert">:message</span>') !!}														
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-2">
+												<div class="form-group">
+													<label>Project Employees </label>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="form-group">
+	                                    			<select class="employee_name form-control {{ $errors->has('employees') ? 'is-invalid' : ''}}" name="employees[]" id="employee_ids" multiple="multiple" style="width: 100%" disabled>
+														@foreach ($employees as $item)
+															<option value="{{ $item['id'] }}" selected> {{ $item['name'] }}</option>
+														@endforeach
+													</select>
+													{!! $errors->first('employees', '<span class="invalid-feedback" role="alert">:message</span>') !!}														
 												</div>
 											</div>
 										</div>
@@ -106,9 +152,13 @@
 													</div>
 													<div class="col-sm-6">
 														<a href="{{ route('projects.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
-													</div>
+													</div>													
 												</div>
 											</div>
+											<div class="col-sm-6" id="success_message_info" style="display: none;">
+												<div class="alert alert-success"><p> Project Info Updated Successfully</p></div>
+											</div> 
+
 										</div>
 									</form>
 								</div>
@@ -313,6 +363,9 @@
 			$('#project_name').prop('disabled', true);
 			$('#project_admin').prop('disabled', true);
 			$('#project_description').prop('disabled', true);
+			$('#manager_ids').prop('disabled', true);
+			$('#employee_ids').prop('disabled', true);
+			$('#admin_id').prop('disabled', true);
 			$('#add_customer').css("display", "none");
 			$('#add_admin').css("display", "none");
 		}
@@ -344,7 +397,7 @@
 					   contentType: 'application/json',
 					   success:function(data){
 					   	console.log(data);
-					   	window.location.href = data.url;
+					   	window.location.href = data.url + '?message=true';
 					  }
 					});
 				}else{
@@ -362,7 +415,7 @@
 				   contentType: 'application/json',
 				   success:function(data){
 				   	console.log(data);
-				   	window.location.href = data.url;
+				   	window.location.href = data.url + '?message=true';
 				  }
 				});
 			}
@@ -375,16 +428,22 @@
 				var project_name = $('input[name="project_name"]').val();
 				var project_description = $('#project_description').val();
 				var customer = $('input[name="customer"]').val();
-				var admin_id = $('input[name="admin_id"]').val();
+				var admin_id = $('select[name="admin_id"]').val();
+				
 				$.ajax({
 	               method: 'POST',
 	               url: "{{ route('update-project') }}",
-				   data:JSON.stringify({'project_id':project_id, 'project_name':project_name, 'project_description':project_description, 'customer':customer, 'admin_id':admin_id, "_token": "{{ csrf_token() }}"}),
+				   data:JSON.stringify({'project_id':project_id, 'project_name':project_name, 'project_description':project_description, 'customer':customer, 'admin_id':admin_id, 'employees':$('#employee_ids').val(), 'managers':$('#manager_ids').val(), "_token": "{{ csrf_token() }}"}),
 				   dataType: "json",
 				   contentType: 'application/json',
 				   success:function(data){
-				   	console.log(data);
+				   	console.log(data);					  
 				   	disable_edit();
+						$('#success_message_info').show();
+						setTimeout(function(){
+							$("#success_message_info").hide();
+							}, 2500);
+					
 				  }
 				});
 			} else{
@@ -393,7 +452,10 @@
 				$('#customer_name').prop('disabled', false);
 				$('#project_name').prop('disabled', false);
 				$('#project_admin').prop('disabled', false);
-				$('#project_description').prop('disabled', false);
+				$('#project_description').prop('disabled', false);				
+				$('#manager_ids').prop('disabled', false);
+				$('#employee_ids').prop('disabled', false);
+				$('#admin_id').prop('disabled', false);
 				$('#add_customer').css("display", "block");
 				$('#add_admin').css("display", "block");
 			}
@@ -482,5 +544,36 @@
 	    function pass_admin_id(id){
 	    	document.getElementById('admin_id').value = id;
 	    }
+
+		$('.employee_name, .managers, #admin_id').select2({
+		placeholder: 'Select',
+		ajax: {
+			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+	var urlParams = new URLSearchParams(window.location.search);
+	console.log('URL PARAM:: ', urlParams.has('message')); 
+	if(urlParams.has('message')) {
+		$('#alert_success_message_info').show();
+		setTimeout(function(){
+			$("#alert_success_message_info").hide();
+		}, 6000);
+	}
+
+	
 	</script>
 @endpush
