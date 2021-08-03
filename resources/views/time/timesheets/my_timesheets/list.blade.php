@@ -129,15 +129,27 @@
 
 										<div class="card-body employee-timesheets">
 											@if($message = Session::get('success'))
-												<div class="alert alert-success">
-													<p>{{$message}}</p>
+												<div class="col-md-12">
+													<div class="alert alert-success">
+														<p>{{ $message }}</p>
+													</div>
 												</div>
 											@endif
 											<div class="table-responsive">
 												<table id="timesheets" class="table custom-table table-hover">
 													<thead>
+														 <tr class="bg-light">
+		              										<th>Employee</th>
+		              										<th>Timesheet</th>
+		              										<th>Duration (HH:MM)</th>
+		              										<th>Status</th>
+		              										<th>Action</th>
+		              									</tr>
 													</thead>
 													<tbody id="list_timesheet_table">
+														<tr>
+															<td colspan="5"><p class="text-center">No data found in selected date</p></td>
+														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -174,6 +186,7 @@
 	// Project name autocomplete
 	$('#project_name').select2({
 		placeholder: 'Select a project',
+		allowClear: true,
 		ajax: {
 			url: '/project-autocomplete-ajax',
 			dataType: 'json',
@@ -253,7 +266,7 @@
 			success: function(data){
 				// console.log('response : ', data);
 				var thead = '<tr class="bg-light">';
-					thead += '<th class="text-center">';
+					thead += '<th class="text-center">'
 					thead += '<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick=SelectAll("timesheets")>';
 					thead += '</th>';
 	              	thead += '<th>Employee</th>';
@@ -276,7 +289,7 @@
 
 		            	tbody += '<tr>';
 		            	if(row.status == '0'){
-		            		tbody += '<td><input type="checkbox" name="timesheet_id" value='+row.id+'></td>'
+		            		tbody += '<td class="text-center"><input type="checkbox" name="timesheet_id" value='+row.id+'></td>'
 		            	}else{
 		            		tbody += '<td></td>';
 		            	}

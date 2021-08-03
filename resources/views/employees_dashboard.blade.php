@@ -179,50 +179,10 @@
 									<!-- Team Leads List -->
 									<div class="card flex-fill team-lead shadow-sm">
 										<div class="card-header">
-											<h4 class="card-title mb-0 d-inline-block">Team Leads </h4>
+											<h4 class="card-title mb-0 d-inline-block">Team Info </h4>
 											<a href="employees-team" class="dash-card d-inline-block float-right mb-0 text-primary">Manage Team </a>
 										</div>
-										<div class="card-body">
-											<div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img src="img/profiles/img-6.jpg" alt="Maria Cotton" class="img-fluid"></div>
-												<div class="media-body">
-													<h6 class="m-0">Maria Cotton</h6>
-													<p class="mb-0 ctm-text-sm">PHP</p>
-												</div>
-											</div>
-											<hr>
-											<div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img class="img-fluid" src="img/profiles/img-5.jpg" alt="Linda Craver"></div>
-												<div class="media-body">
-													<h6 class="m-0">Danny Ward</h6>
-													<p class="mb-0 ctm-text-sm">Design</p>
-												</div>
-											</div>
-											<hr>
-											<div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img src="img/profiles/img-4.jpg" alt="Linda Craver" class="img-fluid"></div>
-												<div class="media-body">
-													<h6 class="m-0">Linda Craver</h6>
-													<p class="mb-0 ctm-text-sm">IOS</p>
-												</div>
-											</div>
-											<hr>
-											<div class="media mb-3">
-												<div class="e-avatar avatar-online mr-3"><img class="img-fluid" src="img/profiles/img-3.jpg" alt="Linda Craver"></div>
-												<div class="media-body">
-													<h6 class="m-0">Jenni Sims</h6>
-													<p class="mb-0 ctm-text-sm">Android</p>
-												</div>
-											</div>
-											<hr>
-											
-											<div class="media">
-												<div class="e-avatar avatar-offline mr-3"><img class="img-fluid" src="img/profiles/img-8.jpg" alt="Linda Craver"></div>
-												<div class="media-body">
-													<h6 class="m-0">Stacey Linville</h6>
-													<p class="mb-0 ctm-text-sm">Testing</p>
-												</div>
-											</div>
+										<div class="card-body" id="team_leads">
 										</div>
 									</div>
 								</div>
@@ -373,3 +333,112 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+
+	// Team Leads data
+	function LoadTeamLeads(){
+		$.ajax({
+			method: 'GET',
+			url: '/getTeamLeads-ajax',
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				// console.log('TeamLeads : ', data);
+				var leads = '';
+				if(data.length > 0){
+		            data.forEach(function (row,index) {
+		            	leads += '<div class="media mb-3">';
+		            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+						leads += '<div class="media-body">';
+						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
+						var designation = '';
+						if(row.role_name == "Manager"){
+							designation = "Team Manager";
+						}else{
+							designation = "Team Member";
+						}
+						leads += '<p class="mb-0 ctm-text-sm">' +row.project_name+ ' Project (' +designation+ ')</p>';
+						leads += '</div></div>';
+						if (index !== data.length - 1) {
+							leads += '<hr>';
+						}						
+		        	});	            
+		        }else{
+		        	leads += '<div class="media mb-3">';
+		        	leads += '<h6 class="m-0 ctm-text-sm">No Team Data</h6>';
+		        	leads += '</div><hr>';
+		        }
+		        $('#team_leads').html(leads);
+			}
+		});
+	}
+
+	// upcoming leave data
+	function LoadUpcomingLeave(){
+		$.ajax({
+			method: 'GET',
+			url: '/getUpcomingLeaves-ajax',
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				console.log('response : ', data);
+				var leaves = '';
+				if(data.length > 0){
+		            data.forEach(function (row,index) {
+		            	if(row.status == '5'){
+							var class_name = "danger"; var status = "Cancelled";
+		            	}else if(row.status == '4'){
+							var class_name = "danger"; var status = "Rejected";
+						}else if(row.status == '2'){
+							var class_name = "success"; var status = "Approved";
+						}else if(row.status == '1'){
+							var class_name = "warning"; var status = "Pending";
+						}
+
+		            	leaves += '<div class="notice-board">';
+		            	leaves += '<div class="dash-card-icon text-'+class_name+'">';
+						leaves += '<i class="fa fa-suitcase"></i></div>';
+						leaves += '<div class="notice-body">';
+						leaves += '<h6 class="mb-0">';
+						leaves += row.from_date;
+						if(row.from_date != row.to_date){
+							leaves += " - "+row.to_date;
+						}
+						leaves += '<span class="ctm-text-sm"> ('+ row.name+ ')</span>';
+						leaves += '</h6>';
+						leaves += '<span class="ctm-text-sm">';
+						leaves += (row.leave_days+1) * row.length_days+ ' ('+row.leave_duration+') | '+status+'</span>';
+						leaves += '</div></div>';
+						if (index !== data.length - 1) {
+							leaves += '<hr>';
+						}
+		        	});	            
+		        }else{
+		        	leaves += '<div class="notice-board">';
+					leaves += '<h6 class="mb-0 ctm-text-sm">No Upcoming Leave</h6>';
+		        	leaves += '</div><hr>';
+		        }
+		        $('#upcoming_leaves').html(leaves);
+			}
+		});
+	}
+
+	// onclick of refresh_upcoming_leave
+	$('#refresh_upcoming_leave').click(function() {
+		// to load upcoming leave data
+	   	LoadUpcomingLeave();
+	});
+
+	window.onload = function() {
+		
+		// to load Team Leads data
+	   	LoadTeamLeads();
+		// to load Upcoming leave data
+	   	LoadUpcomingLeave();
+	}
+	
+</script>
+@endpush

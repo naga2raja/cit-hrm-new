@@ -55,7 +55,7 @@
 													@if(count($pay_grade_currency) > 0)
 														@foreach ($pay_grade_currency as $row)
 															@if($row->pay_grade_id == $grade->id)
-																{{ $row->currencyName->currency_name }}@if (!$loop->last),@endif														
+																{{ $row->currencyName->currency_name }}@if (!$loop->last),@endif
 															@endif
 														@endforeach
 													@else

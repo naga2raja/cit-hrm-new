@@ -162,6 +162,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
 
     // admin_dashboard
     Route::get('/adminDashboard', 'HomeController@index')->name('adminDashboard');
+
     // system_user
     Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
     Route::post('/systemUsers/multiple-delete', 'Admin\UserManagement\SystemUserController@deleteMultiple');
@@ -259,11 +260,11 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
     Route::post('/mytimesheets/status-change', 'Time\Timesheets\MyTimesheetsController@updateStatusAjax')->name('mytimesheets.submit');
     Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
+    Route::post('/mytimesheets/multiple-delete', 'Time\Timesheets\MyTimesheetsController@deleteMultiple');
     // add Timesheets
     Route::get('/timesheets.create', 'Time\Timesheets\TimesheetsController@create')->name('timesheets.create');
     Route::post('/timesheets.store', 'Time\Timesheets\TimesheetsController@store')->name('timesheets.store');
-    // Route::post('/timesheets.destroy', 'Time\Timesheets\TimesheetsController@destroy')->name('timesheets.destroy');
-
+    Route::post('/timesheets/multiple-delete', 'Time\Timesheets\TimesheetsController@deleteMultiple');
 
     //Employee autocomplete ajax
     Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
@@ -283,6 +284,9 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function
 });
 
 Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
+    // dashboard
+    Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads');
+    Route::get('/getUpcomingLeaves-ajax', 'Admin\AdminController@getUpcomingLeaves');
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');

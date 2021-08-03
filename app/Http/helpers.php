@@ -19,7 +19,11 @@ if (! function_exists('assetUrl')) {
                     ->where('id', $user->id)
                     ->selectRaw('profile_photo')
                     ->first();
-        return $data->profile_photo;
+        if($data){
+            return $data->profile_photo;
+        }else{
+            return "img/profiles/img-1.jpg";
+        }
     }
 
     function hoursAndMins($time, $format = '%02d:%02d')

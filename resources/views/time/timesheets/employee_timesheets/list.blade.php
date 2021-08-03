@@ -114,25 +114,28 @@
 									<div class="card shadow-sm ctm-border-radius">
 										<div class="card-header">
 											<div class="row filter-row">
-												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
 													<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
 												</div>
 												<div id="button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
 												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
+													<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('timesheets','timesheets')"><i class="fa fa-trash"></i> Delete</button>
+												</div>
 											</div>
 										</div>
 
-										<div class="card-body employee-timesheets">									
-											<div class="table-responsive">
-												@if($message = Session::get('success'))
-													<div class="col-md-12">
-														<div class="alert alert-success">
-															<p>{{ $message }}</p>
-														</div>
+										<div class="card-body employee-timesheets">
+											@if($message = Session::get('success'))
+												<div class="col-md-12">
+													<div class="alert alert-success">
+														<p>{{ $message }}</p>
 													</div>
-												@endif
+												</div>
+											@endif
+											<div class="table-responsive">
 												<table id="timesheets" class="table custom-table table-hover">
 													<thead>
 														 <tr class="bg-light">
@@ -307,6 +310,9 @@
 			success: function(data){
 				// console.log('response : ', data);
 				var thead = '<tr class="bg-light">';
+					thead += '<th class="text-center">'
+					thead += '<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick=SelectAll("timesheets")>';
+					thead += '</th>';
 	              	thead += '<th>Employee</th>';
 	              	thead += '<th>Timesheet Period</th>';
 	              	thead += '<th>Duration (HH:MM)</th>';
@@ -323,7 +329,7 @@
 				    	var urlParams = new Array( 'employee_id=' + row.employee_id, 'date='+ row.start_date );
 				    	var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
 
-		            	tbody += '<tr>';
+		            	tbody += '<td class="text-center"><input type="checkbox" name="timesheet_id" value='+row.id+'></td>'
 				        tbody += '<td><h2><u><a href="'+url+'">' + row.employee_name + '</a></u></h2></td>';
 		              	tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
 				        var duration = 0;
