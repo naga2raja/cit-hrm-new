@@ -244,8 +244,13 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
 });
 
 Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function () {
-    Route::get('/emp-page', 'HomeController@demoEmployee');
 
+    // dashboard
+    Route::get('/getTodayNews-ajax', 'Admin\AdminController@getTodayNews');
+    Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads');
+    Route::get('/getUpcomingLeaves-ajax', 'Admin\AdminController@getUpcomingLeaves');
+
+    Route::get('/emp-page', 'HomeController@demoEmployee');
     Route::resource('/employees', 'Employee\EmployeeController');
 
     //Leave
@@ -284,10 +289,8 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function
 });
 
 Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
-    // dashboard
-    Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads');
-    Route::get('/getUpcomingLeaves-ajax', 'Admin\AdminController@getUpcomingLeaves');
-
+    // dashboard news
+    Route::resource('/todayNews', 'Admin\NewsController');
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
     Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');    

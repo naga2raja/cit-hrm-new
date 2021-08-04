@@ -1,0 +1,10 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class tNews extends Model
+{
+    protected $fillable = ['title', 'news', 'category', 'date', 'uploads', 'status', 'created_by', 'updated_by'];
+}

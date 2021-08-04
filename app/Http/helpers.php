@@ -26,6 +26,16 @@ if (! function_exists('assetUrl')) {
         }
     }
 
+    // to get project name from project_id
+    function getProjectName($project_id){
+        $project = DB::table('m_projects')->where('id', $project_id)->first();
+        $project_name = '';
+        if($project){
+            $project_name = $project->project_name;
+        }
+        return $project_name;
+    }
+
     function hoursAndMins($time, $format = '%02d:%02d')
     {
         if ($time < 1) {

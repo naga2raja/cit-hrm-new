@@ -14,7 +14,9 @@ use App\tLeave;
 use App\tLeaveRequest;
 use App\mProject;
 use App\tProjectAdmin;
+use App\tProjectEmployee;
 use App\tEmployeeReportTo;
+use App\tNews;
 use App\Http\Controllers\Leave\Leave\LeaveController;
 use App\Role;
 use Session;
@@ -87,55 +89,107 @@ class AdminController extends Controller
         //
     }
 
+    public function getTodayNews()
+    {
+        $user = Auth::user();
+        $employee = Employee::where('id', $user->id)->first();
+
+        $today_news = tNews::select('t_news.*')
+                                ->where('t_news.status', 'Active')
+                                ->where('t_news.date', '=', date('Y-m-d'))
+                                ->get();
+        // dd($today_news);
+        return response()->json($today_news);
+    }
+
+
     public function getTeamLeads(Request $request)
     {
         $user = Auth::user();
         $employee = Employee::where('id', $user->id)->first();
         DB::connection()->enableQueryLog();
 
-        // if(Auth::user()->hasRole('Admin')) {
-        //     $reporting_managers = tEmployeeReportTo::selectRaw('employees.id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo')
-        //                                 ->join('t_project_admins', 't_project_admins.admin_id', 't_employee_report_to.manager_id')
-        //                                 ->join('employees', 'employees.id', 't_employee_report_to.manager_id')
-        //                                 ->groupBy('t_employee_report_to.manager_id', 't_project_admins.admin_id')
-        //                                 ->get();
-        //     // $project_managers = tProjectAdmin::selectRaw('employees.id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo')
-        //     //                             ->join('employees', 'employees.id', 't_project_admins.admin_id')
-        //     //                             ->groupBy('t_project_admins.admin_id')
-        //     //                             ->get();
-        //     //dd(DB::getQueryLog());
-        //     //dd($reporting_managers);
-        // }
-
+        $team_info = [];
+        if(Auth::user()->hasRole('Admin')) {
+            $team_info = tEmployeeReportTo::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_employee_report_to.manager_id as reporting_manager, t_project_admins.admin_id as project_admin, t_project_managers.employee_id as project_manager, t_project_admins.project_id as admin_project_id, t_project_managers.project_id as manager_project_id,
+                CONCAT_WS(" | ", 
+                        CASE WHEN t_employee_report_to.manager_id != "" THEN "Reporting Manager" END,
+                        CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END,
+                        CASE WHEN t_project_managers.employee_id != "" THEN "Projct Manager" END
+                    ) AS designation')
+                                    ->leftJoin('t_project_admins', 't_project_admins.admin_id', 't_employee_report_to.manager_id')
+                                    ->leftJoin('t_project_managers', 't_project_managers.employee_id', 't_employee_report_to.manager_id')
+                                    ->join('employees', 'employees.id', 't_employee_report_to.manager_id')
+                                    ->groupBy('t_employee_report_to.manager_id', 't_project_admins.admin_id', 't_project_managers.employee_id')
+                                    ->get();
+        }
 
         if(Auth::user()->hasRole('Manager')) {
-            $team_leads = tEmployeeReportTo::selectRaw('employees.id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, roles.name as role_name, m_projects.project_name')
-                                        ->join('t_project_admins', 't_project_admins.admin_id', 't_employee_report_to.manager_id')
-                                        ->join('m_projects', 'm_projects.id', 't_project_admins.project_id')
-                                        ->join('employees', 'employees.id', 't_employee_report_to.employee_id')
-                                        ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
-                                        ->join('roles', 'roles.id', 'model_has_roles.role_id')
-                                        ->where('manager_id', $employee->id)
-                                        ->get();
-        }else{        
-            $team_leads = tEmployeeReportTo::selectRaw('employees.id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, roles.name as role_name, m_projects.project_name')
-                                        ->join('t_project_admins', 't_project_admins.admin_id', 't_employee_report_to.manager_id')
-                                        ->join('m_projects', 'm_projects.id', 't_project_admins.project_id')
-                                        ->join('employees', 'employees.id', 't_employee_report_to.manager_id')
-                                        ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
-                                        ->join('roles', 'roles.id', 'model_has_roles.role_id');
-                                        if(Auth::user()->hasRole('Employee')) {
-                                            $team_leads->where('t_employee_report_to.employee_id', $employee->id);
-                                        }
-                                        if(Auth::user()->hasRole('Admin')) {
-                                            $team_leads->groupBy('t_employee_report_to.manager_id');
-                                        }
-                                        $team_leads = $team_leads->get();
+            $team_info = tEmployeeReportTo::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_employee_report_to.employee_id as employee_id, m_projects.project_name, CASE WHEN t_employee_report_to.employee_id != "" THEN "Reporting Employee" END as designation')
+                                ->leftJoin('t_project_managers', 't_project_managers.employee_id', 't_employee_report_to.manager_id')
+                                ->leftJoin('m_projects', 'm_projects.id', 't_project_managers.project_id')
+                                ->join('employees', 'employees.id', 't_employee_report_to.employee_id')
+                                ->where('t_employee_report_to.manager_id', $employee->id)
+                                ->get();
+
+        }
+
+        if(Auth::user()->hasRole('Employee')) {
+            $reporting_manager = tEmployeeReportTo::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_employee_report_to.manager_id as employee_id, m_projects.project_name, CASE WHEN t_employee_report_to.manager_id != "" THEN "Reporting Manager" END as designation')
+                                ->leftJoin('t_project_managers', 't_project_managers.employee_id', 't_employee_report_to.manager_id')
+                                ->leftJoin('m_projects', 'm_projects.id', 't_project_managers.project_id')
+                                ->join('employees', 'employees.id', 't_employee_report_to.employee_id')
+                                ->where('t_employee_report_to.employee_id', $employee->id)
+                                ->get()->toArray();
+
+            $project_employees = mProject::selectRaw('t_project_employees.employee_id, m_projects.project_name, CASE WHEN t_project_employees.employee_id != "" THEN "Project Employee" END as designation')
+                                ->join('t_project_employees', 't_project_employees.project_id', 'm_projects.id')
+                                ->join('employees', 'employees.id', 't_project_employees.employee_id')
+                                // ->where('t_project_employees.employee_id', '!=', 3)
+                                ->where('m_projects.id', 1)
+                                ->get()->toArray();
+
+            $project_manager = mProject::selectRaw('t_project_managers.employee_id, m_projects.project_name, CASE WHEN t_project_managers.employee_id != "" THEN "Project Manager" END as designation')
+                                ->join('t_project_managers', 't_project_managers.project_id', 'm_projects.id')
+                                ->join('t_project_employees', 't_project_employees.project_id', 'm_projects.id')
+                                ->join('employees', 'employees.id', 't_project_managers.employee_id')
+                                ->where('t_project_employees.employee_id', $employee->id)
+                                ->get()->toArray();
+
+            $project_admin = mProject::selectRaw('t_project_admins.admin_id as employee_id, m_projects.project_name, CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END as designation')
+                                ->join('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
+                                ->join('t_project_employees', 't_project_employees.project_id', 'm_projects.id')
+                                ->join('employees', 'employees.id', 't_project_admins.admin_id')
+                                ->where('t_project_employees.employee_id', $employee->id)
+                                ->get()->toArray();
+
+            $result_arr = array_merge($reporting_manager, $project_employees, $project_manager, $project_admin);
+
+            $team_info['reporting_manager'] = [];
+            $team_info['project_admin'] = [];
+            $team_info['project_manager'] = [];
+            $team_info['project_employee'] = [];
+
+            foreach ($result_arr as $key => $value) {
+                if($value['designation'] == "Reporting Manager"){
+                    $team_info['reporting_manager'][] = $value;
+                }
+                if($value['designation'] == "Project Admin"){
+                    $team_info['project_admin'][] = $value;
+                }
+                if($value['designation'] == "Project Manager"){
+                    $team_info['project_manager'][] = $value;
+                }
+                if($value['designation'] == "Project Employee"){
+                    $team_info['project_employee'][] = $value;
+                }
+            }
+            // dd($team_info['project_employee'][0]['employee_id']);
+            // dd($team_info);
         }
         // dd(DB::getQueryLog());
-
-        // dd($team_leads);
-        return response()->json($team_leads);
+        // dd($team_info);
+        return response()->json($team_info);
     }
 
     public function getUpcomingLeaves(Request $request)

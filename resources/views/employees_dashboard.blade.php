@@ -98,12 +98,12 @@
 								<div class="col-xl-6 col-lg-12 d-flex">
 									<div class="card shadow-sm flex-fill">
 										<div class="card-header align-items-center">
-											<h4 class="card-title mb-0 d-inline-block">Today</h4>
-											<a href="javascript:void(0)" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
+											<h4 class="card-title mb-0 d-inline-block">Today ({{ date('d M Y') }})</h4>
+											<a href="javascript:void(0)" id="refresh_today_news" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ">
-											<div class="recent-comment">
-												<a href="javascript:void(0)" class="dash-card text-dark">
+											<div class="recent-comment" id="today_news">
+												<!-- <a href="javascript:void(0)" class="dash-card text-dark">
 													<div class="dash-card-container">
 														<div class="dash-card-icon text-primary">
 															<i class="fa fa-birthday-cake" aria-hidden="true"></i>
@@ -113,8 +113,8 @@
 														</div>
 													</div>
 												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-dark">
+												<hr> -->
+												<!-- <a href="javascript:void(0)" class="dash-card text-dark">
 													<div class="dash-card-container">
 														<div class="dash-card-icon text-warning">
 															<i class="fa fa-bed" aria-hidden="true"></i>
@@ -162,14 +162,13 @@
 															<i class="fa fa-home" aria-hidden="true"></i>
 														</div>
 														<div class="dash-card-content">
-															<h6 class="mb-0">John Gibbs is working from home today</h6>
+															<h6 class="mb-0">You are working from home today</h6>
 														</div>
 														<div class="dash-card-avatars">
-															<div class="e-avatar"><img class="img-fluid" src="img/profiles/img-2.jpg" alt="John Gibbs"></div>
+															<div class="e-avatar"><img class="img-fluid" src="img/profiles/img-6.jpg" alt="Maria Cotton"></div>
 														</div>
 													</div>
-												</a>
-												
+												</a> -->
 											</div>
 										</div>
 									</div>
@@ -180,7 +179,7 @@
 									<div class="card flex-fill team-lead shadow-sm">
 										<div class="card-header">
 											<h4 class="card-title mb-0 d-inline-block">Team Info </h4>
-											<a href="employees-team" class="dash-card d-inline-block float-right mb-0 text-primary">Manage Team </a>
+											<a href="javascript:void(0)" id="refresh_team_leads" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body" id="team_leads">
 										</div>
@@ -257,65 +256,10 @@
 									<div class="card flex-fill today-list shadow-sm">
 										<div class="card-header">
 											<h4 class="card-title mb-0 d-inline-block">Your Upcoming Leave</h4>
-											<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
+											<a href="javascript:void(0)" id="refresh_upcoming_leave" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ">
-											<div class="recent-comment">
-												<a href="javascript:void(0)" class="dash-card text-danger">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Mon, 16 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Mon, 23 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Wed, 25 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Fri, 27 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-primary">
-													<div class="dash-card-container">
-														<div class="dash-card-icon">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Tue, 31 Dec 2019</h6>
-														</div>
-													</div>
-												</a>
+											<div class="recent-comment" id="upcoming_leaves">
 											</div>
 										</div>
 									</div>
@@ -337,6 +281,48 @@
 @push('scripts')
 <script type="text/javascript">
 
+	// TodayNews data
+	function LoadTodayNews(){
+		$.ajax({
+			method: 'GET',
+			url: '/getTodayNews-ajax',
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				console.log('TodayNews : ', data);
+				var news = '';
+				if(data.length > 0){
+		            data.forEach(function (row,index) {
+		            	news += '<a href="javascript:void(0)" class="dash-card text-dark">';
+						news += '<div class="dash-card-container">';
+						news += '<div class="dash-card-icon text-primary">';
+						news += '<i class="fa fa-suitcase" aria-hidden="true"></i>';
+						news += '</div>';
+						news += '<div class="dash-card-content">';
+						news += '<h6 class="mb-0">'+row.news+'</h6>';
+						news += '</div>';
+						news += '</div>';
+						news += '</a>';
+						if (index !== data.length - 1) {
+							news += '<hr>';
+						}					
+		        	});	            
+		        }else{
+		        	news += '<a href="javascript:void(0)" class="dash-card text-dark">';
+		        	news += '<div class="dash-card-container">';
+						news += '<div class="dash-card-icon text-primary">';
+						news += '<i class="fa fa-birthday-cake" aria-hidden="true"></i>';
+						news += '</div>';
+						news += '<div class="dash-card-content">';
+						news += '<h6 class="mb-0">No News</h6>';
+						news += '</div>';
+		        	news += '</div></a><hr>';
+		        }
+		        $('#today_news').html(news);
+			}
+		});
+	}
+
 	// Team Leads data
 	function LoadTeamLeads(){
 		$.ajax({
@@ -345,26 +331,12 @@
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
-				// console.log('TeamLeads : ', data);
+				console.log('TeamLeads : ', data);
 				var leads = '';
-				if(data.length > 0){
+				if(data.reporting_manager.length > 0){
+		            console.log('reporting_manager : ', data.reporting_manager);
 		            data.forEach(function (row,index) {
-		            	leads += '<div class="media mb-3">';
-		            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
-						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
-						leads += '<div class="media-body">';
-						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						var designation = '';
-						if(row.role_name == "Manager"){
-							designation = "Team Manager";
-						}else{
-							designation = "Team Member";
-						}
-						leads += '<p class="mb-0 ctm-text-sm">' +row.project_name+ ' Project (' +designation+ ')</p>';
-						leads += '</div></div>';
-						if (index !== data.length - 1) {
-							leads += '<hr>';
-						}						
+		            					
 		        	});	            
 		        }else{
 		        	leads += '<div class="media mb-3">';
@@ -384,7 +356,7 @@
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
-				console.log('response : ', data);
+				// console.log('UpcomingLeave : ', data);
 				var leaves = '';
 				if(data.length > 0){
 		            data.forEach(function (row,index) {
@@ -426,19 +398,28 @@
 		});
 	}
 
+
+	// onclick of refresh_today_news
+	$('#refresh_today_news').click(function() {
+	   	LoadUpcomingLeave();
+	});
+	// onclick of refresh_team_leads
+	$('#refresh_team_leads').click(function() {
+	   	LoadTeamLeads();
+	});
 	// onclick of refresh_upcoming_leave
 	$('#refresh_upcoming_leave').click(function() {
-		// to load upcoming leave data
 	   	LoadUpcomingLeave();
 	});
 
 	window.onload = function() {
-		
+		// to load Today News data
+		LoadTodayNews();
 		// to load Team Leads data
 	   	LoadTeamLeads();
 		// to load Upcoming leave data
 	   	LoadUpcomingLeave();
 	}
-	
+
 </script>
 @endpush

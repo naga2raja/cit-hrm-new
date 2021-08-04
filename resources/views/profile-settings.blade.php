@@ -49,7 +49,7 @@
 							</aside>
 						</div>
 				
-						<div class="col-xl-9 col-lg-8  col-md-12">
+						<div class="col-xl-9 col-lg-8 col-md-12">
 							<div class="row">
 								<div class="col-lg-6 d-flex">
 									<div class="card flex-fill ctm-border-radius shadow-sm">
@@ -85,33 +85,72 @@
 										</div>
 									</div>
 								</div>
-								<!--
+								
 								<div class="col-lg-6 d-flex">
 									<div class="card reminder flex-fill ctm-border-radius shadow-sm">
 										<div class="card-header">
-											<h4 class="card-title mb-0">Company Notification Settings</h4>
-											<span class="ctm-text-sm">You will receive information across the whole company.</span>
+											<h4 class="card-title mb-0">Today's News</h4>
 										</div>
 										<div class="card-body">
-											<div class="custom-control custom-checkbox mb-3">
-												<input type="checkbox" class="custom-control-input" id="weekly-digest" checked>
-												<label class="custom-control-label" for="weekly-digest"><span class="h6">Weekly Summarize</span><br><span class="ctm-text-sm">Keeping you in the loop with a weekly email summarizing</span> </label>
+											@if($message = Session::get('news_success'))
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
 											</div>
-											<div class="custom-control custom-checkbox mb-3">
-												<input type="checkbox" class="custom-control-input" id="weekly-payroll" checked>
-												<label class="custom-control-label" for="weekly-payroll"><span class="h6">Weekly Payroll Summarize</span><br><span class="ctm-text-sm">A weekly email containing all changes related to your payroll..</span></label>
-											</div>
-											<div class="custom-control custom-checkbox mb-3">
-												<input type="checkbox" class="custom-control-input" id="Key" checked>
-												<label class="custom-control-label" for="Key"><span class="h6">Visa Dates</span><br><span class="ctm-text-sm">Informs and notify the day before Visa dates for each team member.</span></label>
-											</div>
-											<div class="text-center">
-												<button class="btn btn-theme button-1 ctm-border-radius text-white">Update Notification Settings</button>
-											</div>
+											@endif	
+
+											<form method="POST" action="{{ route('todayNews.store') }}">
+												@csrf
+												<div class="row filter-row">
+													<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+														<div class="form-group">
+															<label>Title</label>
+															<input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" name="title" >
+															{!! $errors->first('title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
+												</div>
+
+												<div class="row filter-row">
+													<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+														<div class="form-group">
+															<label>News <span class="text-danger">*</span></label>
+															<textarea class="form-control {{ $errors->has('news') ? 'is-invalid' : ''}}" name="news" ></textarea>
+															{!! $errors->first('news', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
+												</div>
+
+												<div class="row filter-row">
+													<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+														<div class="form-group">
+															<label>Category <span class="text-danger">*</span></label>
+															<select class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="category" id="category" style="width: 100%">
+																<option value="Information">Information</option>
+																<option value="Important">Important</option>
+																<option value="Urgent">Urgent</option>
+																<option value="Leave">Leave</option>
+																<option value="Birtday">Birtday</option>
+																<option value="Event">Event</option>
+																<option value="Project">Project</option>
+															</select>
+															{!! $errors->first('category', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+														<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-paper-plane"></i> Post </button>
+													</div>
+													<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+														<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"> Cancel </button>
+													</div>
+												</div>												
+											</form>
 										</div>
 									</div>
 								</div>
-							-->
+							
 							</div>
 							<!--
 							<div class="row">

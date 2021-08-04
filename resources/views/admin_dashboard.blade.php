@@ -47,6 +47,42 @@
 										</ul>
 									</div>
 								</div>
+								<div class="card shadow-sm">
+									<div class="card-header">
+										<h4 class="card-title mb-0 d-inline-block">Permission</h4>
+										<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
+									</div>
+									<div class="card-body text-center">
+										<div class="time-list">
+											<div class="dash-stats-list">
+												<span class="btn btn-outline-primary">9.00 Hrs</span>
+												<p class="mb-0">Approved</p>
+											</div>
+											<div class="dash-stats-list">
+												<span class="btn btn-outline-primary">10.00 Hrs</span>
+												<p class="mb-0">Remaining</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card shadow-sm">
+									<div class="card-header">
+										<h4 class="card-title mb-0 d-inline-block">Leave</h4>
+										<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
+									</div>
+									<div class="card-body text-center">
+										<div class="time-list">
+											<div class="dash-stats-list">
+												<span class="btn btn-outline-primary">4.5 Days</span>
+												<p class="mb-0">Taken</p>
+											</div>
+											<div class="dash-stats-list">
+												<span class="btn btn-outline-primary">7.5 Days</span>
+												<p class="mb-0">Remaining</p>
+											</div>
+										</div>
+									</div>
+								</div>
 							</aside>
 						</div>
 						
@@ -144,12 +180,12 @@
 								<div class="col-xl-6 col-lg-12 col-md-12">
 									<div class="card ctm-border-radius shadow-sm">
 										<div class="card-header">
-											<h4 class="card-title mb-0 d-inline-block">Today</h4>
-											<a href="javascript:void(0)" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
+											<h4 class="card-title mb-0 d-inline-block">Today ({{ date('d M Y') }})</h4>
+											<a href="javascript:void(0)" id="refresh_today_news" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ">
-											<div class="recent-comment">
-												<a href="javascript:void(0)" class="dash-card text-dark">
+											<div class="recent-comment" id="today_news">
+												<!-- <a href="javascript:void(0)" class="dash-card text-dark">
 													<div class="dash-card-container">
 														<div class="dash-card-icon text-primary">
 															<i class="fa fa-birthday-cake" aria-hidden="true"></i>
@@ -159,8 +195,8 @@
 														</div>
 													</div>
 												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-dark">
+												<hr> -->
+												<!-- <a href="javascript:void(0)" class="dash-card text-dark">
 													<div class="dash-card-container">
 														<div class="dash-card-icon text-warning">
 															<i class="fa fa-bed" aria-hidden="true"></i>
@@ -214,7 +250,7 @@
 															<div class="e-avatar"><img class="img-fluid" src="img/profiles/img-6.jpg" alt="Maria Cotton"></div>
 														</div>
 													</div>
-												</a>
+												</a> -->
 											</div>
 										</div>
 									</div>
@@ -232,7 +268,8 @@
 												Team Info
 											@endrole
 											</h4>
-											<a href="{{ route('projects.index') }}" class="dash-card float-right mb-0 text-primary">Manage Team </a>
+											<!-- <a href="{{ route('projects.index') }}" class="dash-card float-right mb-0 text-primary">Manage Team </a> -->
+											<a href="javascript:void(0)" id="refresh_team_leads" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body" id="team_leads">
 										</div>
@@ -334,6 +371,48 @@
 @push('scripts')
 <script type="text/javascript">
 
+	// TodayNews data
+	function LoadTodayNews(){
+		$.ajax({
+			method: 'GET',
+			url: '/getTodayNews-ajax',
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				// console.log('TodayNews : ', data);
+				var news = '';
+				if(data.length > 0){
+		            data.forEach(function (row,index) {
+		            	news += '<a href="javascript:void(0)" class="dash-card text-dark">';
+						news += '<div class="dash-card-container">';
+						news += '<div class="dash-card-icon text-primary">';
+						news += '<i class="fa fa-suitcase" aria-hidden="true"></i>';
+						news += '</div>';
+						news += '<div class="dash-card-content">';
+						news += '<h6 class="mb-0">'+row.news+'</h6>';
+						news += '</div>';
+						news += '</div>';
+						news += '</a>';
+						if (index !== data.length - 1) {
+							news += '<hr>';
+						}					
+		        	});	            
+		        }else{
+		        	news += '<a href="javascript:void(0)" class="dash-card text-dark">';
+		        	news += '<div class="dash-card-container">';
+						news += '<div class="dash-card-icon text-primary">';
+						news += '<i class="fa fa-birthday-cake" aria-hidden="true"></i>';
+						news += '</div>';
+						news += '<div class="dash-card-content">';
+						news += '<h6 class="mb-0">No News</h6>';
+						news += '</div>';
+		        	news += '</div></a><hr>';
+		        }
+		        $('#today_news').html(news);
+			}
+		});
+	}
+
 	// Team Leads data
 	function LoadTeamLeads(){
 		$.ajax({
@@ -342,7 +421,7 @@
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
-				// console.log('TeamLeads : ', data);
+				console.log('TeamLeads : ', data);
 				var leads = '';
 				if(data.length > 0){
 		            data.forEach(function (row,index) {
@@ -351,13 +430,14 @@
 						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						var designation = '';
-						if(row.role_name == "Manager"){
-							designation = "Team Manager";
-						}else{
-							designation = "Team Member";
-						}
-						leads += '<p class="mb-0 ctm-text-sm">' +row.project_name+ ' Project (' +designation+ ')</p>';
+						// var project_id = '';
+						// if(row.admin_project_id){
+						// 	project_id = 'Project: '+row.admin_project_id;
+						// }
+						// else if(row.manager_project_id){
+						// 	project_id = 'Project: '+row.manager_project_id;
+						// }
+						leads += '<p class="mb-0 ctm-text-sm"> (' +row.designation+ ')</p>';
 						leads += '</div></div>';
 						if (index !== data.length - 1) {
 							leads += '<hr>';
@@ -423,14 +503,23 @@
 		});
 	}
 
+
+	// onclick of refresh_today_news
+	$('#refresh_today_news').click(function() {
+	   	LoadUpcomingLeave();
+	});
+	// onclick of refresh_team_leads
+	$('#refresh_team_leads').click(function() {
+	   	LoadTeamLeads();
+	});
 	// onclick of refresh_upcoming_leave
 	$('#refresh_upcoming_leave').click(function() {
-		// to load upcoming leave data
 	   	LoadUpcomingLeave();
 	});
 
 	window.onload = function() {
-		
+		// to load Today News data
+		LoadTodayNews();
 		// to load Team Leads data
 	   	LoadTeamLeads();
 		// to load Upcoming leave data
