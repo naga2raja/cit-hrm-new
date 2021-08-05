@@ -28,7 +28,7 @@
 								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
 									<div class="card-body">
 										<ul class="list-group">
-											<li class="list-group-item text-center active"><a href="reports" class="text-white">Employee Reports</a></li>
+											<li class="list-group-item text-center active"><a href="employee_report" class="text-white">Employee Reports</a></li>
 											<li class="list-group-item text-center "><a class="text-dark" href="leave-reports">Leave Reports</a></li>
 											<li class="list-group-item text-center"><a class="text-dark" href="payroll-reports">Payroll reports</a></li>
 											<li class="list-group-item text-center"><a class="text-dark" href="contact-reports">Contact reports</a></li>
@@ -44,15 +44,16 @@
 						<div class="col-xl-9 col-lg-8  col-md-12">
 							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-body align-center">
-									<form method="GET">
+									<form method="GET" id="reportForm">
+										<input type="hidden" name="export" value="0" id="export">
 									<div class="row filter-row">
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<label>Report</label>
 													<select class="form-control select" name="report">
 														<option>Select</option>
-														<option value="employee">Employee Report</option>
-														<option>Leave Report</option>
+														<option value="employee_report" @if(Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
+														<option value="leave_report" @if(Request::get('report') == 'leave_report') selected @endif>Leave Report</option>
 														<option>Attendance Report</option>
 														<option>Timesheet Report</option>
 														<option>Project Report</option>
@@ -61,14 +62,24 @@
 											</div>
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-													<label>From Date</label>
-													<input type="text" class="form-control datetimepicker" placeholder="From" name="from_date">
+													<label>Created From Date</label>
+													<input type="text" class="form-control datetimepicker" placeholder="From" name="from_date" id="from_date" value="{{ Request::get('from_date') }}">
 												</div>
 											</div>
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
 												<div class="form-group mb-lg-0 mb-md-0 mb-sm-0">
-													<label>To Date</label>
-													<input type="text" class="form-control datetimepicker" placeholder="To" name="to_date">
+													<label>Created To Date</label>
+													<input type="text" class="form-control datetimepicker" placeholder="To" name="to_date" id="to_date" value="{{ Request::get('to_date') }}">
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
+												<div class="form-group mb-lg-0 mb-md-0 mb-sm-0">
+													<label>Status</label>
+													<select class="form-control select" name="status">
+														<option value="">All</option>
+														<option value="Active"  {{ Request::get('status') == 'Active' ? 'selected' : ''}}>Active</option>
+														<option value="Inactive" {{ Request::get('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
+													</select>
 												</div>
 											</div>
 											
@@ -87,18 +98,36 @@
 											<table class="table custom-table table-hover">
 												<thead>
 													<tr>
-														<th>Name</th>
-														<th>Active</th>
+														<th>Employee Id</th>
+														<th>First Name</th>
+														<th>Middle Name</th>
+														<th>Last Name</th>
 														<th>Email</th>
-														<th>Days Allowed</th>
-														<th>Days Approved</th>
-														<th>Sick Days</th>
-														<th>Work From Home</th>
-														<th>Days Remaining</th>
+														<th>Date of Birth</th>
+														<th>Gender</th>
+														<th>Date of Joining</th>
+														<th>Status</th>
+														<th>Created At</th>
 													</tr>
 												</thead>
 												<tbody>
+
+													@foreach ($data as $item)
 													<tr>
+														<td> {{ $item['employee_id'] }} </td>
+														<td> {{ $item['first_name'] }} </td>
+														<td> {{ $item['middle_name'] }} </td>
+														<td> {{ $item['last_name'] }} </td>
+														<td> {{ $item['email'] }} </td>														
+														<th> {{ $item['date_of_birth'] }}</th>
+														<td> {{ $item['gender'] }} </td>
+														<td> {{ $item['joined_date'] }} </td>
+														<td> {{ $item['status'] }} </td>
+														<td> {{ $item['created_at'] }} </td>
+													</tr>														
+													@endforeach
+													
+													{{-- <tr>
 														<td>
 															<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>
 															<h2><a href="employment">Danny Ward</a></h2>
@@ -244,13 +273,13 @@
 														<td>0</td>
 														<td>2</td>
 														<td>5</td>
-													</tr>
+													</tr> --}}
 												</tbody>
 											</table>
 										</div>
 									</div>
 									<div class="text-center mt-3">
-										<a href="javascript:void(0)" class="btn btn-theme button-1 ctm-border-radius text-white">Download Report</a>
+										<button onclick="downloadExcel()" class="btn btn-theme button-1 ctm-border-radius text-white">Download Report</button>
 									</div>
 								</div>
 							</div>
@@ -265,4 +294,15 @@
 		<!-- Inner Wrapper -->
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
+@endsection
+
+@section('my-scripts')
+	<script type="text/javascript">
+		function downloadExcel() {
+			$('#export').val(1);
+			$('#reportForm').submit();
+			$('#export').val(0);
+
+		}
+	</script>
 @endsection
