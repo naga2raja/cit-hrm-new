@@ -126,6 +126,14 @@
 														<td> {{ $item['created_at'] }} </td>
 													</tr>														
 													@endforeach
+
+													@if(count($data) < 1)
+														<tr>
+															<td colspan="100%">
+																<div class="alert alert-danger text-center">No Data Found</div>
+															</td>
+														</tr>
+													@endif
 													
 													{{-- <tr>
 														<td>
