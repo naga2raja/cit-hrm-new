@@ -49,38 +49,27 @@
 								</div>
 								<div class="card shadow-sm">
 									<div class="card-header">
-										<h4 class="card-title mb-0 d-inline-block">Permission</h4>
-										<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
-									</div>
-									<div class="card-body text-center">
-										<div class="time-list">
-											<div class="dash-stats-list">
-												<span class="btn btn-outline-primary">9.00 Hrs</span>
-												<p class="mb-0">Approved</p>
-											</div>
-											<div class="dash-stats-list">
-												<span class="btn btn-outline-primary">10.00 Hrs</span>
-												<p class="mb-0">Remaining</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="card shadow-sm">
-									<div class="card-header">
 										<h4 class="card-title mb-0 d-inline-block">Leave</h4>
 										<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
 									</div>
 									<div class="card-body text-center">
-										<div class="time-list">
-											<div class="dash-stats-list">
-												<span class="btn btn-outline-primary">4.5 Days</span>
-												<p class="mb-0">Taken</p>
-											</div>
-											<div class="dash-stats-list">
-												<span class="btn btn-outline-primary">7.5 Days</span>
-												<p class="mb-0">Remaining</p>
-											</div>
-										</div>
+										@if($leavesInfo = currentUserLeaveBalance())
+											@foreach ($leavesInfo as $leave)
+												<span class="mt-0 mb-0">{{ $leave->name }}</span>
+												<div class="time-list">
+													<div class="dash-stats-list">
+														<p class="mb-0">Taken</p>
+														<span class="btn btn-outline-primary"> {{ $leave->days_used }} Days</span>
+													</div>
+													<div class="dash-stats-list">
+														<p class="mb-0">Remaining</p>
+														<span class="btn btn-outline-primary">{{ $leave->remaining_days }} Days</span>
+													</div>
+												</div>
+												@if (!$loop->last) <hr> @endif
+												
+											@endforeach
+										@endif
 									</div>
 								</div>
 							</aside>
@@ -180,7 +169,7 @@
 								<div class="col-xl-6 col-lg-12 col-md-12">
 									<div class="card ctm-border-radius shadow-sm">
 										<div class="card-header">
-											<h4 class="card-title mb-0 d-inline-block">Today ({{ date('d M Y') }})</h4>
+											<h4 class="card-title mb-0 d-inline-block">Today <span class="mb-0 ctm-text-sm">({{ date('d M Y') }})</span></h4>
 											<a href="javascript:void(0)" id="refresh_today_news" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ">
@@ -371,6 +360,25 @@
 @push('scripts')
 <script type="text/javascript">
 
+	function getHoursDiff(created_date){
+		var currentdate = new Date(); 
+		var rightNow = moment(currentdate).format("YYYY-MM-DD HH:mm:ss");
+		var createdDate = moment(created_date).format("YYYY-MM-DD HH:mm:ss");
+
+		var diff = moment(rightNow).diff(createdDate, 'minutes');
+		var mins = diff%60; // to get minutes
+		var hours = (diff - mins)/60; // to get hours
+
+		var time = '';
+		if(hours != 0){
+			time += hours+' hours ';
+		}
+		if(mins != 0){
+			time += mins +' mins';
+		}
+        return time;
+	}
+
 	// TodayNews data
 	function LoadTodayNews(){
 		$.ajax({
@@ -383,30 +391,30 @@
 				var news = '';
 				if(data.length > 0){
 		            data.forEach(function (row,index) {
-		            	news += '<a href="javascript:void(0)" class="dash-card text-dark">';
-						news += '<div class="dash-card-container">';
-						news += '<div class="dash-card-icon text-primary">';
-						news += '<i class="fa fa-suitcase" aria-hidden="true"></i>';
+						news += '<div class="notice-board">';
+						news += '<div class="table-img">';
+						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
 						news += '</div>';
-						news += '<div class="dash-card-content">';
+						news += '<div class="notice-body">';
 						news += '<h6 class="mb-0">'+row.news+'</h6>';
+						var hours = getHoursDiff(row.created_at);
+						var diff = (hours) ? hours+" ago" : "Just Now";
+						news += '<span class="ctm-text-sm">' +row.employee_name+ ' | ' +diff+ '</span>';
 						news += '</div>';
 						news += '</div>';
-						news += '</a>';
 						if (index !== data.length - 1) {
 							news += '<hr>';
 						}					
 		        	});	            
 		        }else{
-		        	news += '<a href="javascript:void(0)" class="dash-card text-dark">';
-		        	news += '<div class="dash-card-container">';
-						news += '<div class="dash-card-icon text-primary">';
-						news += '<i class="fa fa-birthday-cake" aria-hidden="true"></i>';
-						news += '</div>';
-						news += '<div class="dash-card-content">';
-						news += '<h6 class="mb-0">No News</h6>';
-						news += '</div>';
-		        	news += '</div></a><hr>';
+		        	news += '<div class="notice-board">';
+					news += '<div class="table-img">';
+					news += '<div class="e-avatar mr-3"><img class="img-fluid" src="img/profiles/img-5.jpg" alt="Danny Ward"></div>';
+					news += '</div>';
+					news += '<div class="notice-body">';
+					news += '<h6 class="mb-0">No News</h6>';
+					news += '</div></div>';
 		        }
 		        $('#today_news').html(news);
 			}
@@ -430,23 +438,17 @@
 						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						// var project_id = '';
-						// if(row.admin_project_id){
-						// 	project_id = 'Project: '+row.admin_project_id;
-						// }
-						// else if(row.manager_project_id){
-						// 	project_id = 'Project: '+row.manager_project_id;
-						// }
-						leads += '<p class="mb-0 ctm-text-sm"> (' +row.designation+ ')</p>';
+						var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> ' +row.project_name+ ' Project</span>' : "";
+						leads += '<p class="mb-0 ctm-text-sm"> (' +row.designation+ ') '+ project +'</p>';
 						leads += '</div></div>';
 						if (index !== data.length - 1) {
 							leads += '<hr>';
-						}						
+						}
 		        	});	            
 		        }else{
 		        	leads += '<div class="media mb-3">';
 		        	leads += '<h6 class="m-0 ctm-text-sm">No Team Data</h6>';
-		        	leads += '</div><hr>';
+		        	leads += '</div>';
 		        }
 		        $('#team_leads').html(leads);
 			}
@@ -480,14 +482,11 @@
 						leaves += '<i class="fa fa-suitcase"></i></div>';
 						leaves += '<div class="notice-body">';
 						leaves += '<h6 class="mb-0">';
-						leaves += row.from_date;
-						if(row.from_date != row.to_date){
-							leaves += " - "+row.to_date;
-						}
+						leaves += row.date;
 						leaves += '<span class="ctm-text-sm"> ('+ row.name+ ')</span>';
 						leaves += '</h6>';
 						leaves += '<span class="ctm-text-sm">';
-						leaves += (row.leave_days+1) * row.length_days+ ' ('+row.leave_duration+') | '+status+'</span>';
+						leaves += row.leave_duration+' | '+status+'</span>';
 						leaves += '</div></div>';
 						if (index !== data.length - 1) {
 							leaves += '<hr>';
@@ -503,10 +502,9 @@
 		});
 	}
 
-
 	// onclick of refresh_today_news
 	$('#refresh_today_news').click(function() {
-	   	LoadUpcomingLeave();
+	   	LoadTodayNews();
 	});
 	// onclick of refresh_team_leads
 	$('#refresh_team_leads').click(function() {
