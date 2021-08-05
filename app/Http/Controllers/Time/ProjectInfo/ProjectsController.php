@@ -72,7 +72,6 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'customer' => 'required',
             'project_name' => 'required|string|max:255',
@@ -212,6 +211,16 @@ class ProjectsController extends Controller
         } else {  
             return false;
         }  
+    }
+
+    public function customerAjaxSearch(Request $request)
+    {
+        $customer_name = $request->q;
+        $customers = mCustomer::selectRaw('m_customers.customer_name as name, m_customers.id')
+                                    ->where('m_customers.customer_name', 'like', "%{$customer_name}%")
+                                    ->orderBy('m_customers.customer_name', 'ASC')
+                                    ->get();
+        return $customers;
     }
 
     public function customers_search(Request $request)

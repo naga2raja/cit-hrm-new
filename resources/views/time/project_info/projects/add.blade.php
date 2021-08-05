@@ -23,10 +23,15 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-	                                    			<input type="hidden" name="customer" id="customer" value="">
+													<select class="form-control select {{ $errors->has('customer') ? 'is-invalid' : ''}}" name="customer" id="customer" style="width: 100%">
+														
+													</select>
+													{!! $errors->first('customer', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
+
+	                                    			{{-- <input type="hidden" name="customer2" id="customer2" value="">
 													<input type="text" class="form-control {{ $errors->has('customer') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="customer_name" value="{{ old('customer_name') }}" id="customer_name" autocomplete="off">
 													{!! $errors->first('customer', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													<div id="customers_list" class="autocomplete"></div>
+													<div id="customers_list" class="autocomplete"></div> --}}
 												</div>
 											</div>
 											<div class="col-sm-3">
@@ -225,10 +230,14 @@
 		   dataType: "json",
 		   contentType: 'application/json',
 		   success:function(data){
-		   	console.log(data.customer_name, data.customer_id);
 		    $('#customer_model_cancel').click();
-		    $('#customer_name').val(data.customer_name);
-		    $('#customer').val(data.customer_id);
+			var respData = {
+				id: data.customer_id, 
+				text: data.customer_name
+			};
+			var newOption = new Option(respData.text, respData.id, false, false);
+			$('#customer').append(newOption).trigger('change');
+			console.log('customer id', $('#customer').val());
 		  }
 		});
 	}	
@@ -295,6 +304,31 @@
 		placeholder: 'Select',
 		ajax: {
 			url: '/employee-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+	
+$('#customer').select2({
+		placeholder: 'Select',
+    allowClear: false,
+    enable: true,
+    readonly: false,
+    multiple: false,
+
+		ajax: {
+			url: '{{ route("customer.AjaxSearch") }}',
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {

@@ -223,6 +223,8 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::post('/project-save-customer', 'Time\ProjectInfo\ProjectsController@project_save_customer')->name('project-save-customer');
     Route::post('/update-project', 'Time\ProjectInfo\ProjectsController@update_project')->name('update-project');
     Route::post('/projects/multiple-delete', 'Time\ProjectInfo\ProjectsController@deleteMultiple');
+    Route::get('/customers-ajax-search', 'Time\ProjectInfo\ProjectsController@customerAjaxSearch')->name('customer.AjaxSearch');
+    
 
     /* Time/ProjectInfo/Projects/Activities */
     Route::resource('/activities', 'Time\ProjectInfo\ActivitiesController');

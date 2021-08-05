@@ -33,10 +33,15 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-	                                    			<input type="hidden" name="customer" id="customer" value="{{ $projects[0]->customer_id }}">
+													<select class="form-control select {{ $errors->has('customer') ? 'is-invalid' : ''}}" name="customer" id="customer" style="width: 100%">
+														<option value="{{ $projects[0]->customer_id }}" selected> {{ $projects[0]->customer_name }}</option>
+													</select>
+													{!! $errors->first('customer', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
+
+	                                    			{{-- <input type="hidden" name="customer" id="customer" value="{{ $projects[0]->customer_id }}">
 													<input type="text" class="form-control {{ $errors->has('customer') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="customer_name" value="{{ old('customer_name', $projects[0]->customer_name) }}" id="customer_name" autocomplete="off" disabled="disabled">
 													{!! $errors->first('customer', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													<div id="customers_list" class="autocomplete"></div>
+													<div id="customers_list" class="autocomplete"></div> --}}
 												</div>
 											</div>
 											<div class="col-sm-4">
@@ -427,7 +432,7 @@
 				var project_id = $('input[name="project_id"]').val();
 				var project_name = $('input[name="project_name"]').val();
 				var project_description = $('#project_description').val();
-				var customer = $('input[name="customer"]').val();
+				var customer = $('#customer').val();
 				var admin_id = $('select[name="admin_id"]').val();
 				
 				$.ajax({
@@ -481,8 +486,18 @@
 			   success:function(data){
 			   	console.log(data.customer_name, data.customer_id);
 			    $('#customer_model_cancel').click();
-			    $('#customer_name').val(data.customer_name);
-			    $('#customer').val(data.customer_id);
+			    // $('#customer_name').val(data.customer_name);
+			    // $('#customer').val(data.customer_id);
+				var dropdownval = $( "#customer" ).val();
+  				$("#customer option[value='"+dropdownval+"']").remove();
+				var respData = {
+					id: data.customer_id, 
+					text: data.customer_name
+				};
+				var newOption = new Option(respData.text, respData.id, false, false);
+				$('#customer').append(newOption).trigger('change');
+				$("#customer option[value='"+respData.id+"']").attr("selected","selected");
+				console.log('New customer added, ', respData);
 			  }
 			});
 		}
@@ -574,6 +589,28 @@
 		}, 6000);
 	}
 
-	
+	$('#customer').select2({
+		placeholder: 'Select',
+		allowClear: false,
+		enable: true,
+		readonly: false,
+		multiple: false,
+			ajax: {
+				url: '{{ route("customer.AjaxSearch") }}',
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+					return {
+						results:  $.map(data, function (item) {
+							return {
+								text: item.name,
+								id: item.id
+							}
+						})
+					};
+				},
+				cache: true
+			}		
+		});
 	</script>
 @endpush
