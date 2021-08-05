@@ -191,9 +191,6 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     // holidays
     Route::resource('/holidays', 'Leave\Holidays\HolidaysController');
     Route::post('/holidays/multiple-delete', 'Leave\Holidays\HolidaysController@deleteMultiple');
-
-    Route::resource('/leaveEntitlement', 'Leave\Entitlements\LeaveEntitlementController'); // add
-    Route::post('/leaveEntitlement/multiple-delete', 'Leave\LeaveType\LeaveEntitlementController@deleteMultiple');
     
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
     Route::post('/myEntitlements/multiple-delete', 'Leave\LeaveType\MyLeaveEntitlementController@deleteMultiple');
@@ -297,6 +294,10 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
 
     Route::get('employee-records', 'Time\Attendance\PunchInOutController@getEmployeeRecords')->name('punch.employee-records');
     Route::post('attendance-admin-action', 'Time\Attendance\PunchInOutController@adminAction')->name('punch.action');
+
+    // Employee Entitlement List
+    Route::resource('/leaveEntitlement', 'Leave\Entitlements\LeaveEntitlementController'); // add
+    Route::post('/leaveEntitlement/multiple-delete', 'Leave\LeaveType\LeaveEntitlementController@deleteMultiple');
 
     // Employee Timesheet List
     Route::get('/timesheets', 'Time\Timesheets\TimesheetsController@index')->name('timesheets.index');

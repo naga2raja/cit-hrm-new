@@ -93,9 +93,12 @@ class TimesheetsController extends Controller
           if(Auth::User()->id == $employee_id) {
             $status = '0';
             $comments = '<b>'.Auth::user()->name.'</b> - Saved Timesheet on ' . getCurrentTime();
+            $action = "Saved";
           }else if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){
             $status = '2';
+            $newtimesheetStatus = currentTimesheetStatus($status);
             $comments = '<b>'.Auth::user()->name .'('. Auth::user()->roles[0]->name .')</b> - Send to <b>'. $newtimesheetStatus.'</b> on ' . getCurrentTime();
+            $action = $newtimesheetStatus;
           }
           // create Timesheet
           $timesheet = tTimesheet::create([
@@ -106,6 +109,11 @@ class TimesheetsController extends Controller
               'comments' => $comments,
               'created_by' => Auth::user()->id
           ]);
+          // to store in activityLog
+          $send_by = Auth::user()->id;
+          $send_to = $employee_id;
+          activityLog($action, "Timesheet", $send_by, $employee_id);
+
           $timesheet_id = $timesheet->id;
         }
         // create TimesheetItem

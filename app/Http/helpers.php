@@ -142,3 +142,20 @@ if (! function_exists('assetUrl')) {
             ->get();
         return $leaves;
     }
+
+
+    use App\tLog;
+    function activityLog($action, $module, $action_by, $action_to) {
+        $userId = getEmployeeId(Auth::User()->id);
+        $today = date('Y-m-d h:i:s');
+
+        $log = tLog::create([
+            'action' => $action,
+            'module' => $module,
+            'action_by' => $action_by,
+            'action_to' => $action_to,
+            'date' => $today,
+        ]);
+
+        return $log;
+    }
