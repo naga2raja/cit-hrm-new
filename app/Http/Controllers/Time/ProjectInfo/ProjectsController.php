@@ -329,12 +329,17 @@ class ProjectsController extends Controller
 
     public function searchProjectAjax(Request $request)
     {
+        $currentUserAssignedProjects = getCurrentUserAssignedProjects();
         $projects = [];
         if($request->has('q')){
             $project_name = $request->q;
             $projects = mProject::select('m_projects.project_name', 'm_projects.id')
-                                    ->where('m_projects.project_name', 'like', "%{$project_name}%")
-                                    ->get();
+                                    ->where('m_projects.project_name', 'like', "%{$project_name}%");
+            
+            if($currentUserAssignedProjects['role'] != 'Admin') {
+                $projects = $projects->whereIn('id', $currentUserAssignedProjects['project_ids'] );
+            }
+            $projects = $projects->get();
         }
         return response()->json($projects);
     }

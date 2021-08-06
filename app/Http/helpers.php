@@ -159,3 +159,22 @@ if (! function_exists('assetUrl')) {
 
         return $log;
     }
+
+    function getCurrentUserAssignedProjects() {
+        $employeeId = getEmployeeId(Auth::User()->id);
+        $roleName = '';
+        if( Auth::user()->hasRole('Manager') ) {
+            $roleName = 'Manager';
+        } elseif( Auth::user()->hasRole('Employee') ) {
+            $roleName = 'Employee';
+        } else {
+            $roleName = 'Admin';
+        }
+        $out['role'] = $roleName;
+        $employees = DB::table('t_project_employees')->where('employee_id', $employeeId)->pluck('project_id')->toArray();
+        $managers = DB::table('t_project_managers')->where('employee_id', $employeeId)->pluck('project_id')->toArray();
+        $admins = DB::table('t_project_admins')->where('admin_id', $employeeId)->pluck('project_id')->toArray();
+        $employees = array_merge($employees, $managers, $admins);
+        $out['project_ids'] = array_unique($employees);
+        return $out;
+    }
