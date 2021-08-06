@@ -98,7 +98,7 @@
 											</div>
 											@endif	
 
-											<form method="POST" action="{{ route('todayNews.store') }}">
+											<form method="POST" action="{{ route('news.store') }}">
 												@csrf
 												<div class="row filter-row">
 													<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">

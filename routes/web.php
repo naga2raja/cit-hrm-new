@@ -289,7 +289,10 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function
 
 Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
     // dashboard news
-    Route::resource('/todayNews', 'Admin\NewsController');
+    Route::resource('/news', 'Admin\NewsController');
+    Route::post('/news/multiple-delete', 'Admin\NewsController@deleteMultiple');
+    Route::get('/getEmployeeChart-ajax', 'Employee\EmployeeController@getEmployeeChartData');
+
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
     Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');    

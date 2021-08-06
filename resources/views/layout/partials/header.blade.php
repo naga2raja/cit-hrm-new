@@ -57,7 +57,7 @@
                                             <!-- Notifications -->
                                             <div class="dropdown-menu notification-dropdown-menu shadow-lg border-0 p-3 m-0 dropdown-menu-right">
                                                 @if (!Auth::guest())
-                                                <a class="dropdown-item p-2" href="employment">
+                                                <a class="dropdown-item p-2" href="{{ route('myinfo') }}">
                                                     <span class="media align-items-center">
                                                         <span class="lnr lnr-user mr-3"></span>
                                                         <span class="media-body text-truncate">
@@ -312,7 +312,7 @@
                                 @hasrole('Admin|Manager')
                                 <li class="mr-1 nav-item dropdown {{ Request::is('employees*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="company" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="lnr lnr-apartment pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
+                                        <span class="lnr lnr-exit pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">PIM</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item {{ Request::is('employees') ? 'active' : '' }}" href="{{ route('employees.index') }}">Employee List</a>
@@ -382,7 +382,7 @@
                                     </ul>
                                 </li>
                                 <li class="mr-1 {{ Request::is('mytimesheets*', 'timesheets*') ? 'active' : '' }}">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)"><span class="lnr lnr-briefcase pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)"><span class="lnr lnr-clock pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item dropdown-toggle {{ Request::is('mytimesheets*', 'timesheets*') ? 'active' : '' }}" href="#">Timesheets</a>
@@ -431,11 +431,11 @@
                                     </ul>
                                 </li>
                                 <li class="mr-1 {{ Request::is('my-info') ? 'active' : '' }}">
-                                    <a class="nav-link {{ Request::is('my-info') ? 'active' : '' }}" href="{{ route('myinfo') }}"><span class="lnr lnr-star pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">My Info</span></a>                                    
+                                    <a class="nav-link {{ Request::is('my-info') ? 'active' : '' }}" href="{{ route('myinfo') }}"><span class="lnr lnr-user pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">My Info</span></a>                                    
                                 </li>
                                 @hasrole('Admin')
                                 <li class="mr-1 {{ Request::is('reports') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ route('reports.index') }}"><span class="lnr lnr-rocket pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a>
+                                    <a class="nav-link" href="{{ route('reports.index') }}"><span class="lnr lnr-download pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Reports</span></a>
                                     
                                 </li>
                                 <li class="mr-1 {{ Request::is('import-biometric-data') ? 'active' : '' }}">
@@ -445,6 +445,9 @@
                                 </li>
                                 <li class="mr-1 {{ Request::is('profile-settings') ? 'active' : '' }}">
                                     <a class="nav-link btn-ctm-space {{ Request::is('profile-settings') ? 'active' : '' }} " href="{{ route('profile-settings') }}"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a>
+                                </li>
+                                <li class="mr-1 {{ Request::is('news') ? 'active' : '' }}">
+                                    <a class="nav-link btn-ctm-space {{ Request::is('news') ? 'active' : '' }} " href="{{ route('news.index') }}"><span class="lnr lnr-bullhorn pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">News</span></a>
                                 </li>
                                 @endrole
                             </ul>

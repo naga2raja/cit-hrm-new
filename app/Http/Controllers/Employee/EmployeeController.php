@@ -412,4 +412,14 @@ class EmployeeController extends Controller
 
         return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
     }
+
+    public function getEmployeeChartData(Request $request)
+    {
+        $employee_details = Employee::selectRaw('employees.*, m_job_titles.job_title')
+                                    ->leftJoin('m_job_titles', 'm_job_titles.id', 'employees.job_id')
+                                    ->where('m_job_titles.job_title', '!=', '')
+                                    ->get();
+
+        return response()->json($employee_details);
+    }
 }

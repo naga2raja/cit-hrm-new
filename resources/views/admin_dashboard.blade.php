@@ -40,13 +40,38 @@
 										</div>
 									</div>
 								</div>
-								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
+								<!-- <div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
 									<div class="card-body">
 										<ul class="list-group">
 											<li class="list-group-item text-center active button-5"><a href="javascript:void(0)" class="text-white">{{ @Auth::user()->roles[0]->name }} Dashboard</a></li>
 										</ul>
 									</div>
-								</div>
+								</div> -->
+								<!-- <div class="card shadow-sm">
+									<div class="card-header">
+										<h4 class="card-title mb-0 d-inline-block">Attendance</h4>
+										<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
+									</div>
+									<div class="card-body text-center">
+										@if($leavesInfo = currentUserLeaveBalance())
+											@foreach ($leavesInfo as $leave)
+												<div class="time-list">
+													<div class="dash-stats-list">
+														<p class="mb-0">Taken</p>
+														<span class="btn btn-outline-primary"> {{ $leave->days_used }} Days</span>
+													</div>
+													<div class="dash-stats-list">
+														<p class="mb-0">Remaining</p>
+														<span class="btn btn-outline-primary">{{ $leave->remaining_days }} Days</span>
+													</div>
+												</div>
+												@if (!$loop->last) <hr> @endif
+												
+											@endforeach
+										@endif
+									</div>
+								</div> -->
+
 								<div class="card shadow-sm">
 									<div class="card-header">
 										<h4 class="card-title mb-0 d-inline-block">Leave</h4>
@@ -166,86 +191,20 @@
 							<!-- / Chart -->
 							
 							<div class="row">
-								<div class="col-xl-6 col-lg-12 col-md-12">
-									<div class="card ctm-border-radius shadow-sm">
-										<div class="card-header">
-											<h4 class="card-title mb-0 d-inline-block">Today <span class="mb-0 ctm-text-sm">({{ date('d M Y') }})</span></h4>
+								<div class="col-xl-6 col-lg-12 d-flex">
+									<div class="card shadow-sm flex-fill">
+										<div class="card-header align-items-center">
+											<h4 class="card-title mb-0 d-inline-block">News</h4>
 											<a href="javascript:void(0)" id="refresh_today_news" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ">
 											<div class="recent-comment" id="today_news">
-												<!-- <a href="javascript:void(0)" class="dash-card text-dark">
-													<div class="dash-card-container">
-														<div class="dash-card-icon text-primary">
-															<i class="fa fa-birthday-cake" aria-hidden="true"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">No Birthdays Today</h6>
-														</div>
-													</div>
-												</a>
-												<hr> -->
-												<!-- <a href="javascript:void(0)" class="dash-card text-dark">
-													<div class="dash-card-container">
-														<div class="dash-card-icon text-warning">
-															<i class="fa fa-bed" aria-hidden="true"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Ralph Baker is off sick today</h6>
-														</div>
-														<div class="dash-card-avatars">
-															<div class="e-avatar"><img class="img-fluid" src="img/profiles/img-9.jpg" alt="Avatar"></div>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-dark">
-													<div class="dash-card-container">
-														<div class="dash-card-icon text-success">
-															<i class="fa fa-child" aria-hidden="true"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Ralph Baker is parenting leave today</h6>
-														</div>
-														<div class="dash-card-avatars">
-															<div class="e-avatar"><img class="img-fluid" src="img/profiles/img-9.jpg" alt="Avatar"></div>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-dark">
-													<div class="dash-card-container">
-														<div class="dash-card-icon text-danger">
-															<i class="fa fa-suitcase"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">Danny ward is away today</h6>
-														</div>
-														<div class="dash-card-avatars">
-															<div class="e-avatar"><img class="img-fluid" src="img/profiles/img-5.jpg" alt="Avatar"></div>
-														</div>
-													</div>
-												</a>
-												<hr>
-												<a href="javascript:void(0)" class="dash-card text-dark">
-													<div class="dash-card-container">
-														<div class="dash-card-icon text-pink">
-															<i class="fa fa-home" aria-hidden="true"></i>
-														</div>
-														<div class="dash-card-content">
-															<h6 class="mb-0">You are working from home today</h6>
-														</div>
-														<div class="dash-card-avatars">
-															<div class="e-avatar"><img class="img-fluid" src="img/profiles/img-6.jpg" alt="Maria Cotton"></div>
-														</div>
-													</div>
-												</a> -->
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-xl-6 col-lg-12 col-md-12 d-flex">
-								
+
+								<div class="col-xl-6 col-lg-12 col-md-12 d-flex">								
 									<!-- Team Leads List -->
 									<div class="card flex-fill team-lead shadow-sm">
 										<div class="card-header">
@@ -350,15 +309,47 @@
 				</div>
 			</div>
 			<!--/Content-->
+
+
+
+		<figure class="highcharts-figure">
+		    <div id="container"></div>
+		</figure>
 			
 		</div>
 		<!-- Inner Wrapper -->
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
+
+		<!--  Validation Modal -->
+		<div class="modal fade" id="details_news">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h5 class="modal-title mb-3"></h5><hr>
+						<p class="modal-message"></p>
+						<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3 mt-4" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 @endsection
+
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script> -->
 
 @push('scripts')
 <script type="text/javascript">
+
+	function news_popup(title, details){
+		$('#details_news').modal('toggle');
+		$('.modal-title').html(title);
+		$('.modal-message').html(details);
+	}
 
 	function getHoursDiff(created_date){
 		var currentdate = new Date(); 
@@ -390,23 +381,48 @@
 				// console.log('TodayNews : ', data);
 				var news = '';
 				if(data.length > 0){
-		            data.forEach(function (row,index) {
-						news += '<div class="notice-board">';
+					data[0].birthday.forEach(function (row,index) {
+						news += '<div class="notice-board mb-3">';
+						news += '<div class="table-img">';
+						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Photo"></div>';
+						news += '</div>';
+						news += '<div class="notice-body">';
+						news += '<h6 class="mb-0">Today '+row.employee_name+' Birthday</h6>';						
+						news += '</div>';
+						news += '<div class="dash-card-avatars">';
+						news += '<div class="dash-card-icon text-warning"><i class="fa fa-birthday-cake" aria-hidden="true"></i></div>';
+						news += '</div>';
+						news += '</div><hr>';
+					});
+		            data[0].news.forEach(function (row,news_index) {
+		            	news += '<a href="javascript:void(0)" id="'+row.title+'" title="'+row.news+'" onclick="news_popup(this.id, this.title)" class="text-dark">';
+		            	news += '<div class="notice-board mb-3">';
 						news += '<div class="table-img">';
 						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
 						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
-						news += '<h6 class="mb-0">'+row.news+'</h6>';
+						news += '<h6 class="mb-0">'+row.title+'</h6>';
 						var hours = getHoursDiff(row.created_at);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						news += '<span class="ctm-text-sm">' +row.employee_name+ ' | ' +diff+ '</span>';
 						news += '</div>';
+						news += '<div class="dash-card-avatars">';
+						var category = ''; style = '';
+						if(row.category == 'Information'){
+							category = "fa fa-info-circle"; style = "text-primary";
+						}
+						if(row.category == 'Important'){
+							category = 'fa fa-exclamation'; style = "text-danger";
+						}
+						news += '<div class="dash-card-icon '+style+'"><i class="'+category+'" aria-hidden="true"></i></div>';
 						news += '</div>';
-						if (index !== data.length - 1) {
+						news += '</div></a>';
+						if (news_index !== data[0].news.length - 1) {
 							news += '<hr>';
-						}					
-		        	});	            
+						}
+		        	});
 		        }else{
 		        	news += '<div class="notice-board">';
 					news += '<div class="table-img">';
@@ -438,8 +454,8 @@
 						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> ' +row.project_name+ ' Project</span>' : "";
-						leads += '<p class="mb-0 ctm-text-sm"> (' +row.designation+ ') '+ project +'</p>';
+						var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
+						leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
 						leads += '</div></div>';
 						if (index !== data.length - 1) {
 							leads += '<hr>';
@@ -486,7 +502,7 @@
 						leaves += '<span class="ctm-text-sm"> ('+ row.name+ ')</span>';
 						leaves += '</h6>';
 						leaves += '<span class="ctm-text-sm">';
-						leaves += row.leave_duration+' | '+status+'</span>';
+						leaves += row.leave_duration.charAt(0).toUpperCase() + row.leave_duration.slice(1)+' | '+status+'</span>';
 						leaves += '</div></div>';
 						if (index !== data.length - 1) {
 							leaves += '<hr>';
@@ -523,6 +539,4 @@
 		// to load Upcoming leave data
 	   	LoadUpcomingLeave();
 	}
-
 </script>
-@endpush

@@ -16,9 +16,9 @@
 													<div class="custom-breadcrumb">
 														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
 															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Admin</a></li>
-															<li class="breadcrumb-item d-inline-block active">User Management</li>
+															<li class="breadcrumb-item d-inline-block active">News</li>
 														</ol>
-														<h4 class="text-dark">System Users</h4>
+														<h4 class="text-dark">Daily News</h4>
 													</div>
 												</div>
 											</div>
@@ -28,12 +28,12 @@
 								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="{{ route('systemUsers.index') }}">
+										<form method="GET" action="{{ route('news.index') }}">
 
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
-														<label>Employee Name</label>
+														<label>Post By</label>
 														<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%" >
 															@if(Request::get('emp_name'))
 																<option selected="selected" id="{{ Request::get('employee_id') }}">{{ Request::get('emp_name'), old('name') }}</option>
@@ -46,28 +46,11 @@
 												</div>
 											</div>
 
-											<!-- <div class="row filter-row">
-												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-													<div class="form-group">
-														<label>Username</label>
-														<input type="text" name="email" class="form-control" placeholder="Username" value="{{ Request::get('email') }}" autocomplete="off">
-		                                                {!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													</div>
-												</div>
-											</div> -->
-
 											<div class="row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
-														<label>Role</label>
-														<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}} select2-hidden-accessible" name="role" tabindex="-1" aria-hidden="true">
-																<option value="" selected="">User Role</option>
-																<option value="all" {{ Request::get('role') == 'all' ? 'selected' : '' }}>All</option>
-		                                                    @foreach ($roles as $role)
-		                                                        <option value='{{ $role->name }}' {{ Request::get('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
-		                                                    @endforeach
-		                                                </select>
-		                                                {!! $errors->first('role', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														<label>Date</label>
+														<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date" name="date" value="{{ old('date', Request::get('date')) }}" id="date">
 													</div>
 												</div>
 											</div>
@@ -89,7 +72,7 @@
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+													<a href="{{ route('news.index') }}" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </a>
 												</div>
 											</div>												
 										</form>
@@ -106,15 +89,15 @@
 									<div class="row filter-row">
 										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-												<h4 class="card-title mb-0 ml-2 mt-2">System Users</h4>
+												<h4 class="card-title mb-0 ml-2 mt-2">Daily News List</h4>
 											</div>
 										</div>
 										@hasrole('Admin')
 											<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
-												<a href="{{ route('systemUsers.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
+												<a href="{{ route('news.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 											</div>
 											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
-												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_user_table','systemUsers')"><i class="fa fa-trash"></i> Delete</button>
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_news_table','news')"><i class="fa fa-trash"></i> Delete</button>
 											</div>
 										@endrole
 									</div>
@@ -125,50 +108,36 @@
 											<thead>
 												<tr class="bg-light">
 													<th class="text-center">
-														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_user_table')">
+														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_news_table')">
 													</th>
-													<th>Username</th>
-													<th>User Role</th>
-													<th>Employee Name</th>
+													<th>News Title</th>
+													<th>Category</th>
+													<th>Date</th>
+													<th>Post By</th>
 													<th>Status</th>
-													<!-- <th class="text-right">Action</th> -->
 												</tr>
 											</thead>
-											<tbody id="list_user_table">
-												@if(count($users) > 0)
-													@foreach ($users as $user)
+											<tbody id="list_news_table">
+												@if(count($news) > 0)
+													@foreach ($news as $row)
 													<tr>
 														<td class="text-center">
-															@if($user->user_id != auth()->user()->id || $user->user_id == 1)
-																<input type="checkbox" name="user_id" value="{{ $user->user_id }}">
-															@endif
+															<input type="checkbox" name="news_id" value="{{ $row->id }}">
 														</td>
 														<td>
-															<h2><u><a href="{{ route('systemUsers.edit', $user->user_id) }}">{{ $user->email }}</a></u></h2>
+															<h2><u><a href="{{ route('news.edit', $row->id) }}">{{ $row->news }}</a></u></h2>
 														</td>
-														<td>{{ $user->role_name }}</td>
-														<td>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</td>
-														<td>
-															@if($user->emp_status == 'In active')
-																<a class="btn btn-outline-danger btn-sm"> Inactive </a>
-															@elseif($user->emp_status == 'Active')
-																<a class="btn  btn-outline-success btn-sm"> Active </a>
-															@endif
-														</td>
-													</tr>
+														<td>{{ $row->category }}</td>
+														<td>{{ $row->date }}</td>
+														<td>{{ $row->employee_name }}</td>
+														<td>{{ $row->status }}</td>
+													<tr>
 													@endforeach
 												@else
 													<tr>
-														<td colspan="5"><p class="text-center">No Data Found</p></td>
+														<td colspan="6"><p class="text-center">No Data Found</p></td>
 													</tr>
 												@endif
-													<tr>
-														<td colspan="5">
-															<div class="d-flex justify-content-center">
-																{{ $users->links() }}
-															</div>
-														</td>
-													</tr>
 											</tbody>
 										</table>
 									</div>
@@ -249,6 +218,23 @@
 		// calling validation_popup_msg
 		validation_popup_msg();
 	}
+
+	//Date picker's format
+	$("#date").datetimepicker({
+		date: '{{ (Request::get("date")) ? (date("m-d-Y", strtotime(Request::get("date")))) : "" }}',
+		format: 'DD-MM-YYYY',
+		locale:  moment.locale('en', {
+			week: { dow: 1 }
+		}),
+		maxDate: moment(),
+        icons: {
+            up: "fa fa-angle-up",
+            down: "fa fa-angle-down",
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+        daysOfWeekDisabled: [0,6],
+	});
 </script>    
     <!-- <script src="{{ asset('js/system_users.js')}}"></script> -->
 @endpush
