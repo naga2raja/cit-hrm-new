@@ -17,7 +17,7 @@ class CreateTLogsTable extends Migration
             $table->id();
             $table->string('action');
             $table->string('module')->nullable();
-            $table->datetime('date';
+            $table->datetime('date');
             $table->bigInteger('action_by');   
             $table->bigInteger('action_to');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
