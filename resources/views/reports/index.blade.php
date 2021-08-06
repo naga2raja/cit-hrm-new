@@ -27,14 +27,14 @@
 								
 								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
 									<div class="card-body">
-										<ul class="list-group">
-											<li class="list-group-item text-center active"><a href="employee_report" class="text-white">Employee Reports</a></li>
-											<li class="list-group-item text-center "><a class="text-dark" href="leave-reports">Leave Reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="payroll-reports">Payroll reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="contact-reports">Contact reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="email-reports">Email Reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="security-reports">Security Reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="work-from-home-reports">Working From Home Reports</a></li>
+										<ul class="list-group" id="reports_list">
+											<li class="list-group-item text-center {{ (!Request::get('report') || Request::get('report') == 'employee_report') ? 'active' : '' }}"><a href="#employee_report" class="text-dark">Employee Reports</a></li>
+											<li class="list-group-item text-center {{ (Request::get('report') == 'leave_report') ? 'active' : '' }}"><a class="text-dark" href="#leave_report">Leave Reports</a></li>
+											<li class="list-group-item text-center"><a class="text-dark" href="#payroll-reports">Payroll reports</a></li>
+											<li class="list-group-item text-center"><a class="text-dark" href="#contact-reports">Contact reports</a></li>
+											<li class="list-group-item text-center"><a class="text-dark" href="#email-reports">Email Reports</a></li>
+											<li class="list-group-item text-center"><a class="text-dark" href="#security-reports">Security Reports</a></li>
+											<li class="list-group-item text-center"><a class="text-dark" href="#work-from-home-reports">Working From Home Reports</a></li>
 										</ul>
 									</div>
 								</div>
@@ -50,29 +50,75 @@
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<label>Report</label>
-													<select class="form-control select" name="report">
+													<select class="form-control select" name="report" id="report">
 														<option>Select</option>
-														<option value="employee_report" @if(Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
+														<option value="employee_report" @if(!Request::get('report') || Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
 														<option value="leave_report" @if(Request::get('report') == 'leave_report') selected @endif>Leave Report</option>
 														<option>Attendance Report</option>
 														<option>Timesheet Report</option>
 														<option>Project Report</option>
 													</select>
 												</div>
-											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
+											</div>	
+											
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-													<label>Created From Date</label>
+													<label>Employee</label> 
+													<select class="form-control select" name="employee_id" id="employee_id">
+														<option value="">Select</option>
+														@foreach ($employees as $item)
+															<option value="{{ $item->id }}" @if(Request::get('employee_id') == $item->id) selected @endif> {{ $item->name }} </option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter">  
+												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+													<label>Leave Status</label> 
+													<select class="form-control select" name="leave_status" id="leave_status">
+														<option value="">Select</option>
+														@foreach ($leaveStatus as $item)
+															<option value="{{ $item->id }}" @if(Request::get('leave_status') == $item->id) selected @endif> {{ $item->name }} </option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter">  
+												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+													<label>Leave Type</label> 
+													<select class="form-control select" name="leave_type" id="leave_type">
+														<option value="">Select</option>
+														@foreach ($leaveType as $item)
+															<option value="{{ $item->id }}" @if(Request::get('leave_type') == $item->id) selected @endif> {{ $item->name }} </option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+										
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter">  
+												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+													<label>Job Title</label> 
+													<select class="form-control select" name="job_title" id="job_title">
+														<option value="">Select</option>
+														@foreach ($jobTitle as $item)
+															<option value="{{ $item->id }}" @if(Request::get('job_title') == $item->id) selected @endif> {{ $item->job_title }} </option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter leave_report_filter">  
+												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+													<label> From Date</label>
 													<input type="text" class="form-control datetimepicker" placeholder="From" name="from_date" id="from_date" value="{{ Request::get('from_date') }}">
 												</div>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter leave_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-0 mb-sm-0">
-													<label>Created To Date</label>
+													<label>	 To Date</label>
 													<input type="text" class="form-control datetimepicker" placeholder="To" name="to_date" id="to_date" value="{{ Request::get('to_date') }}">
 												</div>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-0 mb-sm-0">
 													<label>Status</label>
 													<select class="form-control select" name="status">
@@ -87,6 +133,10 @@
 												<label> &nbsp; </label>
 												<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Apply Filter </button>
 											</div>
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
+												<label> &nbsp; </label>
+												<button type="reset" class="btn btn-danger ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Reset </button>
+											</div>
 										</div>
 									</form>
 								</div>
@@ -96,8 +146,9 @@
 									<div class="employee-office-table">
 										<div class="table-responsive">
 											<table class="table custom-table table-hover">
+											  @if(!Request::get('report') || Request::get('report') == 'employee_report')
 												<thead>
-													<tr>
+													<tr class="bg-light">
 														<th>Employee Id</th>
 														<th>First Name</th>
 														<th>Middle Name</th>
@@ -106,7 +157,20 @@
 														<th>Date of Birth</th>
 														<th>Gender</th>
 														<th>Date of Joining</th>
+														<th>Marital Status</th>
 														<th>Status</th>
+														<th> Street address1 </th>
+														<th> Street address2 </th>
+														<th> City </th>
+														<th> State </th>
+														<th> Country </th>
+														<th> Zip code </th>
+														<th> Home Telephone </th>
+														<th> Mobile </th>
+														<th> Work Telephone </th>
+														<th> Alternate Email </th>
+														<th>Job Title</th>
+														<th>Report to</th>
 														<th>Created At</th>
 													</tr>
 												</thead>
@@ -122,15 +186,64 @@
 														<th> {{ $item['date_of_birth'] }}</th>
 														<td> {{ $item['gender'] }} </td>
 														<td> {{ $item['joined_date'] }} </td>
+														<td> {{ $item['marital_status'] }} </td>
 														<td> {{ $item['status'] }} </td>
-														<td> {{ $item['created_at'] }} </td>
+														<td> {{ $item['street_address_1'] }}</td>
+														<td> {{ $item['street_address_2'] }}</td>
+														<td> {{ $item['city'] }}</td>
+														<td> {{ $item['state'] }}</td>
+														<td> {{ $item['country'] }}</td>
+														<td> {{ $item['zip_code'] }}</td>
+														<td> {{ $item['home_telephone'] }}</td>
+														<td> {{ $item['mobile'] }}</td>
+														<td> {{ $item['work_telephone'] }}</td>
+														<td> {{ $item['alternate_email'] }}</td>
+														<td> {{ $item['job_title'] }}</td>
+														<td> {{ $item['report_to'] }}</td>
+														<td> {{ date('Y-m-d H:i:s a', strtotime($item['created_at'])) }} </td>
 													</tr>														
 													@endforeach
+												@endif
+												
+												@if(Request::get('report') == 'leave_report')
+												<thead>
+													<tr class="bg-light">
+														<th>Employee Name</th>
+														<th>Leave Type</th>
+														<th>From</th>
+														<th>To</th>
+														<th>Days</th>																
+														<th>Notes</th>
+														<th>Status</th>	
+														<th>Created At</th>														
+													</tr>
+												</thead>
+												<tbody>
+													@foreach ($data as $leave)
+													<tr>                                                                    
+														<td> {{ $leave['emp_name'] }} </td>
+														<td> {{ $leave['name'] }} </td>
+														<td> {{ $leave['from_date'] }} </td>
+														<td> {{ $leave['to_date'] }} </td>
+														<td> 
+															{{ $leave['my_leave_duration']}}
+														</td>                                                                    
+														<td> {{ $leave['comments'] }}</td>
+														<td> 															
+															{{ $leave['my_leave_status'] }}
+														</td>
+														<td> {{ date('Y-m-d H:i:s a', strtotime($item['created_at'])) }} </td>
+														
+													</tr>
+												@endforeach
+
+												</tbody>
+												@endif
 
 													@if(count($data) < 1)
 														<tr>
 															<td colspan="100%">
-																<div class="alert alert-danger text-center">No Data Found</div>
+																<div class="alert alert-danger text-left">No Data Found</div>
 															</td>
 														</tr>
 													@endif
@@ -310,7 +423,28 @@
 			$('#export').val(1);
 			$('#reportForm').submit();
 			$('#export').val(0);
-
 		}
+
+		$("#reports_list li.list-group-item").click(function() {
+			$(this).addClass('active').siblings().removeClass('active');
+			var href = $('#reports_list li.list-group-item.active a').attr('href');
+			href = href.replace('#', '');
+			$('[name=report]').val(href).trigger('change');
+			manageSearchBox(href);
+		});
+
+		$('#employee_id').select2();
+		var report = "{{ Request::get('report') }}";
+		manageSearchBox(report);
+
+		function manageSearchBox(report) {
+			$('.cit_filter_box').hide();
+			if(!report || report == 'employee_report') {
+				$('.employee_report_filter').show();
+			} else if(!report || report == 'leave_report') {
+				$('.leave_report_filter').show();
+			}
+		}
+		
 	</script>
 @endsection

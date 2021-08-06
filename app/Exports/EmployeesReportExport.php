@@ -33,7 +33,9 @@ class EmployeesReportExport implements FromArray, WithHeadings
 
     public function headings(): array
     {
-        return ["Employee id", "First Name", "Middle Name" , "Last Name", "Email", "DOB", "Gender", "Date of Joining", "Status", "Created At"];
+        return [
+            "Employee id", "First Name", "Middle Name" , "Last Name", "Email", "DOB", "Gender", "Date of Joining", "Status", "Created At", "Marital Status", "street_address_1", "street_address_2", "city", "State", "Country", "Zip code", "Home Telephone", "Mobile", "Work Telephone", "Alt Email", "job_title", "report_to"
+        ];
     }
 
 }
