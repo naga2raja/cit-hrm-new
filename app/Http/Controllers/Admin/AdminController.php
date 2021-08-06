@@ -94,17 +94,31 @@ class AdminController extends Controller
         $user = Auth::user();
         $employee = Employee::where('id', $user->id)->first();
 
-        $birthday = Employee::selectRaw('CASE WHEN employee_id != "" THEN CONCAT_WS (" ",  "Today", first_name, middle_name, last_name, "Birthday") END AS news, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo')
+        $birthday = Employee::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, CASE WHEN employees.date_of_birth != "" THEN "birthday" END AS type')
                                 ->where('date_of_birth', date('Y-m-d'))
-                                ->get();
+                                ->get()->toArray();
 
-        $today_news = tNews::selectRaw('t_news.news, t_news.created_at, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo')
+        $news = tNews::selectRaw('t_news.*, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, CASE WHEN news != "" THEN "news" END AS type')
                                 ->join('employees', 'employees.id', 't_news.created_by')
                                 ->where('t_news.status', 'Active')
-                                ->where('t_news.date', '=', date('Y-m-d'))
                                 ->orderBy('t_news.created_at', 'desc')
-                                ->get();
-        // dd($birthday);
+                                ->get()->toArray();
+
+        $result_arr = array_merge($birthday, $news);
+
+        $output['birthday'] = [];
+        $output['news'] = [];
+
+        foreach ($result_arr as $key => $value) {
+            if($value['type'] == "birthday"){
+                $output['birthday'][] = $value;
+            }
+            if($value['type'] == "news"){
+                $output['news'][] = $value;
+            }
+        }
+        $today_news[] = $output;
+        // dd($today_news);
         return response()->json($today_news);
     }
 
