@@ -3,16 +3,24 @@
 namespace App\Http\Controllers\Reports;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Leave\Leave\LeaveController;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Exports\EmployeesReportExport;
 use App\Exports\LeavesReportExport;
+use App\Exports\AttendanceReportExport;
+use App\Exports\TimesheetReportExport;
+use DateTime;
 use Excel;
 use App\mJobTitle;
 use App\tLeave;
 use App\tLeaveRequest;
 use App\mLeaveStatus;
 use App\mLeaveType;
+use App\tPunchInOut;
+use App\mProject;
+use App\tTimesheetItem;
+use Auth;
 
 
 class ReportsController extends Controller
@@ -30,13 +38,26 @@ class ReportsController extends Controller
             $data = $this->getLeavesReport($request);
              if($request->export)
                  return (new LeavesReportExport($data))->download('leaves.xlsx');            
-         }
+        }
+
+        if($request->report == 'attendance_report') {
+            $data = $this->getAttendanceReport($request);
+             if($request->export)
+                 return (new AttendanceReportExport($data))->download('attendance.xlsx');            
+        }
+
+        if($request->report == 'timesheet_report') {
+            $data = $this->getTimesheetsReport($request);
+            if($request->export)
+                return (new TimesheetReportExport($data))->download('timesheet_report.xlsx');            
+        }
 
         $jobTitle = mJobTitle::get();
         $employees = Employee::where('status', 'Active')->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as name')->get();
         $leaveStatus = mLeaveStatus::get();
         $leaveType = mLeaveType::get();
-        return view('reports/index', compact('data', 'jobTitle', 'employees', 'leaveStatus', 'leaveType'));
+        $projects = mProject::get();
+        return view('reports/index', compact('data', 'jobTitle', 'employees', 'leaveStatus', 'leaveType', 'projects'));
     }
 
     public function getEmployeesReport($request) {
@@ -103,5 +124,104 @@ class ReportsController extends Controller
         ->toArray();
         
         return $data;
+    }
+
+    public function getAttendanceReport($request) {
+        $user = Auth::user();
+        $leaveCtrl = new LeaveController;
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
+        $employeeId = $currentEmployeeDetails->id;
+
+        $userRole = 'Admin'; $empIds = [];
+        if($user->hasRole('Manager')) {
+            $userRole = 'Manager';
+            //Find Reporting Employees Ids
+            $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        }
+        
+        $data = tPunchInOut::join('employees', 't_punch_in_outs.employee_id', 'employees.id')
+            ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name, t_punch_in_outs.is_import')
+            ->selectRaw('punch_in_user_time, punch_out_user_time, t_punch_in_outs.punch_in_note, t_punch_in_outs.punch_out_note')
+            ->selectRaw('TIMESTAMPDIFF(MINUTE, t_punch_in_outs.punch_in_user_time, t_punch_in_outs.punch_out_user_time) as duration')
+            ->selectRaw('(IF(t_punch_in_outs.status = 1, "Submitted", IF(t_punch_in_outs.status = 2, "Approved", IF(t_punch_in_outs.status = 3, "Rejected", "Not Submitted")))  ) as current_status')
+            ->when(request()->filled('from_date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('from_date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_punch_in_outs.punch_in_user_time, "%Y-%m-%d") >= "'. $date.'"');
+            })
+            ->when(request()->filled('to_date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('to_date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_punch_in_outs.punch_in_user_time, "%Y-%m-%d") <= "'. $date.'"');
+            });        
+            if(count($empIds)) {
+                $data = $data->whereIn('t_punch_in_outs.employee_id', $empIds);
+            }
+            $data = $data->where('t_punch_in_outs.status', '>', 0)
+                    ->when(request()->filled('is_import'), function ($query) {
+                        $query->where('t_punch_in_outs.is_import', request('is_import'));
+                    })
+                    ->when(request()->filled('employee_id'), function ($query) {
+                        $query->where('t_punch_in_outs.employee_id', request('employee_id'));
+                    })
+                    ->orderBy('t_punch_in_outs.id', 'DESC')
+                    ->get()
+                    ->toArray();
+            return $data;
+    }
+
+    public function getTimesheetsReport($request) {
+        $user = Auth::user();
+        $userRole = 'Admin'; $empIds = [];
+        if($user->hasRole('Manager')) {
+            $userRole = 'Manager';
+            //Find Reporting Employees Ids
+            $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        }
+
+        $timesheets = tTimesheetItem::join('t_timesheets', 't_timesheet_items.timesheet_id', 't_timesheets.id')
+            ->join('m_projects', 'm_projects.id', 't_timesheet_items.project_id')
+            ->select('t_timesheets.*')
+            ->join('employees', 'employees.id', 't_timesheets.employee_id')
+            ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+            ->join('roles', 'roles.id', 'model_has_roles.role_id')
+            ->when(request()->filled('employee_id'), function ($query) {
+                $query->where('t_timesheets.employee_id', request('employee_id'));
+            })
+            ->when(request()->filled('job_title'), function ($query) {
+                $query->where('employees.job_id', request('job_title'));
+            })
+            ->when(request()->filled('project_id'), function ($query) {
+                $query->where('t_timesheet_items.project_id', request('project_id'));
+            })
+            ->when(request()->filled('from_date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('from_date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_timesheet_items.date, "%Y-%m-%d") >= "'. $date.'"');
+            })
+            ->when(request()->filled('to_date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('to_date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_timesheet_items.date, "%Y-%m-%d") <= "'. $date.'"');
+            });
+
+        if(count($empIds)) {
+            $timesheets = $timesheets->whereIn('t_timesheets.employee_id', $empIds);
+        }  
+        
+        $timesheets = $timesheets->where('t_timesheets.status', '!=', 0)
+            ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, m_projects.project_name')
+            ->selectRaw('employees.user_id, roles.name as role_name, t_timesheet_items.duration, t_timesheet_items.date')
+            // ->with('allTimesheetItem')
+            ->orderBy('t_timesheets.start_date', 'asc')
+            ->orderBy('t_timesheets.id', 'asc')
+            ->get()
+            ->toArray();
+
+        return $timesheets;
     }
 }

@@ -28,13 +28,12 @@
 								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
 									<div class="card-body">
 										<ul class="list-group" id="reports_list">
-											<li class="list-group-item text-center {{ (!Request::get('report') || Request::get('report') == 'employee_report') ? 'active' : '' }}"><a href="#employee_report" class="text-dark">Employee Reports</a></li>
-											<li class="list-group-item text-center {{ (Request::get('report') == 'leave_report') ? 'active' : '' }}"><a class="text-dark" href="#leave_report">Leave Reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="#payroll-reports">Payroll reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="#contact-reports">Contact reports</a></li>
+											<li class="list-group-item text-center {{ (!Request::get('report') || Request::get('report') == 'employee_report') ? 'active' : '' }}"><a href="#employee_report" class="text-dark">Employee Report</a></li>
+											<li class="list-group-item text-center {{ (Request::get('report') == 'leave_report') ? 'active' : '' }}"><a class="text-dark" href="#leave_report">Leave Report</a></li>
+											<li class="list-group-item text-center {{ (Request::get('report') == 'attendance_report') ? 'active' : '' }}"><a class="text-dark" href="#attendance_report">Attendance Report</a></li>
+											<li class="list-group-item text-center {{ (Request::get('report') == 'timesheet_report') ? 'active' : '' }}"><a class="text-dark" href="#timesheet_report">Timesheet Report</a></li>
 											<li class="list-group-item text-center"><a class="text-dark" href="#email-reports">Email Reports</a></li>
 											<li class="list-group-item text-center"><a class="text-dark" href="#security-reports">Security Reports</a></li>
-											<li class="list-group-item text-center"><a class="text-dark" href="#work-from-home-reports">Working From Home Reports</a></li>
 										</ul>
 									</div>
 								</div>
@@ -50,18 +49,18 @@
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<label>Report</label>
-													<select class="form-control select" name="report" id="report">
+													<select class="form-control select" name="report" id="report" onchange="selectReportName()">
 														<option>Select</option>
 														<option value="employee_report" @if(!Request::get('report') || Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
 														<option value="leave_report" @if(Request::get('report') == 'leave_report') selected @endif>Leave Report</option>
-														<option>Attendance Report</option>
-														<option>Timesheet Report</option>
+														<option value="attendance_report" @if(Request::get('report') == 'attendance_report') selected @endif>Attendance Report</option>
+														<option value="timesheet_report" @if(Request::get('report') == 'timesheet_report') selected @endif>Timesheet Report</option>
 														<option>Project Report</option>
 													</select>
 												</div>
 											</div>	
 											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter attendance_report_filter timesheet_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 													<label>Employee</label> 
 													<select class="form-control select" name="employee_id" id="employee_id">
@@ -95,7 +94,7 @@
 												</div>
 											</div>
 										
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter timesheet_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 													<label>Job Title</label> 
 													<select class="form-control select" name="job_title" id="job_title">
@@ -106,13 +105,26 @@
 													</select>
 												</div>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter leave_report_filter">  
+
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box timesheet_report_filter">  
+												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+													<label>Project</label> 
+													<select class="form-control select" name="project_id" id="project_id">
+														<option value="">Select</option>
+														@foreach ($projects as $item)
+															<option value="{{ $item->id }}" @if(Request::get('project_id') == $item->id) selected @endif> {{ $item->project_name }} </option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter leave_report_filter attendance_report_filter timesheet_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 													<label> From Date</label>
 													<input type="text" class="form-control datetimepicker" placeholder="From" name="from_date" id="from_date" value="{{ Request::get('from_date') }}">
 												</div>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter leave_report_filter">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box employee_report_filter leave_report_filter attendance_report_filter timesheet_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-0 mb-sm-0">
 													<label>	 To Date</label>
 													<input type="text" class="form-control datetimepicker" placeholder="To" name="to_date" id="to_date" value="{{ Request::get('to_date') }}">
@@ -125,6 +137,16 @@
 														<option value="">All</option>
 														<option value="Active"  {{ Request::get('status') == 'Active' ? 'selected' : ''}}>Active</option>
 														<option value="Inactive" {{ Request::get('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box attendance_report_filter">  
+												<div class="form-group mb-lg-0 mb-md-0 mb-sm-0">
+													<label>Type</label>
+													<select class="form-control select" name="is_import">
+														<option value="">All</option>
+														<option value="0"  {{ Request::get('is_import') == '0' ? 'selected' : ''}}>Manual</option>
+														<option value="1" {{ Request::get('is_import') == '1' ? 'selected' : ''}}>Import</option>
 													</select>
 												</div>
 											</div>
@@ -237,6 +259,66 @@
 													</tr>
 												@endforeach
 
+												</tbody>
+												@endif
+
+												@if(Request::get('report') == 'attendance_report')
+												<thead>
+													<tr class="bg-light">														
+														<th> Name </th>
+														<th>Punch in</th>		
+														<th>Punch out</th>
+														<th>Duration</th>
+														<th>Status</th>
+														<th>Type</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach ($data as $attendance)
+													<tr>
+														<td> {{ $attendance['emp_name'] }} </td>
+														<td>
+															<h2>{{ $attendance['punch_in_user_time'] }}</h2>
+														</td>													
+														<td>
+															<h2>{{ $attendance['punch_out_user_time'] }}</h2>
+														</td>
+														<td>
+															<h2>{{ hoursAndMins($attendance['duration']) }}</h2>
+														</td>
+														<td>
+															{{ $attendance['current_status'] }} 
+														</td>
+														<td>
+															{{ ($attendance['is_import']) ? 'Import' : 'Manual' }}
+														</td>
+													</tr>
+													@endforeach
+
+												</tbody>
+												@endif
+												
+												@if(Request::get('report') == 'timesheet_report')
+												<thead>
+													<tr class="bg-light">														
+														<th>Employee Name </th>
+														<th>Project Name</th>		
+														<th>Date</th>
+														<th>Duration</th>
+														<th>Status</th>
+														<th>Create At</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach ($data as $timesheet)
+													<tr>
+														<td> {{ $timesheet['employee_name'] }} </td>
+														<td> {{ $timesheet['project_name'] }} </td>
+														<td> {{ $timesheet['date'] }} </td>
+														<td> {{ hoursAndMins($timesheet['duration']) }} </td>
+														<td> {{ currentPunchStatus($timesheet['status']) }} </td>
+														<td> {{ date('Y-m-d H:i:s a', strtotime($timesheet['created_at'])) }} </td>
+													@endforeach
 												</tbody>
 												@endif
 
@@ -441,9 +523,18 @@
 			$('.cit_filter_box').hide();
 			if(!report || report == 'employee_report') {
 				$('.employee_report_filter').show();
-			} else if(!report || report == 'leave_report') {
+			} else if(report == 'leave_report') {
 				$('.leave_report_filter').show();
+			} else if(report == 'attendance_report') {
+				$('.attendance_report_filter').show();
+			} else if(report == 'timesheet_report') {
+				$('.timesheet_report_filter').show();
 			}
+		}
+
+		function selectReportName() {
+			var seletedReport = $('#report').val();
+			manageSearchBox(seletedReport);
 		}
 		
 	</script>
