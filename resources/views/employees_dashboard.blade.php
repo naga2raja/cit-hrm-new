@@ -109,7 +109,7 @@
 											<a href="javascript:void(0)" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ admin-activ">
-											<div class="recent-comment">
+											<div class="recent-comment" id="recent_activity">
 												<div class="notice-board">
 													<div class="table-img">
 														<div class="e-avatar mr-3"><img class="img-fluid" src="img/profiles/img-6.jpg" alt="Maria Cotton"></div>
@@ -206,7 +206,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 @endsection
 
 @push('scripts')
@@ -462,6 +462,59 @@
 		});
 	}
 
+	// recent activities data
+	function LoadRecentActivities(){
+		$.ajax({
+			method: 'GET',
+			url: '/getRecentActivities-ajax',
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				console.log('response : ', data);
+				var activity = '';
+				if(data.length > 0){
+					console.log('my_activities : ', data[0].my_activities.length);
+		            data[0].my_activities.forEach(function (row,index) {
+						activity += '<div class="notice-board">';
+						activity += '<div class="table-img">';
+						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
+						activity += '</div>';
+						activity += '<div class="notice-body">';
+						activity += '<h6 class="mb-0">You '+row.action+' '+row.reciever_name+ ' '+row.module+'</h6>';
+						var hours = getHoursDiff(row.date_time);
+						var diff = (hours) ? hours+" ago" : "Just Now";
+						activity += '<span class="ctm-text-sm">' +row.role_name+ ' | '+diff+'</span>';
+						activity += '</div>';
+						activity += '</div><hr>';
+		        	});
+		        	data[0].others_activities.forEach(function (row,index) {
+						activity += '<div class="notice-board">';
+						activity += '<div class="table-img">';
+						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
+						activity += '</div>';
+						activity += '<div class="notice-body">';
+						activity += '<h6 class="mb-0">' +row.employee_name+ ' '+row.action+' Your '+row.module+'</h6>';
+						var hours = getHoursDiff(row.date_time);
+						var diff = (hours) ? hours+" ago" : "Just Now";
+						activity += '<span class="ctm-text-sm">' +row.role_name+ ' | '+diff+'</span>';
+						activity += '</div>';
+						activity += '</div>';
+						if (index != data[0].others_activities.length - 1) {
+							activity += '<hr>';
+						}
+		        	});	
+		        }else{
+		        	activity += '<div class="notice-board">';
+					activity += '<h6 class="mb-0 ctm-text-sm">No Activities</h6>';
+		        	activity += '</div><hr>';
+		        }
+		        $('#recent_activity').html(activity);
+			}
+		});
+	}
+
 
 	// onclick of refresh_today_news
 	$('#refresh_today_news').click(function() {
@@ -483,6 +536,8 @@
 	   	LoadTeamLeads();
 		// to load Upcoming leave data
 	   	LoadUpcomingLeave();
+	   	// to load Recent Activities data
+	   	LoadRecentActivities();
 	}
 
 </script>

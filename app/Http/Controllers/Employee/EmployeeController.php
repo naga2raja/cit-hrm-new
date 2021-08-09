@@ -415,9 +415,10 @@ class EmployeeController extends Controller
 
     public function getEmployeeChartData(Request $request)
     {
-        $employee_details = Employee::selectRaw('employees.*, m_job_titles.job_title')
-                                    ->leftJoin('m_job_titles', 'm_job_titles.id', 'employees.job_id')
+        $employee_details = mJobTitle::selectRaw('m_job_titles.job_title as name, (SELECT COUNT(e.id) FROM employees e WHERE employees.job_id = e.job_id ) as y')
+                                    ->leftJoin('employees', 'employees.job_id', 'm_job_titles.id')
                                     ->where('m_job_titles.job_title', '!=', '')
+                                    ->groupBy('employees.job_id')
                                     ->get();
 
         return response()->json($employee_details);

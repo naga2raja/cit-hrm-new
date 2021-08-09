@@ -45,7 +45,7 @@ class NewsController extends Controller
         if ($status) {
             $news->Where('t_news.status', $status);
         }
-        $news = $news->orderBy('created_at', 'desc')
+        $news = $news->orderBy('date', 'desc')
                     ->get();
         // dd($news);
         return view('admin/news/list', compact('news'));
@@ -119,6 +119,7 @@ class NewsController extends Controller
         $news->title = $request->input('title');
         $news->news = $request->input('news');
         $news->category = $request->input('category');
+        $news->date = date('Y-m-d');
         $news->status = $request->input('status');
         $news->save();
 

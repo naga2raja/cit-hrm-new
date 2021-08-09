@@ -17,6 +17,9 @@ use App\tProjectAdmin;
 use App\tProjectEmployee;
 use App\tEmployeeReportTo;
 use App\tNews;
+use App\tLog;
+use App\tTimesheet;
+use App\tPunchInOut;
 use App\Http\Controllers\Leave\Leave\LeaveController;
 use App\Role;
 use Session;
@@ -121,7 +124,6 @@ class AdminController extends Controller
         // dd($today_news);
         return response()->json($today_news);
     }
-
 
     public function getTeamLeads(Request $request)
     {
@@ -228,6 +230,108 @@ class AdminController extends Controller
                                 ->get();
         // dd($upcoming_leaves);
         return response()->json($upcoming_leaves);
+    }
+
+    public function getRecentActivities(Request $request)
+    {
+        $user = Auth::user();
+        $employee = Employee::where('id', $user->id)->first();
+
+        $my_activities = tLog::selectRaw('t_logs.*, t_logs.updated_at as date_time, CONCAT_WS (" ", receiver.first_name, receiver.middle_name, receiver.last_name) as reciever_name, sender.profile_photo, roles.name as role_name, CASE WHEN t_logs.send_by != "" THEN "My Activities" END as type')
+                                ->join('employees as receiver', 'receiver.id', 't_logs.send_to')
+                                ->join('employees as sender', 'sender.id', 't_logs.send_by')
+                                ->join('model_has_roles', 'model_has_roles.model_id', 'sender.user_id')
+                                ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                                ->where('t_logs.send_by', $employee->id)
+                                ->get()->toArray();
+
+        $others_activities = tLog::selectRaw('t_logs.*, t_logs.updated_at as date_time, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
+                                ->join('employees', 'employees.id', 't_logs.send_by')
+                                ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                                ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                                ->where('t_logs.send_to', $employee->id)
+                                ->where('t_logs.send_to', '!=', '0')
+                                ->get()->toArray();
+
+        $result_arr = array_merge($my_activities, $others_activities);
+
+        $activity['my_activities'] = [];
+        $activity['others_activities'] = [];
+
+        foreach ($result_arr as $key => $value) {
+            if($value['type'] == "My Activities"){
+                $activity['my_activities'][] = $value;
+            }
+            if($value['type'] == "Others Activities"){
+                $activity['others_activities'][] = $value;
+            }
+        }
+        $recent_activities[] = $activity;
+        // dd($result_arr);
+        return response()->json($recent_activities);
+    }
+
+    public function getRequestChart(Request $request)
+    {
+        $leaveCtrl = new LeaveController;
+
+        $user = Auth::user();
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails($user->id);
+        $employeeId = $currentEmployeeDetails->id;
+
+        $empIds = [];
+        if($user->hasRole('Manager')) {
+            $userRole = 'Manager';
+            $approval_level = [0,1,2];
+            //Find Reporting Employees Ids
+            $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        } else {
+          //admin
+            $userRole = 'Admin';
+            $approval_level = [1,2];
+            $empIds = $leaveCtrl->getReportingToAdminEmployees($user->id);
+        }
+
+        $leave = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
+                                ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
+                                ->join('employees', 'employees.id', 't_leave_requests.employee_id')
+                                ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
+                                ->where('t_leave_requests.employee_id', '!=', $employeeId)
+                                ->whereIn('t_leaves.approval_level', $approval_level);
+                                if(count($empIds)) {
+                                    $leave->whereIn('t_leave_requests.employee_id', $empIds);
+                                }
+                                $leave = $leave->where('t_leave_requests.status', 1)
+                                        ->groupBy('t_leave_requests.id')
+                                        ->count();
+
+        $attendance = tPunchInOut::join('employees', 't_punch_in_outs.employee_id', 'employees.id');        
+                                if(count($empIds)) {
+                                    $attendance->whereIn('t_punch_in_outs.employee_id', $empIds);
+                                }
+                                $attendance = $attendance->where('t_punch_in_outs.status', 1)
+                                        ->orderBy('t_punch_in_outs.id', 'DESC')
+                                        ->count();
+
+        $timesheet = tTimesheet::select('t_timesheets.*')
+                              ->join('employees', 'employees.id', 't_timesheets.employee_id')
+                              ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                              ->join('roles', 'roles.id', 'model_has_roles.role_id');
+                              if(count($empIds)) {
+                                $timesheet->whereIn('t_timesheets.employee_id', $empIds);
+                              }  
+                              $timesheet = $timesheet->where('t_timesheets.status', 1)
+                                          ->orderBy('t_timesheets.start_date', 'asc')
+                                          ->orderBy('employees.id', 'asc')
+                                          ->count();
+
+        $data['leave'] = $leave;
+        $data['attendance'] = $attendance;
+        $data['timesheet'] = $timesheet;
+
+        return response()->json($data);
     }
     
 }

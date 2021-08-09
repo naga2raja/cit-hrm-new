@@ -1,8 +1,8 @@
 $(function(){
 
-	LoadEmployeeChart();
+	// LoadNewChart();
 	// upcoming leave data
-	function LoadEmployeeChart(){
+	function LoadNewChart(){
 		$.ajax({
 			method: 'GET',
 			url: '/getEmployeeChart-ajax',
@@ -64,127 +64,167 @@ $(function(){
 		        }
 			}
 		});
-	}     
+	}
 	
 	
-	// Line Chart
-	
-	var ctx = document.getElementById("lineChart").getContext('2d');
-	var lineChart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: ["Jan",	"Feb",	"Mar",	"Apr",	"May"],
-			datasets: [{
-				label: 'Developer',
-				data: [20,	10,	5,	5,	20],
-				fill: false,
-				borderColor: '#373651',
-				backgroundColor: '#373651',
-				borderWidth: 1
-			},
-					  {
-				label: 'Marketing',
-				data: [2,	2,	3,	4,	1],
-				fill: false,
-				borderColor: '#E65A26',
-				backgroundColor: '#E65A26',
-				borderWidth: 1
-			},
-					  {
-				label: 'Marketing',
-				data: [1,	3,	6,	8,	10],
-				fill: false,
-				borderColor: '#a1a1a1',
-				backgroundColor: '#a1a1a1',
-				borderWidth: 1
-			}]
-		},
-		options: {
-		  responsive: true,
-			legend: {
-				display: false
-			}
-		}
-	});
 
 });
 
-// LoadNewChart();
+LoadEmployeeChart();
 
-// function LoadNewChart(){
-// 	$.ajax({
-// 		method: 'GET',
-// 		url: '/getEmployeeChart-ajax',
-// 		dataType: "json",
-// 		contentType: 'application/json',
-// 		success: function(data){
-// 			var leaves = '';
-// 			var labels = '';
-// 			var labels_Data = [];
-// 			var count = 0;
-// 			var count_Data = [];
-// 			if(data.length > 0){
-// 			// console.log('response : ', data);
+function LoadEmployeeChart(){
+	$.ajax({
+		method: 'GET',
+		url: '/getEmployeeChart-ajax',
+		dataType: "json",
+		contentType: 'application/json',
+		success: function(data){
+			var leaves = '';
+			var labels = '';
+			var labels_Data = [];
+			var count = 0;
+			var count_Data = [];
+			if(data.length > 0){
+			console.log('chartData : ', data);
 
-// 				data.forEach(function (row,index) {
-// 	            	labels += "{ name:'"+row.job_title+"', y: 61.41, },"+;
-// 	            	labels_Data.push(row.job_title);
-// 	        	});
-// 	            for (var i = 0; i < labels_Data.length; i++) {
-//             		data.forEach(function (row,index) {
-// 	            		if(labels_Data[i] == row.job_title){
-// 	            			count = (count+++ 1);
-// 	            		}
-//             		});
-//             		count_Data.push(count);
-//             		count = '';
-//             	}
-//             	console.log('labels : ', labels_Data);
-// 	        	console.log('data : ', count_Data);
+				// Make monochrome colors
+				var pieColors = (function () {
+				    var colors = [],
+				        base = Highcharts.getOptions().colors[0],
+				        i;
 
-// 	        	// Pie Chart	
-// 				Highcharts.chart('container', {
-// 				    chart: {
-// 				        plotBackgroundColor: null,
-// 				        plotBorderWidth: null,
-// 				        plotShadow: false,
-// 				        type: 'pie'
-// 				    },
-// 				    title: {
-// 				        text: 'Employee Job Title 2021'
-// 				    },
-// 				    tooltip: {
-// 				        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-// 				    },
-// 				    accessibility: {
-// 				        point: {
-// 				            valueSuffix: '%'
-// 				        }
-// 				    },
-// 				    plotOptions: {
-// 				        pie: {
-// 				            allowPointSelect: true,
-// 				            cursor: 'pointer',
-// 				            dataLabels: {
-// 				                enabled: true,
-// 				                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-// 				            }
-// 				        }
-// 				    },
-// 				    series: [{
-// 				        name: 'Brands',
-// 				        colorByPoint: true,
-// 				        data: [
-// 				        		{
-// 						            name: 'Chrome',
-// 						            y: 61.41,
-// 						        },
-// 						    ]
-// 				    }]
-// 				});
+				    for (i = 0; i < 10; i += 1) {
+				        // Start out with a darkened base color (negative brighten), and end
+				        // up with a much brighter color
+				        colors.push(Highcharts.color(base).brighten((i - 3) / 7).get());
+				    }
+				    return colors;
+				}());
 
-// 	        }
-// 		}
-// 	});
-// }
+	        	// Pie Chart	
+				Highcharts.chart('employees_count', {
+				    chart: {
+				        plotBackgroundColor: null,
+				        plotBorderWidth: null,
+				        plotShadow: false,
+				        type: 'pie'
+				    },
+				    title: {
+				        text: 'Total Employees'
+				    },
+				    tooltip: {
+				        pointFormat: '{series.name}: <b>{point.y}</b>'
+				    },
+				    accessibility: {
+				        point: {
+				            valueSuffix: ''
+				        }
+				    },
+				    plotOptions: {
+				        pie: {
+				            allowPointSelect: true,
+				            cursor: 'pointer',
+				            dataLabels: {
+				                enabled: true,
+				                format: '{point.percentage:.1f} %',
+				                distance: 13,
+				            },
+				            showInLegend: true
+				        }
+				    },
+				    series: [{
+				        name: 'No. of Employee',
+				        colorByPoint: true,
+				        data:  data
+				    }]
+				});
 
+				// to remove the watermark
+				$('.highcharts-credits').html('');
+
+	        }
+		}
+	});
+}
+
+LoadRequestChart();
+
+function LoadRequestChart(){
+	$.ajax({
+		method: 'GET',
+		url: '/getRequestChart-ajax',
+		dataType: "json",
+		contentType: 'application/json',
+		success: function(data){
+			var leave = 0;
+			var attendance = 0;
+			var timesheet = 0;
+			console.log('bar chartData : ', data.leave);
+			if(data.leave){
+				leave = data.leave;
+	        }
+	        if(data.attendance){
+				attendance = data.attendance;
+	        }
+	        if(data.timesheet){
+				timesheet = data.timesheet;
+	        }
+
+        	// bar Chart	
+			Highcharts.chart('container', {
+			    chart: {
+			        type: 'column'
+			    },
+			    title: {
+			        text: 'Pending Requests'
+			    },
+			    subtitle: {
+			        // text: 'Source: WorldClimate.com'
+			    },
+			    xAxis: {
+			        categories: ['Request Type'],
+			        crosshair: true
+			    },
+			    yAxis: {
+			        min: 0,
+			        title: {
+			            text: 'No. of Requests'
+			        }
+			    },
+			    plotOptions: {
+			        pie: {
+			            allowPointSelect: true,
+			            cursor: 'pointer',
+			            dataLabels: {
+			                enabled: true,
+			                format: '{point.percentage:.1f} %',
+			                // distance: -10,
+			            },
+			            // showInLegend: true
+			        },
+			        column: {
+			            pointPadding: 0.2,
+			            borderWidth: 0
+			        }
+			    },
+			    series: [{
+			        name: 'Leave',
+			        data: [leave]
+
+			    }, {
+			        name: 'Attendance',
+			        data: [attendance]
+
+			    }, {
+			        name: 'Timesheet',
+			        data: [timesheet]
+
+			    }]
+			});
+
+			// to remove the watermark
+			$('.highcharts-credits').html('');
+		}
+	});
+	
+}
