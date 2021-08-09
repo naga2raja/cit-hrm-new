@@ -248,6 +248,8 @@ Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function
     Route::get('/getTodayNews-ajax', 'Admin\AdminController@getTodayNews');
     Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads');
     Route::get('/getUpcomingLeaves-ajax', 'Admin\AdminController@getUpcomingLeaves');
+    Route::get('/getRecentActivities-ajax', 'Admin\AdminController@getRecentActivities');
+    
 
     Route::get('/emp-page', 'HomeController@demoEmployee');
     Route::resource('/employees', 'Employee\EmployeeController');
@@ -292,6 +294,7 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
     Route::resource('/news', 'Admin\NewsController');
     Route::post('/news/multiple-delete', 'Admin\NewsController@deleteMultiple');
     Route::get('/getEmployeeChart-ajax', 'Employee\EmployeeController@getEmployeeChartData');
+    Route::get('/getRequestChart-ajax', 'Admin\AdminController@getRequestChart');
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');

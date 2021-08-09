@@ -32,8 +32,8 @@
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
-														<label>Employee Name <span class="text-danger">*</span></label>
-														<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%" required="">
+														<label>Employee Name </label>
+														<select class="employee_name form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="name" id="employee_name" style="width: 100%">
 															@if(Request::get('emp_name'))
 																<option selected="selected" id="{{ Request::get('emp_number') }}">{{ Request::get('emp_name'), old('name') }}</option>
 															@endif
