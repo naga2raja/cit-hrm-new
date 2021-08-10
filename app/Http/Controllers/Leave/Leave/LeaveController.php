@@ -285,7 +285,7 @@ class LeaveController extends Controller
         $leaveDays = $leaves->days;
         $entitlementId = $leaves->entitlement_id;
         $entitlementDet = mLeaveEntitlement::where('id', $entitlementId)->first();
-        $entitlementDet->days_used = $entitlementDet->days_used + $leaveDays;
+        $entitlementDet->days_used = $entitlementDet->days_used - $leaveDays;
         $entitlementDet->save();
 
         tLeave::where('leave_request_id', $leave_request_id)->delete(); 

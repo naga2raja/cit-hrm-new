@@ -10,6 +10,7 @@ use App\Exports\EmployeesReportExport;
 use App\Exports\LeavesReportExport;
 use App\Exports\AttendanceReportExport;
 use App\Exports\TimesheetReportExport;
+use App\Exports\ProductivityReportExport;
 use DateTime;
 use Excel;
 use App\mJobTitle;
@@ -20,6 +21,7 @@ use App\mLeaveType;
 use App\tPunchInOut;
 use App\mProject;
 use App\tTimesheetItem;
+use App\tActivity;
 use Auth;
 
 
@@ -50,13 +52,17 @@ class ReportsController extends Controller
             $data = $this->getTimesheetsReport($request);
             if($request->export)
                 return (new TimesheetReportExport($data))->download('timesheet_report.xlsx');            
+        } elseif($request->report == 'productivity_report') {
+            $data = $this->getProductivityReport($request);
+            if($request->export)                
+                return (new ProductivityReportExport($data))->download('productivity_report.xlsx');
         }
 
         $jobTitle = mJobTitle::get();
         $employees = Employee::where('status', 'Active')->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as name')->get();
         $leaveStatus = mLeaveStatus::get();
         $leaveType = mLeaveType::get();
-        $projects = mProject::get();
+        $projects = mProject::orderBy('m_projects.project_name', 'ASC')->get();
         return view('reports/index', compact('data', 'jobTitle', 'employees', 'leaveStatus', 'leaveType', 'projects'));
     }
 
@@ -223,5 +229,68 @@ class ReportsController extends Controller
             ->toArray();
 
         return $timesheets;
+    }
+
+    public function getProductivityReport($request) {
+        $out = [];
+        $projects = mProject::join('m_customers', 'm_customers.id', 'm_projects.customer_id')
+            ->join('t_timesheet_items', 't_timesheet_items.project_id', 'm_projects.id')
+            ->join('t_timesheets', 't_timesheets.id', 't_timesheet_items.timesheet_id')
+            ->when(request()->filled('project_id'), function ($query) {
+                $query->where('m_projects.id', request('project_id'));
+            })
+            ->when(request()->filled('from_date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('from_date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_timesheet_items.date, "%Y-%m-%d") >= "'. $date.'"');
+            })
+            ->when(request()->filled('to_date'), function ($query) {
+                $date = DateTime::createFromFormat('d/m/Y', request('to_date'));
+                $date = $date->format('Y-m-d');
+                $query->whereRaw('DATE_FORMAT(t_timesheet_items.date, "%Y-%m-%d") <= "'. $date.'"');
+            })
+            ->selectRaw('m_projects.project_name as project_name, m_customers.customer_name, SUM(t_timesheet_items.duration) as duration, m_projects.id')
+            ->orderBy('m_projects.project_name', 'ASC')
+            ->groupBy('m_projects.id')
+            ->get()
+            ->toArray();
+        
+            foreach($projects as $project) {
+                $activities = tActivity::join('t_timesheet_items', 't_timesheet_items.activity_id', 't_activities.id')
+                ->join('t_timesheets', 't_timesheets.id', 't_timesheet_items.timesheet_id')
+                ->where('t_timesheet_items.project_id', $project['id'])
+                ->selectRaw('t_activities.activity_name as activity_name, SUM(t_timesheet_items.duration) as duration')
+                ->orderBy('t_activities.activity_name', 'ASC')
+                ->groupBy('t_activities.id')
+                ->get()
+                ->toArray();
+                
+                $project['activities'] = $activities;
+                $out[] = $project;
+            }
+
+            if($request->export) {
+                $download = [];
+                foreach($out as $timesheet) {
+                    $download[] = [
+                        'project_name' => $timesheet['project_name'],
+                        'customer_name' => $timesheet['customer_name'],
+                        'duration' => ($timesheet['duration'])
+                    ];
+    
+                    foreach($timesheet['activities'] as $activity) {
+                        $download[] = [
+                            'project_name' => '',
+                            'customer_name' => $activity['activity_name'],
+                            'duration' => ($activity['duration'])
+                        ];
+                    }
+                    $download[] = [  'project_name' => '', 'customer_name' => '', 'duration' => ''];    
+                }
+                return $download;   
+            }
+            
+
+           return $out;        
     }
 }
