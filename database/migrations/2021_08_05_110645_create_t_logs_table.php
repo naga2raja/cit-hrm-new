@@ -18,8 +18,8 @@ class CreateTLogsTable extends Migration
             $table->string('action');
             $table->string('module')->nullable();
             $table->datetime('date');
-            $table->bigInteger('action_by');   
-            $table->bigInteger('action_to');
+            $table->bigInteger('send_by');   
+            $table->bigInteger('send_to');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->softDeletes();

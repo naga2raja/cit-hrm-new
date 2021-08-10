@@ -140,6 +140,14 @@ class MyTimesheetsController extends Controller
         $timesheetInfo->updated_by = Auth::user()->id;
         $timesheetInfo->comments = $comments. '<br> <b>'.Auth::user()->name .'</b> - Sent to <b> Approval </b> on ' . getCurrentTime(); 
         $timesheetInfo->save();
+
+        // =========== t_log table Start ===========
+            $action = "Submitted";
+            $send_by = getEmployeeId(Auth::user()->id);
+            $send_to = getMyReportingManager($timesheetInfo->employee_id);
+            activityLog($action, "Timesheet", $send_by, $send_to);
+        // =========== t_log table end =============
+
         return $timesheetInfo;
     }
 

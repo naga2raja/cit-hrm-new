@@ -443,9 +443,6 @@
                                         <span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Biomatric Data</span>
                                     </a>
                                 </li>
-                                <li class="mr-1 {{ Request::is('profile-settings') ? 'active' : '' }}">
-                                    <a class="nav-link btn-ctm-space {{ Request::is('profile-settings') ? 'active' : '' }} " href="{{ route('profile-settings') }}"><span class="lnr lnr-cog pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Settings</span></a>
-                                </li>
                                 <li class="mr-1 {{ Request::is('news') ? 'active' : '' }}">
                                     <a class="nav-link btn-ctm-space {{ Request::is('news') ? 'active' : '' }} " href="{{ route('news.index') }}"><span class="lnr lnr-bullhorn pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">News</span></a>
                                 </li>

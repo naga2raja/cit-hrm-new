@@ -93,12 +93,10 @@ class TimesheetsController extends Controller
           if(Auth::User()->id == $employee_id) {
             $status = '0';
             $comments = '<b>'.Auth::user()->name.'</b> - Saved Timesheet on ' . getCurrentTime();
-            $action = "Saved";
           }else if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){
             $status = '2';
             $newtimesheetStatus = currentTimesheetStatus($status);
             $comments = '<b>'.Auth::user()->name .'('. Auth::user()->roles[0]->name .')</b> - Send to <b>'. $newtimesheetStatus.'</b> on ' . getCurrentTime();
-            $action = $newtimesheetStatus;
           }
           // create Timesheet
           $timesheet = tTimesheet::create([
@@ -109,10 +107,15 @@ class TimesheetsController extends Controller
               'comments' => $comments,
               'created_by' => Auth::user()->id
           ]);
-          // to store in activityLog
-          $send_by = Auth::user()->id;
-          $send_to = $employee_id;
-          activityLog($action, "Timesheet", $send_by, $employee_id);
+
+          // =========== t_log table Start ===========
+            if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){              
+                $action = $newtimesheetStatus;
+                $send_by = getEmployeeId(Auth::user()->id);
+                $send_to = getMyReportingManager($send_by);
+                activityLog($action, "Timesheet", $send_by, $send_to);
+            }
+            // =========== t_log table end =============
 
           $timesheet_id = $timesheet->id;
         }
@@ -291,7 +294,14 @@ class TimesheetsController extends Controller
                 $timesheetInfo->comments = $timesheetInfo->comments . ' <hr> <b>'.Auth::user()->name .'('. $userRole .')</b> - Updated to <b>'. $newtimesheetStatus.'</b> on ' . getCurrentTime();
                 $timesheetInfo->save();
 
-                //Send Email to Employee
+              // =========== t_log table Start ===========
+                $action = $newtimesheetStatus;
+                $send_by = getEmployeeId(Auth::user()->id);
+                $send_to = $timesheetInfo->employee_id;
+                activityLog($action, "Timesheet", $send_by, $send_to);
+              // =========== t_log table end =============
+
+                // Send Email to Employee
                 // $toEmails = [];
                 // $employeeDetails = $leaveCtrl->getEmployeeDetails($timesheetInfo->employee_id);
                 // $details = [

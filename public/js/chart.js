@@ -1,7 +1,6 @@
 $(function(){
 
 	// LoadNewChart();
-	// upcoming leave data
 	function LoadNewChart(){
 		$.ajax({
 			method: 'GET',
@@ -65,13 +64,9 @@ $(function(){
 			}
 		});
 	}
-	
-	
-
 });
 
 LoadEmployeeChart();
-
 function LoadEmployeeChart(){
 	$.ajax({
 		method: 'GET',
@@ -102,7 +97,7 @@ function LoadEmployeeChart(){
 				}());
 
 	        	// Pie Chart	
-				Highcharts.chart('employees_count', {
+				Highcharts.chart('employees_chart', {
 				    chart: {
 				        plotBackgroundColor: null,
 				        plotBorderWidth: null,
@@ -111,6 +106,9 @@ function LoadEmployeeChart(){
 				    },
 				    title: {
 				        text: 'Total Employees'
+				    },
+				    subtitle: {
+				        text: 'Based on Job Title'
 				    },
 				    tooltip: {
 				        pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -147,8 +145,8 @@ function LoadEmployeeChart(){
 	});
 }
 
+// no. of Requests
 LoadRequestChart();
-
 function LoadRequestChart(){
 	$.ajax({
 		method: 'GET',
@@ -156,10 +154,14 @@ function LoadRequestChart(){
 		dataType: "json",
 		contentType: 'application/json',
 		success: function(data){
+			var role = '';
 			var leave = 0;
 			var attendance = 0;
 			var timesheet = 0;
 			console.log('bar chartData : ', data.leave);
+			if(data.role){
+				role = data.role;
+	        }
 			if(data.leave){
 				leave = data.leave;
 	        }
@@ -170,57 +172,127 @@ function LoadRequestChart(){
 				timesheet = data.timesheet;
 	        }
 
-        	// bar Chart	
-			Highcharts.chart('container', {
+        	// bar Chart
+        	var color = {
+			    Leave: 'rgb(124,181,236)',
+			  	Attendance: 'rgb(67,67,72)',
+			  	Timesheet: 'rgb(144,237,125)'
+			}
+
+        	Highcharts.chart('pending_request_chart', {
 			    chart: {
 			        type: 'column'
 			    },
 			    title: {
-			        text: 'Pending Requests'
+			        text: 'Pending Approval Requests'
 			    },
 			    subtitle: {
-			        // text: 'Source: WorldClimate.com'
+			        text: 'From: '+ role
 			    },
 			    xAxis: {
-			        categories: ['Request Type'],
-			        crosshair: true
+			        categories: ['Leave', 'Attendance', 'Timesheet'],
+			        crosshair: true,
+			        title: {
+			            // text: 'Request Type',
+			            // style: { fontWeight: 'bold'}
+			        },
+			        labels: {
+			        	formatter: function() {
+							return '<a href="<?php echo $this->baseUrl();?>/" class="external">' + this.value +'</a>';
+						}
+				      // formatter () {
+				      // 	return `<span style="color: ${color[this.value]}">${this.value}</span>`
+				      // }
+				    }
 			    },
 			    yAxis: {
 			        min: 0,
 			        title: {
-			            text: 'No. of Requests'
+			            text: 'No. of Requests',
+			            style: { fontWeight: 'bold'}
 			        }
 			    },
+			    legend: {
+			    	enabled: false
+			    },
+			    tooltip: {
+			        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+			            '<td style="padding:0">{point.y} Pending</td></tr>',
+			        footerFormat: '</table>',
+			        shared: true,
+			        useHTML: false
+			    },
 			    plotOptions: {
-			        pie: {
-			            allowPointSelect: true,
-			            cursor: 'pointer',
+			        series: {
 			            dataLabels: {
 			                enabled: true,
-			                format: '{point.percentage:.1f} %',
-			                // distance: -10,
-			            },
-			            // showInLegend: true
+			                style: {
+			                    fontWeight: 'bold'
+			                }
+			            }
 			        },
 			        column: {
-			            pointPadding: 0.2,
+			            pointPadding: 0.3,
 			            borderWidth: 0
 			        }
 			    },
 			    series: [{
-			        name: 'Leave',
-			        data: [leave]
-
-			    }, {
-			        name: 'Attendance',
-			        data: [attendance]
-
-			    }, {
-			        name: 'Timesheet',
-			        data: [timesheet]
+			        name: '',
+			        colorByPoint: true,
+			        data: [leave, attendance, timesheet]
 
 			    }]
-			});
+			});	
+			// Highcharts.chart('container', {
+			//     chart: {
+			//         type: 'column'
+			//     },
+			//     title: {
+			//         text: 'Pending Requests'
+			//     },
+			//     subtitle: {
+			//         // text: 'Source: WorldClimate.com'
+			//     },
+			//     xAxis: {
+			//         categories: ['Request Type'],
+			//         crosshair: true
+			//     },
+			//     yAxis: {
+			//         title: {
+			//             text: 'No. of Requests'
+			//         }
+			//     },
+			//     plotOptions: {
+			//         pie: {
+			//             allowPointSelect: true,
+			//             cursor: 'pointer',
+			//             dataLabels: {
+			//                 enabled: true,
+			//                 format: '{point.percentage:.1f} %',
+			//                 // distance: -10,
+			//             },
+			//             // showInLegend: true
+			//         },
+			//         column: {
+			//             pointPadding: 0.3,
+			//             borderWidth: 0
+			//         }
+			//     },
+			//     series: [{
+			//         name: 'Leave',
+			//         data: [leave]
+
+			//     }, {
+			//         name: 'Attendance',
+			//         data: [attendance]
+
+			//     }, {
+			//         name: 'Timesheet',
+			//         data: [timesheet]
+
+			//     }]
+			// });
 
 			// to remove the watermark
 			$('.highcharts-credits').html('');

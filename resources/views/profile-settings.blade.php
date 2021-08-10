@@ -26,10 +26,11 @@
 								<div class="user-card shadow-sm bg-white p-4 text-center ctm-border-radius card">
 									<div class="user-info">
 										<div class="user-avatar mb-4">
-											<img src="img/profiles/img-6.jpg" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+											<img src="{{ getProfileImage() }}" alt="{{ Auth::user()->name }}" class="img-fluid rounded-circle" width="100">
 										</div>
 										<div class="user-details">
-											<h4><b>Welcome {{ Auth::user()->name }}</b></h4>
+											<h4>Welcome</h4>
+											<h4><b>@if (!Auth::guest()) {{ Auth::user()->name }} @endif</b></h4>
 											<span class="ctm-text-sm">{{ Auth::user()->email }}</span>
 										</div>
 									</div>
@@ -84,73 +85,7 @@
 											</form>
 										</div>
 									</div>
-								</div>
-								
-								<div class="col-lg-6 d-flex">
-									<div class="card reminder flex-fill ctm-border-radius shadow-sm">
-										<div class="card-header">
-											<h4 class="card-title mb-0">Today's News</h4>
-										</div>
-										<div class="card-body">
-											@if($message = Session::get('news_success'))
-											<div class="alert alert-success">
-												<p>{{$message}}</p>
-											</div>
-											@endif	
-
-											<form method="POST" action="{{ route('news.store') }}">
-												@csrf
-												<div class="row filter-row">
-													<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-														<div class="form-group">
-															<label>Title</label>
-															<input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" name="title" >
-															{!! $errors->first('title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-														</div>
-													</div>
-												</div>
-
-												<div class="row filter-row">
-													<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-														<div class="form-group">
-															<label>News <span class="text-danger">*</span></label>
-															<textarea class="form-control {{ $errors->has('news') ? 'is-invalid' : ''}}" name="news" ></textarea>
-															{!! $errors->first('news', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-														</div>
-													</div>
-												</div>
-
-												<div class="row filter-row">
-													<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-														<div class="form-group">
-															<label>Category <span class="text-danger">*</span></label>
-															<select class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" name="category" id="category" style="width: 100%">
-																<option value="Information">Information</option>
-																<option value="Important">Important</option>
-																<option value="Urgent">Urgent</option>
-																<option value="Leave">Leave</option>
-																<option value="Birtday">Birtday</option>
-																<option value="Event">Event</option>
-																<option value="Project">Project</option>
-															</select>
-															{!! $errors->first('category', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-														</div>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-														<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-paper-plane"></i> Post </button>
-													</div>
-													<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-														<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"> Cancel </button>
-													</div>
-												</div>												
-											</form>
-										</div>
-									</div>
-								</div>
-							
+								</div>							
 							</div>
 							<!--
 							<div class="row">
