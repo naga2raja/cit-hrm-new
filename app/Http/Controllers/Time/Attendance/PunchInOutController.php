@@ -334,7 +334,9 @@ class PunchInOutController extends Controller
             $action = "Submitted";
             $send_by = getEmployeeId(Auth::user()->id);
             $send_to = getMyReportingManager($punchInfo->employee_id);
-            activityLog($action, "Attendance", $send_by, $send_to);
+            $module_id = $punchInfo->id;
+            $date = date('Y-m-d', strtotime($punchInfo->punch_in_user_time));
+            activityLog($action, "Attendance", $send_by, $send_to, $module_id, $date);
         // =========== t_log table end =============
 
         return $punchInfo;
@@ -401,10 +403,12 @@ class PunchInOutController extends Controller
                 $punchInfo->save();
 
                 // =========== t_log table Start ===========
-                $action = $newPunchStatus;
-                $send_by = getEmployeeId(Auth::user()->id);
-                $send_to = $punchInfo->employee_id;
-                activityLog($action, "Attendance", $send_by, $send_to);
+                 $action = $newPunchStatus;
+                 $send_by = getEmployeeId(Auth::user()->id);
+                 $send_to = $punchInfo->employee_id;
+                 $module_id = $punchInfo->id;
+                 $date = date('Y-m-d', strtotime($punchInfo->punch_in_user_time));
+                 activityLog($action, "Attendance", $send_by, $send_to, $module_id, $date);
                 // =========== t_log table end =============
 
                 //Send Email to Employee

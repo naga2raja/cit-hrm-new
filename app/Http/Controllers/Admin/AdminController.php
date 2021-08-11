@@ -97,16 +97,37 @@ class AdminController extends Controller
         $user = Auth::user();
         $employee = Employee::where('id', $user->id)->first();
 
+        $project = mProject::select('m_projects.id')
+                                ->leftJoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
+                                ->leftJoin('t_project_managers', 't_project_managers.project_id', 'm_projects.id')
+                                ->leftJoin('t_project_employees', 't_project_employees.project_id', 'm_projects.id')
+                                ->where('t_project_admins.admin_id', $employee->id)
+                                ->orWhere('t_project_managers.employee_id', $employee->id)
+                                ->orWhere('t_project_employees.employee_id', $employee->id)
+                                ->selectRaw('GROUP_CONCAT(m_projects.id) as my_projects')
+                                ->first();
+        $assignedProjects = [];
+        if($project && $project->my_projects) {
+            $assignedProjects = explode(',',$project->my_projects);
+        }
+
         $birthday = Employee::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, CASE WHEN employees.date_of_birth != "" THEN "birthday" END AS type')
                                 ->where('date_of_birth', date('Y-m-d'))
                                 ->get()->toArray();
 
         $news = tNews::selectRaw('t_news.*, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, CASE WHEN news != "" THEN "news" END AS type')
                                 ->join('employees', 'employees.id', 't_news.created_by')
-                                ->where('t_news.status', 'Active')
-                                ->orderBy('t_news.created_at', 'desc')
-                                ->get()->toArray();
-
+                                ->where('t_news.status', 'Active');                                
+                                if(!Auth::user()->hasRole('Admin')){
+                                    $news->where('t_news.project_id', null);
+                                }
+                                if(count($assignedProjects) && (!Auth::user()->hasRole('Admin'))) {
+                                    $news->orWhereIn('t_news.project_id', $assignedProjects);
+                                }
+                                $news = $news->groupBy('t_news.id')
+                                            ->orderBy('t_news.created_at', 'desc')
+                                            ->get()->toArray();
+        // dd($news);
         $result_arr = array_merge($birthday, $news);
 
         $output['birthday'] = [];
@@ -168,6 +189,7 @@ class AdminController extends Controller
                                 ->join('employees', 'employees.id', 't_project_employees.employee_id')
                                 ->where('t_project_employees.employee_id', '!=', $employee->id)
                                 // ->where('m_projects.id', 1)
+                                ->groupBy('t_project_employees.employee_id')
                                 ->get()->toArray();
 
             $project_manager = mProject::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_managers.employee_id, m_projects.project_name, CASE WHEN t_project_managers.employee_id != "" THEN "Project Manager" END as designation')
@@ -175,6 +197,7 @@ class AdminController extends Controller
                                 ->join('t_project_employees', 't_project_employees.project_id', 'm_projects.id')
                                 ->join('employees', 'employees.id', 't_project_managers.employee_id')
                                 ->where('t_project_employees.employee_id', $employee->id)
+                                ->groupBy('t_project_managers.employee_id')
                                 ->get()->toArray();
 
             $project_admin = mProject::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_admins.admin_id as employee_id, m_projects.project_name, CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END as designation')
@@ -182,6 +205,7 @@ class AdminController extends Controller
                                 ->join('t_project_employees', 't_project_employees.project_id', 'm_projects.id')
                                 ->join('employees', 'employees.id', 't_project_admins.admin_id')
                                 ->where('t_project_employees.employee_id', $employee->id)
+                                ->groupBy('t_project_admins.admin_id')
                                 ->get()->toArray();
 
             $result_arr = array_merge($reporting_manager, $reporting_employee, $project_employees, $project_manager, $project_admin);
@@ -291,20 +315,23 @@ class AdminController extends Controller
         $user = Auth::user();
         $employee = Employee::where('id', $user->id)->first();
 
-        $my_activities = tLog::selectRaw('t_logs.*, t_logs.updated_at as date_time, CONCAT_WS (" ", receiver.first_name, receiver.middle_name, receiver.last_name) as reciever_name, sender.profile_photo, roles.name as role_name, CASE WHEN t_logs.send_by != "" THEN "My Activities" END as type')
+        $my_activities = tLog::selectRaw('t_logs.*, t_logs.created_at as date_time, CONCAT_WS (" ", receiver.first_name, receiver.last_name) as reciever_name, sender.profile_photo, roles.name as role_name, CASE WHEN t_logs.send_by != "" THEN "My Activities" END as type')
                                 ->join('employees as receiver', 'receiver.id', 't_logs.send_to')
                                 ->join('employees as sender', 'sender.id', 't_logs.send_by')
                                 ->join('model_has_roles', 'model_has_roles.model_id', 'sender.user_id')
                                 ->join('roles', 'roles.id', 'model_has_roles.role_id')
                                 ->where('t_logs.send_by', $employee->id)
+                                ->where('t_logs.status', '0')
+                                ->orderBy('t_logs.id', 'DESC')
                                 ->get()->toArray();
 
-        $others_activities = tLog::selectRaw('t_logs.*, t_logs.updated_at as date_time, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
+        $others_activities = tLog::selectRaw('t_logs.*, t_logs.created_at as date_time, CONCAT_WS (" ", first_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
                                 ->join('employees', 'employees.id', 't_logs.send_by')
                                 ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
                                 ->join('roles', 'roles.id', 'model_has_roles.role_id')
-                                ->where('t_logs.send_to', $employee->id)
+                                ->whereRaw('FIND_IN_SET ('.$employee->id.', t_logs.send_to)')
                                 ->where('t_logs.send_to', '!=', '0')
+                                ->where('t_logs.status', '0')
                                 ->orderBy('t_logs.id', 'DESC')
                                 ->get()->toArray();
 

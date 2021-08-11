@@ -239,7 +239,7 @@
 											<h4 class="card-title mb-0 d-inline-block">Recent Activities</h4>
 											<a href="javascript:void(0)" id="refresh_recent_activities" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
-										<div class="card-body recent-activ admin-activ">
+										<div class="card-body recent-activ">
 											<div class="recent-comment" id="recent_activity">
 											</div>
 										</div>
@@ -267,10 +267,6 @@
 				</div>
 			</div>
 			<!--/Content-->
-
-
-
-		
 			
 		</div>
 		<!-- Inner Wrapper -->
@@ -307,11 +303,11 @@
 		$('.modal-message').html(details);
 	}
 
-
-	function getHoursDiff(updated_at){
+	function getHoursDiff(created_at){
 		var currentdate = new Date(); 
-		var rightNow = moment(currentdate).format("YYYY-MM-DD HH:mm:ss");
-		var updatedDate = moment(updated_at).format("YYYY-MM-DD HH:mm:ss");
+		var rightNow = moment(currentdate).utcOffset(0).format('YYYY-MM-DD HH:mm:ss');
+		var updatedDate = moment(created_at).format("YYYY-MM-DD HH:mm:ss");
+		// console.log(rightNow+" - "+updatedDate);
 
 		var diff = moment(rightNow).diff(updatedDate, 'minutes');
 		var mins = diff%60; // to get minutes
@@ -366,7 +362,7 @@
 						news += '</div>';
 						news += '<div class="notice-body">';
 						news += '<h6 class="mb-0">'+row.title+'</h6>';
-						var hours = getHoursDiff(row.updated_at);
+						var hours = getHoursDiff(row.created_at);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						news += '<span class="ctm-text-sm">' +row.employee_name+ ' | ' +diff+ '</span>';
 						news += '</div>';
@@ -575,7 +571,17 @@
 						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
 						activity += '</div>';
 						activity += '<div class="notice-body">';
-						activity += '<h6 class="mb-0">You '+row.action+' '+row.reciever_name+ ' '+row.module+'</h6>';
+
+						var dateArr = row.date.split(',');
+						var date = '';
+						if(dateArr && dateArr[0]){
+							date += moment(dateArr[0]).format("DD/MM/YYYY");
+						}
+						if(dateArr && dateArr[1]){
+							date += '-'+moment(dateArr[1]).format("DD/MM/YYYY");
+						}
+
+						activity += '<h6 class="mb-0">You '+row.action+' '+row.reciever_name+ ' '+row.module+' ('+date+')</h6>';
 						var hours = getHoursDiff(row.date_time);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						activity += '<span class="ctm-text-sm">' +row.role_name+ ' | '+diff+'</span>';
@@ -590,10 +596,19 @@
 						activity += '</div>';
 						activity += '<div class="notice-body">';
 
+						var dateArr = row.date.split(',');
+						var date = '';
+						if(dateArr && dateArr[0]){
+							date += moment(dateArr[0]).format("DD/MM/YYYY");
+						}
+						if(dateArr && dateArr[1]){
+							date += '-'+moment(dateArr[1]).format("DD/MM/YYYY");
+						}
+
 						if(row.action == "Submitted"){
-							activity += '<h6 class="mb-0">' +row.employee_name+ ' Sent '+row.module+' to Approval</h6>';
+							activity += '<h6 class="mb-0">' +row.employee_name+ ' Sent '+row.module+' ('+date+') to Approval </h6>';
 						}else{
-							activity += '<h6 class="mb-0">' +row.employee_name+ ' '+row.action+' '+row.module+'</h6>';
+							activity += '<h6 class="mb-0">' +row.employee_name+ ' '+row.action+' '+row.module+' ('+date+')</h6>';
 						}						
 						var hours = getHoursDiff(row.date_time);
 						var diff = (hours) ? hours+" ago" : "Just Now";

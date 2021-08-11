@@ -184,13 +184,15 @@ class LeaveController extends Controller
             if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){
                 $action = $leaveStatus->name;
                 $send_by = getEmployeeId(Auth::user()->id);
-                $send_to = getMyReportingManager($employeeId);
+                $send_to = $employeeId;
             }else{
                 $action = "Applied";
                 $send_by = $employeeId;
                 $send_to = getMyReportingManager($employeeId);
-            }        
-          activityLog($action, "Leave", $send_by, $send_to);
+            }
+            $module_id = $leaveRequest->id;
+            $date = $leaveRequest->from_date.','.$leaveRequest->to_date;
+            activityLog($action, "Leave", $send_by, $send_to, $module_id, $date);
         // =========== t_log table end =============
 
         // Iterate over the period
@@ -459,7 +461,9 @@ class LeaveController extends Controller
                 $action = $leaveStatus->name;
                 $send_by = getEmployeeId(Auth::user()->id);
                 $send_to = $leaveRequest->employee_id;
-                activityLog($action, "Leave", $send_by, $send_to);
+                $module_id = $leaveRequest->id;
+                $date = $leaveRequest->from_date.','.$leaveRequest->to_date;
+                activityLog($action, "Leave", $send_by, $send_to, $module_id, $date);
             // =========== t_log table end =============
 
                 $currentEmployeeDetails = $this->getEmployeeDetails(Auth::user()->id);
