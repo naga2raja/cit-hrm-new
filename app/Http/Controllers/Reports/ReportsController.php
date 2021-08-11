@@ -11,6 +11,7 @@ use App\Exports\LeavesReportExport;
 use App\Exports\AttendanceReportExport;
 use App\Exports\TimesheetReportExport;
 use App\Exports\ProductivityReportExport;
+use App\Exports\LeaveBalanceReportExport;
 use DateTime;
 use Excel;
 use App\mJobTitle;
@@ -22,6 +23,7 @@ use App\tPunchInOut;
 use App\mProject;
 use App\tTimesheetItem;
 use App\tActivity;
+use App\mLeaveEntitlement;
 use Auth;
 
 
@@ -34,21 +36,15 @@ class ReportsController extends Controller
            $data = $this->getEmployeesReport($request);
             if($request->export)
                 return (new EmployeesReportExport($data))->download('employees.xlsx');            
-        }
-
-        if($request->report == 'leave_report') {
+        } elseif($request->report == 'leave_report') {
             $data = $this->getLeavesReport($request);
              if($request->export)
                  return (new LeavesReportExport($data))->download('leaves.xlsx');            
-        }
-
-        if($request->report == 'attendance_report') {
+        } elseif($request->report == 'attendance_report') {
             $data = $this->getAttendanceReport($request);
              if($request->export)
                  return (new AttendanceReportExport($data))->download('attendance.xlsx');            
-        }
-
-        if($request->report == 'timesheet_report') {
+        } elseif($request->report == 'timesheet_report') {
             $data = $this->getTimesheetsReport($request);
             if($request->export)
                 return (new TimesheetReportExport($data))->download('timesheet_report.xlsx');            
@@ -56,14 +52,23 @@ class ReportsController extends Controller
             $data = $this->getProductivityReport($request);
             if($request->export)                
                 return (new ProductivityReportExport($data))->download('productivity_report.xlsx');
-        }
+        } elseif($request->report == 'leave_balance_report') {
+            $data = $this->getLeaveBalanceReport($request);
+            if($request->export)                
+                return (new LeaveBalanceReportExport($data))->download('leave_balance_report.xlsx');
+        }  
 
         $jobTitle = mJobTitle::get();
         $employees = Employee::where('status', 'Active')->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as name')->get();
         $leaveStatus = mLeaveStatus::get();
         $leaveType = mLeaveType::get();
         $projects = mProject::orderBy('m_projects.project_name', 'ASC')->get();
-        return view('reports/index', compact('data', 'jobTitle', 'employees', 'leaveStatus', 'leaveType', 'projects'));
+        $leavePeriod = mLeaveEntitlement::select('from_date', 'to_date')
+            ->selectRaw('CONCAT(from_date, " - ", to_date) as leave_period')
+            ->distinct()
+            ->get(); 
+
+        return view('reports/index', compact('data', 'jobTitle', 'employees', 'leaveStatus', 'leaveType', 'projects', 'leavePeriod'));
     }
 
     public function getEmployeesReport($request) {
@@ -288,9 +293,36 @@ class ReportsController extends Controller
                     $download[] = [  'project_name' => '', 'customer_name' => '', 'duration' => ''];    
                 }
                 return $download;   
-            }
-            
+            }          
 
            return $out;        
+    }
+
+    public function getLeaveBalanceReport() {
+
+        $data = mLeaveEntitlement::join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
+            // ->leftJoin('t_leaves', 't_leaves.entitlement_id', 'm_leave_entitlements.id')
+            ->leftjoin('t_leaves', function($query){
+                $query->on('t_leaves.entitlement_id', '=', 'm_leave_entitlements.id')
+                    ->whereIn('t_leaves.status', [1,2,3]);
+            })
+            ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')            
+            ->when(request()->filled('leave_period'), function ($query) {
+                $leavePeriod = explode(' - ', request('leave_period'));
+                $query->where('m_leave_entitlements.from_date', '>=', $leavePeriod[0] );
+                $query->where('m_leave_entitlements.to_date', '<=', $leavePeriod[1] );
+            })
+            ->when(request()->filled('employee_id'), function ($query) {
+                $query->where('m_leave_entitlements.emp_number', request('employee_id'));
+            })
+            ->when(request()->filled('leave_type'), function ($query) {
+                $query->where('m_leave_entitlements.leave_type_id', request('leave_type'));
+            })
+            ->selectraw('CONCAT_WS (" ", employees.first_name, employees.middle_name, employees.last_name) as employee_name, m_leave_types.name as leave_type, m_leave_entitlements.no_of_days, SUM(t_leaves.length_days) as leaves_taken, m_leave_entitlements.from_date, m_leave_entitlements.to_date')
+            ->orderBy('employees.id', 'ASC')
+            ->groupBy('m_leave_entitlements.id', 'm_leave_entitlements.emp_number')
+            ->get()
+            ->toArray();
+        return  $data;
     }
 }

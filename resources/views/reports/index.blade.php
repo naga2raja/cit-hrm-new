@@ -49,19 +49,19 @@
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<label>Report</label>
-													<select class="form-control select" name="report" id="report" onchange="selectReportName()">
-														<option>Select</option>
+													<select class="form-control select" name="report" id="report" required onchange="selectReportName()">
+														<option value="">Select</option>
 														<option value="employee_report" @if(!Request::get('report') || Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
 														<option value="leave_report" @if(Request::get('report') == 'leave_report') selected @endif>Leave Report</option>
 														<option value="attendance_report" @if(Request::get('report') == 'attendance_report') selected @endif>Attendance Report</option>
 														<option value="timesheet_report" @if(Request::get('report') == 'timesheet_report') selected @endif>Timesheet Report</option>
-														<option value="productivity_report" @if(Request::get('report') == 'productivity_report') selected @endif">Productivity Report</option>
-														<option value="leave_balance_report" @if(Request::get('report') == 'leave_balance_report') selected @endif">Leave Balance Report</option>
+														<option value="productivity_report" @if(Request::get('report') == 'productivity_report') selected @endif>Productivity Report</option>
+														<option value="leave_balance_report" @if(Request::get('report') == 'leave_balance_report') selected @endif>Leave Balance Report</option>
 													</select>
 												</div>
 											</div>	
 											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter attendance_report_filter timesheet_report_filter">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter attendance_report_filter timesheet_report_filter leave_balance_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 													<label>Employee</label> 
 													<select class="form-control select" name="employee_id" id="employee_id">
@@ -83,7 +83,7 @@
 													</select>
 												</div>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter leave_balance_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 													<label>Leave Type</label> 
 													<select class="form-control select" name="leave_type" id="leave_type">
@@ -114,6 +114,18 @@
 														<option value="">All</option>
 														@foreach ($projects as $item)
 															<option value="{{ $item->id }}" @if(Request::get('project_id') == $item->id) selected @endif> {{ $item->project_name }} </option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_balance_report_filter">  
+												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
+													<label>Leave Period</label>
+													<select class="form-control select" name="leave_period" id="leave_period">
+														<option value="">Select</option>
+														@foreach ($leavePeriod as $period)
+															<option value='{{ $period->leave_period }}' {{ Request::get('leave_period') == $period->leave_period ? 'selected' : '' }}>{{ $period->leave_period }}</option>
 														@endforeach
 													</select>
 												</div>
@@ -152,13 +164,13 @@
 												</div>
 											</div>
 											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
 												<label> &nbsp; </label>
 												<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Apply Filter </button>
 											</div>
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
 												<label> &nbsp; </label>
-												<button type="reset" class="btn btn-danger ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Reset </button>
+												<button type="button" class="btn btn-danger ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="resetAllValues('reportForm')"> Reset </button>
 											</div>
 										</div>
 									</form>
@@ -353,6 +365,32 @@
 												</tbody>
 												@endif
 
+												@if(Request::get('report') == 'leave_balance_report')
+												<thead>
+													<tr class="bg-light">														
+														<th>Employee Name </th>
+														<th>Leave Type</th>	
+														<th>Leave Period</th>																
+														<th>Total Leaves</th>
+														<th>Leaves Taken</th>
+														<th>Leave Balance</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach ($data as $leave)
+														<tr>
+															<td> {{ $leave['employee_name'] }} </td>
+															<td> {{ $leave['leave_type'] }} </td>
+															<td> {{ $leave['from_date'] }} -  {{ $leave['to_date'] }} </td> 
+															<td> {{ $leave['no_of_days'] }} </td>
+															<td> {{ (float) $leave['leaves_taken'] }} </td>
+															<td> {{ (float) ($leave['no_of_days'] - $leave['leaves_taken']) }} </td>
+														</tr>
+
+													@endforeach
+												</tbody>
+												@endif
+
 													@if(count($data) < 1)
 														<tr>
 															<td colspan="100%">
@@ -387,9 +425,13 @@
 											</table>
 										</div>
 									</div>
-									<div class="text-center mt-3">
-										<button onclick="downloadExcel()" class="btn btn-theme button-1 ctm-border-radius text-white">Download Report</button>
-									</div>
+
+									@if(count($data))
+										<div class="text-center mt-3">
+											<button onclick="downloadExcel()" class="btn btn-theme button-1 ctm-border-radius text-white">Download Report</button>
+										</div>
+									@endif									
+
 								</div>
 							</div>
 							
@@ -436,13 +478,19 @@
 			} else if(report == 'timesheet_report') {
 				$('.timesheet_report_filter').show();
 			} else if(report == 'productivity_report') {
-				$('.productivity_report_filter').show();
+ 				$('.productivity_report_filter').show();
+			} else if(report == 'leave_balance_report') {
+ 				$('.leave_balance_report_filter').show();
 			}
 		}
 
 		function selectReportName() {
 			var seletedReport = $('#report').val();
 			manageSearchBox(seletedReport);
+		}
+
+		function resetFilter() {
+
 		}
 		
 	</script>
