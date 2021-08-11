@@ -19,7 +19,7 @@ if (! function_exists('assetUrl')) {
                     ->where('id', $user->id)
                     ->selectRaw('profile_photo')
                     ->first();
-        if($data){
+        if($data->profile_photo){
             return $data->profile_photo;
         }else{
             return "img/profiles/img-1.jpg";
@@ -89,8 +89,7 @@ if (! function_exists('assetUrl')) {
     }
 
     function isPunchInEnabled()
-    {
-        
+    {        
         $enabledFlag = 0;
         //check punch time module enabled for all
         $empSettings = DB::table('m_attendance_configures')->where('id', 4)->first();
@@ -143,17 +142,16 @@ if (! function_exists('assetUrl')) {
         return $leaves;
     }
 
-
     use App\tLog;
     function activityLog($action, $module, $action_by, $action_to) {
         $userId = getEmployeeId(Auth::User()->id);
         $today = date('Y-m-d h:i:s');
 
         $log = tLog::create([
-            'action' => $action,
+            'action' => ucfirst(strtolower($action)),
             'module' => $module,
-            'action_by' => $action_by,
-            'action_to' => $action_to,
+            'send_by' => $action_by,
+            'send_to' => $action_to,
             'date' => $today,
         ]);
 
@@ -177,4 +175,13 @@ if (! function_exists('assetUrl')) {
         $employees = array_merge($employees, $managers, $admins);
         $out['project_ids'] = array_unique($employees);
         return $out;
+    }
+
+    function getMyReportingManager($employee_id) {
+        $data = DB::table('t_employee_report_to')->where('employee_id', $employee_id)->first(); 
+        $return = 0;
+        if($data){
+           $return = $data->manager_id;
+        }   
+        return $return;
     }

@@ -147,8 +147,8 @@ Route::get('/work-from-home-reports', function () {
     return view('work-from-home-reports');
 })->name('work-from-home-reports');
 
-
 */
+
 Route::get('/password/reset', function () {
     return view('auth.email');
 })->middleware('guest')->name('password.request');
@@ -242,7 +242,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::post('import-biometric-data', 'Biometric\BiometricImportController@import')->name('attendance.import');
 });
 
-Route::group(['middleware' => ['role:Employee|Admin|Manager', 'auth']], function () {
+Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function () {
 
     // dashboard
     Route::get('/getTodayNews-ajax', 'Admin\AdminController@getTodayNews');

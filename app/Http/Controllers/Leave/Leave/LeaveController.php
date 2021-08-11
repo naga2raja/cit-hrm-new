@@ -178,6 +178,21 @@ class LeaveController extends Controller
         $leaveRequest->comments = $request->reason;
         $leaveRequest->save();
 
+        $leaveStatus = mLeaveStatus::where('id', $leave_status)->first();
+
+        // =========== t_log table Start ===========
+            if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){
+                $action = $leaveStatus->name;
+                $send_by = getEmployeeId(Auth::user()->id);
+                $send_to = getMyReportingManager($employeeId);
+            }else{
+                $action = "Applied";
+                $send_by = $employeeId;
+                $send_to = getMyReportingManager($employeeId);
+            }        
+          activityLog($action, "Leave", $send_by, $send_to);
+        // =========== t_log table end =============
+
         // Iterate over the period
         foreach ($leaveDates as $date) {
             $leaveDate = $date->format('Y-m-d');
@@ -439,6 +454,13 @@ class LeaveController extends Controller
                 $leaveRequest->save();
 
                 $leaveStatus = mLeaveStatus::where('id', $status_id)->first();
+
+            // =========== t_log table Start ===========
+                $action = $leaveStatus->name;
+                $send_by = getEmployeeId(Auth::user()->id);
+                $send_to = $leaveRequest->employee_id;
+                activityLog($action, "Leave", $send_by, $send_to);
+            // =========== t_log table end =============
 
                 $currentEmployeeDetails = $this->getEmployeeDetails(Auth::user()->id);
                 //update in leave comments table

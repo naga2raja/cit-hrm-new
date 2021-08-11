@@ -321,7 +321,7 @@ class PunchInOutController extends Controller
         return $punchInfo;
     }
 
-    public function updateStatusAjax(Request $request) {        
+    public function updateStatusAjax(Request $request) {
         $id = $request->id;
         $punchInfo = tPunchInOut::where('id', $id)->first();
         $comments = $punchInfo->comments;
@@ -329,6 +329,14 @@ class PunchInOutController extends Controller
         $punchInfo->updated_by = Auth::user()->id;
         $punchInfo->comments = $comments. '<br> <b>'.Auth::user()->name .'</b> - Sent to <b> Approval </b> on ' . getCurrentTime(); 
         $punchInfo->save();
+
+        // =========== t_log table Start ===========
+            $action = "Submitted";
+            $send_by = getEmployeeId(Auth::user()->id);
+            $send_to = getMyReportingManager($punchInfo->employee_id);
+            activityLog($action, "Attendance", $send_by, $send_to);
+        // =========== t_log table end =============
+
         return $punchInfo;
     }
 
@@ -391,6 +399,13 @@ class PunchInOutController extends Controller
                 $punchInfo->status = $status_id;
                 $punchInfo->comments = $punchInfo->comments . ' <hr> <b>'.Auth::user()->name .'('. $userRole .')</b> - Updated to <b>'. $newPunchStatus.'</b> on ' . getCurrentTime() .' '.$feedbackComment;
                 $punchInfo->save();
+
+                // =========== t_log table Start ===========
+                $action = $newPunchStatus;
+                $send_by = getEmployeeId(Auth::user()->id);
+                $send_to = $punchInfo->employee_id;
+                activityLog($action, "Attendance", $send_by, $send_to);
+                // =========== t_log table end =============
 
                 //Send Email to Employee
                 $toEmails = [];
