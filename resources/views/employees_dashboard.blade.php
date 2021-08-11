@@ -52,7 +52,10 @@
 										<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
 									</div>
 									<div class="card-body text-center">
-										@if($leavesInfo = currentUserLeaveBalance())
+										@php 
+											$leavesInfo = currentUserLeaveBalance();
+										@endphp
+										@if(count($leavesInfo) > 0)
 											@foreach ($leavesInfo as $leave)
 												<span class="mt-0 mb-0">{{ $leave->name }}</span>
 												<div class="time-list">
@@ -65,9 +68,10 @@
 														<span class="btn btn-outline-primary">{{ $leave->remaining_days }} Days</span>
 													</div>
 												</div>
-												@if (!$loop->last) <hr> @endif
-												
+												@if (!$loop->last) <hr> @endif												
 											@endforeach
+										@else
+											<div>No Leaves</div>
 										@endif
 									</div>
 								</div>
@@ -108,7 +112,7 @@
 											<h4 class="card-title mb-0 d-inline-block">Recent Activities</h4>
 											<a href="javascript:void(0)" id="refresh_recent_activities" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
-										<div class="card-body recent-activ admin-activ">
+										<div class="card-body recent-activ">
 											<div class="recent-comment" id="recent_activity">
 											</div>
 										</div>
@@ -169,10 +173,11 @@
 		$('.modal-message').html(details);
 	}
 
-	function getHoursDiff(updated_at){
+	function getHoursDiff(created_at){
 		var currentdate = new Date(); 
-		var rightNow = moment(currentdate).format("YYYY-MM-DD HH:mm:ss");
-		var updatedDate = moment(updated_at).format("YYYY-MM-DD HH:mm:ss");
+		var rightNow = moment(currentdate).utcOffset(0).format('YYYY-MM-DD HH:mm:ss');
+		var updatedDate = moment(created_at).format("YYYY-MM-DD HH:mm:ss");
+		// console.log(rightNow+" - "+updatedDate);
 
 		var diff = moment(rightNow).diff(updatedDate, 'minutes');
 		var mins = diff%60; // to get minutes
@@ -390,7 +395,17 @@
 						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
 						activity += '</div>';
 						activity += '<div class="notice-body">';
-						activity += '<h6 class="mb-0">You '+row.action+' '+row.module+'</h6>';
+
+						var dateArr = row.date.split(',');
+						var date = '';
+						if(dateArr && dateArr[0]){
+							date += moment(dateArr[0]).format("DD/MM/YYYY");
+						}
+						if(dateArr && dateArr[1]){
+							date += '-'+moment(dateArr[1]).format("DD/MM/YYYY");
+						}
+						
+						activity += '<h6 class="mb-0">You '+row.action+' '+row.module+' ('+date+')</h6>';
 						// activity += '<h6 class="mb-0">You '+row.action+' '+row.reciever_name+ ' '+row.module+'</h6>';
 						var hours = getHoursDiff(row.date_time);
 						var diff = (hours) ? hours+" ago" : "Just Now";
@@ -405,7 +420,17 @@
 						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
 						activity += '</div>';
 						activity += '<div class="notice-body">';
-						activity += '<h6 class="mb-0">' +row.employee_name+ ' '+row.action+' Your '+row.module+'</h6>';
+
+						var dateArr = row.date.split(',');
+						var date = '';
+						if(dateArr && dateArr[0]){
+							date += moment(dateArr[0]).format("DD/MM/YYYY");
+						}
+						if(dateArr && dateArr[1]){
+							date += '-'+moment(dateArr[1]).format("DD/MM/YYYY");
+						}
+
+						activity += '<h6 class="mb-0">' +row.employee_name+ ' '+row.action+' Your '+row.module+' ('+date+')</h6>';
 						var hours = getHoursDiff(row.date_time);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						activity += '<span class="ctm-text-sm">' +row.role_name+ ' | '+diff+'</span>';

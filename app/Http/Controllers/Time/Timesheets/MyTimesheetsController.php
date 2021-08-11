@@ -145,7 +145,9 @@ class MyTimesheetsController extends Controller
             $action = "Submitted";
             $send_by = getEmployeeId(Auth::user()->id);
             $send_to = getMyReportingManager($timesheetInfo->employee_id);
-            activityLog($action, "Timesheet", $send_by, $send_to);
+            $module_id = $timesheetInfo->id;
+            $date = $timesheetInfo->start_date;
+            activityLog($action, "Timesheet", $send_by, $send_to, $module_id, $date);
         // =========== t_log table end =============
 
         return $timesheetInfo;

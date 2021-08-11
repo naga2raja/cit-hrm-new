@@ -84,6 +84,30 @@
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">				
+															<label>Project</label>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="form-group">
+															<select class="form-control select" name="project_id">
+																<option value="">All</option>
+																@if(count($projects) > 0)
+																	@foreach($projects as $row)
+																    	<option value="{{ $row->project_id }}" {{ $news->project_id == $row->project_id ? 'selected' : '' }}>{{ $row->project_name }}</option>
+																    @endforeach
+																@endif
+															</select>
+															{!! $errors->first('project_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<label class="ctm-text-sm mt-2">News will visible only to selected project members</label>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-sm-2">
+														<div class="form-group">				
 															<label>Status</label>
 														</div>
 													</div>

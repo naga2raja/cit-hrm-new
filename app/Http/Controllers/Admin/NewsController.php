@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Carbon\Carbon;
 use App\tNews;
+use App\mCustomer;
+use App\mProject;
+use App\tProjectAdmin;
+use App\tProjectManager;
+use App\tProjectEmployee;
 use Session;
 use DB;
 
@@ -34,8 +39,9 @@ class NewsController extends Controller
         $date = date('Y-m-d', strtotime($request->input('date')));
         $status = $request->input('status');
 
-        $news = tNews::selectRaw('t_news.*, CONCAT_WS (" ", employees.first_name, employees.middle_name, employees.last_name) as employee_name')
-                       ->join('employees', 'employees.id', 't_news.created_by');
+        $news = tNews::selectRaw('t_news.*, CONCAT_WS (" ", employees.first_name, employees.middle_name, employees.last_name) as employee_name, m_projects.project_name')
+                       ->join('employees', 'employees.id', 't_news.created_by')
+                       ->leftJoin('m_projects', 'm_projects.id', 't_news.project_id');
         if ($post_by) {
             $news->Where('t_news.created_by', $post_by);
         }
@@ -53,7 +59,8 @@ class NewsController extends Controller
 
     public function create(Request $request)
     {
-        return view('admin/news/add');
+        $projects = mProject::select('m_projects.id as project_id', 'm_projects.project_name')->get();
+        return view('admin/news/add', compact('projects'));
     }
 
     public function store(Request $request)
@@ -69,6 +76,7 @@ class NewsController extends Controller
             'title'  => $request->input('title'),
             'news'  => $request->input('news'),
             'category' => $request->input('category'),
+            'project_id' => $request->input('project_id'),
             'date'  => date('Y-m-d'),
             'created_by'  => Auth::User()->id,
             'status'  => $request->input('status')
@@ -97,7 +105,8 @@ class NewsController extends Controller
     public function edit($id)
     {
         $news = tNews::find($id);
-        return view('admin/news/edit', compact('news'));
+        $projects = mProject::select('m_projects.id as project_id', 'm_projects.project_name')->get();
+        return view('admin/news/edit', compact('news', 'projects'));
     }
 
     /**
@@ -119,6 +128,7 @@ class NewsController extends Controller
         $news->title = $request->input('title');
         $news->news = $request->input('news');
         $news->category = $request->input('category');
+        $news->project_id = $request->input('project_id');
         $news->date = date('Y-m-d');
         $news->status = $request->input('status');
         $news->save();

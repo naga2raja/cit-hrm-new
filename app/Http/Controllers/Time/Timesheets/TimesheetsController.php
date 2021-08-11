@@ -110,10 +110,12 @@ class TimesheetsController extends Controller
 
           // =========== t_log table Start ===========
             if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){              
-                $action = $newtimesheetStatus;
-                $send_by = getEmployeeId(Auth::user()->id);
-                $send_to = getMyReportingManager($send_by);
-                activityLog($action, "Timesheet", $send_by, $send_to);
+              $action = $newtimesheetStatus;
+              $send_by = getEmployeeId(Auth::user()->id);
+              $send_to = getMyReportingManager($send_by);
+              $module_id = $timesheet->id;
+              $date = $date;
+              activityLog($action, "Timesheet", $send_by, $send_to, $module_id, $date);
             }
             // =========== t_log table end =============
 
@@ -298,7 +300,9 @@ class TimesheetsController extends Controller
                 $action = $newtimesheetStatus;
                 $send_by = getEmployeeId(Auth::user()->id);
                 $send_to = $timesheetInfo->employee_id;
-                activityLog($action, "Timesheet", $send_by, $send_to);
+                $module_id = $timesheetInfo->id;
+                $date = $timesheetInfo->start_date;
+                activityLog($action, "Timesheet", $send_by, $send_to, $module_id, $date);
               // =========== t_log table end =============
 
                 // Send Email to Employee

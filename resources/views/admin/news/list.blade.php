@@ -112,6 +112,7 @@
 													</th>
 													<th>News Title</th>
 													<th>Category</th>
+													<th>Project</th>
 													<th>Date</th>
 													<th>Post By</th>
 													<th>Status</th>
@@ -128,6 +129,7 @@
 															<h2><u><a href="{{ route('news.edit', $row->id) }}">{{ $row->news }}</a></u></h2>
 														</td>
 														<td>{{ $row->category }}</td>
+														<td>{{ $row->project_name }}</td>
 														<td>{{ $row->date }}</td>
 														<td>{{ $row->employee_name }}</td>
 														<td>{{ $row->status }}</td>
