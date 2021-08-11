@@ -240,6 +240,10 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
     Route::get('import-biometric-data', 'Biometric\BiometricImportController@index')->name('upload.biometric');
     Route::post('import-biometric-data', 'Biometric\BiometricImportController@import')->name('attendance.import');
+
+    // Payslips
+    Route::resource('payslips', 'Payslips\PayslipController');
+    
 });
 
 Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function () {
