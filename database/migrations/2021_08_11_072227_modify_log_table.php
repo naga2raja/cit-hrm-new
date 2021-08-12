@@ -16,7 +16,7 @@ class ModifyLogTable extends Migration
         Schema::table('t_logs', function (Blueprint $table) {
             // create new column
             $table->bigInteger('module_id')->after('module');
-            $table->tinyInteger('status')->default(0)->comment('0-active, 1-inactive')->after('action_to');
+            $table->tinyInteger('status')->default(0)->comment('0-active, 1-inactive')->after('send_to');
         });
     }
 
