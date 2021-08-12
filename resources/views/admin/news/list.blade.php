@@ -28,7 +28,7 @@
 								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="{{ route('news.index') }}">
+										<form id="searchNews" method="GET" action="{{ route('news.index') }}">
 
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
@@ -60,6 +60,7 @@
 													<div class="form-group">
 														<label>Status</label>
 														<select class="form-control select" name="status">
+															<option value=''>Select Status</option>
 														    <option value='Active' {{ Request::get('status') == "Active" ? 'selected' : '' }}>Active</option>
 														    <option value='In active' {{ Request::get('status') == "In active" ? 'selected' : '' }}>In-active</option>
 														</select>
@@ -72,7 +73,7 @@
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<a href="{{ route('news.index') }}" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </a>
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchNews')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>

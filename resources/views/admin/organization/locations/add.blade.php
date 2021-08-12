@@ -37,13 +37,11 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<select class="form-control select {{ $errors->has('country') ? 'is-invalid' : ''}}" name="country">
-														<option value="">-Select-</option>
-														@foreach ($countries as $country)
-														<option value="{{ $country->id }}">{{ $country->country }}</option>
-														@endforeach
-													</select>													
-														{!! $errors->first('country', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<select class="country form-control select {{ $errors->has('country') ? 'is-invalid' : ''}}" name="country" id="country">
+													</select>
+													{!! $errors->first('country', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<input type="hidden" name="country_name" id="country_name" class="form-control">
+													<input type="hidden" name="country_id" id="country_id" value="{{ (Request::get('country_id')) ? Request::get('country_id') : '' }}">
 												</div>
 											</div>
 										</div>
@@ -182,3 +180,34 @@
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
 @endsection
+@push('scripts')
+<script type="text/javascript">
+	// Autocomplete ajax call
+	$('.country').select2({
+		placeholder: 'Select a Country',
+		allowClear: true,
+		ajax: {
+			url: '/country-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.country,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+	$(document.body).on("change","#country",function(){
+	 	$('#country_id').val(this.value);
+	 	var country = $("#country option:selected").html();
+	 	$('#country_name').val(country);
+	});
+</script>
+@endpush

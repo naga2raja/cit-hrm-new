@@ -43,6 +43,7 @@ class HomeController extends Controller
         if($user->hasRole('Manager')) {
             $userRole = 'Manager';
             $approval_level = [0,1,2];
+            $pending_status = 0;
             //Find Reporting Employees Ids
             $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
             if($reportTo)
@@ -50,6 +51,7 @@ class HomeController extends Controller
         } else {
             $userRole = 'Admin';
             $approval_level = [1,2];
+            $pending_status = 1;
         }
 
         $data = [];
@@ -59,25 +61,27 @@ class HomeController extends Controller
                                 $employees_count->join('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id')
                                     ->where('t_employee_report_to.manager_id', $employeeId);
                               }
-                              $employees_count = $employees_count->count();
+                              $employees_count = $employees_count->get();
 
-            $company_count = mCompany::count();
+            $company_count = mCompany::get();
 
-            $leave_count = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
+            $leave_count = tLeaveRequest::select('t_leave_requests.*')
+                                ->join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
                                 ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
                                 ->join('employees', 'employees.id', 't_leave_requests.employee_id')
                                 ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
                                 ->where('t_leave_requests.employee_id', '!=', $employeeId)
+                                ->where('t_leaves.status', $pending_status)
                                 ->whereIn('t_leaves.approval_level', $approval_level);
                                 if(count($empIds)) {
                                     $leave_count->whereIn('t_leave_requests.employee_id', $empIds);
                                 }
-                                $leave_count = $leave_count->groupBy('t_leave_requests.id')->count();
+                                $leave_count = $leave_count->groupBy('t_leave_requests.id')->get();
             $data = [
                 'my_data'  => $my_data,
-                'employees_count'  => $employees_count,
-                'company_count'   => $company_count,
-                'leave_count' => $leave_count
+                'employees_count'  => count($employees_count),
+                'company_count'   => count($company_count),
+                'leave_count' => count($leave_count)
             ];
             return view('admin_dashboard', compact('data'));
         } else {

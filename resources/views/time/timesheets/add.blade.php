@@ -283,6 +283,7 @@
 	// Autocomplete ajax call
 	$('.employee_name').select2({
 		placeholder: 'Select a employee',
+		allowClear: true,
 		ajax: {
 			url: '/employee-autocomplete-ajax',
 			dataType: 'json',
@@ -317,6 +318,7 @@
 	function loadProjects(i=0) {
 		$('#project_name'+i).select2({
 			placeholder: 'Select a project',
+			allowClear: true,
 			ajax: {
 				url: '/project-autocomplete-ajax',
 				dataType: 'json',
@@ -376,27 +378,27 @@
 	function validation (j) {
 		if(!$('#timesheet_date').val()){
     		$('#timesheet_date').focus();
-    		alert("date");
+    		validation_popup_msg("Warning", "Date is Invalid");
     		return false;
     	}
     	else if(!$('#employee_name').val()){
     		$('#employee_name').select2('open');
-    		alert("Select Employee Name");
+    		validation_popup_msg("Warning", "Select Employee Name");
     		return false;
     	}
     	else if(!$('#project_name'+j).val()){
 			$('#project_name'+j).select2('open');
-			alert("Select Project Name");
+			validation_popup_msg("Warning", "Select Project Name");
 			return false;
     	}
     	else if(!$('#activity_name'+j).val()){
     		$('#activity_name'+j).first().focus();
-    		alert("Select Activity Name");
+    		validation_popup_msg("Warning", "Select Activity Name");
     		return false;
     	}
     	else if ((!$('#duration'+j).val()) || ($('#duration'+j).val() == '00:00')){
     		$('#duration'+j).focus();
-    		alert("Enter Duration");
+    		validation_popup_msg("Warning", "Enter Duration");
     		$('#duration'+j).addClass("is-invalid");
     		return false;
     	}else{
@@ -457,7 +459,7 @@
 	        var button_id = $(this).attr("id");
 	        $("#row_"+button_id+"").remove();
 	    }else{
-	    	alert("Can't delete");
+	    	validation_popup_msg("Warning", "Can't delete");
 	    }
     });    
 
@@ -476,6 +478,7 @@
 			   data: { 'data': $('#timesheets_form').serialize(), '_token': '{{ csrf_token() }}' } ,
 			   success:function(data){
 			   	console.log(data);
+			   	// validation_popup_msg("Success", "Timesheets Updated successfully");
 			   	alert("Timesheets Updated successfully");
 			   	window.location.href = "{{ url()->previous() }}";
 			  }

@@ -189,4 +189,19 @@ class LocationsController extends Controller
             return false;
         }  
     }
+
+    public function searchCountryAjax(Request $request)
+    {
+        $countries = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $string = str_replace(' ', '', $search);
+            $countries = mCountry::select('m_countries.*')
+                                    ->where('country','LIKE',"%$search%")
+                                    ->orWhere('code','LIKE',"%$search%")
+                                    ->get();
+        }
+        return response()->json($countries);
+    }
 }

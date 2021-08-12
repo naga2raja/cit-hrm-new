@@ -28,7 +28,7 @@
 								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="{{ route('systemUsers.index') }}">
+										<form id="searchSystemUsers" method="GET" action="{{ route('systemUsers.index') }}">
 
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
@@ -89,7 +89,7 @@
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchSystemUsers')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
@@ -139,12 +139,16 @@
 													@foreach ($users as $user)
 													<tr>
 														<td class="text-center">
-															@if($user->user_id != auth()->user()->id || $user->user_id == 1)
+															@if($user->user_id != auth()->user()->id || $user->user_id != 1)
 																<input type="checkbox" name="user_id" value="{{ $user->user_id }}">
 															@endif
 														</td>
 														<td>
-															<h2><u><a href="{{ route('systemUsers.edit', $user->user_id) }}">{{ $user->email }}</a></u></h2>
+															@if($user->user_id != auth()->user()->id || $user->user_id != 1)
+																<h2><u><a href="{{ route('systemUsers.edit', $user->user_id) }}">{{ $user->email }}</a></u></h2>
+															@else																
+																<h2>{{ $user->email }}</h2>
+															@endif
 														</td>
 														<td>{{ $user->role_name }}</td>
 														<td>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</td>

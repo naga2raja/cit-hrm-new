@@ -26,7 +26,12 @@
 			$('#'+$table_tbody_id+' input[type="checkbox"]:checked').each(function(){
 				var selected_user_ids = $(this).val();
 				selectedIds.push(selected_user_ids);
-			});                
+			});
+
+			if(selectedIds[0] == "on") {
+				alert('Please select valid records to delete');
+				return false;
+			}
 
 			if(selectedIds.length == 0) {
 				alert('Please select atleast one record to delete');
@@ -47,7 +52,7 @@
 	                console.log('response : ', response);
 					alert('Deleted successfully!');
 					window.location.reload();
-	            }					
+	            }
 	        });
 		}
 

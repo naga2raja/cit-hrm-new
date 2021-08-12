@@ -90,34 +90,17 @@ class TimesheetsController extends Controller
                                 ->delete();
             
         }else{
-          if(Auth::User()->id == $employee_id) {
-            $status = '0';
-            $comments = '<b>'.Auth::user()->name.'</b> - Saved Timesheet on ' . getCurrentTime();
-          }else if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){
-            $status = '2';
-            $newtimesheetStatus = currentTimesheetStatus($status);
-            $comments = '<b>'.Auth::user()->name .'('. Auth::user()->roles[0]->name .')</b> - Send to <b>'. $newtimesheetStatus.'</b> on ' . getCurrentTime();
-          }
+          $comments = '<b>'.Auth::user()->name.'</b> - Saved Timesheet on ' . getCurrentTime();
+
           // create Timesheet
           $timesheet = tTimesheet::create([
               'employee_id'  => $employee_id,
               'start_date'  =>  $date,
               'end_date'  =>  $date,
-              'status'  => $status,
+              'status'  => 0,
               'comments' => $comments,
               'created_by' => Auth::user()->id
           ]);
-
-          // =========== t_log table Start ===========
-            if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){              
-              $action = $newtimesheetStatus;
-              $send_by = getEmployeeId(Auth::user()->id);
-              $send_to = getMyReportingManager($send_by);
-              $module_id = $timesheet->id;
-              $date = $date;
-              activityLog($action, "Timesheet", $send_by, $send_to, $module_id, $date);
-            }
-            // =========== t_log table end =============
 
           $timesheet_id = $timesheet->id;
         }

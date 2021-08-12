@@ -279,6 +279,8 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax');
     //Activity autocomplete ajax
     Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName');
+    //country autocomplete ajax
+    Route::get('/country-autocomplete-ajax', 'Admin\Organization\LocationsController@searchCountryAjax');
 
 
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');

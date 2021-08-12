@@ -18,7 +18,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-6">
                             <div class="logo my-3 my-sm-0">
-                                <a href="index">
+                                <a href="javascript::void(0)">
                                     <!-- <img src="{{ assetUrl('img/logo.png') }}" alt="logo image" class="img-fluid" width="100"> -->
                                     <h2 class="img-fluid text-white">CIT-HRM</h2>
                                 </a>
@@ -373,15 +373,15 @@
 
                                         @hasanyrole('Admin|Manager')
                                         <li>
-                                            <a class="dropdown-item {{ Request::is('leave/list') ? 'active' : '' }}" href="{{ route('leave.list') }}">Leave List</a>
+                                            <a class="dropdown-item {{ Request::is('leave-list') ? 'active' : '' }}" href="{{ route('leave.list') }}">Leave List</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('leave.assign') }}">Assign Leave</a>
+                                            <a class="dropdown-item {{ Request::is('leave-assign') ? 'active' : '' }}" href="{{ route('leave.assign') }}">Assign Leave</a>
                                         </li>
                                         @endrole
                                     </ul>
                                 </li>
-                                <li class="mr-1 {{ Request::is('mytimesheets*', 'timesheets*') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('mytimesheets*', 'timesheets*', 'punch*', 'employee-records', 'customers*', 'projects*') ? 'active' : '' }}">
                                     <a class="nav-link dropdown-toggle" href="javascript:void(0)"><span class="lnr lnr-clock pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Time</span></a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -398,32 +398,32 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Attendance</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('punch*', 'employee-records') ? 'active' : '' }}" href="#">Attendance</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('punch.index') }}">My Records</a>
+                                                    <a class="dropdown-item {{ Request::is('punch') ? 'active' : '' }}" href="{{ route('punch.index') }}">My Records</a>
                                                 </li>
                                                 @if(isPunchInEnabled())
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('punch.create') }}">Punch In/Out</a>
+                                                    <a class="dropdown-item {{ Request::is('punch/create') ? 'active' : '' }}" href="{{ route('punch.create') }}">Punch In/Out</a>
                                                 </li>
                                                 @endif
                                                 @hasanyrole('Admin|Manager')
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('punch.employee-records') }}">Employee Records</a>
+                                                    <a class="dropdown-item {{ Request::is('employee-records') ? 'active' : '' }}" href="{{ route('punch.employee-records') }}">Employee Records</a>
                                                 </li>                       
                                                 @endrole                                                                         
                                             </ul>
                                         </li>
                                         @hasanyrole('Admin|Manager')
                                         <li>
-                                            <a class="dropdown-item dropdown-toggle" href="#">Project Info</a>
+                                            <a class="dropdown-item dropdown-toggle {{ Request::is('customers*', 'projects*') ? 'active' : '' }}" href="#">Project Info</a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('customers.index') }}">Customers</a>
+                                                    <a class="dropdown-item {{ Request::is('customers*') ? 'active' : '' }}" href="{{ route('customers.index') }}">Customers</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('projects.index') }}">Projects</a>
+                                                    <a class="dropdown-item {{ Request::is('projects*') ? 'active' : '' }}" href="{{ route('projects.index') }}">Projects</a>
                                                 </li>
                                             </ul>
                                         </li>

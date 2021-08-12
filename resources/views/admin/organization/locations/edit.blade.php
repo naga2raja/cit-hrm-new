@@ -189,3 +189,34 @@
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 		
 @endsection
+@push('scripts')
+<script type="text/javascript">
+	// Autocomplete ajax call
+	$('.country').select2({
+		placeholder: 'Select a Country',
+		allowClear: true,
+		ajax: {
+			url: '/country-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.country,
+							id: item.id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
+	});
+
+	$(document.body).on("change","#country",function(){
+	 	$('#country_id').val(this.value);
+	 	var country = $("#country option:selected").html();
+	 	$('#country_name').val(country);
+	});
+</script>
+@endpush

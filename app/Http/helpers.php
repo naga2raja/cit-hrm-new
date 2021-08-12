@@ -145,9 +145,10 @@ if (! function_exists('assetUrl')) {
     use App\tLog;
     function activityLog($action, $module, $action_by, $action_to, $module_id='0', $date) {
 
-        if(($action == "Approved")||($action == "Rejected")){
+        if((strtolower($action) == "approved")||(strtolower($action) == "rejected")){
             $data = DB::table('t_logs')
                     ->where('module_id', $module_id)
+                    ->where('module', $module)
                     ->where('status', 0)
                     ->update([
                         'status' => 1
@@ -189,7 +190,7 @@ if (! function_exists('assetUrl')) {
         $data = DB::table('t_employee_report_to')->where('employee_id', $employee_id)
                     ->selectRaw('GROUP_CONCAT(manager_id) as reporting_manager_ids')
                     ->first();
-        $return = '';
+        $return = '1';
         if($data && $data->reporting_manager_ids){
             $return = $data->reporting_manager_ids;
         }

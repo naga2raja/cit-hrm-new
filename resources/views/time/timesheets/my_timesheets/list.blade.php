@@ -37,7 +37,7 @@
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="">
+										<form id="searchMyTimesheet" method="GET" action="">
 											<div class="row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
@@ -55,7 +55,7 @@
 													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchMyTimesheet')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
@@ -154,15 +154,6 @@
 												</table>
 											</div>
 											<hr>
-											<div class="row">
-												<div class="col-sm-3 text-center">
-													<div class="row">
-														<div class="col-sm-6">
-															<button class="btn btn-theme text-white ctm-border-radius button-1" type="button">Export</button>
-														</div>
-													</div>
-												</div>
-											</div>
 										</div>
 									</div>	
 								</div>
@@ -315,7 +306,7 @@
 				        tbody += '<td><b>' + status + '</b></td>';
 
 				        var action = '';
-				        if((row.status != 0)&&(row.role_name == 'Admin')){
+				        if((row.status == 1)&&(row.role_name == 'Admin')){
 				        	action += '<select class="form-control select" data-minimum-results-for-search="Infinity" onchange="getTimeSheetStatus('+ row.id+')" id="timesheet_'+ row.id+'">';
 							action += '<option value="">Select Action</option>';
 							action += '<option value="2">Approve</option>';

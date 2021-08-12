@@ -8,7 +8,7 @@
 
 						<div class="col-xl-12 col-lg-12 col-md-12">
 							<div class="accordion add-employee" id="accordion-details">
-								<div class="card shadow-sm ctm-border-radius">
+								<div class="card shadow-sm ctm-border-radius border">
 									<div class="card-header" id="basic1">
 										<h4 class="cursor-pointer mb-0">
 											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
