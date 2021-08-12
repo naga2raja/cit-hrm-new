@@ -63,17 +63,17 @@
 							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-header">
 									<div class="row filter-row">
-										<div class="col-sm-6 col-md-8 col-lg-7 col-xl-8">  
+										<div class="col-sm-6 col-md-8 col-lg-7 {{ (Route::is(['punch.employee-records'])) ? 'col-xl-10' : 'col-xl-8' }} ">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 												<h4 class="card-title mb-0 ml-2 mt-2">{{ Request::is('employee-records') ? 'Employee' : 'My' }} Records</h4>
 											</div>
 										</div>
-										@if(isPunchInEnabled())
+										@if(!Route::is(['punch.employee-records']) && isPunchInEnabled())
                                         <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                             <a href="{{ route('punch.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
                                         </div>
 										@endif
-										@if( (attendanceDeleteEnabled() && $userRole == 'Manager') || (employeeDeleteEnabled() && $userRole == 'Employee') || $userRole == 'Admin' )
+										@if( (attendanceDeleteEnabled() && $userRole == 'Manager') || (employeeDeleteEnabled() && $userRole == 'Employee') || $userRole == 'Admin' )									
                                         <div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
                                             <button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_myrecords_table', 'punch')"><i class="fa fa-trash"></i> Delete</button>
                                         </div>
@@ -102,6 +102,7 @@
 													<th>Punch out</th>
 													{{-- <th>Punch out Note</th> --}}
                                                     <th>Duration</th>
+													<th>Type</th>
 													<th>Status</th>
 													<th>Action</th>
 												</tr>
@@ -129,6 +130,9 @@
                                                         <td>
                                                             <h2>{{ hoursAndMins($item->duration) }}</h2>
                                                         </td>
+														<td>
+															{{ ($item->is_import) ? 'Import' : 'Manual' }}
+														</td>
 														<td>
 															{{ currentPunchStatus($item->status) }}
 														</td>

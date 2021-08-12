@@ -132,10 +132,12 @@
 																	</td>
                                                                     <td> 																		
 																		@if($leave->approval_level == 0)
+																			@if($leave->status == 1)
 																			<!-- if employee want to delete can do it before manager approve/reject-->																			
 																			<a href="javascript:void(0);" onclick="showDeleteModal({{ $leave->id }})" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
 																				<span class="lnr lnr-trash"></span> Delete
 																			</a>
+																			@endif
 																		@endif
                                                                          
                                                                     </td>

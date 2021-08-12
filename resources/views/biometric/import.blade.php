@@ -37,9 +37,13 @@
 									<div class="card-body">
 
 										@if($message = Session::get('success'))
-										<div class="alert alert-success">
-											<p>{{ $message }}</p>
-										</div>
+											@if(@$output = Session::get('output')) 
+												@if(count(@$output['success']))
+													<div class="alert alert-success">
+														<p>{{ $message }}</p>
+													</div>
+												@endif
+											@endif
 										@endif
 										
 											<form method="POST" enctype="multipart/form-data" action="{{ route('attendance.import') }}">

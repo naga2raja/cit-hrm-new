@@ -213,6 +213,9 @@ class PunchInOutController extends Controller
         $punch->punch_out_user_time = $logout_date;
         $punch->state = 'PUNCHED OUT';
         $punch->updated_by = Auth::user()->id;
+        if(Auth::user()->hasRole('Admin')) {
+            $punch->status = 2;
+        }
         $punch->save();
 
         return redirect()->route('punch.index')->with('success', 'Punched out successfully!' );
