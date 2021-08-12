@@ -55,7 +55,7 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">                                                            
-                                                            <input autocomplete="off" class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="" name="pay_month" value="{{ Request::get('pay_month') }}" id="datetimepicker1" required>
+                                                            <input autocomplete="off" class="form-control datetimepicker1 cal-icon-input {{ $errors->has('pay_month') ? 'is-invalid' : ''}}" type="text" placeholder="" name="pay_month" id="datetimepicker1" required>
                                                             {!! $errors->first('pay_month', '<span class="invalid-feedback" role="alert">:message</span>') !!}
                                                         </div>
 													</div>
@@ -69,9 +69,13 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">                                                            
-                                                            <input type="file" name="payslip_doc" id="payslip_doc" required>
+                                                            <input type="file" name="payslip_doc" id="payslip_doc" class="form-control {{ $errors->has('payslip_doc') ? 'is-invalid' : ''}}" required>
+															
                                                             {!! $errors->first('payslip_doc', '<span class="invalid-feedback" role="alert">:message</span>') !!}
                                                         </div>
+													</div>
+													<div class="col-sm-7">
+														<p>File type should be in .pdf Format, Size should be less than 1MB</p>
 													</div>
 												</div>
 
@@ -83,30 +87,11 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<textarea class="form-control {{ $errors->has('comments') ? 'is-invalid' : ''}}" name="comments" rows="3" placeholder="Comments"></textarea>
+															<textarea class="form-control {{ $errors->has('comments') ? 'is-invalid' : ''}}" name="comments" rows="3" placeholder="Comments"> {{ old('comments') }} </textarea>
 															{!! $errors->first('comments', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
-												</div>												
-
-                                                <!--
-												<div class="row">
-													<div class="col-sm-2">
-														<div class="form-group">				
-															<label>Status</label>
-														</div>
-													</div>
-													<div class="col-sm-3">
-														<div class="form-group">
-															<select class="form-control select" name="status">
-															    <option value='Active' {{ Request::get('status') == "Active" ? 'selected' : '' }}>Active</option>
-															    <option value='In active' {{ Request::get('status') == "In active" ? 'selected' : '' }}>In-active</option>
-															</select>
-															
-														</div>
-													</div>
 												</div>
-                                            -->
 
 												<div class="row">
 													<div class="col-sm-2">
@@ -150,6 +135,7 @@
 @push('scripts')
 <script type="text/javascript">
     $('#datetimepicker1').datetimepicker({
+        date: "{{ old('pay_month') }}",
 		format: "YYYY-MM",
 		icons: {
 			up: "fa fa-angle-up",

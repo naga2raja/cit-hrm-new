@@ -46,12 +46,13 @@
 																</div>
 															</div>															
 
+															@hasrole('Admin')
 															<div class="row filter-row">
 																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 																	<div class="form-group">
 																		<label>Employee Name</label>
 																		<select class="form-control select" name="employee_id">
-                                                                            <option value="">Status</option>
+                                                                            <option value="">All</option>
                                                                                 @foreach($employees as $employee)
                                                                                     <option value="{{ $employee->id }}"  {{ Request::get('employee_id') == $employee->id ? 'selected' : ''}}> {{ $employee->name }}</option>
                                                                                 @endforeach																
@@ -59,6 +60,7 @@
 																	</div>
 																</div>
 															</div>
+															@endrole
 
 															<div class="row">
 																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
@@ -97,10 +99,11 @@
                                                         <h4 class="card-title mb-0">Payslips List</h4>
                                                     </div>
                                                 </div>
-                                                
+                                                @hasrole('Admin')
                                                 <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                                     <a href="{{ route('payslips.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
                                                 </div>
+												@endrole
                                                 
                                             </div>
 
@@ -116,7 +119,9 @@
 																<th>Month Year</th>
 																<th>Document</th>
 																<th>Created At</th>
+																@hasrole('Admin')
 																<th class="text-right">Action</th>
+																@endrole
 															</tr>
 														</thead>
 														<tbody>
@@ -125,13 +130,19 @@
                                                         @if($data->first()) 
                                                             @foreach ($data as $payslip)
                                                                 <tr>
-                                                                    <td> {{ $payslip->employee_id }} </td>  
-                                                                    <td> {{ $payslip->pay_month }}</td>
-                                                                    <td> {{ $payslip->pay_slip_pdf }}</td>
-                                                                    <td> {{ $leave->created_at }}</td>  
+                                                                    <td> {{ $payslip->employee_name }} </td>  
+                                                                    <td> {{ $payslip->payslip_month }}</td>
+                                                                    <td> <a href="{{ route('payslip.download') }}?file={{ base64_encode($payslip->id) }}">Download</a></td>
+                                                                    <td> {{ date('Y-m-d H:i a', strtotime($payslip->created_at)) }}</td>  
+																	@hasrole('Admin')
                                                                     <td> 
-                                                                        
+                                                                        <form onsubmit="return confirm('Are you sure?')" action="{{ route('payslips.destroy', $payslip->id)}}" method="post" style="margin-left: 5px;">
+																			@method('DELETE')
+																			@csrf
+																			<button class="btn  btn-outline-danger btn-sm" type="submit"> Delete </button>
+																		</form>
                                                                     </td>
+																	@endrole
                                                                 </tr>
                                                             @endforeach
                                                         @else                                                        
@@ -182,7 +193,7 @@
 	<script>
         $('#datetimepicker1').datetimepicker({
             date: '{{ (@Request::get("from_date")) }}',
-            format: "YYYY-MM-DD",
+            format: "YYYY-MM",
             icons: {
                 up: "fa fa-angle-up",
                 down: "fa fa-angle-down",
@@ -193,7 +204,7 @@
 
         $('.datetimepicker2').datetimepicker({
             date: '{{ (@Request::get("to_date")) }}',
-            format: "YYYY-MM-DD", 
+            format: "YYYY-MM", 
             icons: {
                 up: "fa fa-angle-up",
                 down: "fa fa-angle-down",

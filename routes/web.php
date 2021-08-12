@@ -240,9 +240,6 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');
     Route::get('import-biometric-data', 'Biometric\BiometricImportController@index')->name('upload.biometric');
     Route::post('import-biometric-data', 'Biometric\BiometricImportController@import')->name('attendance.import');
-
-    // Payslips
-    Route::resource('payslips', 'Payslips\PayslipController');
     
 });
 
@@ -290,6 +287,10 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     Route::post('/punch/status-change', 'Time\Attendance\PunchInOutController@updateStatusAjax')->name('punch.submit');    
 
     Route::post('/timesheets/getEmployeeTimeSheets-ajax', 'Time\Timesheets\TimesheetsController@getEmployeeTimeSheets');
+
+    // Payslips
+    Route::resource('payslips', 'Payslips\PayslipController');
+    Route::get('payslip-download', 'Payslips\PayslipController@download')->name('payslip.download');
 
 });
 
