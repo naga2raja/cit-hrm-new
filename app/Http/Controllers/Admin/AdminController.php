@@ -325,6 +325,7 @@ class AdminController extends Controller
                                 ->orderBy('t_logs.id', 'DESC')
                                 ->get()->toArray();
 
+        // dd($my_activities);
         $others_activities = tLog::selectRaw('t_logs.*, t_logs.created_at as date_time, CONCAT_WS (" ", first_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
                                 ->join('employees', 'employees.id', 't_logs.send_by')
                                 ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
@@ -336,25 +337,25 @@ class AdminController extends Controller
                                 ->get()->toArray();
 
         $result_arr = array_merge($my_activities, $others_activities);
+
+        if(Auth::user()->hasRole('Admin')){
+            $idsArr = [];        
+            foreach ($result_arr as $key => $result ) {
+                $id = $result['id'];
+                if(in_array($id, $idsArr)) {
+                      unset($result_arr[$key]);
+                } else {
+                    $idsArr[] = $id;
+                }        
+            }
+            // dd($idsArr, $result_arr);
+        }
+
         // to sort by latest record
         $keys = array_column($result_arr, 'id');
         array_multisort($keys, SORT_DESC, $result_arr);
-        // dd($result_arr);
 
-        $activity['my_activities'] = [];
-        $activity['others_activities'] = [];
-
-        foreach ($result_arr as $key => $value) {
-            if($value['type'] == "My Activities"){
-                $activity['my_activities'][] = $value;
-            }
-            if($value['type'] == "Others Activities"){
-                $activity['others_activities'][] = $value;
-            }
-        }
-        $recent_activities[] = $activity;
-        // dd($result_arr);
-        return response()->json($recent_activities);
+        return ($result_arr);
     }
 
     public function getRequestChart(Request $request)
@@ -370,6 +371,7 @@ class AdminController extends Controller
             $userRole = 'Manager';
             $approval_level = [0,1,2];
             $status = 1;
+            $pending_status = 0;
             //Find Reporting Employees Ids
             $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
             if($reportTo)
@@ -379,20 +381,23 @@ class AdminController extends Controller
             $userRole = 'Admin';
             $approval_level = [1,2];
             $status = 2;
+            $pending_status = 1;
         }
 
-        $leave = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
+        $leave = tLeaveRequest::select('t_leave_requests.*')
+                                ->join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
                                 ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
                                 ->join('employees', 'employees.id', 't_leave_requests.employee_id')
                                 ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
                                 ->where('t_leave_requests.employee_id', '!=', $employeeId)
+                                ->where('t_leaves.status', $pending_status)
                                 ->whereIn('t_leaves.approval_level', $approval_level);
                                 if(count($empIds)) {
                                     $leave->whereIn('t_leave_requests.employee_id', $empIds);
                                 }
                                 $leave = $leave->where('t_leave_requests.status', $status)
                                         ->groupBy('t_leave_requests.id')
-                                        ->count();
+                                        ->get();
 
         // adminEmployees only for Attendance and timesheet
         if($user->hasRole('Admin')) {
@@ -405,7 +410,7 @@ class AdminController extends Controller
                                 }
                                 $attendance = $attendance->where('t_punch_in_outs.status', 1)
                                         ->orderBy('t_punch_in_outs.id', 'DESC')
-                                        ->count();
+                                        ->get();
 
         $timesheet = tTimesheet::select('t_timesheets.*')
                               ->join('employees', 'employees.id', 't_timesheets.employee_id')
@@ -417,12 +422,12 @@ class AdminController extends Controller
                               $timesheet = $timesheet->where('t_timesheets.status', 1)
                                           ->orderBy('t_timesheets.start_date', 'asc')
                                           ->orderBy('employees.id', 'asc')
-                                          ->count();
+                                          ->get();
 
         $data['role'] = $userRole;
-        $data['leave'] = $leave;
-        $data['attendance'] = $attendance;
-        $data['timesheet'] = $timesheet;
+        $data['leave'] = count($leave);
+        $data['attendance'] = count($attendance);
+        $data['timesheet'] = count($timesheet);
 
         return response()->json($data);
     }

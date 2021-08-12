@@ -128,7 +128,7 @@
         <script src="{{ assetUrl('js/jquery-ui.min.js') }}"></script>
         <script src="{{ assetUrl('plugins/fullcalendar/fullcalendar.min.js') }}"></script>
         <script src="{{ assetUrl('plugins/fullcalendar/jquery.fullcalendar.js') }}"></script>	
-		@if(!Route::is(['add-employee','admin','calendar','company','contact-reports','create-review','custom-timeoff-approver','details','documents','edit-review','email-reports','employees-dashboard','employees-list','employees-offices-list','employees-offices','employees-team','employees','employment','forgot-password','leave-reports','leave','line-manager','login','manage-leadership','manage','payroll-admin','payroll-reports','payroll','profile-reviews','profile-settings','register','reports','reviews','security-reports','settings-timeoff','settings','super-admin','team-lead','team-member','time-off','work-from-home-reports']))	
+		@if((Route::is(['adminDashboard']))||Route::is(['home'])||Route::is(['index']))	
 		<!-- Chart JS -->
 		<script src="{{ assetUrl('js/Chart.min.js') }}"></script>
 		<script src="{{ assetUrl('js/chart.js') }}"></script>

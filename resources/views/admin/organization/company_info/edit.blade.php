@@ -82,7 +82,7 @@
 													<h5 class="text-primary"><i class="fa fa-info-circle"></i> Details:</h5>
 													@if($company && $company->incorporation_date)
 														<p><span class="text-primary">Incorporation Date : </span>
-															{{ $company->incorporation_date }}
+															{{ date('d-F-Y', strtotime($company->incorporation_date)) }}
 														</p>
 													@endif
 

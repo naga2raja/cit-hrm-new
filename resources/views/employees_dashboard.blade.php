@@ -125,7 +125,7 @@
 									<!-- Today -->
 									<div class="card flex-fill today-list shadow-sm">
 										<div class="card-header">
-											<h4 class="card-title mb-0 d-inline-block">Your Upcoming Leave</h4>
+											<h4 class="card-title mb-0 d-inline-block">My Upcoming Leave</h4>
 											<a href="javascript:void(0)" id="refresh_upcoming_leave" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
 										</div>
 										<div class="card-body recent-activ">
@@ -386,9 +386,8 @@
 			success: function(data){
 				// console.log('LoadRecentActivities : ', data);
 				var activity = '';
-				if((data[0].my_activities.length > 0)||(data[0].others_activities.length > 0)){
-					// console.log('my_activities : ', data[0].my_activities.length);
-		            data[0].my_activities.forEach(function (row,index) {
+				if(data.length > 0){
+					data.forEach(function (row,index) {
 						activity += '<div class="notice-board">';
 						activity += '<div class="table-img">';
 						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
@@ -403,43 +402,41 @@
 						}
 						if(dateArr && dateArr[1]){
 							date += '-'+moment(dateArr[1]).format("DD/MM/YYYY");
+						}
+
+						var hours = getHoursDiff(row.date_time);
+						var diff = (hours) ? hours+" ago" : "Just Now";
+						if(row.type == "My Activities"){						
+							activity += '<h6 class="mb-0">You '+row.action+' '+row.module+' ('+date+')</h6>';
+							activity += '<span class="ctm-text-sm">'+row.role_name+' '+row.action+' | '+diff+'</span>';
+						}
+						if(row.type == "Others Activities"){
+							var sendArr = row.send_to.split(',');
+							var admin = '';
+							if(sendArr && sendArr[0]){
+								if(sendArr[0] == '1'){
+									admin = "Pending Approval From Admin";
+								}
+							}
+							if(sendArr && sendArr[1]){
+								if(sendArr[1] == '1'){
+									admin = "Pending Approval From Admin";
+								}
+							}
+							if(admin != ''){
+								activity += '<h6 class="mb-0">' +admin+' ('+date+')</h6>';
+							}else{
+								activity += '<h6 class="mb-0">'+row.module+' '+row.action+' ('+date+')</h6>';
+							}
+							activity += '<span class="ctm-text-sm">(' +row.employee_name+ ') '+row.role_name+' '+row.action+' | '+diff+'</span>';						
 						}
 						
-						activity += '<h6 class="mb-0">You '+row.action+' '+row.module+' ('+date+')</h6>';
-						// activity += '<h6 class="mb-0">You '+row.action+' '+row.reciever_name+ ' '+row.module+'</h6>';
-						var hours = getHoursDiff(row.date_time);
-						var diff = (hours) ? hours+" ago" : "Just Now";
-						activity += '<span class="ctm-text-sm">' +row.role_name+ ' | '+diff+'</span>';
-						activity += '</div>';
-						activity += '</div><hr>';
-		        	});
-		        	data[0].others_activities.forEach(function (row,index) {
-						activity += '<div class="notice-board">';
-						activity += '<div class="table-img">';
-						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
-						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
-						activity += '</div>';
-						activity += '<div class="notice-body">';
-
-						var dateArr = row.date.split(',');
-						var date = '';
-						if(dateArr && dateArr[0]){
-							date += moment(dateArr[0]).format("DD/MM/YYYY");
-						}
-						if(dateArr && dateArr[1]){
-							date += '-'+moment(dateArr[1]).format("DD/MM/YYYY");
-						}
-
-						activity += '<h6 class="mb-0">' +row.employee_name+ ' '+row.action+' Your '+row.module+' ('+date+')</h6>';
-						var hours = getHoursDiff(row.date_time);
-						var diff = (hours) ? hours+" ago" : "Just Now";
-						activity += '<span class="ctm-text-sm">' +row.role_name+ ' | '+diff+'</span>';
 						activity += '</div>';
 						activity += '</div>';
-						if (index != data[0].others_activities.length - 1) {
+						if (index != data.length - 1) {
 							activity += '<hr>';
 						}
-		        	});	
+		        	});
 		        }else{
 		        	activity += '<div class="notice-board">';
 					activity += '<h6 class="mb-0 ctm-text-sm">No Activities</h6>';

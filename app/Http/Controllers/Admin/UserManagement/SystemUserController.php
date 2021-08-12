@@ -143,7 +143,8 @@ class SystemUserController extends Controller
                     ->where('users.id', $id)
                     ->get();
         // dd($users);
-        $roles = Role::orderBy('id', 'desc')->get();
+        // In edit admin role is disabled
+        $roles = Role::where('id', '!=', '1')->orderBy('id', 'desc')->get();
         return view('admin/system_users/edit', compact('users', 'roles'));
     }
 

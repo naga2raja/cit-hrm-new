@@ -28,7 +28,7 @@
 								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" id="holidays_search" action="{{ route('holidays.index') }}">
+										<form id="searchHoliday" method="GET" id="holidays_search" action="{{ route('holidays.index') }}">
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
@@ -52,7 +52,7 @@
 													<button id="search"  type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchHoliday')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>

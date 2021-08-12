@@ -135,16 +135,28 @@ class MyTimesheetsController extends Controller
     public function updateStatusAjax(Request $request) {
         $id = $request->id;
         $timesheetInfo = tTimesheet::where('id', $id)->first();
+        if(Auth::user()->hasRole('Admin')){
+          $status = 2;
+          $comments_msg = "</b> - Updated to <b>Approved</b> on ";
+        }else{
+          $status = $request->status;
+          $comments_msg = "</b> - Sent to <b> Approval </b> on ";
+        }
         $comments = $timesheetInfo->comments;
-        $timesheetInfo->status = $request->status;
+        $timesheetInfo->status = $status;
         $timesheetInfo->updated_by = Auth::user()->id;
-        $timesheetInfo->comments = $comments. '<br> <b>'.Auth::user()->name .'</b> - Sent to <b> Approval </b> on ' . getCurrentTime(); 
+        $timesheetInfo->comments = $comments. '<br> <b>'.Auth::user()->name .''.$comments_msg.''. getCurrentTime(); 
         $timesheetInfo->save();
 
         // =========== t_log table Start ===========
-            $action = "Submitted";
+            if(Auth::user()->hasRole('Admin')){
+              $action = "Approved";
+              $send_to = getEmployeeId(Auth::user()->id);
+            }else{
+              $action = "Submitted";
+              $send_to = getMyReportingManager($timesheetInfo->employee_id);
+            }
             $send_by = getEmployeeId(Auth::user()->id);
-            $send_to = getMyReportingManager($timesheetInfo->employee_id);
             $module_id = $timesheetInfo->id;
             $date = $timesheetInfo->start_date;
             activityLog($action, "Timesheet", $send_by, $send_to, $module_id, $date);

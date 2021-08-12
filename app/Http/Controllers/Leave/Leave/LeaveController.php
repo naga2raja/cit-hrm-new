@@ -181,10 +181,14 @@ class LeaveController extends Controller
         $leaveStatus = mLeaveStatus::where('id', $leave_status)->first();
 
         // =========== t_log table Start ===========
-            if(Auth::user()->hasRole('Manager') || Auth::user()->hasRole('Admin')){
+            if(Auth::user()->hasRole('Admin')){
                 $action = $leaveStatus->name;
                 $send_by = getEmployeeId(Auth::user()->id);
                 $send_to = $employeeId;
+            }else if(Auth::user()->hasRole('Manager')){
+                $action = $leaveStatus->name;
+                $send_by = getEmployeeId(Auth::user()->id);
+                $send_to = $employeeId.','.'1';
             }else{
                 $action = "Applied";
                 $send_by = $employeeId;
@@ -460,7 +464,11 @@ class LeaveController extends Controller
             // =========== t_log table Start ===========
                 $action = $leaveStatus->name;
                 $send_by = getEmployeeId(Auth::user()->id);
-                $send_to = $leaveRequest->employee_id;
+                if(Auth::user()->hasRole('Manager')){
+                    $send_to = $leaveRequest->employee_id.','.'1';
+                }else if(Auth::user()->hasRole('Admin')){
+                    $send_to = $leaveRequest->employee_id;
+                }
                 $module_id = $leaveRequest->id;
                 $date = $leaveRequest->from_date.','.$leaveRequest->to_date;
                 activityLog($action, "Leave", $send_by, $send_to, $module_id, $date);

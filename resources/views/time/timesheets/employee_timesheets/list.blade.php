@@ -37,7 +37,7 @@
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="">
+										<form id="searchEmployeeTimesheet" method="GET" action="">
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
@@ -55,7 +55,7 @@
 													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchEmployeeTimesheet')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
@@ -114,12 +114,10 @@
 									<div class="card shadow-sm ctm-border-radius">
 										<div class="card-header">
 											<div class="row filter-row">
-												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
 													<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
 													</div>
-												</div>
-												<div id="button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
 													<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('timesheets','timesheets')"><i class="fa fa-trash"></i> Delete</button>
@@ -155,14 +153,7 @@
 											</div>
 											<hr>
 											<div class="row">
-												<div class="col-sm-3 text-center">
-													<div class="row">
-														<div class="col-sm-6">
-															<button class="btn btn-theme text-white ctm-border-radius button-1" type="button">Export</button>
-														</div>
-													</div>
-												</div>
-												<div class="col-sm-9">
+												<div class="col-sm-12">
 													<div class="row">
 														<div class="col-sm-11 float-right">
 															<button type="button" class="btn btn-theme button-1 text-white pull-right p-2" id="approve_action" data-toggle="modal" data-target="#approve_modal" style="display: none;" ><i class="fa fa-save"></i> Save</button>
@@ -229,6 +220,12 @@
 
 @push('scripts')
 <script type="text/javascript">
+	function downloadExcel() {
+		$('#export').val(1);
+		$('#empTimesheetForm').submit();
+		$('#export').val(0);
+	}
+
 	// Autocomplete ajax call
 	$('.employee_name').select2({
 		placeholder: 'Select a employee',
@@ -323,13 +320,18 @@
 				var tbody = '';
 				var selected_date = '';
 				if(data.length > 0){
-		            // console.log(data);
+		            // console.log("Employee Timesheet", data);
 		            data.forEach(function (row,index) {
 		            	// enable edit link
 				    	var urlParams = new Array( 'employee_id=' + row.employee_id, 'date='+ row.start_date );
 				    	var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
 
-		            	tbody += '<td class="text-center"><input type="checkbox" name="timesheet_id" value='+row.id+'></td>'
+				    	tbody += '<tr>';
+		            	if(row.status == '0'){
+		            		tbody += '<td class="text-center"><input type="checkbox" name="timesheet_id" value='+row.id+'></td>'
+		            	}else{
+		            		tbody += '<td></td>';
+		            	}
 				        tbody += '<td><h2><u><a href="'+url+'">' + row.employee_name + '</a></u></h2></td>';
 		              	tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
 				        var duration = 0;
@@ -369,21 +371,9 @@
 		            // tbody += '<td></td>';
 		        }else{
 		        	tbody += '<tr>';
-		        	tbody += '<td colspan="5"><p class="text-center">No data found in selected date</p></td>';
+		        	tbody += '<td colspan="6"><p class="text-center">No data found in selected date</p></td>';
 		        	tbody += '</tr>';
 		        }
-		        $("#button_div").empty(); //cache it
-		        if(key == "daily"){
-		        	if(compareDate($('#dailyDatePicker').val())){
-			    		selected_date = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
-			    		var urlParams = new Array('date='+ selected_date );
-			    		var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
-			    		// append add button
-			            var add_button = $('<a id="add_button" href="'+url+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>');
-			    		$("#button_div").append(add_button);
-			    	}
-		    	}
-
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
 		        $('.select').select2();

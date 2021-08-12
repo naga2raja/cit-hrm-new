@@ -76,7 +76,7 @@
 											<h4 class="card-title mb-0">Apply Leaves</h4>
 										</div>
 										<div class="card-body">
-											<form method="POST" action="{{ route('leave.store') }}">
+											<form id="searchLeave" method="POST" action="{{ route('leave.store') }}">
 												@csrf		
 												<input type="hidden" name="leave_entitlement_id" id="leave_entitlement_id">
 												@if(@$assignLeave)													
@@ -127,14 +127,14 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label>From</label>
-															<input type='text' class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}}" id='datetimepicker4' name="from_date" required value="{{ old('from_date') }}"/>
+															<input type='text' class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}}" id='datetimepicker4' name="from_date" required value="{{ old('from_date') }}"/ autocomplete="off">
 															{!! $errors->first('from_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
 															<label>To</label>
-															<input type='text' class="form-control {{ $errors->has('to_date') ? 'is-invalid' : ''}}" id='datetimepicker5' name="to_date" required value="{{ old('to_date') }}"/>
+															<input type='text' class="form-control {{ $errors->has('to_date') ? 'is-invalid' : ''}}" id='datetimepicker5' name="to_date" required value="{{ old('to_date') }}"/ autocomplete="off">
 															{!! $errors->first('to_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -175,7 +175,7 @@
 												</div>
 												<div class="text-center">
 													<button type="submit" class="btn btn-theme button-1 text-white ctm-border-radius mt-4">Apply</button>
-													<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius mt-4">Cancel</a>
+													<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius mt-4" onclick="resetAllValues('searchLeave')">Cancel</a>
 												</div>
 											</form>
 										</div>
@@ -413,8 +413,7 @@
 			// debug: true,
 		});
 
-		$("#datetimepicker4, #datetimepicker5").datetimepicker().on('dp.change', function (e) {
-			
+		$("#datetimepicker4, #datetimepicker5").datetimepicker().on('dp.change', function (e) {			
 			var from_date = $(this).val();			
 			getLeaveBalance();
 			numberOfDaysLeave();
