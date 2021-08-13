@@ -21,13 +21,17 @@ class ConfigurationsController extends Controller
         $configurations = mAttendanceConfigure::whereIn('id', [1,2,3])->get();
         $employees = [];
         $employeeConfig = mAttendanceConfigure::where('id', 4)->first();
-        if($employeeConfig) {
-            $employeeIdArr = explode(',', $employeeConfig->employee_ids);
+        // if($employeeConfig) {
+            if($employeeConfig && $employeeConfig->employee_ids) { 
+                $employeeIdArr = explode(',', $employeeConfig->employee_ids);
+            } else {
+                $employeeIdArr = ['1']; //Admin id
+            }
             $employees = Employee::whereIn('id', $employeeIdArr)
                 ->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) AS name')
                 ->get()
                 ->toArray();
-        }
+        // }
 
         return view('time/attendance/configuration/list', compact('configurations', 'employees', 'employeeConfig'));        
     }
@@ -48,12 +52,16 @@ class ConfigurationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        if(!$request->enable_employee_checkbox) {
+    {   
+        if(!$request->enable_employee_checkbox && ($request->checkbox && count($request->checkbox))) {
             $request->validate([
                 'employees' => 'required'
             ]);            
-        }
+        } 
+        $request->validate([
+            'employees' => 'required_if:enable_employee_checkbox,0',
+            // 'checkbox' => 'required'
+        ]); 
         $checked_values = $request->input('checkbox');
         //set to zero before configuring
         $ids = array('1', '2', '3');
@@ -63,7 +71,9 @@ class ConfigurationsController extends Controller
 
         $employees = NULL;
         if($request->employees) {
-            $employees = implode(',', $request->employees);
+            $employeesIds = $request->employees;
+            $employeesIds[] = 1;
+            $employees = implode(',', $employeesIds);
         }
         // updating the flag
         if($checked_values) {
