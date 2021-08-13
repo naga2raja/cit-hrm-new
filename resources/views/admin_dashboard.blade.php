@@ -403,7 +403,7 @@
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
-				// console.log('LoadTeamLeads : ', data);
+				console.log('LoadTeamLeads : ', data);
 				var leads = '';
 				if('{{ Auth::user()->roles[0]->name }}' == "Admin"){
 					if(data.length > 0){					
@@ -425,8 +425,8 @@
 			        	});
 			        }
 			    }
-		    	else if((data[0].reporting_manager.length > 0)||(data[0].project_admin.length > 0)||(data[0].project_manager.length > 0)||(data[0].team_member.length > 0)){
-		        	// console.log('reporting_manager : ', data[0].reporting_manager.length);
+		    	else if((data[0].reporting_manager.length > 0)||(data[0].reporting_employee.length > 0)||(data[0].project_admin.length > 0)||(data[0].project_manager.length > 0)||(data[0].team_member.length > 0)){
+		        	console.log('reporting_manager : ', data[0].reporting_manager.length);
 		            data[0].reporting_manager.forEach(function (row,index) {
 		            	var designation = row.designation;
 		            	data[0].project_admin.forEach(function (admin_row,admin_index) {

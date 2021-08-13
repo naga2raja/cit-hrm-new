@@ -354,16 +354,19 @@
 		        	});
 		        	// Team Member
 		        	data[0].team_member.forEach(function (row,index) {
-		            	leads += '<div class="media mb-3">';
-		            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
-						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
-						leads += '<div class="media-body">';
-						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
-						leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
-						leads += '</div></div>';
-						if (index !== data[0].team_member.length - 1) {
-							leads += '<hr>';
+		        		var login_employee_id= "{{ getEmployeeId(Auth::user()->id) }}";
+		        		if(login_employee_id != row.employee_id){
+			            	leads += '<div class="media mb-3">';
+			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+							leads += '<div class="media-body">';
+							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
+							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
+							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
+							leads += '</div></div>';
+							if (index !== data[0].team_member.length - 1) {
+								leads += '<hr>';
+							}
 						}
 		        	});
 		        }else{
