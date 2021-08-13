@@ -77,7 +77,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::SMQLGJiOcZsajvW6',
+            '_route' => 'generated::ECTEc4rAUa4OwLyM',
           ),
           1 => NULL,
           2 => 
@@ -132,7 +132,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::N1FYkDpUhcizmGMt',
+            '_route' => 'generated::5WeSH4p85Pn4ot81',
           ),
           1 => NULL,
           2 => 
@@ -187,7 +187,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Xig52qiMHzi2y6BB',
+            '_route' => 'generated::aA6bJg2FM4ZikIBp',
           ),
           1 => NULL,
           2 => 
@@ -246,7 +246,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::oG0jyetAseK9DUwo',
+            '_route' => 'generated::eu1LWzfI8FmOxkao',
           ),
           1 => NULL,
           2 => 
@@ -342,7 +342,26 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::iCtI2tbWPKlvJpzG',
+            '_route' => 'generated::TDOveunPhGDF36QA',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/getUsername' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::K5LDrj1s3pAoDsFU',
           ),
           1 => NULL,
           2 => 
@@ -473,7 +492,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::eMiEY4zBfNn4Dtkh',
+            '_route' => 'generated::67WrjHmpOlZXhwiO',
           ),
           1 => NULL,
           2 => 
@@ -766,13 +785,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/leaveEntitlement' => 
+      '/myEntitlements' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'leaveEntitlement.index',
+            '_route' => 'myEntitlements.index',
           ),
           1 => NULL,
           2 => 
@@ -789,7 +808,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'leaveEntitlement.store',
+            '_route' => 'myEntitlements.store',
           ),
           1 => NULL,
           2 => 
@@ -802,13 +821,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/leaveEntitlement/create' => 
+      '/myEntitlements/create' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'leaveEntitlement.create',
+            '_route' => 'myEntitlements.create',
           ),
           1 => NULL,
           2 => 
@@ -822,55 +841,18 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/employees' => 
+      '/employees/multiple-delete' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'employees.index',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'employees.store',
+            '_route' => 'generated::xzTM9GlH9QrbRRNv',
           ),
           1 => NULL,
           2 => 
           array (
             'POST' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      '/employees/create' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'employees.create',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
           ),
           3 => NULL,
           4 => false,
@@ -907,26 +889,6 @@ app('router')->setCompiledRoutes(
           2 => 
           array (
             'POST' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      '/employee-autocomplete-ajax' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'generated::XmhA7mKRexlOkKfM',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
           ),
           3 => NULL,
           4 => false,
@@ -1253,6 +1215,26 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/customers-ajax-search' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'customer.AjaxSearch',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/activities' => 
       array (
         0 => 
@@ -1553,13 +1535,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/mytimesheets' => 
+      '/import-biometric-data' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'mytimesheets.index',
+            '_route' => 'upload.biometric',
           ),
           1 => NULL,
           2 => 
@@ -1576,7 +1558,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'mytimesheets.store',
+            '_route' => 'attendance.import',
           ),
           1 => NULL,
           2 => 
@@ -1589,13 +1571,73 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/mytimesheets/create' => 
+      '/getTodayNews-ajax' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'mytimesheets.create',
+            '_route' => 'generated::C7eW6J7sq6E9EqTm',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/getTeamLeads-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::Ip6RnjTBkgZgbUms',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/getUpcomingLeaves-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::bfMIMOelruDyzlGW',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/getRecentActivities-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::TlEG0UZ6rTw9wCfn',
           ),
           1 => NULL,
           2 => 
@@ -1615,7 +1657,83 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::amkuEoxBphKi5mMs',
+            '_route' => 'generated::vZ8dj6Us8S2ovjQn',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/employees' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'employees.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'employees.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/employees/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'employees.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leave-list' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.list',
           ),
           1 => NULL,
           2 => 
@@ -1685,13 +1803,33 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/myEntitlements' => 
+      '/my-info' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'myEntitlements.index',
+            '_route' => 'myinfo',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/mytimesheets' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'mytimesheets.index',
           ),
           1 => NULL,
           2 => 
@@ -1708,7 +1846,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'myEntitlements.store',
+            '_route' => 'mytimesheets.store',
           ),
           1 => NULL,
           2 => 
@@ -1721,19 +1859,540 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/myEntitlements/create' => 
+      '/mytimesheets/create' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'myEntitlements.create',
+            '_route' => 'mytimesheets.create',
           ),
           1 => NULL,
           2 => 
           array (
             'GET' => 0,
             'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/timesheets.create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'timesheets.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/timesheets.store' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'timesheets.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/timesheets/multiple-delete' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::lMAOhbWZAb1afbmW',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/employee-autocomplete-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::dk8XnXPnycUOUzXA',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/project-autocomplete-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::oJU1xtYJ511ZgQfF',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/getActivityName-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::MqxG7bjZi3ye2Knh',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/country-autocomplete-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::oG6aHF1ntr2Gr22S',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/timesheets/getEmployeeTimeSheets-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::lOE7l4qlcUDsF4vz',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/payslips' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslips.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslips.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/payslips/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslips.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/payslip-download' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslip.download',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/news' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'news.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'news.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/news/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'news.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/getEmployeeChart-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::qhhN2j1VPtSwI0Jo',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/getRequestChart-ajax' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::nXxDLWdMw9l8UnS2',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leave-admin-action' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.action',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leave-assign' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.assign',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/employee-records' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'punch.employee-records',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/attendance-admin-action' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'punch.action',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leaveEntitlement' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/leaveEntitlement/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/timesheets' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'timesheets.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/reports' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'reports.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/timesheets-admin-action' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'timesheets.action',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
           ),
           3 => NULL,
           4 => false,
@@ -1783,7 +2442,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/p(?|a(?|ssword/reset/([^/]++)(*:37)|yGrade(?|s/(?|([^/]++)(?|(*:69)|/edit(*:81)|(*:88))|multiple\\-delete(*:112))|Currency/([^/]++)(?|(*:141)|/edit(*:154)|(*:162))))|rojects/(?|([^/]++)(?|(*:195)|/edit(*:208)|(*:216))|multiple\\-delete(*:241))|unch/([^/]++)(?|(*:266)|/edit(*:279)|(*:287)))|/s(?|ystemUsers/(?|([^/]++)(?|(*:327)|/edit(*:340)|(*:348))|multiple\\-delete(*:373))|kills/(?|([^/]++)(?|(*:402)|/edit(*:415)|(*:423))|multiple\\-delete(*:448)))|/job(?|Titles/(?|([^/]++)(?|(*:486)|/edit(*:499)|(*:507))|multiple\\-delete(*:532))|Category/(?|([^/]++)(?|(*:564)|/edit(*:577)|(*:585))|multiple\\-delete(*:610)))|/l(?|eave(?|Period/([^/]++)(?|(*:650)|/edit(*:663)|(*:671))|Types/(?|([^/]++)(?|(*:700)|/edit(*:713)|(*:721))|multiple\\-delete(*:746))|Entitlement/([^/]++)(?|(*:778)|/edit(*:791)|(*:799))|/(?|([^/]++)(?|(*:823)|/edit(*:836)|(*:844))|leave\\-balance\\-ajax(*:873)))|ocations/(?|([^/]++)(?|(*:906)|/edit(*:919)|(*:927))|multiple\\-delete(*:952)))|/holidays/(?|([^/]++)(?|(*:986)|/edit(*:999)|(*:1007))|multiple\\-delete(*:1033))|/employees/(?|([^/]++)(?|(*:1068)|/edit(*:1082)|(*:1091))|multiple\\-delete(*:1117))|/c(?|ustomers/(?|([^/]++)(?|(*:1155)|/edit(*:1169)|(*:1178))|multiple\\-delete(*:1204))|o(?|mpany/([^/]++)(?|(*:1235)|/edit(*:1249)|(*:1258))|nfigurations/([^/]++)(?|(*:1292)|/edit(*:1306)|(*:1315))))|/activities/(?|([^/]++)(?|(*:1353)|/edit(*:1367)|(*:1376))|multiple\\-delete(*:1402))|/my(?|timesheets/([^/]++)(?|(*:1440)|/edit(*:1454)|(*:1463))|Entitlements/([^/]++)(?|(*:1497)|/edit(*:1511)|(*:1520))))/?$}sDu',
+      0 => '{^(?|/p(?|a(?|ssword/reset/([^/]++)(*:37)|y(?|Grade(?|s/(?|([^/]++)(?|(*:72)|/edit(*:84)|(*:91))|multiple\\-delete(*:115))|Currency/(?|([^/]++)(?|(*:147)|/edit(*:160)|(*:168))|multiple\\-delete(*:193)))|slips/([^/]++)(?|(*:220)|/edit(*:233)|(*:241))))|rojects/(?|([^/]++)(?|(*:274)|/edit(*:287)|(*:295))|multiple\\-delete(*:320))|unch/(?|([^/]++)(?|(*:348)|/edit(*:361)|(*:369))|multiple\\-delete(*:394)|update\\-ajax(*:414)|status\\-change(*:436)))|/s(?|ystemUsers/(?|([^/]++)(?|(*:476)|/edit(*:489)|(*:497))|multiple\\-delete(*:522))|kills/(?|([^/]++)(?|(*:551)|/edit(*:564)|(*:572))|multiple\\-delete(*:597)))|/job(?|Titles/(?|([^/]++)(?|(*:635)|/edit(*:648)|(*:656))|multiple\\-delete(*:681))|Category/(?|([^/]++)(?|(*:713)|/edit(*:726)|(*:734))|multiple\\-delete(*:759)))|/l(?|eave(?|Period/([^/]++)(?|(*:799)|/edit(*:812)|(*:820))|Types/(?|([^/]++)(?|(*:849)|/edit(*:862)|(*:870))|multiple\\-delete(*:895))|/(?|([^/]++)(?|(*:919)|/edit(*:932)|(*:940))|leave\\-balance\\-ajax(*:969)|delete\\-leave(*:990))|Entitlement/(?|([^/]++)(?|(*:1025)|/edit(*:1039)|(*:1048))|multiple\\-delete(*:1074)))|ocations/(?|([^/]++)(?|(*:1108)|/edit(*:1122)|(*:1131))|multiple\\-delete(*:1157)))|/holidays/(?|([^/]++)(?|(*:1192)|/edit(*:1206)|(*:1215))|multiple\\-delete(*:1241))|/my(?|Entitlements/(?|([^/]++)(?|(*:1284)|/edit(*:1298)|(*:1307))|multiple\\-delete(*:1333))|timesheets/(?|([^/]++)(?|(*:1368)|/edit(*:1382)|(*:1391))|status\\-change(*:1415)|getMyTimeSheets\\-ajax(*:1445)|multiple\\-delete(*:1470)))|/c(?|ustomers/(?|([^/]++)(?|(*:1509)|/edit(*:1523)|(*:1532))|multiple\\-delete(*:1558))|o(?|mpany/([^/]++)(?|(*:1589)|/edit(*:1603)|(*:1612))|nfigurations/([^/]++)(?|(*:1646)|/edit(*:1660)|(*:1669))))|/activities/(?|([^/]++)(?|(*:1707)|/edit(*:1721)|(*:1730))|multiple\\-delete(*:1756))|/employees/([^/]++)(?|(*:1788)|/edit(*:1802)|(*:1811))|/news/(?|([^/]++)(?|(*:1841)|/edit(*:1855)|(*:1864))|multiple\\-delete(*:1890)))/?$}sDu',
     ),
     3 => 
     array (
@@ -1810,7 +2469,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      69 => 
+      72 => 
       array (
         0 => 
         array (
@@ -1833,7 +2492,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      81 => 
+      84 => 
       array (
         0 => 
         array (
@@ -1856,7 +2515,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      88 => 
+      91 => 
       array (
         0 => 
         array (
@@ -1898,13 +2557,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      112 => 
+      115 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::3pLb2c1jRejFLK3H',
+            '_route' => 'generated::9sACBRh56NgXX2KZ',
           ),
           1 => 
           array (
@@ -1919,7 +2578,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      141 => 
+      147 => 
       array (
         0 => 
         array (
@@ -1942,7 +2601,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      154 => 
+      160 => 
       array (
         0 => 
         array (
@@ -1965,7 +2624,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      162 => 
+      168 => 
       array (
         0 => 
         array (
@@ -2007,7 +2666,116 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      195 => 
+      193 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::Uxfu6Q9DuljI8JAD',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      220 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslips.show',
+          ),
+          1 => 
+          array (
+            0 => 'payslip',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      233 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslips.edit',
+          ),
+          1 => 
+          array (
+            0 => 'payslip',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      241 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslips.update',
+          ),
+          1 => 
+          array (
+            0 => 'payslip',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'payslips.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'payslip',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      274 => 
       array (
         0 => 
         array (
@@ -2030,7 +2798,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      208 => 
+      287 => 
       array (
         0 => 
         array (
@@ -2053,7 +2821,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      216 => 
+      295 => 
       array (
         0 => 
         array (
@@ -2095,13 +2863,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      241 => 
+      320 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::KaaacDlP8kK1MknB',
+            '_route' => 'generated::6oe3qNVnrIQtdMI8',
           ),
           1 => 
           array (
@@ -2116,7 +2884,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      266 => 
+      348 => 
       array (
         0 => 
         array (
@@ -2139,7 +2907,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      279 => 
+      361 => 
       array (
         0 => 
         array (
@@ -2162,7 +2930,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      287 => 
+      369 => 
       array (
         0 => 
         array (
@@ -2204,7 +2972,70 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      327 => 
+      394 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::HpzePqFiBrdMEyMC',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      414 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'punch.update-ajax',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      436 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'punch.submit',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      476 => 
       array (
         0 => 
         array (
@@ -2227,7 +3058,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      340 => 
+      489 => 
       array (
         0 => 
         array (
@@ -2250,7 +3081,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      348 => 
+      497 => 
       array (
         0 => 
         array (
@@ -2292,13 +3123,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      373 => 
+      522 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::4FOBdaR03KDjBfrp',
+            '_route' => 'generated::gyYs4KQs7re1l9Gc',
           ),
           1 => 
           array (
@@ -2313,7 +3144,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      402 => 
+      551 => 
       array (
         0 => 
         array (
@@ -2336,7 +3167,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      415 => 
+      564 => 
       array (
         0 => 
         array (
@@ -2359,7 +3190,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      423 => 
+      572 => 
       array (
         0 => 
         array (
@@ -2401,13 +3232,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      448 => 
+      597 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::LNSbRcItuTQI6QiE',
+            '_route' => 'generated::EUC8kOf3i0ohxBOR',
           ),
           1 => 
           array (
@@ -2422,7 +3253,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      486 => 
+      635 => 
       array (
         0 => 
         array (
@@ -2445,7 +3276,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      499 => 
+      648 => 
       array (
         0 => 
         array (
@@ -2468,7 +3299,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      507 => 
+      656 => 
       array (
         0 => 
         array (
@@ -2510,13 +3341,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      532 => 
+      681 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::2CPc5K9Dh8g9edXT',
+            '_route' => 'generated::ec9q8LC2NSxlNQMo',
           ),
           1 => 
           array (
@@ -2531,7 +3362,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      564 => 
+      713 => 
       array (
         0 => 
         array (
@@ -2554,7 +3385,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      577 => 
+      726 => 
       array (
         0 => 
         array (
@@ -2577,7 +3408,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      585 => 
+      734 => 
       array (
         0 => 
         array (
@@ -2619,13 +3450,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      610 => 
+      759 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::wxLoGRyCeCFbm3LX',
+            '_route' => 'generated::5bTcvrUIlu165Vcc',
           ),
           1 => 
           array (
@@ -2640,7 +3471,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      650 => 
+      799 => 
       array (
         0 => 
         array (
@@ -2663,7 +3494,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      663 => 
+      812 => 
       array (
         0 => 
         array (
@@ -2686,7 +3517,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      671 => 
+      820 => 
       array (
         0 => 
         array (
@@ -2728,7 +3559,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      700 => 
+      849 => 
       array (
         0 => 
         array (
@@ -2751,7 +3582,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      713 => 
+      862 => 
       array (
         0 => 
         array (
@@ -2774,7 +3605,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      721 => 
+      870 => 
       array (
         0 => 
         array (
@@ -2816,13 +3647,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      746 => 
+      895 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::eDLSm4soefTAxFoL',
+            '_route' => 'generated::h7ZkLW0LbP5j73ku',
           ),
           1 => 
           array (
@@ -2837,95 +3668,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      778 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'leaveEntitlement.show',
-          ),
-          1 => 
-          array (
-            0 => 'leaveEntitlement',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      791 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'leaveEntitlement.edit',
-          ),
-          1 => 
-          array (
-            0 => 'leaveEntitlement',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      799 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'leaveEntitlement.update',
-          ),
-          1 => 
-          array (
-            0 => 'leaveEntitlement',
-          ),
-          2 => 
-          array (
-            'PUT' => 0,
-            'PATCH' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'leaveEntitlement.destroy',
-          ),
-          1 => 
-          array (
-            0 => 'leaveEntitlement',
-          ),
-          2 => 
-          array (
-            'DELETE' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      823 => 
+      919 => 
       array (
         0 => 
         array (
@@ -2948,7 +3691,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      836 => 
+      932 => 
       array (
         0 => 
         array (
@@ -2971,7 +3714,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      844 => 
+      940 => 
       array (
         0 => 
         array (
@@ -3013,13 +3756,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      873 => 
+      969 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::yBZYA17nDlbTpYg3',
+            '_route' => 'generated::dswk57qbSdJZvg3M',
           ),
           1 => 
           array (
@@ -3034,7 +3777,137 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      906 => 
+      990 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leave.delete_modal',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1025 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.show',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1039 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.edit',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1048 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.update',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'leaveEntitlement.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'leaveEntitlement',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1074 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::WNzWocV0CUqGj93T',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1108 => 
       array (
         0 => 
         array (
@@ -3057,7 +3930,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      919 => 
+      1122 => 
       array (
         0 => 
         array (
@@ -3080,7 +3953,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      927 => 
+      1131 => 
       array (
         0 => 
         array (
@@ -3122,13 +3995,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      952 => 
+      1157 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::krqYTTEusLlGh3qa',
+            '_route' => 'generated::zBvymSNCiE7aZIHC',
           ),
           1 => 
           array (
@@ -3143,7 +4016,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      986 => 
+      1192 => 
       array (
         0 => 
         array (
@@ -3166,7 +4039,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      999 => 
+      1206 => 
       array (
         0 => 
         array (
@@ -3189,7 +4062,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1007 => 
+      1215 => 
       array (
         0 => 
         array (
@@ -3231,13 +4104,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1033 => 
+      1241 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::mqTa8QyJ999DSpNz',
+            '_route' => 'generated::doob1bzIqT7NKBpv',
           ),
           1 => 
           array (
@@ -3252,17 +4125,17 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1068 => 
+      1284 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'employees.show',
+            '_route' => 'myEntitlements.show',
           ),
           1 => 
           array (
-            0 => 'employee',
+            0 => 'myEntitlement',
           ),
           2 => 
           array (
@@ -3275,17 +4148,17 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1082 => 
+      1298 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'employees.edit',
+            '_route' => 'myEntitlements.edit',
           ),
           1 => 
           array (
-            0 => 'employee',
+            0 => 'myEntitlement',
           ),
           2 => 
           array (
@@ -3298,17 +4171,17 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1091 => 
+      1307 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'employees.update',
+            '_route' => 'myEntitlements.update',
           ),
           1 => 
           array (
-            0 => 'employee',
+            0 => 'myEntitlement',
           ),
           2 => 
           array (
@@ -3324,11 +4197,11 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'employees.destroy',
+            '_route' => 'myEntitlements.destroy',
           ),
           1 => 
           array (
-            0 => 'employee',
+            0 => 'myEntitlement',
           ),
           2 => 
           array (
@@ -3340,13 +4213,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1117 => 
+      1333 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::NUD5QGFFtoDpl9NH',
+            '_route' => 'generated::LNWqlAPJXeVtOTOT',
           ),
           1 => 
           array (
@@ -3361,401 +4234,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1155 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'customers.show',
-          ),
-          1 => 
-          array (
-            0 => 'customer',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1169 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'customers.edit',
-          ),
-          1 => 
-          array (
-            0 => 'customer',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      1178 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'customers.update',
-          ),
-          1 => 
-          array (
-            0 => 'customer',
-          ),
-          2 => 
-          array (
-            'PUT' => 0,
-            'PATCH' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'customers.destroy',
-          ),
-          1 => 
-          array (
-            0 => 'customer',
-          ),
-          2 => 
-          array (
-            'DELETE' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1204 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'generated::LBES1xaWPdqg3cHP',
-          ),
-          1 => 
-          array (
-          ),
-          2 => 
-          array (
-            'POST' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      1235 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'company.show',
-          ),
-          1 => 
-          array (
-            0 => 'company',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1249 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'company.edit',
-          ),
-          1 => 
-          array (
-            0 => 'company',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      1258 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'company.update',
-          ),
-          1 => 
-          array (
-            0 => 'company',
-          ),
-          2 => 
-          array (
-            'PUT' => 0,
-            'PATCH' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'company.destroy',
-          ),
-          1 => 
-          array (
-            0 => 'company',
-          ),
-          2 => 
-          array (
-            'DELETE' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1292 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'configurations.show',
-          ),
-          1 => 
-          array (
-            0 => 'configuration',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1306 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'configurations.edit',
-          ),
-          1 => 
-          array (
-            0 => 'configuration',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      1315 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'configurations.update',
-          ),
-          1 => 
-          array (
-            0 => 'configuration',
-          ),
-          2 => 
-          array (
-            'PUT' => 0,
-            'PATCH' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'configurations.destroy',
-          ),
-          1 => 
-          array (
-            0 => 'configuration',
-          ),
-          2 => 
-          array (
-            'DELETE' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1353 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'activities.show',
-          ),
-          1 => 
-          array (
-            0 => 'activity',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1367 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'activities.edit',
-          ),
-          1 => 
-          array (
-            0 => 'activity',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      1376 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'activities.update',
-          ),
-          1 => 
-          array (
-            0 => 'activity',
-          ),
-          2 => 
-          array (
-            'PUT' => 0,
-            'PATCH' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'activities.destroy',
-          ),
-          1 => 
-          array (
-            0 => 'activity',
-          ),
-          2 => 
-          array (
-            'DELETE' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      1402 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'generated::cnPNixgrlD0anNsg',
-          ),
-          1 => 
-          array (
-          ),
-          2 => 
-          array (
-            'POST' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      1440 => 
+      1368 => 
       array (
         0 => 
         array (
@@ -3778,7 +4257,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1454 => 
+      1382 => 
       array (
         0 => 
         array (
@@ -3801,7 +4280,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1463 => 
+      1391 => 
       array (
         0 => 
         array (
@@ -3843,17 +4322,80 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1497 => 
+      1415 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'myEntitlements.show',
+            '_route' => 'mytimesheets.submit',
           ),
           1 => 
           array (
-            0 => 'myEntitlement',
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1445 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::XumYcIMXGagySDPr',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1470 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::VLpbrQivQCusCFUX',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1509 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'customers.show',
+          ),
+          1 => 
+          array (
+            0 => 'customer',
           ),
           2 => 
           array (
@@ -3866,17 +4408,17 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1511 => 
+      1523 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'myEntitlements.edit',
+            '_route' => 'customers.edit',
           ),
           1 => 
           array (
-            0 => 'myEntitlement',
+            0 => 'customer',
           ),
           2 => 
           array (
@@ -3889,17 +4431,17 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      1520 => 
+      1532 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'myEntitlements.update',
+            '_route' => 'customers.update',
           ),
           1 => 
           array (
-            0 => 'myEntitlement',
+            0 => 'customer',
           ),
           2 => 
           array (
@@ -3915,11 +4457,11 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'myEntitlements.destroy',
+            '_route' => 'customers.destroy',
           ),
           1 => 
           array (
-            0 => 'myEntitlement',
+            0 => 'customer',
           ),
           2 => 
           array (
@@ -3930,7 +4472,510 @@ app('router')->setCompiledRoutes(
           5 => true,
           6 => NULL,
         ),
-        2 => 
+      ),
+      1558 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::JmdkQg0Xiu9rHmZm',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1589 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'company.show',
+          ),
+          1 => 
+          array (
+            0 => 'company',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1603 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'company.edit',
+          ),
+          1 => 
+          array (
+            0 => 'company',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1612 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'company.update',
+          ),
+          1 => 
+          array (
+            0 => 'company',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'company.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'company',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1646 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'configurations.show',
+          ),
+          1 => 
+          array (
+            0 => 'configuration',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1660 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'configurations.edit',
+          ),
+          1 => 
+          array (
+            0 => 'configuration',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1669 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'configurations.update',
+          ),
+          1 => 
+          array (
+            0 => 'configuration',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'configurations.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'configuration',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1707 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'activities.show',
+          ),
+          1 => 
+          array (
+            0 => 'activity',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1721 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'activities.edit',
+          ),
+          1 => 
+          array (
+            0 => 'activity',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1730 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'activities.update',
+          ),
+          1 => 
+          array (
+            0 => 'activity',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'activities.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'activity',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1756 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::RuylHVd1miLh8Vgy',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1788 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'employees.show',
+          ),
+          1 => 
+          array (
+            0 => 'employee',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1802 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'employees.edit',
+          ),
+          1 => 
+          array (
+            0 => 'employee',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1811 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'employees.update',
+          ),
+          1 => 
+          array (
+            0 => 'employee',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'employees.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'employee',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1841 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'news.show',
+          ),
+          1 => 
+          array (
+            0 => 'news',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1855 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'news.edit',
+          ),
+          1 => 
+          array (
+            0 => 'news',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      1864 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'news.update',
+          ),
+          1 => 
+          array (
+            0 => 'news',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'news.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'news',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      1890 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generated::2NpQvgrcCXOgJl0A',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
         array (
           0 => NULL,
           1 => NULL,
@@ -3979,6 +5024,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'login' => 
     array (
@@ -4013,8 +5060,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::SMQLGJiOcZsajvW6' => 
+    'generated::ECTEc4rAUa4OwLyM' => 
     array (
       'methods' => 
       array (
@@ -4034,7 +5083,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::SMQLGJiOcZsajvW6',
+        'as' => 'generated::ECTEc4rAUa4OwLyM',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4046,6 +5095,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'logout' => 
     array (
@@ -4079,6 +5130,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'register' => 
     array (
@@ -4113,8 +5166,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::N1FYkDpUhcizmGMt' => 
+    'generated::5WeSH4p85Pn4ot81' => 
     array (
       'methods' => 
       array (
@@ -4134,7 +5189,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::N1FYkDpUhcizmGMt',
+        'as' => 'generated::5WeSH4p85Pn4ot81',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4146,6 +5201,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'password.email' => 
     array (
@@ -4179,6 +5236,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'password.reset' => 
     array (
@@ -4213,6 +5272,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'password.update' => 
     array (
@@ -4246,6 +5307,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'password.confirm' => 
     array (
@@ -4280,8 +5343,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::Xig52qiMHzi2y6BB' => 
+    'generated::aA6bJg2FM4ZikIBp' => 
     array (
       'methods' => 
       array (
@@ -4301,7 +5366,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::Xig52qiMHzi2y6BB',
+        'as' => 'generated::aA6bJg2FM4ZikIBp',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4313,6 +5378,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'index' => 
     array (
@@ -4347,6 +5414,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'home' => 
     array (
@@ -4381,8 +5450,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::oG0jyetAseK9DUwo' => 
+    'generated::eu1LWzfI8FmOxkao' => 
     array (
       'methods' => 
       array (
@@ -4396,6 +5467,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\HomeController@demoAdmin',
         'controller' => 'App\\Http\\Controllers\\HomeController@demoAdmin',
@@ -4404,7 +5476,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::oG0jyetAseK9DUwo',
+        'as' => 'generated::eu1LWzfI8FmOxkao',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4416,6 +5488,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'adminDashboard' => 
     array (
@@ -4431,9 +5505,10 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
-        'uses' => 'App\\Http\\Controllers\\Admin\\AdminController@index',
-        'controller' => 'App\\Http\\Controllers\\Admin\\AdminController@index',
+        'uses' => 'App\\Http\\Controllers\\HomeController@index',
+        'controller' => 'App\\Http\\Controllers\\HomeController@index',
         'namespace' => 'App\\Http\\Controllers',
         'prefix' => NULL,
         'where' => 
@@ -4451,6 +5526,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'systemUsers.index' => 
     array (
@@ -4466,6 +5543,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'systemUsers.index',
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@index',
@@ -4486,6 +5564,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'systemUsers.create' => 
     array (
@@ -4501,6 +5581,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'systemUsers.create',
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@create',
@@ -4521,6 +5602,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'systemUsers.store' => 
     array (
@@ -4535,6 +5618,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'systemUsers.store',
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@store',
@@ -4555,6 +5639,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'systemUsers.show' => 
     array (
@@ -4570,6 +5656,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'systemUsers.show',
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@show',
@@ -4590,6 +5677,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'systemUsers.edit' => 
     array (
@@ -4605,6 +5694,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'systemUsers.edit',
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@edit',
@@ -4625,6 +5715,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'systemUsers.update' => 
     array (
@@ -4640,6 +5732,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'systemUsers.update',
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@update',
@@ -4660,6 +5753,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'systemUsers.destroy' => 
     array (
@@ -4674,6 +5769,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'systemUsers.destroy',
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@destroy',
@@ -4694,8 +5790,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::4FOBdaR03KDjBfrp' => 
+    'generated::gyYs4KQs7re1l9Gc' => 
     array (
       'methods' => 
       array (
@@ -4708,6 +5806,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@deleteMultiple',
         'controller' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@deleteMultiple',
@@ -4716,7 +5815,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::4FOBdaR03KDjBfrp',
+        'as' => 'generated::gyYs4KQs7re1l9Gc',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4728,8 +5827,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::iCtI2tbWPKlvJpzG' => 
+    'generated::TDOveunPhGDF36QA' => 
     array (
       'methods' => 
       array (
@@ -4742,6 +5843,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@employeeNameSearch',
         'controller' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@employeeNameSearch',
@@ -4750,7 +5852,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::iCtI2tbWPKlvJpzG',
+        'as' => 'generated::TDOveunPhGDF36QA',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4762,6 +5864,45 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::K5LDrj1s3pAoDsFU' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'getUsername',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@getUsername',
+        'controller' => 'App\\Http\\Controllers\\Admin\\UserManagement\\SystemUserController@getUsername',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::K5LDrj1s3pAoDsFU',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobTitles.index' => 
     array (
@@ -4777,6 +5918,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobTitles.index',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@index',
@@ -4797,6 +5939,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobTitles.create' => 
     array (
@@ -4812,6 +5956,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobTitles.create',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@create',
@@ -4832,6 +5977,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobTitles.store' => 
     array (
@@ -4846,6 +5993,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobTitles.store',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@store',
@@ -4866,6 +6014,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobTitles.show' => 
     array (
@@ -4881,6 +6031,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobTitles.show',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@show',
@@ -4901,6 +6052,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobTitles.edit' => 
     array (
@@ -4916,6 +6069,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobTitles.edit',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@edit',
@@ -4936,6 +6090,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobTitles.update' => 
     array (
@@ -4951,6 +6107,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobTitles.update',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@update',
@@ -4971,6 +6128,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobTitles.destroy' => 
     array (
@@ -4985,6 +6144,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobTitles.destroy',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@destroy',
@@ -5005,8 +6165,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::2CPc5K9Dh8g9edXT' => 
+    'generated::ec9q8LC2NSxlNQMo' => 
     array (
       'methods' => 
       array (
@@ -5019,6 +6181,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@deleteMultiple',
         'controller' => 'App\\Http\\Controllers\\Admin\\Job\\JobTitles\\JobTitlesController@deleteMultiple',
@@ -5027,7 +6190,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::2CPc5K9Dh8g9edXT',
+        'as' => 'generated::ec9q8LC2NSxlNQMo',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5039,6 +6202,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGrades.index' => 
     array (
@@ -5054,6 +6219,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGrades.index',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@index',
@@ -5074,6 +6240,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGrades.create' => 
     array (
@@ -5089,6 +6257,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGrades.create',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@create',
@@ -5109,6 +6278,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGrades.store' => 
     array (
@@ -5123,6 +6294,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGrades.store',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@store',
@@ -5143,6 +6315,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGrades.show' => 
     array (
@@ -5158,6 +6332,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGrades.show',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@show',
@@ -5178,6 +6353,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGrades.edit' => 
     array (
@@ -5193,6 +6370,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGrades.edit',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@edit',
@@ -5213,6 +6391,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGrades.update' => 
     array (
@@ -5228,6 +6408,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGrades.update',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@update',
@@ -5248,6 +6429,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGrades.destroy' => 
     array (
@@ -5262,6 +6445,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGrades.destroy',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@destroy',
@@ -5282,8 +6466,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::3pLb2c1jRejFLK3H' => 
+    'generated::9sACBRh56NgXX2KZ' => 
     array (
       'methods' => 
       array (
@@ -5296,6 +6482,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@deleteMultiple',
         'controller' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@deleteMultiple',
@@ -5304,7 +6491,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::3pLb2c1jRejFLK3H',
+        'as' => 'generated::9sACBRh56NgXX2KZ',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5316,8 +6503,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::eMiEY4zBfNn4Dtkh' => 
+    'generated::67WrjHmpOlZXhwiO' => 
     array (
       'methods' => 
       array (
@@ -5330,6 +6519,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@currencyNameSearch',
         'controller' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradesController@currencyNameSearch',
@@ -5338,7 +6528,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::eMiEY4zBfNn4Dtkh',
+        'as' => 'generated::67WrjHmpOlZXhwiO',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5350,6 +6540,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.index' => 
     array (
@@ -5365,6 +6557,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGradeCurrency.index',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@index',
@@ -5385,6 +6578,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.create' => 
     array (
@@ -5400,6 +6595,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGradeCurrency.create',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@create',
@@ -5420,6 +6616,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.store' => 
     array (
@@ -5434,6 +6632,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGradeCurrency.store',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@store',
@@ -5454,6 +6653,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.show' => 
     array (
@@ -5469,6 +6670,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGradeCurrency.show',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@show',
@@ -5489,6 +6691,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.edit' => 
     array (
@@ -5504,6 +6708,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGradeCurrency.edit',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@edit',
@@ -5524,6 +6729,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.update' => 
     array (
@@ -5539,6 +6746,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGradeCurrency.update',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@update',
@@ -5559,6 +6767,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'payGradeCurrency.destroy' => 
     array (
@@ -5573,6 +6783,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'payGradeCurrency.destroy',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@destroy',
@@ -5593,6 +6804,45 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::Uxfu6Q9DuljI8JAD' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'payGradeCurrency/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Job\\PayGrades\\PayGradeCurrencyController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::Uxfu6Q9DuljI8JAD',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobCategory.index' => 
     array (
@@ -5608,6 +6858,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobCategory.index',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@index',
@@ -5628,6 +6879,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobCategory.create' => 
     array (
@@ -5643,6 +6896,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobCategory.create',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@create',
@@ -5663,6 +6917,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobCategory.store' => 
     array (
@@ -5677,6 +6933,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobCategory.store',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@store',
@@ -5697,6 +6954,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobCategory.show' => 
     array (
@@ -5712,6 +6971,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobCategory.show',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@show',
@@ -5732,6 +6992,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobCategory.edit' => 
     array (
@@ -5747,6 +7009,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobCategory.edit',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@edit',
@@ -5767,6 +7030,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobCategory.update' => 
     array (
@@ -5782,6 +7047,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobCategory.update',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@update',
@@ -5802,6 +7068,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'jobCategory.destroy' => 
     array (
@@ -5816,6 +7084,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'jobCategory.destroy',
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@destroy',
@@ -5836,8 +7105,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::wxLoGRyCeCFbm3LX' => 
+    'generated::5bTcvrUIlu165Vcc' => 
     array (
       'methods' => 
       array (
@@ -5850,6 +7121,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@deleteMultiple',
         'controller' => 'App\\Http\\Controllers\\Admin\\Job\\JobCategories\\JobCategoryController@deleteMultiple',
@@ -5858,7 +7130,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::wxLoGRyCeCFbm3LX',
+        'as' => 'generated::5bTcvrUIlu165Vcc',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5870,6 +7142,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leavePeriod.index' => 
     array (
@@ -5885,6 +7159,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leavePeriod.index',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeavePeriod\\LeavePeriodController@index',
@@ -5905,6 +7180,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leavePeriod.create' => 
     array (
@@ -5920,6 +7197,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leavePeriod.create',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeavePeriod\\LeavePeriodController@create',
@@ -5940,6 +7218,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leavePeriod.store' => 
     array (
@@ -5954,6 +7234,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leavePeriod.store',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeavePeriod\\LeavePeriodController@store',
@@ -5974,6 +7255,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leavePeriod.show' => 
     array (
@@ -5989,6 +7272,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leavePeriod.show',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeavePeriod\\LeavePeriodController@show',
@@ -6009,6 +7293,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leavePeriod.edit' => 
     array (
@@ -6024,6 +7310,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leavePeriod.edit',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeavePeriod\\LeavePeriodController@edit',
@@ -6044,6 +7331,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leavePeriod.update' => 
     array (
@@ -6059,6 +7348,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leavePeriod.update',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeavePeriod\\LeavePeriodController@update',
@@ -6079,6 +7369,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leavePeriod.destroy' => 
     array (
@@ -6093,6 +7385,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leavePeriod.destroy',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeavePeriod\\LeavePeriodController@destroy',
@@ -6113,6 +7406,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leaveTypes.index' => 
     array (
@@ -6128,6 +7423,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leaveTypes.index',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@index',
@@ -6148,6 +7444,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leaveTypes.create' => 
     array (
@@ -6163,6 +7461,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leaveTypes.create',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@create',
@@ -6183,6 +7482,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leaveTypes.store' => 
     array (
@@ -6197,6 +7498,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leaveTypes.store',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@store',
@@ -6217,6 +7519,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leaveTypes.show' => 
     array (
@@ -6232,6 +7536,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leaveTypes.show',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@show',
@@ -6252,6 +7557,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leaveTypes.edit' => 
     array (
@@ -6267,6 +7574,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leaveTypes.edit',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@edit',
@@ -6287,6 +7595,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leaveTypes.update' => 
     array (
@@ -6302,6 +7612,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leaveTypes.update',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@update',
@@ -6322,6 +7633,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'leaveTypes.destroy' => 
     array (
@@ -6336,6 +7649,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'leaveTypes.destroy',
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@destroy',
@@ -6356,8 +7670,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::eDLSm4soefTAxFoL' => 
+    'generated::h7ZkLW0LbP5j73ku' => 
     array (
       'methods' => 
       array (
@@ -6370,6 +7686,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@deleteMultiple',
         'controller' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveTypeController@deleteMultiple',
@@ -6378,7 +7695,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::eDLSm4soefTAxFoL',
+        'as' => 'generated::h7ZkLW0LbP5j73ku',
       ),
       'fallback' => false,
       'defaults' => 
@@ -6390,6 +7707,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'holidays.index' => 
     array (
@@ -6405,6 +7724,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'holidays.index',
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@index',
@@ -6425,6 +7745,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'holidays.create' => 
     array (
@@ -6440,6 +7762,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'holidays.create',
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@create',
@@ -6460,6 +7783,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'holidays.store' => 
     array (
@@ -6474,6 +7799,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'holidays.store',
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@store',
@@ -6494,6 +7820,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'holidays.show' => 
     array (
@@ -6509,6 +7837,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'holidays.show',
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@show',
@@ -6529,6 +7858,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'holidays.edit' => 
     array (
@@ -6544,6 +7875,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'holidays.edit',
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@edit',
@@ -6564,6 +7896,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'holidays.update' => 
     array (
@@ -6579,6 +7913,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'holidays.update',
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@update',
@@ -6599,6 +7934,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'holidays.destroy' => 
     array (
@@ -6613,6 +7950,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'as' => 'holidays.destroy',
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@destroy',
@@ -6633,8 +7971,10 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
-    'generated::mqTa8QyJ999DSpNz' => 
+    'generated::doob1bzIqT7NKBpv' => 
     array (
       'methods' => 
       array (
@@ -6647,6 +7987,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'role:Admin',
+          2 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@deleteMultiple',
         'controller' => 'App\\Http\\Controllers\\Leave\\Holidays\\HolidaysController@deleteMultiple',
@@ -6655,7 +7996,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::mqTa8QyJ999DSpNz',
+        'as' => 'generated::doob1bzIqT7NKBpv',
       ),
       'fallback' => false,
       'defaults' => 
@@ -6667,3598 +8008,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
-    ),
-    'leaveEntitlement.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leaveEntitlement',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'leaveEntitlement.index',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@index',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leaveEntitlement.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leaveEntitlement/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'leaveEntitlement.create',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@create',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leaveEntitlement.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'leaveEntitlement',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'leaveEntitlement.store',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@store',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leaveEntitlement.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leaveEntitlement/{leaveEntitlement}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'leaveEntitlement.show',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@show',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leaveEntitlement.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leaveEntitlement/{leaveEntitlement}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'leaveEntitlement.edit',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@edit',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leaveEntitlement.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'leaveEntitlement/{leaveEntitlement}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'leaveEntitlement.update',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@update',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leaveEntitlement.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'leaveEntitlement/{leaveEntitlement}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'leaveEntitlement.destroy',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'employees',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'employees.index',
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@index',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'employees/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'employees.create',
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@create',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'employees',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'employees.store',
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@store',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'employees/{employee}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'employees.show',
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@show',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'employees/{employee}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'employees.edit',
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@edit',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'employees/{employee}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'employees.update',
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@update',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'employees/{employee}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'employees.destroy',
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::NUD5QGFFtoDpl9NH' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'employees/multiple-delete',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@deleteMultiple',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@deleteMultiple',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::NUD5QGFFtoDpl9NH',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees.import' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'employees-import',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@index',
-        'controller' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'employees.import',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'employees-import' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'employees-import',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@import',
-        'controller' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@import',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'employees-import',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::XmhA7mKRexlOkKfM' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'employee-autocomplete-ajax',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@searchEmployeeAjax',
-        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@searchEmployeeAjax',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::XmhA7mKRexlOkKfM',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'skills.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'skills',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'skills.index',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@index',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'skills.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'skills/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'skills.create',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@create',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'skills.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'skills',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'skills.store',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@store',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'skills.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'skills/{skill}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'skills.show',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@show',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'skills.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'skills/{skill}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'skills.edit',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@edit',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'skills.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'skills/{skill}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'skills.update',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@update',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'skills.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'skills/{skill}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'skills.destroy',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::LNSbRcItuTQI6QiE' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'skills/multiple-delete',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@deleteMultiple',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@deleteMultiple',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::LNSbRcItuTQI6QiE',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'locations.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'locations',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'locations.index',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@index',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'locations.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'locations/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'locations.create',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@create',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'locations.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'locations',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'locations.store',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@store',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'locations.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'locations/{location}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'locations.show',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@show',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'locations.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'locations/{location}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'locations.edit',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@edit',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'locations.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'locations/{location}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'locations.update',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@update',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'locations.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'locations/{location}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'locations.destroy',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::krqYTTEusLlGh3qa' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'locations/multiple-delete',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@deleteMultiple',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@deleteMultiple',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::krqYTTEusLlGh3qa',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'customers',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'customers.index',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@index',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'customers/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'customers.create',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@create',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'customers',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'customers.store',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@store',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'customers/{customer}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'customers.show',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@show',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'customers/{customer}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'customers.edit',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@edit',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'customers/{customer}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'customers.update',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@update',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'customers/{customer}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'customers.destroy',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::LBES1xaWPdqg3cHP' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'customers/multiple-delete',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@deleteMultiple',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@deleteMultiple',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::LBES1xaWPdqg3cHP',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'projects',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'projects.index',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@index',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'projects/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'projects.create',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@create',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'projects',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'projects.store',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@store',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'projects/{project}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'projects.show',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@show',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'projects/{project}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'projects.edit',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@edit',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'projects/{project}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'projects.update',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'projects/{project}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'projects.destroy',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'customers-search' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'customers-search',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@customers_search',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@customers_search',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'customers-search',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'projects-search' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'projects-search',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@projects_search',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@projects_search',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'projects-search',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'project-admin-search' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'project-admin-search',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_admin_search',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_admin_search',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'project-admin-search',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'project-save-customer' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'project-save-customer',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_save_customer',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_save_customer',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'project-save-customer',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'update-project' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'update-project',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update_project',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update_project',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'update-project',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::KaaacDlP8kK1MknB' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'projects/multiple-delete',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@deleteMultiple',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@deleteMultiple',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::KaaacDlP8kK1MknB',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'activities.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'activities',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'activities.index',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@index',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'activities.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'activities/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'activities.create',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@create',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'activities.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'activities',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'activities.store',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@store',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'activities.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'activities/{activity}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'activities.show',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@show',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'activities.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'activities/{activity}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'activities.edit',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@edit',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'activities.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'activities/{activity}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'activities.update',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'activities.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'activities/{activity}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'activities.destroy',
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'update-activity' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'update-activity',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update_activity',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update_activity',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'update-activity',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::cnPNixgrlD0anNsg' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'activities/multiple-delete',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@deleteMultiple',
-        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@deleteMultiple',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::cnPNixgrlD0anNsg',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'company.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'company',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'company.index',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@index',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'company.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'company/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'company.create',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@create',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'company.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'company',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'company.store',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@store',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'company.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'company/{company}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'company.show',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@show',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'company.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'company/{company}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'company.edit',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@edit',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'company.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'company/{company}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'company.update',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'company.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'company/{company}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'company.destroy',
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'update-company-name' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'update-company-name',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_name',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_name',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'update-company-name',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'update-company-info' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'update-company-info',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_info',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_info',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'update-company-info',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'update-company-contact' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'update-company-contact',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_contact',
-        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_contact',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'update-company-contact',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'configurations.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'configurations',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'configurations.index',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@index',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'configurations.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'configurations/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'configurations.create',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@create',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'configurations.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'configurations',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'configurations.store',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@store',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'configurations.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'configurations/{configuration}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'configurations.show',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@show',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'configurations.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'configurations/{configuration}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'configurations.edit',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@edit',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'configurations.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'configurations/{configuration}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'configurations.update',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@update',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'configurations.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'configurations/{configuration}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'configurations.destroy',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'punch.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'punch',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'as' => 'punch.index',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@index',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'punch.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'punch/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'as' => 'punch.create',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@create',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'punch.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'punch',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'as' => 'punch.store',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@store',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'punch.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'punch/{punch}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'as' => 'punch.show',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@show',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'punch.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'punch/{punch}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'as' => 'punch.edit',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@edit',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'punch.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'punch/{punch}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'as' => 'punch.update',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@update',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'punch.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'punch/{punch}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'as' => 'punch.destroy',
-        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'mytimesheets.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'mytimesheets',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'mytimesheets.index',
-        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@index',
-        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'mytimesheets.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'mytimesheets/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'mytimesheets.create',
-        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@create',
-        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'mytimesheets.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'mytimesheets',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'mytimesheets.store',
-        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@store',
-        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'mytimesheets.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'mytimesheets/{mytimesheet}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'mytimesheets.show',
-        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@show',
-        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'mytimesheets.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'mytimesheets/{mytimesheet}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'mytimesheets.edit',
-        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@edit',
-        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'mytimesheets.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'mytimesheets/{mytimesheet}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'mytimesheets.update',
-        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@update',
-        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'mytimesheets.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'mytimesheets/{mytimesheet}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Admin',
-        ),
-        'as' => 'mytimesheets.destroy',
-        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::amkuEoxBphKi5mMs' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'emp-page',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\HomeController@demoEmployee',
-        'controller' => 'App\\Http\\Controllers\\HomeController@demoEmployee',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::amkuEoxBphKi5mMs',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leave.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leave',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'as' => 'leave.index',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@index',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@index',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leave.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leave/create',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'as' => 'leave.create',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@create',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@create',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leave.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'leave',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'as' => 'leave.store',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@store',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@store',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leave.show' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leave/{leave}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'as' => 'leave.show',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@show',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@show',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leave.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'leave/{leave}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'as' => 'leave.edit',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@edit',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@edit',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leave.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-        1 => 'PATCH',
-      ),
-      'uri' => 'leave/{leave}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'as' => 'leave.update',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@update',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@update',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'leave.destroy' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'DELETE',
-      ),
-      'uri' => 'leave/{leave}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'as' => 'leave.destroy',
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => '/',
-        'where' => 
-        array (
-        ),
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-    ),
-    'generated::yBZYA17nDlbTpYg3' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'leave/leave-balance-ajax',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'role:Employee|Admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveBalance',
-        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveBalance',
-        'namespace' => 'App\\Http\\Controllers',
-        'prefix' => NULL,
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::yBZYA17nDlbTpYg3',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'myEntitlements.index' => 
     array (
@@ -10273,7 +8024,8 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee|Admin',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
         ),
         'as' => 'myEntitlements.index',
         'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@index',
@@ -10294,6 +8046,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'myEntitlements.create' => 
     array (
@@ -10308,7 +8062,8 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee|Admin',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
         ),
         'as' => 'myEntitlements.create',
         'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@create',
@@ -10329,6 +8084,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'myEntitlements.store' => 
     array (
@@ -10342,7 +8099,8 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee|Admin',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
         ),
         'as' => 'myEntitlements.store',
         'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@store',
@@ -10363,6 +8121,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'myEntitlements.show' => 
     array (
@@ -10377,7 +8137,8 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee|Admin',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
         ),
         'as' => 'myEntitlements.show',
         'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@show',
@@ -10398,6 +8159,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'myEntitlements.edit' => 
     array (
@@ -10412,7 +8175,8 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee|Admin',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
         ),
         'as' => 'myEntitlements.edit',
         'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@edit',
@@ -10433,6 +8197,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'myEntitlements.update' => 
     array (
@@ -10447,7 +8213,8 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee|Admin',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
         ),
         'as' => 'myEntitlements.update',
         'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@update',
@@ -10468,6 +8235,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'myEntitlements.destroy' => 
     array (
@@ -10481,7 +8250,8 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'role:Employee|Admin',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
         ),
         'as' => 'myEntitlements.destroy',
         'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\MyLeaveEntitlementController@destroy',
@@ -10502,6 +8272,5797 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::LNWqlAPJXeVtOTOT' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'myEntitlements/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\MyLeaveEntitlementController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Leave\\LeaveType\\MyLeaveEntitlementController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::LNWqlAPJXeVtOTOT',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::xzTM9GlH9QrbRRNv' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'employees/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::xzTM9GlH9QrbRRNv',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.import' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employees-import',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@index',
+        'controller' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'employees.import',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees-import' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'employees-import',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@import',
+        'controller' => 'App\\Http\\Controllers\\Employee\\ImportEmployeeController@import',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'employees-import',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'skills.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'skills',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'skills.index',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'skills.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'skills/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'skills.create',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@create',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'skills.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'skills',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'skills.store',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@store',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'skills.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'skills/{skill}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'skills.show',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@show',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'skills.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'skills/{skill}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'skills.edit',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@edit',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'skills.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'skills/{skill}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'skills.update',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@update',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'skills.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'skills/{skill}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'skills.destroy',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::EUC8kOf3i0ohxBOR' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'skills/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Qualifications\\SkillsController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::EUC8kOf3i0ohxBOR',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'locations.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'locations',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'locations.index',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'locations.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'locations/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'locations.create',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@create',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'locations.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'locations',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'locations.store',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@store',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'locations.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'locations/{location}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'locations.show',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@show',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'locations.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'locations/{location}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'locations.edit',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@edit',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'locations.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'locations/{location}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'locations.update',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@update',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'locations.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'locations/{location}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'locations.destroy',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::zBvymSNCiE7aZIHC' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'locations/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::zBvymSNCiE7aZIHC',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'customers',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'customers.index',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'customers/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'customers.create',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'customers',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'customers.store',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'customers/{customer}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'customers.show',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@show',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'customers/{customer}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'customers.edit',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@edit',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'customers/{customer}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'customers.update',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@update',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'customers/{customer}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'customers.destroy',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::JmdkQg0Xiu9rHmZm' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'customers/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\CustomersController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::JmdkQg0Xiu9rHmZm',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'projects',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'projects.index',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'projects/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'projects.create',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'projects',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'projects.store',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'projects/{project}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'projects.show',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@show',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'projects/{project}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'projects.edit',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@edit',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'projects/{project}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'projects.update',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'projects/{project}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'projects.destroy',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customers-search' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'customers-search',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@customers_search',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@customers_search',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'customers-search',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'projects-search' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'projects-search',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@projects_search',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@projects_search',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'projects-search',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'project-admin-search' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'project-admin-search',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_admin_search',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_admin_search',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'project-admin-search',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'project-save-customer' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'project-save-customer',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_save_customer',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@project_save_customer',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'project-save-customer',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'update-project' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'update-project',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update_project',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@update_project',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'update-project',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::6oe3qNVnrIQtdMI8' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'projects/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::6oe3qNVnrIQtdMI8',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'customer.AjaxSearch' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'customers-ajax-search',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@customerAjaxSearch',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@customerAjaxSearch',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'customer.AjaxSearch',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'activities.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'activities',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'activities.index',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'activities.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'activities/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'activities.create',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'activities.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'activities',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'activities.store',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'activities.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'activities/{activity}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'activities.show',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@show',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'activities.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'activities/{activity}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'activities.edit',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@edit',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'activities.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'activities/{activity}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'activities.update',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'activities.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'activities/{activity}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'activities.destroy',
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'update-activity' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'update-activity',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update_activity',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@update_activity',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'update-activity',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::RuylHVd1miLh8Vgy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'activities/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::RuylHVd1miLh8Vgy',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'company.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'company',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'company.index',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'company.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'company/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'company.create',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@create',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'company.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'company',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'company.store',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@store',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'company.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'company/{company}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'company.show',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@show',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'company.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'company/{company}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'company.edit',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@edit',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'company.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'company/{company}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'company.update',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'company.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'company/{company}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'company.destroy',
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'update-company-name' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'update-company-name',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_name',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_name',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'update-company-name',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'update-company-info' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'update-company-info',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_info',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_info',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'update-company-info',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'update-company-contact' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'update-company-contact',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_contact',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\CompanyInfoController@update_company_contact',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'update-company-contact',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'configurations.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'configurations',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'configurations.index',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'configurations.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'configurations/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'configurations.create',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'configurations.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'configurations',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'configurations.store',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'configurations.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'configurations/{configuration}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'configurations.show',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@show',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'configurations.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'configurations/{configuration}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'configurations.edit',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@edit',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'configurations.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'configurations/{configuration}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'configurations.update',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@update',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'configurations.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'configurations/{configuration}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'as' => 'configurations.destroy',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\ConfigurationsController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'punch',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'punch.index',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'punch/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'punch.create',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'punch',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'punch.store',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'punch/{punch}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'punch.show',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@show',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'punch/{punch}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'punch.edit',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@edit',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'punch/{punch}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'punch.update',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@update',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'punch/{punch}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'punch.destroy',
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'upload.biometric' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'import-biometric-data',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Biometric\\BiometricImportController@index',
+        'controller' => 'App\\Http\\Controllers\\Biometric\\BiometricImportController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'upload.biometric',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'attendance.import' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'import-biometric-data',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Biometric\\BiometricImportController@import',
+        'controller' => 'App\\Http\\Controllers\\Biometric\\BiometricImportController@import',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'attendance.import',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::C7eW6J7sq6E9EqTm' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'getTodayNews-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminController@getTodayNews',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminController@getTodayNews',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::C7eW6J7sq6E9EqTm',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::Ip6RnjTBkgZgbUms' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'getTeamLeads-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminController@getTeamLeads',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminController@getTeamLeads',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::Ip6RnjTBkgZgbUms',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::bfMIMOelruDyzlGW' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'getUpcomingLeaves-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminController@getUpcomingLeaves',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminController@getUpcomingLeaves',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::bfMIMOelruDyzlGW',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::TlEG0UZ6rTw9wCfn' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'getRecentActivities-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminController@getRecentActivities',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminController@getRecentActivities',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::TlEG0UZ6rTw9wCfn',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::vZ8dj6Us8S2ovjQn' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'emp-page',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\HomeController@demoEmployee',
+        'controller' => 'App\\Http\\Controllers\\HomeController@demoEmployee',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::vZ8dj6Us8S2ovjQn',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employees',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'employees.index',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@index',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employees/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'employees.create',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@create',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'employees',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'employees.store',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@store',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employees/{employee}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'employees.show',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@show',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employees/{employee}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'employees.edit',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@edit',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'employees/{employee}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'employees.update',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@update',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'employees.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'employees/{employee}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'employees.destroy',
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.list' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave-list',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveList',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveList',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'leave.list',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'leave.index',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@index',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'leave.create',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@create',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leave',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'leave.store',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@store',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave/{leave}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'leave.show',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@show',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave/{leave}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'leave.edit',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@edit',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'leave/{leave}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'leave.update',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@update',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'leave/{leave}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'leave.destroy',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::dswk57qbSdJZvg3M' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leave/leave-balance-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveBalance',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@getLeaveBalance',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::dswk57qbSdJZvg3M',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.delete_modal' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'leave/delete-leave',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'leave.delete_modal',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'myinfo' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'my-info',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@myInfo',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@myInfo',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'myinfo',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'mytimesheets.index',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'mytimesheets.create',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'mytimesheets',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'mytimesheets.store',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'mytimesheets.show',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@show',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'mytimesheets.edit',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@edit',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'mytimesheets.update',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@update',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'mytimesheets/{mytimesheet}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'mytimesheets.destroy',
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'mytimesheets.submit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'mytimesheets/status-change',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@updateStatusAjax',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@updateStatusAjax',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'mytimesheets.submit',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::XumYcIMXGagySDPr' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'mytimesheets/getMyTimeSheets-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@getMyTimeSheets',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@getMyTimeSheets',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::XumYcIMXGagySDPr',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::VLpbrQivQCusCFUX' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'mytimesheets/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\MyTimesheetsController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::VLpbrQivQCusCFUX',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'timesheets.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'timesheets.create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@create',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'timesheets.create',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'timesheets.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'timesheets.store',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@store',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'timesheets.store',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::lMAOhbWZAb1afbmW' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'timesheets/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::lMAOhbWZAb1afbmW',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::dk8XnXPnycUOUzXA' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employee-autocomplete-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@searchEmployeeAjax',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@searchEmployeeAjax',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::dk8XnXPnycUOUzXA',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::oJU1xtYJ511ZgQfF' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'project-autocomplete-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@searchProjectAjax',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ProjectsController@searchProjectAjax',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::oJU1xtYJ511ZgQfF',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::MqxG7bjZi3ye2Knh' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'getActivityName-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@getActivityName',
+        'controller' => 'App\\Http\\Controllers\\Time\\ProjectInfo\\ActivitiesController@getActivityName',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::MqxG7bjZi3ye2Knh',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::oG6aHF1ntr2Gr22S' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'country-autocomplete-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@searchCountryAjax',
+        'controller' => 'App\\Http\\Controllers\\Admin\\Organization\\LocationsController@searchCountryAjax',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::oG6aHF1ntr2Gr22S',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::HpzePqFiBrdMEyMC' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'punch/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::HpzePqFiBrdMEyMC',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.update-ajax' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'punch/update-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@updateAjax',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@updateAjax',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'punch.update-ajax',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.submit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'punch/status-change',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@updateStatusAjax',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@updateStatusAjax',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'punch.submit',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::lOE7l4qlcUDsF4vz' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'timesheets/getEmployeeTimeSheets-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@getEmployeeTimeSheets',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@getEmployeeTimeSheets',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::lOE7l4qlcUDsF4vz',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslips.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'payslips',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'payslips.index',
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@index',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslips.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'payslips/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'payslips.create',
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@create',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslips.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'payslips',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'payslips.store',
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@store',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslips.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'payslips/{payslip}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'payslips.show',
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@show',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslips.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'payslips/{payslip}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'payslips.edit',
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@edit',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslips.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'payslips/{payslip}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'payslips.update',
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@update',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslips.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'payslips/{payslip}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'as' => 'payslips.destroy',
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'payslip.download' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'payslip-download',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager|Employee',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Payslips\\PayslipController@download',
+        'controller' => 'App\\Http\\Controllers\\Payslips\\PayslipController@download',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'payslip.download',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'news.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'news',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'news.index',
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'news.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'news/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'news.create',
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@create',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'news.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'news',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'news.store',
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@store',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'news.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'news/{news}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'news.show',
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@show',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'news.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'news/{news}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'news.edit',
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@edit',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'news.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'news/{news}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'news.update',
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@update',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'news.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'news/{news}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'news.destroy',
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::2NpQvgrcCXOgJl0A' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'news/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\NewsController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Admin\\NewsController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::2NpQvgrcCXOgJl0A',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::qhhN2j1VPtSwI0Jo' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'getEmployeeChart-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Employee\\EmployeeController@getEmployeeChartData',
+        'controller' => 'App\\Http\\Controllers\\Employee\\EmployeeController@getEmployeeChartData',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::qhhN2j1VPtSwI0Jo',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::nXxDLWdMw9l8UnS2' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'getRequestChart-ajax',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminController@getRequestChart',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminController@getRequestChart',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::nXxDLWdMw9l8UnS2',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.action' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leave-admin-action',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@adminAction',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@adminAction',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'leave.action',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leave.assign' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leave-assign',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@assign',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Leave\\LeaveController@assign',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'leave.assign',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.employee-records' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'employee-records',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@getEmployeeRecords',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@getEmployeeRecords',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'punch.employee-records',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'punch.action' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'attendance-admin-action',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@adminAction',
+        'controller' => 'App\\Http\\Controllers\\Time\\Attendance\\PunchInOutController@adminAction',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'punch.action',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leaveEntitlement.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'leaveEntitlement.index',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@index',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leaveEntitlement.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'leaveEntitlement.create',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@create',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@create',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leaveEntitlement.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leaveEntitlement',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'leaveEntitlement.store',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@store',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@store',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leaveEntitlement.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'leaveEntitlement.show',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@show',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@show',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leaveEntitlement.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'leaveEntitlement.edit',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@edit',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@edit',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leaveEntitlement.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'leaveEntitlement.update',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@update',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@update',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'leaveEntitlement.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'leaveEntitlement/{leaveEntitlement}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'as' => 'leaveEntitlement.destroy',
+        'uses' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Leave\\Entitlements\\LeaveEntitlementController@destroy',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'generated::WNzWocV0CUqGj93T' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'leaveEntitlement/multiple-delete',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveEntitlementController@deleteMultiple',
+        'controller' => 'App\\Http\\Controllers\\Leave\\LeaveType\\LeaveEntitlementController@deleteMultiple',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::WNzWocV0CUqGj93T',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'timesheets.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'timesheets',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@index',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'timesheets.index',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'reports.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'reports',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Reports\\ReportsController@index',
+        'controller' => 'App\\Http\\Controllers\\Reports\\ReportsController@index',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'reports.index',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+    ),
+    'timesheets.action' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'timesheets-admin-action',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'role:Admin|Manager',
+          2 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@adminAction',
+        'controller' => 'App\\Http\\Controllers\\Time\\Timesheets\\TimesheetsController@adminAction',
+        'namespace' => 'App\\Http\\Controllers',
+        'prefix' => NULL,
+        'where' => 
+        array (
+        ),
+        'as' => 'timesheets.action',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'profile-settings' => 
     array (
@@ -10536,6 +14097,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
     'change-password' => 
     array (
@@ -10569,6 +14132,8 @@ app('router')->setCompiledRoutes(
       'bindingFields' => 
       array (
       ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
     ),
   ),
 )

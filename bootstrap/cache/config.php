@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Laravel',
+    'name' => 'CITHRM',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:ptBHL/4jIsAcT/ejBVJNpA5uG+oFlLo/p/yAoG2dof0=',
+    'key' => 'base64:GrU0iMl5/jVNGiwjlClyM2SWr87YdOLsHAJKOvyT+vg=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -180,7 +180,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/cache/data',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -219,7 +219,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'laravel_cache',
+    'prefix' => 'cithrm_cache',
   ),
   'cors' => 
   array (
@@ -257,7 +257,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -267,7 +267,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -287,7 +287,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -302,7 +302,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'cit_hrm',
+        'database' => 'cithrm_new',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -317,7 +317,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'laravel_database_',
+        'prefix' => 'cithrm_database_',
       ),
       'default' => 
       array (
@@ -346,12 +346,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\app',
+        'root' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
+        'root' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -368,7 +368,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp\\htdocs\\cit-hrm-new\\public\\storage' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
+      'D:\\xampp\\htdocs\\cit-hrm-new\\public\\storage' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -402,13 +402,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -458,7 +458,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -507,14 +507,14 @@
     'from' => 
     array (
       'address' => 'anbutechbee@gmail.com',
-      'name' => 'Laravel',
+      'name' => 'CITHRM',
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\cit-hrm-new\\resources\\views/vendor/mail',
+        0 => 'D:\\xampp\\htdocs\\cit-hrm-new\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -641,7 +641,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/sessions',
+    'files' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -650,7 +650,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'laravel_session',
+    'cookie' => 'cithrm_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
@@ -661,9 +661,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\cit-hrm-new\\resources\\views',
+      0 => 'D:\\xampp\\htdocs\\cit-hrm-new\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework\\views',
+    'compiled' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -677,8 +677,18 @@
       'report_query_bindings' => true,
       'report_view_data' => true,
       'grouping_type' => NULL,
+      'report_logs' => true,
+      'maximum_number_of_collected_logs' => 200,
+      'censor_request_body_fields' => 
+      array (
+        0 => 'password',
+      ),
     ),
     'send_logs_as_events' => true,
+    'censor_request_body_fields' => 
+    array (
+      0 => 'password',
+    ),
   ),
   'ignition' => 
   array (
@@ -795,7 +805,7 @@
     ),
     'temporary_files' => 
     array (
-      'local_path' => 'C:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/laravel-excel',
+      'local_path' => 'D:\\xampp\\htdocs\\cit-hrm-new\\storage\\framework/laravel-excel',
       'remote_disk' => NULL,
       'remote_prefix' => NULL,
       'force_resync_remote' => NULL,
