@@ -149,12 +149,16 @@ class PayslipController extends Controller
 
     public function download(Request $request) {
         $id = base64_decode($request->file);
-        $payslip = tPayslip::where('id', $id)->first();
+        $payslip = tPayslip::join('employees', 'employees.id', 't_payslips.employee_id')->where('t_payslips.id', $id)
+            ->selectRaw('t_payslips.*, employees.employee_id as emp_number')
+            ->first();
+
         $file = public_path().$payslip->pay_slip_pdf;
 
         if (file_exists($file)) {            
-            $fileNameArr = explode('/', $payslip->pay_slip_pdf);            
-            $fileName = @$fileNameArr[4]; //'PaySlip_'.$payslip->pay_month.'_'.$payslip->employee_id.'.pdf';
+            // $fileNameArr = explode('/', $payslip->pay_slip_pdf);            
+            // $fileName = @$fileNameArr[4]; //
+            $fileName = $payslip->emp_number.'_'.date('F_Y', strtotime($payslip->pay_month)).'.pdf';
             return response()->download($file, $fileName); 
         }  else {
             return redirect()->back()->with('error', 'File Not Found');

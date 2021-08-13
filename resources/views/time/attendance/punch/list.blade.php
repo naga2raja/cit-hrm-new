@@ -131,7 +131,7 @@
                                                             <h2>{{ hoursAndMins($item->duration) }}</h2>
                                                         </td>
 														<td>
-															{{ ($item->is_import) ? 'Import' : 'Manual' }}
+															{{ ($item->is_import == 1) ? 'Import' : 'Manual' }}
 														</td>
 														<td>
 															{{ currentPunchStatus($item->status) }}
