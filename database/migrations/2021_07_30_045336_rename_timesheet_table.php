@@ -14,8 +14,7 @@ class RenameTimesheetTable extends Migration
     public function up()
     {
         Schema::table('t_timesheets', function (Blueprint $table) {
-            // rename column name
-            $table->renameColumn('state', 'status');
+            
         });
     }
 
