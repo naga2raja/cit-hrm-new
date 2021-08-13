@@ -667,11 +667,6 @@
 	$('#refresh_total_employee').click(function() {
 	   	LoadEmployeeChart();
 	});
-
-	// onclick of refresh_total_employee
-	$('#refresh_total_employee').click(function() {
-	   	LoadEmployeeChart();
-	});
 	// onclick of refresh_pending_requests
 	$('#refresh_pending_requests').click(function() {
 	   	LoadRequestChart();

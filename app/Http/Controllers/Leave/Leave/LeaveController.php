@@ -361,7 +361,7 @@ class LeaveController extends Controller
                 $query->where('t_leave_requests.to_date', '<=', request('to_date'));
             })
             ->groupBy('t_leave_requests.id')
-            ->paginate(10); 
+            ->paginate(10);
 
         return view('leave/leave/leave_list', compact('leaveStatus', 'myLeaves', 'userRole'));           
     }

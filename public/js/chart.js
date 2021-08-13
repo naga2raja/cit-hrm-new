@@ -1,4 +1,3 @@
-$(function(){
 	// Total no. of Employees
 	LoadEmployeeChart();
 	function LoadEmployeeChart(){
@@ -233,4 +232,3 @@ $(function(){
 			}
 		});
 	}	
-});

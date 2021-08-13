@@ -42,16 +42,16 @@ class HomeController extends Controller
         $empIds = [];
         if($user->hasRole('Manager')) {
             $userRole = 'Manager';
-            $approval_level = [0,1,2];
-            $pending_status = 0;
+            $approval_level = 0;
+            $pending_status = 1;
             //Find Reporting Employees Ids
             $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
             if($reportTo)
                 $empIds = explode(',', $reportTo->reporting_manager_ids);
         } else {
             $userRole = 'Admin';
-            $approval_level = [1,2];
-            $pending_status = 1;
+            $approval_level = 1;
+            $pending_status = 2;
         }
 
         $data = [];
@@ -72,7 +72,7 @@ class HomeController extends Controller
                                 ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
                                 ->where('t_leave_requests.employee_id', '!=', $employeeId)
                                 ->where('t_leaves.status', $pending_status)
-                                ->whereIn('t_leaves.approval_level', $approval_level);
+                                ->where('t_leaves.approval_level', $approval_level);
                                 if(count($empIds)) {
                                     $leave_count->whereIn('t_leave_requests.employee_id', $empIds);
                                 }
