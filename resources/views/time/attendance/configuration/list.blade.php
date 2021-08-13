@@ -65,16 +65,26 @@
 														<label>{{ $configure->action }} </label>
 													</div>
 												</div>
-												<div class="col-sm-2">
+												<div class="col-sm-1">
 													<div class="form-group">
 														<div class="custom-control custom-switch float-left">
 															<input type="checkbox" class="custom-control-input" name="checkbox[]" value="{{$configure->id}}" id="{{ 'customeSwitch'.$configure->id }}" @if($configure->action_flag != 0){{'checked'}}@endif>
 															<label class="custom-control-label" for="{{ 'customeSwitch'.$configure->id }}"></label>
 														</div>
 													</div>
+																											
 												</div>
+												@if($configurations->last() == $configure)
+													@if($errors->first('checkbox'))										
+														<div class="col-sm-6">
+															<span class="invalid-feedback" style="display: block" role="alert"> Please enable any one feature </span>
+														</div>										
+													@endif
+												@endif
 											</div>
 										@endforeach
+										
+
 										<hr>
 
 										<div class="row">
