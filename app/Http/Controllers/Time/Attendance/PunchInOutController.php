@@ -38,7 +38,7 @@ class PunchInOutController extends Controller
                 $date = $date->format('Y-m-d');
                 $query->whereRaw('DATE_FORMAT(t_punch_in_outs.punch_in_user_time, "%Y-%m-%d") = "'. $date.'"');
             })
-            ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+            ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name, t_punch_in_outs.is_import')
             ->orderBy('t_punch_in_outs.id', 'DESC')
             ->paginate(30);
         
@@ -47,7 +47,8 @@ class PunchInOutController extends Controller
             $userRole = 'Manager';
         } elseif($user->hasRole('Employee')) {
             $userRole = 'Employee';
-        }
+        } 
+        // dd($data);
         return view('time/attendance/punch/list', compact('data', 'userRole'));
     }
 
@@ -373,7 +374,7 @@ class PunchInOutController extends Controller
             if(count($empIds)) {
                 $data = $data->whereIn('t_punch_in_outs.employee_id', $empIds);
             }
-            $data = $data->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+            $data = $data->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name, t_punch_in_outs.is_import')
                     ->where('t_punch_in_outs.status', '>', 0)
                     ->orderBy('t_punch_in_outs.id', 'DESC')
                     ->paginate(30);
