@@ -175,10 +175,12 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     // pay_grades
     Route::resource('/payGrades', 'Admin\Job\PayGrades\PayGradesController');
     Route::post('/payGrades/multiple-delete', 'Admin\Job\PayGrades\PayGradesController@deleteMultiple');
-    Route::post('/currencyNameSearch', 'Admin\Job\PayGrades\PayGradesController@currencyNameSearch');
+
     // payGradecurrency
     Route::resource('/payGradeCurrency', 'Admin\Job\PayGrades\PayGradeCurrencyController');
     Route::post('/payGradeCurrency/multiple-delete', 'Admin\Job\PayGrades\PayGradeCurrencyController@deleteMultiple');
+    // currency-autocomplete-ajax
+    Route::get('/currency-autocomplete-ajax', 'Admin\Job\PayGrades\PayGradeCurrencyController@searchCurrencyAjax');
     // job_categories
     Route::resource('/jobCategory', 'Admin\Job\JobCategories\JobCategoryController');
     Route::post('/jobCategory/multiple-delete', 'Admin\Job\JobCategories\JobCategoryController@deleteMultiple');

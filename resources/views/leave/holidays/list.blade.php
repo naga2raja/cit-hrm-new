@@ -28,12 +28,12 @@
 								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form id="searchHoliday" method="GET" id="holidays_search" action="{{ route('holidays.index') }}">
+										<form id="searchHoliday" method="GET" action="{{ route('holidays.index') }}">
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>From Date</label>
-														<input type="text" name="from_date" id="from_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('from_date') }}">
+														<input type="text" name="from_date" id="from_date" class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}} datetimepicker" placeholder="" value="{{ Request::get('from_date') }}" autocomplete="off" required="">
 													</div>
 												</div>
 											</div>
@@ -42,7 +42,7 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>To Date</label>
-														<input type="text" name="to_date" id="to_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('to_date') }}">
+														<input type="text" name="to_date" id="to_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('to_date') }}" autocomplete="off" required="">
 													</div>
 												</div>
 											</div>
@@ -145,10 +145,9 @@
 @push('scripts')
 <script type="text/javascript">
 	// from date to date validation
-	$('#search').click(function(){ 
+	$('#search').click(function(){
 		var from_date = $('#from_date').val();
 		var to_date = $('#to_date').val();
-		// alert(from_date);
 
 		$('#from_date').removeClass('is-invalid');
 		$('#to_date').removeClass('is-invalid');
@@ -156,7 +155,7 @@
 		$("#to_not_exist").remove();
 
 		if((from_date != '')&&(to_date != '')){
-			$('#holidays_search').submit();
+			$('#searchHoliday').submit();
 		}
 		if(from_date == '') {
 			$('#from_date').addClass('is-invalid');
@@ -167,5 +166,6 @@
 			$('<span id="to_not_exist" class="invalid-feedback" role="alert">To date required</span>').insertAfter('#to_date');
 		}
 	});
+
 </script>
 @endpush
