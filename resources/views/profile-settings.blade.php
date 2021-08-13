@@ -68,14 +68,17 @@
 										  <form id="changePasswordFrom" method="post" action="{{ route('change-password') }}">	
 										  		@csrf
 												<div class="form-group">
+													<label>Current Password <span class="text-danger">*</span></label>
 													<input type="password" name="current_password"  id="current_password" class="form-control {{ $errors->has('current_password') ? 'is-invalid' : ''}}" required placeholder="Current Password">
 													{!! $errors->first('current_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="form-group">
+													<label>New Password <span class="text-danger">*</span></label>
 													<input type="password" name="new_password"  id="new_password"  class="form-control {{ $errors->has('new_password') ? 'is-invalid' : ''}}" required placeholder="New Password" id="pwd">
 													{!! $errors->first('new_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="form-group">
+													<label>Repeat Password <span class="text-danger">*</span></label>
 													<input type="password" name="confirm_password"  id="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="Repeat Password">
 													{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
@@ -86,6 +89,7 @@
 										</div>
 									</div>
 								</div>
+
 								<div class="col-lg-6 d-flex">
 									<div class="card flex-fill ctm-border-radius shadow-sm">
 										<div class="card-header">
@@ -94,11 +98,11 @@
 										</div>
 										<div class="card-body">
 											<ul class="list-group">
-												<li class="list-group-item"> * Must be at least 8 characters in length</li>
-												<li class="list-group-item"> * Must contain at least one uppercase letter</li>
-												<li class="list-group-item"> * Must contain at least one lowercase letter</li>
-												<li class="list-group-item"> * Must contain a special character</li>
-												<li class="list-group-item"> * Must contain at least one digit</li>
+												<li class="list-group-item"> - Must be at least 8 characters in length</li>
+												<li class="list-group-item"> - Must contain at least one uppercase letter</li>
+												<li class="list-group-item"> - Must contain at least one lowercase letter</li>
+												<li class="list-group-item"> - Must contain a special character</li>
+												<li class="list-group-item"> - Must contain at least one digit</li>
 											</ul>
 										</div>
 									</div>
