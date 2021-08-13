@@ -150,8 +150,8 @@
 																<option value="">Select</option>
 																<option value="full day" {{ (old('leave_duration') == 'full day') ? 'selected' : '' }}>Full Day</option>
 																<!--<option value="half a day">Half a Day</option> -->
-																<option value="morning" {{ (old('leave_duration') == 'morning') ? 'selected' : '' }}>Morning</option>
-																<option value="evening" {{ (old('leave_duration') == 'evening') ? 'selected' : '' }}>Evening</option>
+																<option value="morning" {{ (old('leave_duration') == 'morning') ? 'selected' : '' }}>First Half</option>
+																<option value="evening" {{ (old('leave_duration') == 'evening') ? 'selected' : '' }}>Second Half</option>
 															</select>
 															{!! $errors->first('leave_duration', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>

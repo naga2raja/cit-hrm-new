@@ -118,7 +118,16 @@
                                                                     <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}' )"> {{ $leave->from_date }} </a></td>
                                                                     <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}' )"> {{ $leave->to_date }} </a> </td>
                                                                     <td> 
-																		{{ ($leave->leave_days+1) * $leave->length_days }} ({{ $leave->leave_duration }})
+																		{{ ($leave->leave_days+1) * $leave->length_days }} 
+																		(
+																		@if($leave->leave_duration == 'morning')
+																			First Half
+																		@elseif($leave->leave_duration == 'evening')
+																			Second Half
+																		@else
+																			Full Day
+																		@endif
+																		)
 																	</td>                                                                    
                                                                     <td> {{ $leave->comments }}</td>
                                                                     <td> 
