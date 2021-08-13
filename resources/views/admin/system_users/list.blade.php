@@ -1,4 +1,5 @@
 @extends('layout.mainlayout')
+@section('mytitle', 'System User')
 @section('content')
 <!-- Content -->
 
@@ -61,7 +62,7 @@
 													<div class="form-group">
 														<label>Role</label>
 														<select class="form-control select {{ $errors->has('role') ? 'is-invalid' : ''}} select2-hidden-accessible" name="role" tabindex="-1" aria-hidden="true">
-																<option value="" selected="">User Role</option>
+																<option value="" selected="">Select User Role</option>
 																<option value="all" {{ Request::get('role') == 'all' ? 'selected' : '' }}>All</option>
 		                                                    @foreach ($roles as $role)
 		                                                        <option value='{{ $role->name }}' {{ Request::get('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
@@ -77,6 +78,7 @@
 													<div class="form-group">
 														<label>Status</label>
 														<select class="form-control select" name="status">
+															<option value="">Select Status</option>
 														    <option value='Active' {{ Request::get('status') == "Active" ? 'selected' : '' }}>Active</option>
 														    <option value='In active' {{ Request::get('status') == "In active" ? 'selected' : '' }}>In-active</option>
 														</select>

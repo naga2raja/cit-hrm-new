@@ -118,7 +118,9 @@
 											<thead>
 												<tr class="bg-light">
 													<th class="text-center">
+														@hasrole('Admin')
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('mylist_entitlements_table')">
+														@endrole
 													</th>
 													<th>Employee Name</th>
 													<th>Leave Type</th>
@@ -135,21 +137,32 @@
 													@foreach ($entitlement as $row)
 													<tr>
 														<td class="text-center">
+															@hasrole('Admin')
 															<input type="checkbox" name="user_id" value="{{ $row->entitlement_id }}">
+															@endrole
 														</td>
 														<td>{{ $row->employee_name }}</td>
 														<td>{{ $row->leave_type_name }}</td>
 														<td>
-															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->from_date }}</a></u></h2>
+															<h2>
+																<u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->from_date }}</a>
+																</u>
+															</h2>
 														</td>
 														<td>
-															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->to_date }}</a></u></h2>
+															<h2>
+																<u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ $row->to_date }}</a>
+																</u>
+															</h2>
 														</td>
 														@php
 															$total = $total + $row->no_of_days;
 														@endphp
 														<td>
-															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ number_format($row->no_of_days, 2) }}</a></u></h2>
+															<h2>
+																<u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ number_format($row->no_of_days, 2) }}</a>
+																</u>
+															</h2>
 														</td>
 													</tr>
 													@endforeach

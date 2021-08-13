@@ -1,4 +1,5 @@
 @extends('layout.mainlayout')
+@section('mytitle', 'System User')
 @section('content')
 <!-- Content -->
 

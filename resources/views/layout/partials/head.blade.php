@@ -6,7 +6,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		@if(!Route::is(['employees.create', 'employees.edit', 'employees.index', 'admin','calendar','company','contact-reports','create-review','custom-timeoff-approver','details','documents','edit-review','email-reports','employees-dashboard','employees-list','employees-offices-list','employees-offices','employees-team','employees','employment','forgot-password','leave-reports','leave','line-manager','login','manage-leadership','manage','payroll-admin','payroll-reports','payroll','profile-reviews','profile-settings','register','reports','reviews','security-reports','settings-timeoff','settings','super-admin','team-lead','team-member','time-off','work-from-home-reports']))
-		<title>Dashboard Page</title>
+		<title>{{ ucfirst(explode('/', Request::path())[0]) }}</title>
 		@endif
 		
 		@if(Route::is(['employees.create']))

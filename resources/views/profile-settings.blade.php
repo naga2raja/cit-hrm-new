@@ -65,27 +65,44 @@
 											</div>
 											@endif										
 
-										  <form method="post" action="{{ route('change-password') }}">	
+										  <form id="changePasswordFrom" method="post" action="{{ route('change-password') }}">	
 										  		@csrf
 												<div class="form-group">
-													<input type="password" name="current_password" class="form-control {{ $errors->has('current_password') ? 'is-invalid' : ''}}" required placeholder="Current Password">
+													<input type="password" name="current_password"  id="current_password" class="form-control {{ $errors->has('current_password') ? 'is-invalid' : ''}}" required placeholder="Current Password">
 													{!! $errors->first('current_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="form-group">
-													<input type="password" name="new_password"  class="form-control {{ $errors->has('new_password') ? 'is-invalid' : ''}}" required placeholder="New Password" id="pwd">
+													<input type="password" name="new_password"  id="new_password"  class="form-control {{ $errors->has('new_password') ? 'is-invalid' : ''}}" required placeholder="New Password" id="pwd">
 													{!! $errors->first('new_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="form-group">
-													<input type="password" name="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="Repeat Password">
+													<input type="password" name="confirm_password"  id="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="Repeat Password">
 													{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 												<div class="text-center">
-													<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center">Change My Password</button>
+													<button id="change_password" type="button" class="btn btn-theme button-1 ctm-border-radius text-white text-center">Change My Password</button>
 												</div>
 											</form>
 										</div>
 									</div>
-								</div>							
+								</div>
+								<div class="col-lg-6 d-flex">
+									<div class="card flex-fill ctm-border-radius shadow-sm">
+										<div class="card-header">
+											<h4 class="card-title mb-0">Change Password Criteria</h4>
+											<span class="ctm-text-sm">Guidelines for Strong Passwords</span>
+										</div>
+										<div class="card-body">
+											<ul class="list-group">
+												<li class="list-group-item"> * Must be at least 8 characters in length</li>
+												<li class="list-group-item"> * Must contain at least one uppercase letter</li>
+												<li class="list-group-item"> * Must contain at least one lowercase letter</li>
+												<li class="list-group-item"> * Must contain a special character</li>
+												<li class="list-group-item"> * Must contain at least one digit</li>
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 							<!--
 							<div class="row">
@@ -136,3 +153,38 @@
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
 @endsection
+@push('scripts')
+<script type="text/javascript">
+	$('#change_password').on('click', function(){
+
+		// alert($('#current_password').val());
+
+		if (!$('#current_password').val()){
+			alert("Current Password is required");
+			$('#current_password').focus();
+		}
+		else if (!$('#new_password').val()){
+			alert("New Password is required");
+			$('#new_password').focus();
+		}
+		else if (!$('#confirm_password').val()){
+			alert("Confirm Password is required");
+			$('#confirm_password').focus();
+		}
+		else {
+			if ($('#new_password').val() != $('#confirm_password').val()){
+				alert("The confirm password and new password must match.");
+				$('#confirm_password').focus();
+			}
+			if (!confirm("Aru you sure Change Password?")){
+				return false;
+			}
+			$('#changePasswordFrom').submit();
+		}		
+	});
+
+	$('#calendar_icon').on('click', function(){
+		$('#in_date').datetimepicker("show");
+	});
+</script>
+@endpush

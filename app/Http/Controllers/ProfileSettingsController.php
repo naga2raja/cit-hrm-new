@@ -23,7 +23,7 @@ class ProfileSettingsController extends Controller
             'new_password' => [
                 'required',
                 'string',
-                'min:8',             // must be at least 10 characters in length
+                'min:8',              // must be at least 8 characters in length
                 'regex:/[a-z]/',      // must contain at least one lowercase letter
                 'regex:/[A-Z]/',      // must contain at least one uppercase letter
                 'regex:/[0-9]/',      // must contain at least one digit
@@ -36,6 +36,7 @@ class ProfileSettingsController extends Controller
         $user = User::find($user_id);
         $user->password = \Hash::make($request->new_password);
         $user->save();
-        return redirect()->route('profile-settings')->with('success', 'Password changed successfully');
+        Auth::logout();
+        return redirect('/login')->with('success', 'Password changed successfully');
     }
 }
