@@ -133,47 +133,4 @@ class PayGradesController extends Controller
             return false;
         }       
     }
-
-    public function currencyNameSearch(Request $request)
-    {
-        DB::connection()->enableQueryLog();
-
-        $currency = $request->currency;
-
-        // dd($request->currency);
-
-        if(!empty(trim($currency))){
-            $query1 = mCurrency::where('currency_id', 'like', "%{$currency}%")
-                                ->orwhere('currency_name', 'like', "%{$currency}%")
-                                ->get();
-
-            $query2 = mCurrency::where(DB::raw("CONCAT(currency_id, ' - ' ,currency_name)"), 'LIKE', "%$currency%")
-                                ->get();
-
-            // dd(DB::getQueryLog());
-
-            $currencies = [];
-            if(count($query1) != 0){
-                $currencies = $query1;
-            }
-            elseif(count($query2) != 0){
-                $currencies = $query2;
-            }
-
-            if(count($currencies) != 0){
-                $output = '<ul class="list-group" style="display:block; position:relative;">';
-                foreach($currencies as $row) {                    
-                   $output .= '<li id='.$row->currency_id.' class="list-group-item currencies"><a class="dropdown-item">'.$row->currency_id.' - '.$row->currency_name.'</a></li>';
-                }
-                $output .= '</ul>';
-                echo $output;
-            } else{
-                $output = "";
-                echo $output;
-            }
-        } else{
-            $output = "";
-            echo $output;
-        }
-    }
 }

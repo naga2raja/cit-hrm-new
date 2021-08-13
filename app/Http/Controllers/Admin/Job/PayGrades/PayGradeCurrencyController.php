@@ -43,19 +43,26 @@ class PayGradeCurrencyController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'currency' => 'required'
+            'currency' => 'required',
+            'min_salary' => 'lte:max_salary',
+            'max_salary' => 'gte:min_salary'
         ]);
 
-        $pay_grade_currency = tPayGradeCurrency::create([
-            'pay_grade_id'  => $request->input('pay_grade_id'),
-            'currency_id'  => $request->input('currency_id'),
-            'min_salary'  => $request->input('min_salary'),
-            'max_salary'  => $request->input('max_salary')
-        ]);
-
-        // dd($pay_grade_currency);
-
-        return redirect()->route('payGrades.edit', $request->input('pay_grade_id'))->with('currency_success', 'Currencie Assigned successfully');
+        $isExists = tPayGradeCurrency::where('currency_id', $request->input('currency_id'))
+                                        ->where('pay_grade_id', $request->input('pay_grade_id'))
+                                        ->first();
+        // dd($isExists);
+        if($isExists) {            
+            return redirect()->route('payGrades.edit', $request->input('pay_grade_id'))->with('currency_warning', 'Currencie Already Exist');
+        }else{
+            $pay_grade_currency = tPayGradeCurrency::create([
+                'pay_grade_id'  => $request->input('pay_grade_id'),
+                'currency_id'  => $request->input('currency_id'),
+                'min_salary'  => $request->input('min_salary'),
+                'max_salary'  => $request->input('max_salary')
+            ]);
+            return redirect()->route('payGrades.edit', $request->input('pay_grade_id'))->with('currency_success', 'Currencie Assigned successfully');
+        }
     }
 
     /**
@@ -107,7 +114,7 @@ class PayGradeCurrencyController extends Controller
     public function deleteMultiple(Request $request)
     {
         if($request->delete_ids) {
-            tPayGradeCurrency::whereIn('pay_grade_id', $request->delete_ids)
+            tPayGradeCurrency::where('id', $request->delete_ids)
                 ->get()
                 ->map(function($pay_currency) {
                     $pay_currency->delete();
@@ -117,5 +124,23 @@ class PayGradeCurrencyController extends Controller
         } else {   
             return false;
         }       
+    }
+
+    public function searchCurrencyAjax(Request $request)
+    {
+        DB::connection()->enableQueryLog();
+        $data = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $string = str_replace(' ', '', $search);
+            $data = mCurrency::select("m_currencies.id")
+                    ->selectRaw('currency_id, CONCAT_WS (" - ", currency_name, currency_id) as currency_name')
+                    ->where('currency_id','LIKE',"%$search%")
+                    ->orWhere('currency_name','LIKE',"%$search%");      
+            $data = $data->groupBy('m_currencies.id')->get();
+        }
+
+        return response()->json($data);
     }
 }

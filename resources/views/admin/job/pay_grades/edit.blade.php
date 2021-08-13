@@ -71,7 +71,7 @@
 				</div>
 
 				<!-- Currency Add -->
-				<div class="container-fluid" id="currency_div" style="display: none">
+				<div class="container-fluid" id="currency_div" style="{{ $errors->has('currency') ? 'display: block' : 'display: none'}}">
 					<div class="row">
 						<div class="col-xl-12 col-lg-12 col-md-12">
 							<div class="accordion add-employee" id="accordion-details">
@@ -91,10 +91,11 @@
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Currency <span class="text-danger">*</span></label>
-															<input type="text" name="currency" id="currency" class="form-control" placeholder="" required="" autocomplete="off">
+															<select class="currency form-control {{ $errors->has('currency') ? 'is-invalid' : ''}}" name="currency" id="currency" style="width: 100%">
+															</select>
+															{!! $errors->first('currency', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 															<input type="hidden" name="currency_id" id="currency_id" class="form-control" placeholder="">
 															<input type="hidden" name="pay_grade_id" id="pay_grade_id" class="form-control" value="{{ $grades->id }}">
-															<div id="currency_list" class="autocomplete"></div>
 														</div>
 													</div>
 
@@ -172,6 +173,11 @@
 												<p>{{$message}}</p>
 											</div>
 										@endif
+										@if($message = Session::get('currency_warning'))
+											<div class="alert alert-warning">
+												<p>{{$message}}</p>
+											</div>
+										@endif
 										<table class="table custom-table table-hover">
 											<thead>
 												<tr class="bg-light">
@@ -188,12 +194,12 @@
 													@foreach ($grade_currency as $row)
 														<tr>
 															<td class="text-center">
-																<input type="checkbox" name="pay_grade_id" value="{{ $row->pay_grade_id }}">
+																<input type="checkbox" name="pay_grade_currency" value="{{ $row->id }}">
 															</td>
 															<td>
 																<h2>
 																	<u><a href="javascript:void(0);" >
-																		{{ $row->currencyName->currency_name }}
+																		{{ @$row->currencyName->currency_name }}
 																	</a></u>
 																</h2>
 															</td>
@@ -238,43 +244,29 @@
 	});
 
 	// Autocomplete ajax call
-	$('#currency').keyup(function(){ 
-		var currency = $(this).val();
-		if(currency != '')
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-				method:"POST",
-				url: '/currencyNameSearch',
-				data:{ currency:currency, _token:_token },
-				success:function(data){
-					$('#currency').removeClass('is-invalid');
-					$("#not_exist").remove();
-
-					if(data != ""){					
-						$('#currency_list').fadeIn();
-						$('#currency_list').html(data);
-					}else{
-						var exists = ($("#not_exist").length == 0);
-					    if (exists) {
-					        $('#currency').addClass('is-invalid');
-							$('#currency_list').fadeOut();
-							$('<span id="not_exist" class="invalid-feedback" role="alert">Currency does not exist</span>').insertAfter('#currency');
-					    }
-					}
-				}
-			});
-		} else{
-			$('#currency_list').html('');	        	
-		}
+	$('.currency').select2({
+		placeholder: 'Select a Currency',
+		allowClear: true,
+		ajax: {
+			url: '/currency-autocomplete-ajax',
+			dataType: 'json',
+			delay: 250,
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.currency_name,
+							id: item.currency_id
+						}
+					})
+				};
+			},
+			cache: true
+		}		
 	});
 
-	$(document).on('click', '.currencies', function(){
-		$('#currency').val($(this).text());
-		$('#currency_id').val($(this).attr('id'));
-		$('#currency').removeClass('is-invalid');
-		$('#currency_list').fadeOut();
-		$("#not_exist").remove();
+	$(document.body).on("change","#currency",function(){
+	 	$('#currency_id').val(this.value);
 	});
 
 
