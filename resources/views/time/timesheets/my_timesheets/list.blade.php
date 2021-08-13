@@ -43,12 +43,17 @@
 													<div class="form-group">
 														<label>Search Project</label>
 		                                                <select class="project_name form-control select2 has-error{{ $errors->has('project_name') ? 'is-invalid' : ''}}" name="project_name" id="project_name" required="" style="width: 100%">
+		                                                	@if(Request::get('pro_name'))
+																<option selected="selected" id="{{ Request::get('project_id') }}">{{ Request::get('pro_name'), old('pro_name') }}</option>
+															@endif
 														</select>
 														{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														<input type="hidden" name="project_id" id="project_id" class="form-control" value="{{ Request::get('project_id') }}">
+														<input type="hidden" name="pro_name" id="pro_name" class="form-control" value="{{ (Request::get('pro_name')) ? Request::get('pro_name') : '' }}">
 													</div>
 												</div>
 											</div>
+
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">

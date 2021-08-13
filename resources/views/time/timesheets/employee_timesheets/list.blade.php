@@ -43,16 +43,20 @@
 													<div class="form-group">
 														<label>Employee Name</label>
 														<select class="employee_name form-control {{ $errors->has('employee_name') ? 'is-invalid' : ''}}" name="employee_name" id="employee_name" required="" style="width: 100%" >
+															@if(Request::get('emp_name'))
+																<option selected="selected" id="{{ Request::get('emp_number') }}">{{ Request::get('emp_name'), old('emp_name') }}</option>
+															@endif
 														</select>
 														{!! $errors->first('employee_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														<input type="hidden" name="employee_id" id="employee_id" class="form-control" value="{{ (Request::get('employee_id')) ? Request::get('employee_id') : '' }}">
+														<input type="hidden" name="emp_name" id="emp_name" class="form-control" value="{{ (Request::get('emp_name')) ? Request::get('emp_name') : '' }}">
 													</div>
 												</div>
 											</div>
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
+													<button id="search" type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchEmployeeTimesheet')"><i class="fa fa-refresh"></i> Reset </button>
@@ -250,6 +254,8 @@
 
 	$(document.body).on("change","#employee_name",function(){
 	 	$('#employee_id').val(this.value);
+	 	var emp_name = $("#employee_name option:selected").html();
+	 	$('#emp_name').val(emp_name);
 	});
 
 	function compareDate(date){
