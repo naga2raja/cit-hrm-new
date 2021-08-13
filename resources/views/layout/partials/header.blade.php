@@ -104,7 +104,7 @@
                                     <div class="user-info align-center bg-theme text-center">
                                         <a href="javascript:void(0)" class="d-block menu-style text-white">
                                             <div class="user-avatar d-inline-block mr-3">
-                                                <img src="img/profiles/img-6.jpg" alt="user avatar" class="rounded-circle" width="50">
+                                                <img src="{{ assetUrl('img/profiles/img-6.jpg') }}" alt="user avatar" class="rounded-circle" width="50">
                                             </div>
                                         </a>
                                     </div>

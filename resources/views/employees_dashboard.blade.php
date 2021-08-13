@@ -212,7 +212,7 @@
 					data[0].birthday.forEach(function (row,index) {
 						news += '<div class="notice-board mb-3">';
 						news += '<div class="table-img">';
-						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
 						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Photo"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
@@ -227,7 +227,7 @@
 		            	news += '<a href="javascript:void(0)" id="'+row.title+'" title="'+row.news+'" onclick="news_popup(this.id, this.title)" class="text-dark">';
 		            	news += '<div class="notice-board mb-3">';
 						news += '<div class="table-img">';
-						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
 						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
@@ -290,7 +290,7 @@
 		            		}
 		            	});
 		            	leads += '<div class="media mb-3">';
-		            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+		            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
 						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
@@ -316,7 +316,7 @@
 		            	});
 		            	if(reporting_remove_id != row.employee_id){
 		            		leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
 							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
@@ -342,7 +342,7 @@
 		            	});
 		            	if((reporting_remove_id != row.employee_id)&&(project_remove_id != row.employee_id)){
 			            	leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
 							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
@@ -357,7 +357,7 @@
 		        		var login_employee_id= "{{ getEmployeeId(Auth::user()->id) }}";
 		        		if(login_employee_id != row.employee_id){
 			            	leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
 							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
@@ -393,7 +393,7 @@
 					data.forEach(function (row,index) {
 						activity += '<div class="notice-board">';
 						activity += '<div class="table-img">';
-						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
 						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
 						activity += '</div>';
 						activity += '<div class="notice-body">';
