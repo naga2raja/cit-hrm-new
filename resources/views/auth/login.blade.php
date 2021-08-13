@@ -17,6 +17,11 @@
                 <h1>Login</h1>
                 <p class="account-subtitle">Access to our dashboard</p>
 
+                @if($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{$message}}</p>
+                    </div>
+                @endif
                 
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

@@ -1,4 +1,5 @@
 @extends('layout.mainlayout')
+@section('mytitle', 'System User')
 @section('content')
 <!-- Content -->
 
@@ -30,7 +31,7 @@
 												</div>
 											@endif
 
-											<form method="POST" action="{{ route('systemUsers.store') }}">
+											<form id="addSystemUser" method="POST" action="{{ route('systemUsers.store') }}">
 												@csrf
 
 												<div class="row">
@@ -148,7 +149,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="submit-section text-center btn-add">
-																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+																	<button id='submit' type="button" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
 																</div>
 															</div>
 															<div class="col-sm-6">
@@ -175,6 +176,7 @@
 @endsection
 
 @push('scripts')
+
 <script type="text/javascript">
 
 	// enable/disable location_div

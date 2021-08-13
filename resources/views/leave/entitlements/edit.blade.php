@@ -98,13 +98,15 @@
 										<div class="col-sm-2"></div>
 										<div class="col-sm-3 text-center">
 											<div class="row">
+												@hasrole('Admin')
 												<div class="col-sm-6">
 													<div class="submit-section text-center btn-add">
 														<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
 													</div>
 												</div>
+												@endrole
 												<div class="col-sm-6">
-													<a href="{{ route('leaveEntitlement.index') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													<a href="{{ route('leaveEntitlement.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>

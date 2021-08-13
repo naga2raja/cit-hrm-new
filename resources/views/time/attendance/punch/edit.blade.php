@@ -18,7 +18,7 @@
 										<p>{{$message}}</p>
 									</div>
 									@endif								
-									<form method="POST" action="{{ route('punch.update', $punch_in[0]->id) }}">
+									<form id="punchOutForm" method="POST" action="{{ route('punch.update', $punch_in[0]->id) }}">
 										@csrf
 										@method('PUT')
 										<div class="row">
@@ -107,7 +107,7 @@
 											<div class="col-sm-3 text-center">
 												<div class="row">
 													<div class="col-sm-6">
-														<button class="btn btn-theme text-white ctm-border-radius button-1" type="submit">Punch Out</button>
+														<button class="btn btn-theme text-white ctm-border-radius button-1" type="button" id="punch_out">Punch Out</button>
 													</div>
 												</div>
 											</div>
@@ -130,6 +130,13 @@
 
 @push('scripts')
 <script type="text/javascript">
+	$('#punch_out').on('click', function(){
+		if (!confirm("Do you want to Punch out?")){
+			return false;
+		}
+		$('#punchOutForm').submit();
+	});
+
 	$('#calendar_icon').on('click', function(){
 		$('#out_date').datetimepicker("show");
 	});

@@ -18,7 +18,7 @@
 										<p>{{$message}}</p>
 									</div>
 									@endif									
-									<form method="POST" action="{{ route('punch.store') }}">
+									<form id="punchInForm" method="POST" action="{{ route('punch.store') }}">
 										@csrf
 										<div class="row">
 											<div class="col-sm-2">
@@ -87,7 +87,7 @@
 											<div class="col-sm-3 text-center">
 												<div class="row">
 													<div class="col-sm-6">
-														<button class="btn btn-theme text-white ctm-border-radius button-1" type="submit">Punch In</button>
+														<button class="btn btn-theme text-white ctm-border-radius button-1" type="button" id="punch_in">Punch In</button>
 													</div>
 												</div>
 											</div>
@@ -110,6 +110,13 @@
 
 @push('scripts')
 <script type="text/javascript">
+	$('#punch_in').on('click', function(){
+		if (!confirm("Do you want to Punch In?")){
+			return false;
+		}
+		$('#punchInForm').submit();
+	});
+
 	$('#calendar_icon').on('click', function(){
 		$('#in_date').datetimepicker("show");
 	});

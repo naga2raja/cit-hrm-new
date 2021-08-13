@@ -341,10 +341,12 @@
                                         <li>
                                             <a class="dropdown-item dropdown-toggle {{ Request::is('leaveEntitlement*', 'myEntitlements*') ? 'active' : '' }}" href="javascript:void(0)">Entitlements</a>
                                             <ul class="dropdown-menu">
-                                                @hasanyrole('Admin|Manager')
+                                                @hasanyrole('Admin')
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('leaveEntitlement/create') ? 'active' : '' }}" href="{{ route('leaveEntitlement.create') }}">Add Entitlements</a>
                                                 </li>
+                                                @endrole
+                                                @hasanyrole('Admin|Manager')
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('leaveEntitlement') ? 'active' : '' }}" href="{{ route('leaveEntitlement.index') }}">Employee Entitlements</a>
                                                 </li>

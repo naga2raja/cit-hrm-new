@@ -14,6 +14,7 @@ use App\mLeavePeriod;
 use App\mLeaveEntitlement;
 use App\mCompanyLocation;
 use App\mCountry;
+use App\Http\Controllers\Leave\Leave\LeaveController;
 use Session;
 use DB;
 
@@ -26,6 +27,21 @@ class LeaveEntitlementController extends Controller
      */
     public function index(Request $request)
     {
+        $leaveCtrl = new LeaveController;
+
+        $user = Auth::user();
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails($user->id);
+        $employeeId = $currentEmployeeDetails->id;
+
+        $empIds = [];
+        if($user->hasRole('Manager')) {
+            $userRole = 'Manager';
+            //Find Reporting Employees Ids
+            $reportTo = $leaveCtrl->getReportingEmployees($employeeId);
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        }
+
       // for employees entitlement list
       DB::connection()->enableQueryLog();
 
@@ -46,6 +62,9 @@ class LeaveEntitlementController extends Controller
                 ->when(request()->filled('to_date'), function ($query) {
                     $query->where('m_leave_entitlements.to_date', '<=', request('to_date'));
                 });
+                if(count($empIds)) {
+                    $entitlement->whereIn('m_leave_entitlements.emp_number', $empIds);
+                }
 
       $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
                        ->get();
