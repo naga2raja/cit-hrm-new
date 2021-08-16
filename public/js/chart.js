@@ -131,7 +131,7 @@
 				        },
 				        labels: {
 				        	formatter: function() {
-								return '<a href="<?php echo $this->baseUrl();?>/" class="external">' + this.value +'</a>';
+								return '<a id='+this.value+'>' + this.value +'</a>';
 							}
 					      // formatter () {
 					      // 	return `<span style="color: ${color[this.value]}">${this.value}</span>`
@@ -176,59 +176,20 @@
 				        data: [leave, attendance, timesheet]
 
 				    }]
-				});	
-				// Highcharts.chart('container', {
-				//     chart: {
-				//         type: 'column'
-				//     },
-				//     title: {
-				//         text: 'Pending Requests'
-				//     },
-				//     subtitle: {
-				//         // text: 'Source: WorldClimate.com'
-				//     },
-				//     xAxis: {
-				//         categories: ['Request Type'],
-				//         crosshair: true
-				//     },
-				//     yAxis: {
-				//         title: {
-				//             text: 'No. of Requests'
-				//         }
-				//     },
-				//     plotOptions: {
-				//         pie: {
-				//             allowPointSelect: true,
-				//             cursor: 'pointer',
-				//             dataLabels: {
-				//                 enabled: true,
-				//                 format: '{point.percentage:.1f} %',
-				//                 // distance: -10,
-				//             },
-				//             // showInLegend: true
-				//         },
-				//         column: {
-				//             pointPadding: 0.3,
-				//             borderWidth: 0
-				//         }
-				//     },
-				//     series: [{
-				//         name: 'Leave',
-				//         data: [leave]
+				});
 
-				//     }, {
-				//         name: 'Attendance',
-				//         data: [attendance]
+				// set link to the xAxis categories // $("#Leave").attr("href", "leave-list");
+				var link1 = document.getElementById("Leave");
+			    link1.setAttribute('href', "leave-list");
 
-				//     }, {
-				//         name: 'Timesheet',
-				//         data: [timesheet]
+			    var link2 = document.getElementById("Attendance");
+			    link2.setAttribute('href', "employee-records");
 
-				//     }]
-				// });
+				var link3 = document.getElementById("Timesheet");
+			    link3.setAttribute('href', "timesheets");
 
 				// to remove the watermark
 				$('.highcharts-credits').html('');
 			}
 		});
-	}	
+	}

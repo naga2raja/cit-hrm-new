@@ -155,18 +155,43 @@ class AdminController extends Controller
 
         $team_info = [];
         if(Auth::user()->hasRole('Admin')) {
-            $team_info = tEmployeeReportTo::selectRaw('t_employee_report_to.manager_id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, m_projects.project_name, t_project_managers.employee_id as project_manager, t_project_admins.project_id as admin_project_id, t_project_managers.project_id as manager_project_id,
-                CONCAT_WS(" | ", 
-                        CASE WHEN t_employee_report_to.manager_id != "" THEN "Reporting Manager" END,
-                        CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END,
-                        CASE WHEN t_project_managers.employee_id != "" THEN "Projct Manager" END
-                    ) AS designation')
-                                    ->leftJoin('t_project_admins', 't_project_admins.admin_id', 't_employee_report_to.manager_id')
-                                    ->leftJoin('t_project_managers', 't_project_managers.employee_id', 't_employee_report_to.manager_id')
-                                    ->leftJoin('m_projects', 'm_projects.id', 't_project_managers.project_id')
-                                    ->join('employees', 'employees.id', 't_employee_report_to.manager_id')
-                                    ->groupBy('t_employee_report_to.manager_id', 't_project_admins.admin_id', 't_project_managers.employee_id')
-                                    ->get();
+            $reporting_manager = tEmployeeReportTo::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_employee_report_to.manager_id as manager_id, CASE WHEN t_employee_report_to.manager_id != "" THEN "Reporting Manager" END as designation')
+                                ->join('employees', 'employees.id', 't_employee_report_to.manager_id')
+                                ->groupBy('t_employee_report_to.manager_id')
+                                ->get()->toArray();
+
+            $project_admin = tProjectAdmin::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_admins.admin_id as employee_id, m_projects.project_name, CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END as designation')
+                                ->join('m_projects', 'm_projects.id', 't_project_admins.project_id')
+                                ->join('employees', 'employees.id', 't_project_admins.admin_id')
+                                ->groupBy('t_project_admins.admin_id')
+                                ->get()->toArray();
+
+            $project_manager = tProjectManager::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_managers.employee_id, m_projects.project_name, CASE WHEN t_project_managers.employee_id != "" THEN "Project Manager" END as designation')
+                                ->join('m_projects', 'm_projects.id', 't_project_managers.project_id')
+                                ->join('employees', 'employees.id', 't_project_managers.employee_id')
+                                ->groupBy('t_project_managers.employee_id')
+                                ->get()->toArray();
+
+            $result_arr = array_merge($reporting_manager, $project_admin, $project_manager);
+
+            $output['reporting_manager'] = [];
+            $output['project_admin'] = [];
+            $output['project_manager'] = [];
+            $output['reporting_employee'] = []; // dummy data
+            $output['team_member'] = []; // dummy data
+
+            foreach ($result_arr as $key => $value) {
+                if($value['designation'] == "Reporting Manager"){
+                    $output['reporting_manager'][] = $value;
+                }
+                if($value['designation'] == "Project Admin"){
+                    $output['project_admin'][] = $value;
+                }
+                if($value['designation'] == "Project Manager"){
+                    $output['project_manager'][] = $value;
+                }
+            }
+            $team_info[] = $output;
         }
 
         if(Auth::user()->hasRole('Manager')) {
@@ -177,11 +202,16 @@ class AdminController extends Controller
                                 ->groupBy('t_employee_report_to.manager_id')
                                 ->get()->toArray();
 
-            $reporting_employee = tEmployeeReportTo::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_employee_report_to.employee_id as employee_id, CASE WHEN t_employee_report_to.employee_id != "" THEN "Reporting Employee" END as designation')
+            $reporting_employee = tEmployeeReportTo::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_employee_report_to.employee_id as employee_id, m_projects.project_name, CASE WHEN t_employee_report_to.employee_id != "" THEN "Reporting Employee" END as designation')
                                 ->join('employees', 'employees.id', 't_employee_report_to.employee_id')
+                                ->leftJoin('t_project_employees', 't_project_employees.employee_id', 'employees.id')
+                                ->leftJoin('m_projects', 'm_projects.id', 't_project_employees.project_id')
                                 ->where('t_employee_report_to.manager_id', $employee->id)
                                 ->groupBy('t_employee_report_to.employee_id')
                                 ->get()->toArray();
+
+            // to get the login user project
+            $project = tProjectManager::select('project_id')->where('employee_id', $employee->id)->first();
 
             $project_admin = tProjectAdmin::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_admins.admin_id as employee_id, m_projects.project_name, CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_admins.project_id')
@@ -190,18 +220,20 @@ class AdminController extends Controller
                                 ->groupBy('t_project_admins.admin_id')
                                 ->get()->toArray();
 
-            $project_manager = tProjectManager::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_managers.employee_id, m_projects.project_name, CASE WHEN t_project_managers.employee_id != "" THEN "Project Manager" END as designation')
+            if($project){
+                $project_manager = tProjectManager::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_managers.employee_id, m_projects.project_name, CASE WHEN t_project_managers.employee_id != "" THEN "Project Manager" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_managers.project_id')
                                 ->join('employees', 'employees.id', 't_project_managers.employee_id')
-                                ->where('t_project_managers.employee_id', $employee->id)
+                                ->where('m_projects.id', $project->project_id)
+                                ->where('t_project_managers.employee_id', '!=', $employee->id)
                                 ->groupBy('t_project_managers.employee_id')
                                 ->get()->toArray();
+            }
 
-            $project = tProjectEmployee::select('project_id')->where('employee_id', $employee->id)->first();
+            
             $project_employees = tProjectEmployee::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_employees.employee_id, m_projects.project_name, CASE WHEN t_project_employees.employee_id != "" THEN "Team Member" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_employees.project_id')
-                                ->join('employees', 'employees.id', 't_project_employees.employee_id')
-                                ->where('t_project_employees.employee_id', '=', $employee->id);
+                                ->join('employees', 'employees.id', 't_project_employees.employee_id');
                                 if($project){
                                     $project_employees->where('m_projects.id', $project->project_id);
                                 }
@@ -243,33 +275,39 @@ class AdminController extends Controller
                                 ->groupBy('t_employee_report_to.manager_id')
                                 ->get()->toArray();
 
+            // to get the login user project
+            $project = tProjectEmployee::select('project_id')->where('employee_id', $employee->id)->first();
+
             $project_admin = tProjectAdmin::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_admins.admin_id as employee_id, m_projects.project_name, CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_admins.project_id')
-                                ->join('employees', 'employees.id', 't_project_admins.admin_id')
-                                ->where('t_project_admins.admin_id', $employee->id)
-                                ->groupBy('t_project_admins.admin_id')
+                                ->join('employees', 'employees.id', 't_project_admins.admin_id');
+                                if($project){
+                                    $project_admin->where('m_projects.id', $project->project_id);
+                                }
+                                $project_admin = $project_admin->groupBy('t_project_admins.admin_id')
                                 ->get()->toArray();
 
             $project_manager = tProjectManager::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_managers.employee_id, m_projects.project_name, CASE WHEN t_project_managers.employee_id != "" THEN "Project Manager" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_managers.project_id')
-                                ->join('employees', 'employees.id', 't_project_managers.employee_id')
-                                ->where('t_project_managers.employee_id', $employee->id)
-                                ->groupBy('t_project_managers.employee_id')
+                                ->join('employees', 'employees.id', 't_project_managers.employee_id');
+                                if($project){
+                                    $project_manager->where('m_projects.id', $project->project_id);
+                                }
+                                $project_manager = $project_manager->groupBy('t_project_managers.employee_id')
                                 ->get()->toArray();
 
-            // to get the login user project
-            $project = tProjectEmployee::select('project_id')->where('employee_id', $employee->id)->first();
-            $project_employees = tProjectEmployee::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_employees.employee_id, m_projects.project_name, CASE WHEN t_project_employees.employee_id != "" THEN "Team Member" END as designation')
+            
+            if($project){
+                $team_member = tProjectEmployee::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_employees.employee_id, m_projects.project_name, CASE WHEN t_project_employees.employee_id != "" THEN "Team Member" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_employees.project_id')
                                 ->join('employees', 'employees.id', 't_project_employees.employee_id')
-                                ->where('t_project_employees.employee_id', '=', $employee->id);
-                                if($project){
-                                    $project_employees->where('m_projects.id', $project->project_id);
-                                }
-                                $project_employees = $project_employees->groupBy('t_project_employees.employee_id')
+                                ->where('m_projects.id', $project->project_id)
+                                ->where('t_project_employees.employee_id', '!=', $employee->id)
+                                ->groupBy('t_project_employees.employee_id')
                                 ->get()->toArray();
+            }
 
-            $result_arr = array_merge($reporting_manager, $project_employees, $project_manager, $project_admin);
+            $result_arr = array_merge($reporting_manager, $project_admin, $project_manager, $team_member);
 
             $output['reporting_manager'] = [];
             $output['project_admin'] = [];

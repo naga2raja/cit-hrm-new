@@ -377,19 +377,14 @@
 						news += '<div class="dash-card-icon '+style+'"><i class="'+category+'" aria-hidden="true"></i></div>';
 						news += '</div>';
 						news += '</div></a>';
-						if (news_index !== data[0].news.length - 1) {
+						if (news_index != data[0].news.length - 1) {
 							news += '<hr>';
 						}
 		        	});
 		        }else{
-		        	var profileImg = "{{ assetUrl('img/profiles/img-5.jpg') }}";
 		        	news += '<div class="notice-board">';
-					news += '<div class="table-img">';
-					news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+profileImg+'" alt="Danny Ward"></div>';
-					news += '</div>';
-					news += '<div class="notice-body">';
-					news += '<h6 class="mb-0">No News</h6>';
-					news += '</div></div>';
+					news += '<h6 class="mb-0 ctm-text-sm">No News</h6>';
+		        	news += '</div>';
 		        }
 		        $('#today_news').html(news);
 			}
@@ -406,30 +401,10 @@
 			success: function(data){
 				console.log('LoadTeamLeads : ', data);
 				var leads = '';
-				if('{{ Auth::user()->roles[0]->name }}' == "Admin"){
-					if(data.length > 0){					
-			            data.forEach(function (row,index) {
-			            	var emp_id = '{{ getEmployeeId(Auth::user()->roles[0]->id) }}';
-			            	if(row.employee_id != emp_id) {
-				            	leads += '<div class="media mb-3">';
-				            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-								leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
-								leads += '<div class="media-body">';
-								leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-								var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
-								leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
-								leads += '</div></div>';
-								if (index !== data.length - 1) {
-									leads += '<hr>';
-								}
-							}
-			        	});
-			        }
-			    }
-		    	else if((data[0].reporting_manager.length > 0)||(data[0].reporting_employee.length > 0)||(data[0].project_admin.length > 0)||(data[0].project_manager.length > 0)||(data[0].team_member.length > 0)){
-		        	console.log('reporting_manager : ', data[0].reporting_manager.length);
+		  		if((data[0].reporting_manager.length > 0)||(data[0].reporting_employee.length > 0)||(data[0].project_admin.length > 0)||(data[0].project_manager.length > 0)||(data[0].team_member.length > 0)){
+		        	// console.log('reporting_manager : ', data[0].reporting_manager.length);
 		            data[0].reporting_manager.forEach(function (row,index) {
-		            	var designation = row.designation;
+		            	var designation = row.designation; var project_name = '';
 		            	data[0].project_admin.forEach(function (admin_row,admin_index) {
 		            		if(admin_row.employee_id == row.manager_id){
 		            			designation += ' | '+ admin_row.designation;
@@ -438,6 +413,7 @@
 		            	data[0].project_manager.forEach(function (project_row,project_index) {
 		            		if(project_row.employee_id == row.manager_id){
 		            			designation += ' | '+ project_row.designation;
+		            			project_name = project_row.project_name;
 		            		}
 		            	});
 		            	leads += '<div class="media mb-3">';
@@ -445,11 +421,84 @@
 						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						leads += '<p class="mb-0 ctm-text-sm">' +designation+ '</p>';
+						var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
+						leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
 						leads += '</div></div>';
 						leads += '<hr>';
 		        	});
+		        	// project admin
+		        	// console.log('project_admin : ', data[0].project_admin.length);
+		        	data[0].project_admin.forEach(function (row,index) {
+		        		var reporting_remove_id = '';
+		        		data[0].reporting_manager.forEach(function (reporting_row,reporting_index) {
+		            		if(reporting_row.manager_id == row.employee_id){
+		            			reporting_remove_id = row.employee_id;
+		            		}
+		            	});
+
+		        		var designation = row.designation;  var project_name = row.project_name;
+		            	data[0].project_manager.forEach(function (project_row,project_index) {
+		            		if(project_row.employee_id == row.employee_id){
+		            			designation += ' | '+ project_row.designation;
+		            			if(project_row.project_name != row.project_name){
+			            			if(project_name != ""){
+			            				project_name += ', ';
+			            			}
+			            			project_name += project_row.project_name;
+			            		}
+		            		}
+		            	});
+		            	if(reporting_remove_id != row.employee_id){
+		            		leads += '<div class="media mb-3">';
+			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
+							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+							leads += '<div class="media-body">';
+							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
+							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
+							leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
+							leads += '</div></div>';
+							if(('{{ Auth::user()->roles[0]->name }}' == "Admin")&&(index != data[0].project_admin.length - 1)) {
+								leads += '<hr>';
+							}
+							if('{{ Auth::user()->roles[0]->name }}' == "Manager"){
+								leads += '<hr>';
+							}
+		            	}		            	
+		        	});
+		        	// project manager
+		        	// console.log('project_manager : ', data[0].project_manager.length);
+		        	data[0].project_manager.forEach(function (row,index) {
+		        		var reporting_remove_id = 0;
+		        		var project_remove_id = 0;
+		        		data[0].reporting_manager.forEach(function (reporting_row,reporting_index) {
+		            		if(reporting_row.manager_id == row.employee_id){
+		            			reporting_remove_id = row.employee_id;
+		            		}
+		            	});
+		            	data[0].project_admin.forEach(function (project_row,project_index) {
+		            		if(project_row.employee_id == row.employee_id){
+		            			project_remove_id = row.employee_id;
+		            		}
+		            	});
+		            	if((reporting_remove_id != row.employee_id)&&(project_remove_id != row.employee_id)){
+			            	leads += '<div class="media mb-3">';
+			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
+							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+							leads += '<div class="media-body">';
+							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
+							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
+							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
+							leads += '</div></div>';
+							if (('{{ Auth::user()->roles[0]->name }}' == "Admin")&&(index != data[0].project_manager.length - 1)) {
+								leads += '<hr>';
+							}
+							if('{{ Auth::user()->roles[0]->name }}' == "Manager"){
+								leads += '<hr>';
+							}
+						}
+		        	});
 		        	// reporting employee
+		        	// console.log('reporting_employee : ', data[0].reporting_employee.length);
 		        	data[0].reporting_employee.forEach(function (row,index) {
 		            	var designation = row.designation;
 		            	data[0].team_member.forEach(function (team_row,team_index) {
@@ -467,60 +516,8 @@
 						leads += '</div></div>';
 						leads += '<hr>';
 		        	});
-		        	// project admin
-		        	data[0].project_admin.forEach(function (row,index) {
-		        		var reporting_remove_id = '';
-		        		data[0].reporting_manager.forEach(function (reporting_row,reporting_index) {
-		            		if(reporting_row.manager_id == row.employee_id){
-		            			reporting_remove_id = row.employee_id;
-		            		}
-		            	});
-
-		        		var designation = row.designation;
-		            	data[0].project_manager.forEach(function (project_row,project_index) {
-		            		if(project_row.employee_id == row.employee_id){
-		            			designation += ' | '+ project_row.designation;
-		            		}
-		            	});
-		            	if(reporting_remove_id != row.employee_id){
-		            		leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
-							leads += '<div class="media-body">';
-							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
-							leads += '</div></div>';
-							leads += '<hr>';
-		            	}		            	
-		        	});
-		        	// project manager
-		        	data[0].project_manager.forEach(function (row,index) {
-		        		var reporting_remove_id = 0;
-		        		var project_remove_id = 0;
-		        		data[0].reporting_manager.forEach(function (reporting_row,reporting_index) {
-		            		if(reporting_row.manager_id == row.employee_id){
-		            			reporting_remove_id = row.employee_id;
-		            		}
-		            	});
-		            	data[0].project_manager.forEach(function (project_row,project_index) {
-		            		if(project_row.employee_id == row.employee_id){
-		            			project_remove_id = row.employee_id;
-		            		}
-		            	});
-		            	if((reporting_remove_id != row.employee_id)&&(project_remove_id != row.employee_id)){
-			            	leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
-							leads += '<div class="media-body">';
-							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
-							leads += '</div></div>';
-							leads += '<hr>';
-						}
-		        	});
 		        	// Team Member
+		        	// console.log('team_member : ', data[0].team_member.length);
 		        	data[0].team_member.forEach(function (row,index) {
 		        		var employee_remove_id = 0;
 		            	data[0].reporting_employee.forEach(function (employee_row,employee_index) {
@@ -537,7 +534,7 @@
 							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
 							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
 							leads += '</div></div>';
-							if (index !== data[0].team_member.length - 1) {
+							if (index != data[0].team_member.length - 1) {
 								leads += '<hr>';
 							}
 						}
@@ -603,7 +600,7 @@
 						activity += '<span class="ctm-text-sm"> ' +row.role_name+ ' | '+diff+'</span>';
 						activity += '</div>';
 						activity += '</div>';
-						if (index !== data.length - 1) {
+						if (index != data.length - 1) {
 							activity += '<hr>';
 						}
 		        	});	
@@ -650,7 +647,7 @@
 						leaves += '<span class="ctm-text-sm">';
 						leaves += row.leave_duration.charAt(0).toUpperCase() + row.leave_duration.slice(1)+' | '+status+'</span>';
 						leaves += '</div></div>';
-						if (index !== data.length - 1) {
+						if (index != data.length - 1) {
 							leaves += '<hr>';
 						}
 		        	});	            

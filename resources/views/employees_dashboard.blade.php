@@ -247,18 +247,14 @@
 						news += '<div class="dash-card-icon '+style+'"><i class="'+category+'" aria-hidden="true"></i></div>';
 						news += '</div>';
 						news += '</div></a>';
-						if (news_index !== data[0].news.length - 1) {
+						if (news_index != data[0].news.length - 1) {
 							news += '<hr>';
 						}
 		        	});
 		        }else{
 		        	news += '<div class="notice-board">';
-					news += '<div class="table-img">';
-					news += '<div class="e-avatar mr-3"><img class="img-fluid" src="img/profiles/img-5.jpg" alt="Danny Ward"></div>';
-					news += '</div>';
-					news += '<div class="notice-body">';
-					news += '<h6 class="mb-0">No News</h6>';
-					news += '</div></div>';
+					news += '<h6 class="mb-0 ctm-text-sm">No News</h6>';
+		        	news += '</div>';
 		        }
 		        $('#today_news').html(news);
 			}
@@ -273,12 +269,12 @@
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
-				// console.log('LoadTeamLeads : ', data);
+				console.log('LoadTeamLeads : ', data);
 				var leads = '';
 				if((data[0].reporting_manager.length > 0)||(data[0].project_admin.length > 0)||(data[0].project_manager.length > 0)||(data[0].team_member.length > 0)){
 		            // console.log('reporting_manager : ', data[0].reporting_manager.length);
 		            data[0].reporting_manager.forEach(function (row,index) {
-		            	var designation = row.designation;
+		            	var designation = row.designation;  var project_name = '';
 		            	data[0].project_admin.forEach(function (admin_row,admin_index) {
 		            		if(admin_row.employee_id == row.manager_id){
 		            			designation += ' | '+ admin_row.designation;
@@ -287,6 +283,7 @@
 		            	data[0].project_manager.forEach(function (project_row,project_index) {
 		            		if(project_row.employee_id == row.manager_id){
 		            			designation += ' | '+ project_row.designation;
+		            			project_name = project_row.project_name;
 		            		}
 		            	});
 		            	leads += '<div class="media mb-3">';
@@ -294,12 +291,13 @@
 						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
+						var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
 						leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
 						leads += '</div></div>';
 						leads += '<hr>';
 		        	});
 		        	// project admin
+		        	// console.log('project_admin : ', data[0].project_admin.length);
 		        	data[0].project_admin.forEach(function (row,index) {
 		        		var reporting_remove_id = '';
 		        		data[0].reporting_manager.forEach(function (reporting_row,reporting_index) {
@@ -327,6 +325,7 @@
 		            	}		            	
 		        	});
 		        	// project manager
+		        	// console.log('project_manager : ', data[0].project_manager.length);
 		        	data[0].project_manager.forEach(function (row,index) {
 		        		var reporting_remove_id = 0;
 		        		var project_remove_id = 0;
@@ -335,7 +334,7 @@
 		            			reporting_remove_id = row.employee_id;
 		            		}
 		            	});
-		            	data[0].project_manager.forEach(function (project_row,project_index) {
+		            	data[0].project_admin.forEach(function (project_row,project_index) {
 		            		if(project_row.employee_id == row.employee_id){
 		            			project_remove_id = row.employee_id;
 		            		}
@@ -353,26 +352,24 @@
 						}
 		        	});
 		        	// Team Member
+		        	// console.log('team_member : ', data[0].team_member.length);
 		        	data[0].team_member.forEach(function (row,index) {
-		        		var login_employee_id= "{{ getEmployeeId(Auth::user()->id) }}";
-		        		if(login_employee_id != row.employee_id){
-			            	leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
-							leads += '<div class="media-body">';
-							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
-							leads += '</div></div>';
-							if (index !== data[0].team_member.length - 1) {
-								leads += '<hr>';
-							}
+		            	leads += '<div class="media mb-3">';
+		            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
+						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+						leads += '<div class="media-body">';
+						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
+						var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
+						leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
+						leads += '</div></div>';
+						if (index != data[0].team_member.length - 1) {
+							leads += '<hr>';
 						}
 		        	});
 		        }else{
 		        	leads += '<div class="media mb-3">';
 		        	leads += '<h6 class="m-0 ctm-text-sm">No Team Data</h6>';
-		        	leads += '</div><hr>';
+		        	leads += '</div>';
 		        }
 		        $('#team_leads').html(leads);
 			}
@@ -483,14 +480,14 @@
 						leaves += '<span class="ctm-text-sm">';
 						leaves += row.leave_duration.charAt(0).toUpperCase() + row.leave_duration.slice(1)+' | '+status+'</span>';
 						leaves += '</div></div>';
-						if (index !== data.length - 1) {
+						if (index != data.length - 1) {
 							leaves += '<hr>';
 						}
 		        	});	            
 		        }else{
 		        	leaves += '<div class="notice-board">';
 					leaves += '<h6 class="mb-0 ctm-text-sm">No Upcoming Leave</h6>';
-		        	leaves += '</div><hr>';
+		        	leaves += '</div>';
 		        }
 		        $('#upcoming_leaves').html(leaves);
 			}
