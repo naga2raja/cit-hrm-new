@@ -252,9 +252,10 @@
 						}
 		        	});
 		        }else{
+		        	var profileImg = "{{ assetUrl('img/profiles/img-5.jpg') }}";
 		        	news += '<div class="notice-board">';
 					news += '<div class="table-img">';
-					news += '<div class="e-avatar mr-3"><img class="img-fluid" src="img/profiles/img-5.jpg" alt="Danny Ward"></div>';
+					news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+profileImg+'" alt="Danny Ward"></div>';
 					news += '</div>';
 					news += '<div class="notice-body">';
 					news += '<h6 class="mb-0">No News</h6>';
