@@ -13,7 +13,7 @@
 									</div>
 								</div>
 								<div class="card-body">
-									<form method="POST" action="{{ route('projects.store') }}">
+									<form id="add_project" method="POST" action="{{ route('projects.store') }}">
 										@csrf
 										<div class="row">
 											<div class="col-sm-2">
@@ -139,7 +139,7 @@
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="submit-section text-center btn-add">
-															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+															<button type="button" onclick="submitProjectsForm()" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
 														</div>
 													</div>
 													<div class="col-sm-6">
@@ -215,6 +215,28 @@
 				</div>
 			</div>
 		</div>
+
+		       <!--Delete The Modal -->
+			   <div class="modal fade" id="reporting_information_modal">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+					
+						<!-- Modal body -->
+						<div class="modal-body">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title mb-3">For You Information</h4>
+								<div class="row">
+									<div class="col-md-12">
+										<div id="reporting_information" class="mb-2"></div>
+									</div>
+								</div>
+							<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
+							<button type="button" onclick="submitForm()" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Proceed</button>
+						
+						</div>
+					</div>
+				</div>
+			</div>
 		
 @endsection
 
@@ -303,7 +325,7 @@
 	$('.employee_name, .managers, #admin_id').select2({
 		placeholder: 'Select',
 		ajax: {
-			url: '/employee-autocomplete-ajax',
+			url: '{{ route("ajax.employee_search") }}',
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {
@@ -344,5 +366,41 @@ $('#customer').select2({
 			cache: true
 		}		
 	});
+
+	function submitForm() {
+		$("#add_project").submit();
+	}
+
+	function submitProjectsForm() {
+		var employeeIds = $('#employee_ids').val();
+		var managerIds = $('#manager_ids').val();		
+
+		//check assigned employees managers
+		$.ajax({
+			method: 'POST',
+			url: '{{ route("project.checkEmployeeAjax") }}',
+			data: JSON.stringify({"manager_ids": managerIds, "employee_ids": employeeIds, "_token": "{{ csrf_token() }}"}),
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(response){
+				console.log('response : ', response);
+				var html = '';	
+				if(response && response.length)	{
+					html += '<table class="table"><tr><th>Employee Name</th><th>Reporting Managers</th></tr>';
+					response.forEach(element => {
+						console.log(element.manager_name);
+						html += '<tr><td>'+element.employee_name+'</td><td>'+element.manager_name+'</td></tr>';
+						
+					});
+					html += '</table>';					
+				} else {
+					html += '<div class="alert alert-danger"><p>No Employees Assigned!</p></div>';
+				}	
+				$('#reporting_information').html(html);
+				$('#reporting_information_modal').modal('show');	
+			}					
+		});
+
+	}
 </script>
 @endpush

@@ -249,7 +249,7 @@
 		placeholder: 'Select a employee',
 		allowClear: true,
 		ajax: {
-			url: '/employee-autocomplete-ajax',
+			url: '{{ route("ajax.employee_search") }}',
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {

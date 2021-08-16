@@ -14,6 +14,7 @@ use App\Session;
 use DB;
 use App\tProjectManager;
 use App\tProjectEmployee;
+use App\tEmployeeReportTo;
 
 class ProjectsController extends Controller
 {
@@ -385,6 +386,27 @@ class ProjectsController extends Controller
                 ->selectRaw('employees.id, CONCAT_WS (" ", first_name, middle_name, last_name) AS name')
                 ->get()
                 ->toArray();
+        return $out;
+    }
+
+    public function checkAssignedEmployeeManagerAjax(Request $request) {
+        $employeeIds = $request->employee_ids;
+        $managerIds = $request->manager_ids;
+        $out = [];
+        if($employeeIds && count($employeeIds)) {
+            foreach ($employeeIds as $employee) {
+                $reportTo = tEmployeeReportTo::join('employees', 't_employee_report_to.manager_id', 'employees.id')
+                    ->where('t_employee_report_to.employee_id', $employee)
+                    ->selectRaw('GROUP_CONCAT(t_employee_report_to.manager_id) as manager_ids, GROUP_CONCAT(CONCAT_WS(" ",first_name, middle_name, last_name)) as manager_name ')
+                    ->first();
+                $employeeDet = Employee::where('id', $employee)->selectRaw('CONCAT_WS(" ",first_name, middle_name, last_name) as name')->first();
+                if($reportTo && $reportTo->manager_name) {
+                    $out[] = ['employee_id' => $employee, 'employee_name'=>$employeeDet->name, 'manager_name' => $reportTo->manager_name, 'manager_ids' => $reportTo->manager_ids];
+                } else {
+                    $out[] = ['employee_id' => $employee, 'employee_name'=>$employeeDet->name, 'manager_name' => 'Admin', 'manager_ids' => '1'];
+                }
+            }
+        }
         return $out;
     }
 }

@@ -223,6 +223,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::post('/update-project', 'Time\ProjectInfo\ProjectsController@update_project')->name('update-project');
     Route::post('/projects/multiple-delete', 'Time\ProjectInfo\ProjectsController@deleteMultiple');
     Route::get('/customers-ajax-search', 'Time\ProjectInfo\ProjectsController@customerAjaxSearch')->name('customer.AjaxSearch');
+    Route::post('/check-assigned-manager-employees-ajax', 'Time\ProjectInfo\ProjectsController@checkAssignedEmployeeManagerAjax')->name('project.checkEmployeeAjax');
     
 
     /* Time/ProjectInfo/Projects/Activities */
@@ -276,7 +277,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     Route::post('/timesheets/multiple-delete', 'Time\Timesheets\TimesheetsController@deleteMultiple');
 
     //Employee autocomplete ajax
-    Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax');
+    Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax')->name('ajax.employee_search');
     //Project autocomplete ajax
     Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax');
     //Activity autocomplete ajax
