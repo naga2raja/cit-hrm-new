@@ -261,7 +261,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     //Leave
     Route::get('leave-list', 'Leave\Leave\LeaveController@getLeaveList')->name('leave.list');
     Route::resource('/leave', 'Leave\Leave\LeaveController');
-    Route::post('leave/leave-balance-ajax', 'Leave\Leave\LeaveController@getLeaveBalance');
+    Route::post('leave/leave-balance-ajax', 'Leave\Leave\LeaveController@getLeaveBalance')->name('leave-balance-ajax');
     Route::delete('leave/delete-leave', 'Leave\Leave\LeaveController@destroy')->name('leave.delete_modal');
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
     Route::get('my-info', 'Employee\EmployeeController@myInfo')->name('myinfo');
