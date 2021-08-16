@@ -70,7 +70,7 @@
 															<li  class="list-group-item">
 																If gender is specified, value should be either <b>Male</b> or <b>Female</b> </li>	
 															<li  class="list-group-item">Sample CSV file:                         
-																<a title="Download" target="_blank" class="download" href="{{ assetUrl('sample/employee-import.csv') }}">Download</a>
+																<a class="download" href="{{ route('sample.download') }}?file=pim">Download</a>
 															</li>
 														 </ul>
 													</div>
