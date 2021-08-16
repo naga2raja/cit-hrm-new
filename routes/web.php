@@ -249,10 +249,10 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
 Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function () {
 
     // dashboard
-    Route::get('/getTodayNews-ajax', 'Admin\AdminController@getTodayNews');
-    Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads');
-    Route::get('/getUpcomingLeaves-ajax', 'Admin\AdminController@getUpcomingLeaves');
-    Route::get('/getRecentActivities-ajax', 'Admin\AdminController@getRecentActivities');
+    Route::get('/getTodayNews-ajax', 'Admin\AdminController@getTodayNews')->name('getTodayNews-ajax');
+    Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads')->name('getTeamLeads-ajax');
+    Route::get('/getUpcomingLeaves-ajax', 'Admin\AdminController@getUpcomingLeaves')->name('getUpcomingLeaves-ajax');
+    Route::get('/getRecentActivities-ajax', 'Admin\AdminController@getRecentActivities')->name('getRecentActivities-ajax');
     
 
     Route::get('/emp-page', 'HomeController@demoEmployee');
@@ -269,7 +269,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     /* Time/Timesheets/MyTimesheets */
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
     Route::post('/mytimesheets/status-change', 'Time\Timesheets\MyTimesheetsController@updateStatusAjax')->name('mytimesheets.submit');
-    Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets');
+    Route::post('/mytimesheets/getMyTimeSheets-ajax', 'Time\Timesheets\MyTimesheetsController@getMyTimeSheets')->name('getMyTimeSheets-ajax');
     Route::post('/mytimesheets/multiple-delete', 'Time\Timesheets\MyTimesheetsController@deleteMultiple');
     // add Timesheets
     Route::get('/timesheets.create', 'Time\Timesheets\TimesheetsController@create')->name('timesheets.create');
@@ -279,9 +279,9 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     //Employee autocomplete ajax
     Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax')->name('ajax.employee_search');
     //Project autocomplete ajax
-    Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax');
+    Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax')->name('ajax.project_search');
     //Activity autocomplete ajax
-    Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName');
+    Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName')->name('getActivityName-ajax');
     //country autocomplete ajax
     Route::get('/country-autocomplete-ajax', 'Admin\Organization\LocationsController@searchCountryAjax');
 
@@ -291,7 +291,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     Route::post('/punch/update-ajax', 'Time\Attendance\PunchInOutController@updateAjax')->name('punch.update-ajax');
     Route::post('/punch/status-change', 'Time\Attendance\PunchInOutController@updateStatusAjax')->name('punch.submit');    
 
-    Route::post('/timesheets/getEmployeeTimeSheets-ajax', 'Time\Timesheets\TimesheetsController@getEmployeeTimeSheets');
+    Route::post('/timesheets/getEmployeeTimeSheets-ajax', 'Time\Timesheets\TimesheetsController@getEmployeeTimeSheets')->name('getEmployeeTimeSheets-ajax');
 
     // Payslips
     Route::resource('payslips', 'Payslips\PayslipController');
@@ -303,8 +303,8 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
     // dashboard news
     Route::resource('/news', 'Admin\NewsController');
     Route::post('/news/multiple-delete', 'Admin\NewsController@deleteMultiple');
-    Route::get('/getEmployeeChart-ajax', 'Employee\EmployeeController@getEmployeeChartData');
-    Route::get('/getRequestChart-ajax', 'Admin\AdminController@getRequestChart');
+    Route::get('/getEmployeeChart-ajax', 'Employee\EmployeeController@getEmployeeChartData')->name('getEmployeeChart-ajax');
+    Route::get('/getRequestChart-ajax', 'Admin\AdminController@getRequestChart')->name('getRequestChart-ajax');
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');

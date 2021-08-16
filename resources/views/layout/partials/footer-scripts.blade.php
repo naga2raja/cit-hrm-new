@@ -131,7 +131,6 @@
 		@if((Route::is(['adminDashboard']))||Route::is(['home'])||Route::is(['index']))	
 		<!-- Chart JS -->
 		<script src="{{ assetUrl('js/Chart.min.js') }}"></script>
-		<script src="{{ assetUrl('js/chart.js') }}"></script>
 		@endif
 		<!-- Custom Js -->
 		<script src="{{ assetUrl('js/script.js') }}"></script>

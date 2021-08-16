@@ -20,7 +20,7 @@ if (! function_exists('assetUrl')) {
                     ->selectRaw('profile_photo')
                     ->first();
         if($data->profile_photo){
-            return $data->profile_photo;
+            return assetUrl($data->profile_photo);
         }else{
             return assetUrl("img/profiles/img-1.jpg");
         }

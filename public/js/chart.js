@@ -3,7 +3,7 @@
 	function LoadEmployeeChart(){
 		$.ajax({
 			method: 'GET',
-			url: '/getEmployeeChart-ajax',
+			url: "{{ route('getEmployeeChart-ajax') }}",
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
@@ -83,7 +83,7 @@
 	function LoadRequestChart(){
 		$.ajax({
 			method: 'GET',
-			url: '/getRequestChart-ajax',
+			url: "{{ route('getRequestChart-ajax') }}",
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){

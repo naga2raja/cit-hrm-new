@@ -184,7 +184,7 @@
 		placeholder: 'Select a project',
 		allowClear: true,
 		ajax: {
-			url: '/project-autocomplete-ajax',
+			url: "{{ route('ajax.project_search') }}",
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {
@@ -255,7 +255,7 @@
 		var project_id = $("#project_id").val();
 		$.ajax({
 			method: 'POST',
-			url: '/mytimesheets/getMyTimeSheets-ajax',
+			url: "{{ route('getMyTimeSheets-ajax') }}",
 			data: JSON.stringify({'selected_date': date, 'project_id': project_id, 'key':key, '_token': '{{ csrf_token() }}' }),
 			dataType: "json",
 			contentType: 'application/json',

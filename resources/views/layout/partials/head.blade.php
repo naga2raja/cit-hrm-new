@@ -157,7 +157,7 @@
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="{{ assetUrl('css/style.css') }}">
 
-        <script src="{{ asset('js/locations.js')}}"></script>        
+        <script src="{{ assetUrl('js/locations.js')}}"></script>        
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 	</head>

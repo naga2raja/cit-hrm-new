@@ -79,7 +79,7 @@
 												<div class="row">												
 													<div class="col-md-6">
 														<div class="form-inline">
-															<div id="daily_div">
+															<div id="daily_div" style="display: none;">
 																<button type="button" class="btn btn-lg text-left" style="width: 100px;">Day:</button>
 																<button type="button" id="dailyPrevious" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
 																<input type="text" name="date" id="dailyDatePicker" class="form-control" required="" autocomplete="off">
@@ -91,7 +91,7 @@
 																<input type="text" name="date" id="weeklyDatePicker" class="form-control weekly " required="" autocomplete="off">
 																<button type="button" id="weeklyNext" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
 															</div>
-															<div id="monthly_div" style="display: none;">
+															<div id="monthly_div">
 																<button type="button" class="btn btn-lg text-left" style="width: 100px;">Month:</button>
 																<button type="button" id="monthlyPrevious" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
 																<input type="text" name="month" id="monthlyDatePicker" class="form-control month" required="" autocomplete="off">
@@ -104,9 +104,9 @@
 															<input type="hidden" name="employee_id" id="employee_id" value="{{ auth()->user()->id }}">
 															<input type="hidden" name="key" id="key" value="">
 									                        <div class="btn-group">
-									                            <a id="daily_button" class="btn btn-sm btn-outline-primary fc-state-active" href="javascript:void(0)">Daily</a>
+									                            <a id="daily_button" class="btn btn-sm btn-outline-primary" href="javascript:void(0)">Daily</a>
 									                            <a id="weekly_button" class="btn btn-sm btn-outline-primary" href="javascript:void(0)">Weekly</a>
-									                            <a id="monthly_button" class="btn btn-sm btn-outline-primary" href="javascript:void(0)">Monthly</a>
+									                            <a id="monthly_button" class="btn btn-sm btn-outline-primary fc-state-active" href="javascript:void(0)">Monthly</a>
 									                        </div>
 										                </div>
 													</div>
@@ -120,7 +120,7 @@
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-10">  
 													<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
+														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Monthly Timesheets</h4>
 													</div>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
@@ -306,12 +306,12 @@
 		var employee_id = $("#employee_id").val();
 		$.ajax({
 			method: 'POST',
-			url: '/timesheets/getEmployeeTimeSheets-ajax',
+			url: "{{ route('getEmployeeTimeSheets-ajax') }}",
 			data: JSON.stringify({'selected_date': date, 'employee_id': employee_id, 'key':key, '_token': '{{ csrf_token() }}' }),
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
-				// console.log('response : ', data);
+				console.log('response : ', data);
 				var thead = '<tr class="bg-light">';
 					thead += '<th class="text-center">'
 					thead += '<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick=SelectAll("timesheets")>';
@@ -392,7 +392,7 @@
 		setCurrentWeek();
 		setCurrentMonth();
 		// to load the data
-	   	LoadData($('#dailyDatePicker').val(),'daily');
+	   	LoadData($('#monthlyDatePicker').val(),'monthly');
 	}
 
 	$('#search').click(function() {

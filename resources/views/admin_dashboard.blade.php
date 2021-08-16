@@ -28,7 +28,7 @@
 									<div class="user-info card-body">
 										<div class="user-avatar mb-4">
 											@if($data['my_data']->profile_photo)												
-												<img src="{{ $data['my_data']->profile_photo }}" alt="{{ $data['my_data']->first_name }}" class="img-fluid rounded-circle" width="100">
+												<img src="{{ assetUrl($data['my_data']->profile_photo) }}" alt="{{ $data['my_data']->first_name }}" class="img-fluid rounded-circle" width="100">
 											@else
 												<img src="{{ assetUrl('img/profiles/admin.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
 											@endif
@@ -78,7 +78,10 @@
 										<a href="leave" class="d-inline-block float-right text-primary"><i class="fa fa-suitcase"></i></a>
 									</div>
 									<div class="card-body text-center">
-										@if($leavesInfo = currentUserLeaveBalance())
+										@php 
+											$leavesInfo = currentUserLeaveBalance();
+										@endphp
+										@if(count($leavesInfo) > 0)
 											@foreach ($leavesInfo as $leave)
 												<span class="mt-0 mb-0">{{ $leave->name }}</span>
 												<div class="time-list">
@@ -91,9 +94,10 @@
 														<span class="btn btn-outline-primary">{{ $leave->remaining_days }} Days</span>
 													</div>
 												</div>
-												@if (!$loop->last) <hr> @endif
-												
+												@if (!$loop->last) <hr> @endif												
 											@endforeach
+										@else
+											<div>No Leaves</div>
 										@endif
 									</div>
 								</div>
@@ -297,6 +301,11 @@
 @push('scripts')
 <script type="text/javascript">
 
+	function getImagePath(img) {
+    	var profile_image = '{{ assetUrl(":id") }}';
+    	return profile_image.replace(':id', img);
+	}
+
 	function news_popup(title, details){
 		$('#details_news').modal('toggle');
 		$('.modal-title').html(title);
@@ -306,8 +315,8 @@
 	function getHoursDiff(created_at){
 		var currentdate = new Date(); 
 		var rightNow = moment(currentdate).utcOffset(0).format('YYYY-MM-DD HH:mm:ss');
-		var updatedDate = moment(created_at).format("YYYY-MM-DD HH:mm:ss");
-		// console.log(rightNow+" - "+updatedDate);
+		var updatedDate = moment(created_at).utcOffset(0).format("YYYY-MM-DD HH:mm:ss");
+		console.log(rightNow+" - "+updatedDate);
 
 		var diff = moment(rightNow).diff(updatedDate, 'minutes');
 		var mins = diff%60; // to get minutes
@@ -332,7 +341,7 @@
 	function LoadTodayNews(){
 		$.ajax({
 			method: 'GET',
-			url: '/getTodayNews-ajax',
+			url: "{{ route('getTodayNews-ajax') }}",
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
@@ -342,8 +351,8 @@
 					data[0].birthday.forEach(function (row,index) {
 						news += '<div class="notice-board mb-3">';
 						news += '<div class="table-img">';
-						var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Photo"></div>';
+						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+getImagePath(profile)+' alt="Photo"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
 						news += '<h6 class="mb-0">Today '+row.employee_name+' Birthday</h6>';						
@@ -357,8 +366,8 @@
 		            	news += '<a href="javascript:void(0)" id="'+row.title+'" title="'+row.news+'" onclick="news_popup(this.id, this.title)" class="text-dark">';
 		            	news += '<div class="notice-board mb-3">';
 						news += '<div class="table-img">';
-						var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
+						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						news += '<div class="e-avatar mr-3"><img class="img-fluid" src='+getImagePath(profile)+' alt="Photo"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
 						news += '<h6 class="mb-0">'+row.title+'</h6>';
@@ -395,7 +404,7 @@
 	function LoadTeamLeads(){
 		$.ajax({
 			method: 'GET',
-			url: '/getTeamLeads-ajax',
+			url: "{{ route('getTeamLeads-ajax') }}",
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
@@ -417,8 +426,8 @@
 		            		}
 		            	});
 		            	leads += '<div class="media mb-3">';
-		            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+		            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						leads += '<div class="e-avatar avatar-online mr-3"><img src='+getImagePath(profile)+' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 						var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
@@ -450,8 +459,8 @@
 		            	});
 		            	if(reporting_remove_id != row.employee_id){
 		            		leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +getImagePath(profile)+ ' alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
@@ -482,8 +491,8 @@
 		            	});
 		            	if((reporting_remove_id != row.employee_id)&&(project_remove_id != row.employee_id)){
 			            	leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +getImagePath(profile)+ ' alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
@@ -508,8 +517,8 @@
 		            		}
 		            	});
 		            	leads += '<div class="media mb-3">';
-		            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+		            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						leads += '<div class="e-avatar avatar-online mr-3"><img src=' +getImagePath(profile)+ ' alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 						leads += '<p class="mb-0 ctm-text-sm">' +designation+ '</p>';
@@ -527,8 +536,8 @@
 		            	});
 		            	if(employee_remove_id != row.employee_id){
 			            	leads += '<div class="media mb-3">';
-			            	var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +profile+ ' alt="Profile" class="img-fluid"></div>';
+			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +getImagePath(profile)+ ' alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
@@ -554,7 +563,7 @@
 	function LoadRecentActivities(){
 		$.ajax({
 			method: 'GET',
-			url: '/getRecentActivities-ajax',
+			url: "{{ route('getRecentActivities-ajax') }}",
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
@@ -564,8 +573,8 @@
 					data.forEach(function (row,index) {
 						activity += '<div class="notice-board">';
 						activity += '<div class="table-img">';
-						var profile = (row.profile_photo) ? row.profile_photo : "{{ assetUrl('img/profiles/img-1.jpg') }}";
-						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+profile+' alt="Danny Ward"></div>';
+						var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
+						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src='+getImagePath(profile)+' alt="Photo"></div>';
 						activity += '</div>';
 						activity += '<div class="notice-body">';
 
@@ -618,7 +627,7 @@
 	function LoadUpcomingLeave(){
 		$.ajax({
 			method: 'GET',
-			url: '/getUpcomingLeaves-ajax',
+			url: "{{ route('getUpcomingLeaves-ajax') }}",
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){
@@ -696,6 +705,203 @@
 	   	LoadRecentActivities();
 		// to load Upcoming leave data
 	   	LoadUpcomingLeave();
+	}
+
+	// chart
+	// Total no. of Employees
+	LoadEmployeeChart();
+	function LoadEmployeeChart(){
+		$.ajax({
+			method: 'GET',
+			url: "{{ route('getEmployeeChart-ajax') }}",
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				var leaves = '';
+				var labels = '';
+				var labels_Data = [];
+				var count = 0;
+				var count_Data = [];
+				if(data.length > 0){
+				console.log('chartData : ', data);
+
+					// Make monochrome colors
+					var pieColors = (function () {
+					    var colors = [],
+					        base = Highcharts.getOptions().colors[0],
+					        i;
+
+					    for (i = 0; i < 10; i += 1) {
+					        // Start out with a darkened base color (negative brighten), and end
+					        // up with a much brighter color
+					        colors.push(Highcharts.color(base).brighten((i - 3) / 7).get());
+					    }
+					    return colors;
+					}());
+
+		        	// Pie Chart	
+					Highcharts.chart('employees_chart', {
+					    chart: {
+					        plotBackgroundColor: null,
+					        plotBorderWidth: null,
+					        plotShadow: false,
+					        type: 'pie'
+					    },
+					    title: {
+					        text: 'Total Employees'
+					    },
+					    subtitle: {
+					        text: 'Based on Job Title'
+					    },
+					    tooltip: {
+					        pointFormat: '{series.name}: <b>{point.y}</b>'
+					    },
+					    accessibility: {
+					        point: {
+					            valueSuffix: ''
+					        }
+					    },
+					    plotOptions: {
+					        pie: {
+					            allowPointSelect: true,
+					            cursor: 'pointer',
+					            dataLabels: {
+					                enabled: true,
+					                format: '{point.percentage:.1f} %',
+					                distance: 13,
+					            },
+					            showInLegend: true
+					        }
+					    },
+					    series: [{
+					        name: 'No. of Employee',
+					        colorByPoint: true,
+					        data:  data
+					    }]
+					});
+
+					// to remove the watermark
+					$('.highcharts-credits').html('');
+
+		        }
+			}
+		});
+	}
+
+	// no. of Requests
+	LoadRequestChart();
+	function LoadRequestChart(){
+		$.ajax({
+			method: 'GET',
+			url: "{{ route('getRequestChart-ajax') }}",
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				var role = '';
+				var leave = 0;
+				var attendance = 0;
+				var timesheet = 0;
+				console.log('bar chartData : ', data.leave);
+				if(data.role){
+					role = data.role;
+		        }
+				if(data.leave){
+					leave = data.leave;
+		        }
+		        if(data.attendance){
+					attendance = data.attendance;
+		        }
+		        if(data.timesheet){
+					timesheet = data.timesheet;
+		        }
+
+	        	// bar Chart
+	        	var color = {
+				    Leave: 'rgb(124,181,236)',
+				  	Attendance: 'rgb(67,67,72)',
+				  	Timesheet: 'rgb(144,237,125)'
+				}
+
+	        	Highcharts.chart('pending_request_chart', {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: 'Pending Approval Requests'
+				    },
+				    subtitle: {
+				        text: 'From: '+ role
+				    },
+				    xAxis: {
+				        categories: ['Leave', 'Attendance', 'Timesheet'],
+				        crosshair: true,
+				        title: {
+				            // text: 'Request Type',
+				            // style: { fontWeight: 'bold'}
+				        },
+				        labels: {
+				        	formatter: function() {
+								return '<a id='+this.value+'>' + this.value +'</a>';
+							}
+					      // formatter () {
+					      // 	return `<span style="color: ${color[this.value]}">${this.value}</span>`
+					      // }
+					    }
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'No. of Requests',
+				            style: { fontWeight: 'bold'}
+				        }
+				    },
+				    legend: {
+				    	enabled: false
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0">{point.y} Pending</td></tr>',
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: false
+				    },
+				    plotOptions: {
+				        series: {
+				            dataLabels: {
+				                enabled: true,
+				                style: {
+				                    fontWeight: 'bold'
+				                }
+				            }
+				        },
+				        column: {
+				            pointPadding: 0.3,
+				            borderWidth: 0
+				        }
+				    },
+				    series: [{
+				        name: '',
+				        colorByPoint: true,
+				        data: [leave, attendance, timesheet]
+
+				    }]
+				});
+
+				// set link to the xAxis categories // $("#Leave").attr("href", "leave-list");
+				var link1 = document.getElementById("Leave");
+			    link1.setAttribute('href', "leave-list");
+
+			    var link2 = document.getElementById("Attendance");
+			    link2.setAttribute('href', "employee-records");
+
+				var link3 = document.getElementById("Timesheet");
+			    link3.setAttribute('href', "timesheets");
+
+				// to remove the watermark
+				$('.highcharts-credits').html('');
+			}
+		});
 	}
 </script>
 @endpush

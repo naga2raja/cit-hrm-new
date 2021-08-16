@@ -320,7 +320,7 @@
 			placeholder: 'Select a project',
 			allowClear: true,
 			ajax: {
-				url: '/project-autocomplete-ajax',
+				url: "{{ route('ajax.project_search') }}",
 				dataType: 'json',
 				delay: 250,
 				processResults: function (data) {
@@ -345,7 +345,7 @@
 	 	$(row_id+' .project_id').val(project_id);
 	 	$.ajax({
 			method: 'POST',
-			url: '/getActivityName-ajax',
+			url: "{{ route('getActivityName-ajax') }}",
 			data: JSON.stringify({'project_id': project_id, '_token': '{{ csrf_token() }}' }),
 			dataType: "json",
 			contentType: 'application/json',
