@@ -9,7 +9,7 @@ if (! function_exists('assetUrl')) {
      */
     function assetUrl($path, $secure = null)
     {
-        return app('url')->asset('/'.$path, $secure);
+        return app('url')->asset('/public/'.$path, $secure);
     }
 }
 
@@ -22,7 +22,7 @@ if (! function_exists('assetUrl')) {
         if($data->profile_photo){
             return $data->profile_photo;
         }else{
-            return "img/profiles/img-1.jpg";
+            return assetUrl("img/profiles/img-1.jpg");
         }
     }
 
