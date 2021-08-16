@@ -378,7 +378,7 @@
 
 			$.ajax({
 				method: 'POST',
-				url: '/leave/leave-balance-ajax',
+				url: "{{ route('leave-balance-ajax') }}",
 				data: JSON.stringify({'leave_type_id': leave_type_id, 'employee_id' : employeeId,  '_token': '{{ csrf_token() }}' }),
 				dataType: "json",
 				contentType: 'application/json',

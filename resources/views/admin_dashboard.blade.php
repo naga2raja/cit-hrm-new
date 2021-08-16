@@ -437,6 +437,7 @@
 		        	});
 		        	// project admin
 		        	// console.log('project_admin : ', data[0].project_admin.length);
+		        	var projectAdminArr = [];
 		        	data[0].project_admin.forEach(function (row,index) {
 		        		var reporting_remove_id = '';
 		        		data[0].reporting_manager.forEach(function (reporting_row,reporting_index) {
@@ -457,7 +458,26 @@
 			            		}
 		            		}
 		            	});
-		            	if(reporting_remove_id != row.employee_id){
+
+		            	var project_name = row.project_name;
+		            	data[0].project_admin.forEach(function (admin_row,admin_index) {
+		            		if(admin_row.employee_id == row.employee_id){
+		            			if(admin_row.project_name != row.project_name){
+			            			if(project_name != ""){
+			            				project_name += ', ';
+			            			}
+			            			project_name += admin_row.project_name;
+			            		}
+		            		}
+		            	});
+
+		            	var exist = 1;
+		            	if ($.inArray(row.employee_id, projectAdminArr) != -1){
+						   exist = 0;
+						}
+
+		            	if(exist && (reporting_remove_id != row.employee_id)){
+		            		projectAdminArr.push(row.employee_id);
 		            		leads += '<div class="media mb-3">';
 			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
 							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +getImagePath(profile)+ ' alt="Profile" class="img-fluid"></div>';
@@ -527,6 +547,7 @@
 		        	});
 		        	// Team Member
 		        	// console.log('team_member : ', data[0].team_member.length);
+		        	var teamMemberArr = [];
 		        	data[0].team_member.forEach(function (row,index) {
 		        		var employee_remove_id = 0;
 		            	data[0].reporting_employee.forEach(function (employee_row,employee_index) {
@@ -534,13 +555,32 @@
 		            			employee_remove_id = row.employee_id;
 		            		}
 		            	});
-		            	if(employee_remove_id != row.employee_id){
-			            	leads += '<div class="media mb-3">';
+
+		            	var project_name = row.project_name;
+		            	data[0].team_member.forEach(function (member_row,member_index) {
+		            		if(member_row.employee_id == row.employee_id){
+		            			if(member_row.project_name != row.project_name){
+			            			if(project_name != ""){
+			            				project_name += ', ';
+			            			}
+			            			project_name += member_row.project_name;
+			            		}
+		            		}
+		            	});
+
+		            	var exist = 1;
+		            	if ($.inArray(row.employee_id, teamMemberArr) != -1){
+						   exist = 0;
+						}
+
+		            	if(exist && (employee_remove_id != row.employee_id)){
+		            		teamMemberArr.push(row.employee_id);
+			            	leads += '<div class="media mb-3 cit_employee_'+row.employee_id+'">';
 			            	var profile = (row.profile_photo) ? row.profile_photo : "img/profiles/img-1.jpg";
 							leads += '<div class="e-avatar avatar-online mr-3"><img src=' +getImagePath(profile)+ ' alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-							var project = (row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +row.project_name+ ' Project)</span>' : "";
+							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
 							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
 							leads += '</div></div>';
 							if (index != data[0].team_member.length - 1) {
