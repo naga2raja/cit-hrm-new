@@ -166,7 +166,7 @@ class PayslipController extends Controller
     }
 
     public function sampleDownload(Request $request) {
-        $file =  public_path().'\sample\employee-import.csv';        
+        $file =  public_path().'/sample/employee-import.csv';  
 
         if (file_exists($file)) {
             $fileName = 'employee-import.csv';
