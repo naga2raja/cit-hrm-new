@@ -160,8 +160,19 @@ class PayslipController extends Controller
             // $fileName = @$fileNameArr[4]; //
             $fileName = $payslip->emp_number.'_'.date('F_Y', strtotime($payslip->pay_month)).'.pdf';
             return response()->download($file, $fileName); 
-        }  else {
+        } else {
             return redirect()->back()->with('error', 'File Not Found');
         }         
+    }
+
+    public function sampleDownload(Request $request) {
+        $file =  public_path().'\sample\employee-import.csv';        
+
+        if (file_exists($file)) {
+            $fileName = 'employee-import.csv';
+            return response()->download($file, $fileName);
+        } else {
+            return redirect()->back()->with('error', 'File Not Found');
+        }
     }
 }

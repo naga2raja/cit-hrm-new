@@ -296,6 +296,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     // Payslips
     Route::resource('payslips', 'Payslips\PayslipController');
     Route::get('payslip-download', 'Payslips\PayslipController@download')->name('payslip.download');
+    Route::get('download-sample-file', 'Payslips\PayslipController@sampleDownload')->name('sample.download');
 
 });
 
