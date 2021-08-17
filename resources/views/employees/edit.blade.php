@@ -39,7 +39,7 @@
 						<div class="user-info card-body">
 							<div class="user-avatar mb-4">
 								@if($employee->profile_photo)												
-									<img src="{{$employee->profile_photo}}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
+									<img src="{{ assetUrl($employee->profile_photo) }}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
 								@else
 									<img src="{{ assetUrl('img/profiles/admin.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
 								@endif
@@ -180,7 +180,7 @@
 												<p class="mb-2">Profile image</p>
 												@if($employee->profile_photo)
 													<div id="preview_profile_image" style="max-width:150px;position: relative;">
-														<img src="{{$employee->profile_photo}}" style="max-width:100%">
+														<img src="{{ assetUrl($employee->profile_photo) }}" style="max-width:100%">
 														<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editImage()"></a>
 													</div>	
 												@endif

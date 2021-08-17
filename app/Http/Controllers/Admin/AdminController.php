@@ -163,13 +163,11 @@ class AdminController extends Controller
             $project_admin = tProjectAdmin::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_admins.admin_id as employee_id, m_projects.project_name, CASE WHEN t_project_admins.admin_id != "" THEN "Project Admin" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_admins.project_id')
                                 ->join('employees', 'employees.id', 't_project_admins.admin_id')
-                                ->groupBy('t_project_admins.admin_id')
                                 ->get()->toArray();
 
             $project_manager = tProjectManager::selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, t_project_managers.employee_id, m_projects.project_name, CASE WHEN t_project_managers.employee_id != "" THEN "Project Manager" END as designation')
                                 ->join('m_projects', 'm_projects.id', 't_project_managers.project_id')
                                 ->join('employees', 'employees.id', 't_project_managers.employee_id')
-                                ->groupBy('t_project_managers.employee_id')
                                 ->get()->toArray();
 
             $result_arr = array_merge($reporting_manager, $project_admin, $project_manager);

@@ -45,7 +45,7 @@
                         </div>
                     </form>
 
-                    <div class="text-center dont-have">Remember your password? <a href="/login">Login</a></div>
+                    <div class="text-center dont-have">Remember your password? <a href="{{ route('login') }}">Login</a></div>
 
                 </div>
             </div>

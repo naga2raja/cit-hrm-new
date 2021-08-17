@@ -155,9 +155,7 @@ Route::get('/password/reset', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => ['role:Admin', 'auth']], function () {
-    Route::get('/', 'HomeController@index')->name('index');
-    Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['role:Admin', 'auth']], function () {    
     Route::get('/admin-page', 'HomeController@demoAdmin');
 
     // admin_dashboard
@@ -246,8 +244,9 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     
 });
 
-Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function () {
-
+Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function () {    
+    Route::get('/', 'HomeController@index')->name('index');
+    Route::get('/home', 'HomeController@index')->name('home');
     // dashboard
     Route::get('/getTodayNews-ajax', 'Admin\AdminController@getTodayNews')->name('getTodayNews-ajax');
     Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads')->name('getTeamLeads-ajax');
