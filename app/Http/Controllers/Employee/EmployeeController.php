@@ -305,7 +305,10 @@ class EmployeeController extends Controller
                 $report->manager_id = $managerId;
                 $report->save();
             }
-        }       
+        }else{
+            // assigned_managers empty then delete
+            tEmployeeReportTo::where('employee_id', $id)->delete();
+        }      
         if($request->my_info == 'yes') {
             return redirect()->back()->with('success', 'Profile updated successfully');
         } else {
@@ -326,7 +329,7 @@ class EmployeeController extends Controller
         // $user->delete(); 
         
         $employee = Employee::where('id', $id)->first();
-        $employee->delete();        
+        $employee->delete();
         return redirect('employees')->with('success','Deleted Successfully');
     }
 
