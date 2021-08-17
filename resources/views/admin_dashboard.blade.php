@@ -416,14 +416,24 @@
 		            	var designation = row.designation; var project_name = '';
 		            	data[0].project_admin.forEach(function (admin_row,admin_index) {
 		            		if(admin_row.employee_id == row.manager_id){
+		            			designation = designation.replace(' | '+ admin_row.designation, "");
 		            			designation += ' | '+ admin_row.designation;
-		            			project_name = admin_row.project_name;
+		            			if(project_name != ""){
+		            				project_name += ', ';
+		            			}
+		            			project_name = project_name.replace(', '+ admin_row.project_name, "");
+		            			project_name += admin_row.project_name;
 		            		}
-		            	});		            	
+		            	});
 		            	data[0].project_manager.forEach(function (project_row,project_index) {
 		            		if(project_row.employee_id == row.manager_id){
+		            			designation = designation.replace(' | '+ project_row.designation, "");
 		            			designation += ' | '+ project_row.designation;
-		            			project_name = project_row.project_name;
+		            			if(project_name != ""){
+		            				project_name += ', ';
+		            			}
+		            			project_name = project_name.replace(', '+ project_row.project_name, "");
+		            			project_name += project_row.project_name;
 		            		}
 		            	});
 		            	leads += '<div class="media mb-3">';
@@ -450,11 +460,13 @@
 		        		var designation = row.designation;  var project_name = row.project_name;
 		            	data[0].project_manager.forEach(function (project_row,project_index) {
 		            		if(project_row.employee_id == row.employee_id){
+		            			designation = designation.replace(' | '+ project_row.designation, "");
 		            			designation += ' | '+ project_row.designation;
 		            			if(project_row.project_name != row.project_name){
 			            			if(project_name != ""){
 			            				project_name += ', ';
 			            			}
+			            			project_name = project_name.replace(', '+ project_row.project_name, "");
 			            			project_name += project_row.project_name;
 			            		}
 		            		}
@@ -467,6 +479,7 @@
 			            			if(project_name != ""){
 			            				project_name += ', ';
 			            			}
+			            			project_name = project_name.replace(', '+ admin_row.project_name, "");
 			            			project_name += admin_row.project_name;
 			            		}
 		            		}
@@ -514,6 +527,7 @@
 			            			if(project_name != ""){
 			            				project_name += ', ';
 			            			}
+			            			project_name = project_name.replace(', '+ manager_row.project_name, "");
 			            			project_name += manager_row.project_name;
 			            		}
 		            		}
@@ -522,10 +536,12 @@
 		        		var designation = row.designation;
 		        		data[0].team_member.forEach(function (team_row,team_index) {
 		            		if(team_row.employee_id == row.employee_id){
+		            			designation = designation.replace(' | '+ team_row.designation, "");
 		            			designation += ' | '+ team_row.designation;
 		            			if(project_name != ""){
 		            				project_name += ', ';
 		            			}
+		            			project_name = project_name.replace(', '+ team_row.project_name, "");
 		            			project_name += team_row.project_name;
 		            		}
 		            	});
@@ -553,6 +569,7 @@
 		            	data[0].team_member.forEach(function (team_row,team_index) {
 		            		if(team_row.employee_id == row.employee_id){
 		            			var project = (team_row.project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +team_row.project_name+ ' Project)</span>' : "";
+		            			designation = designation.replace(' | '+ team_row.designation, "");
 		            			designation += ' | '+ team_row.designation+ ' '+ project;
 		            		}
 		            	});		            	
@@ -591,6 +608,7 @@
 			            			if(project_name != ""){
 			            				project_name += ', ';
 			            			}
+			            			project_name = project_name.replace(', '+ member_row.project_name, "");
 			            			project_name += member_row.project_name;
 			            		}
 		            		}
