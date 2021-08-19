@@ -187,7 +187,7 @@
 		placeholder: 'Select a Country',
 		allowClear: true,
 		ajax: {
-			url: '/country-autocomplete-ajax',
+			url: "{{ route('country-autocomplete-ajax') }}",
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {

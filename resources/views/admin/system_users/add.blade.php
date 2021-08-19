@@ -216,7 +216,7 @@
 		var _token = $('input[name="_token"]').val();
     	$.ajax({
     		method:"POST",
-			url: '/getUsername',
+			url: "{{ route('getUsername') }}",
 			dataType: 'json',
     		data : {employee_id: employee_id, _token: _token},
     		success:function(data){
