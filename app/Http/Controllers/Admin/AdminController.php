@@ -360,7 +360,7 @@ class AdminController extends Controller
         $user = Auth::user();
         $employee = Employee::where('id', $user->id)->first();
 
-        $my_activities = tLog::selectRaw('t_logs.*, t_logs.created_at as date_time, CONCAT_WS (" ", receiver.first_name, receiver.last_name) as reciever_name, sender.profile_photo, roles.name as role_name, CASE WHEN t_logs.send_by != "" THEN "My Activities" END as type')
+        $my_activities = tLog::selectRaw('t_logs.*, CONCAT_WS (" ", receiver.first_name, receiver.last_name) as reciever_name, sender.profile_photo, roles.name as role_name, CASE WHEN t_logs.send_by != "" THEN "My Activities" END as type')
                                 ->join('employees as receiver', 'receiver.id', 't_logs.send_to')
                                 ->join('employees as sender', 'sender.id', 't_logs.send_by')
                                 ->join('model_has_roles', 'model_has_roles.model_id', 'sender.user_id')
@@ -371,7 +371,7 @@ class AdminController extends Controller
                                 ->get()->toArray();
 
         // dd($my_activities);
-        $others_activities = tLog::selectRaw('t_logs.*, t_logs.created_at as date_time, CONCAT_WS (" ", first_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
+        $others_activities = tLog::selectRaw('t_logs.*, CONCAT_WS (" ", first_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
                                 ->join('employees', 'employees.id', 't_logs.send_by')
                                 ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
                                 ->join('roles', 'roles.id', 'model_has_roles.role_id')

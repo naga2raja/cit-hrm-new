@@ -147,7 +147,7 @@
 														</td>
 														<td>
 															@if($user->user_id != auth()->user()->id || $user->user_id != 1)
-																<h2><u><a href="{{ route('systemUsers.edit', $user->user_id) }}">{{ $user->email }}</a></u></h2>
+																<h2><u><a href="{{ route('systemUsers.edit', @$user->user_id) }}">{{ $user->email }}</a></u></h2>
 															@else																
 																<h2>{{ $user->email }}</h2>
 															@endif

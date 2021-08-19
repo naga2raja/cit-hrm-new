@@ -29,7 +29,7 @@
 											@if($data['my_data']->profile_photo)												
 												<img src="{{ assetUrl($data['my_data']->profile_photo) }}" alt="{{ $data['my_data']->first_name }}" class="img-fluid rounded-circle" width="100">
 											@else
-												<img src="{{ assetUrl('img/profiles/profile.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+												<img src="{{ assetUrl('img/profiles/img-1.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
 											@endif
 										</div>
 										<div class="user-details">

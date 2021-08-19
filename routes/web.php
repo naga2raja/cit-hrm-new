@@ -165,7 +165,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::resource('/systemUsers', 'Admin\UserManagement\SystemUserController');
     Route::post('/systemUsers/multiple-delete', 'Admin\UserManagement\SystemUserController@deleteMultiple');
     Route::post('/employeeNameSearch', 'Admin\UserManagement\SystemUserController@employeeNameSearch');
-    Route::post('/getUsername', 'Admin\UserManagement\SystemUserController@getUsername');
+    Route::post('/getUsername', 'Admin\UserManagement\SystemUserController@getUsername')->name('getUsername');
     
     // job_title
     Route::resource('/jobTitles', 'Admin\Job\JobTitles\JobTitlesController');
@@ -178,7 +178,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::resource('/payGradeCurrency', 'Admin\Job\PayGrades\PayGradeCurrencyController');
     Route::post('/payGradeCurrency/multiple-delete', 'Admin\Job\PayGrades\PayGradeCurrencyController@deleteMultiple');
     // currency-autocomplete-ajax
-    Route::get('/currency-autocomplete-ajax', 'Admin\Job\PayGrades\PayGradeCurrencyController@searchCurrencyAjax');
+    Route::get('/currency-autocomplete-ajax', 'Admin\Job\PayGrades\PayGradeCurrencyController@searchCurrencyAjax')->name('currency-autocomplete-ajax');
     // job_categories
     Route::resource('/jobCategory', 'Admin\Job\JobCategories\JobCategoryController');
     Route::post('/jobCategory/multiple-delete', 'Admin\Job\JobCategories\JobCategoryController@deleteMultiple');
@@ -282,7 +282,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     //Activity autocomplete ajax
     Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName')->name('getActivityName-ajax');
     //country autocomplete ajax
-    Route::get('/country-autocomplete-ajax', 'Admin\Organization\LocationsController@searchCountryAjax');
+    Route::get('/country-autocomplete-ajax', 'Admin\Organization\LocationsController@searchCountryAjax')->name('country-autocomplete-ajax');
 
 
     Route::resource('/punch', 'Time\Attendance\PunchInOutController');

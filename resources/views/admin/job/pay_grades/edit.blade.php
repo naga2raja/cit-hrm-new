@@ -248,7 +248,7 @@
 		placeholder: 'Select a Currency',
 		allowClear: true,
 		ajax: {
-			url: '/currency-autocomplete-ajax',
+			url: "{{ route('currency-autocomplete-ajax') }}",
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {

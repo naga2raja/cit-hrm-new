@@ -35,8 +35,12 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $my_data = Employee::where('id', $user->id)->first();        
-        $employeeId = $my_data->id;
+        $my_data = Employee::where('id', $user->id)->first();
+        if($my_data){  
+            $employeeId = $my_data->id;
+        }else{
+            $employeeId= "";
+        }
 
         $leaveCtrl = new LeaveController;
         $empIds = [];

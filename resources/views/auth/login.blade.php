@@ -4,7 +4,7 @@
 <div class="inner-wrapper login-body">
     <div class="login-wrapper">
 <div class="container">
-    <div class="loginbox shadow-sm">
+    <div class="loginbox shadow">
 
         <div class="login-left">
             <!-- <img class="img-fluid" src="img/logo.png" alt="Logo"> -->

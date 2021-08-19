@@ -62,7 +62,7 @@ class SystemUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::get();
+        $roles = Role::where('id', '!=', '1')->orderBy('id', 'desc')->get();
         return view('admin/system_users/add', compact('roles'));
     }
 
