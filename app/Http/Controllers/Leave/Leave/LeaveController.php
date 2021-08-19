@@ -507,8 +507,8 @@ class LeaveController extends Controller
                     }                    
                 }
                 //Send Email to Employee
-                $toEmails = [];
-                $leaveEmployeeDetails = $this->getEmployeeDetails($leaveRequest->employee_id);
+                $toEmails = [];                
+                $leaveEmployeeDetails = Employee::where('id', $leaveRequest->employee_id)->first();
                 $details = [
                     'leave_date' => $leaveRequest->from_date.' to '. $leaveRequest->to_date,
                     'message'  =>  'Updated to '.$leaveStatus->name. ' By '.Auth::user()->name,
