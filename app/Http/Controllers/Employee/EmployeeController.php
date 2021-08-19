@@ -388,7 +388,7 @@ class EmployeeController extends Controller
 
     public function myInfo(Request $request)
     {        
-        $employee = Employee::where('id', Auth::user()->id)->first();
+        $employee = Employee::where('user_id', Auth::user()->id)->first();
         $id = $employee->id;
         
         $contactInfo =  ContactDetails::where('user_id', $id)->first();
