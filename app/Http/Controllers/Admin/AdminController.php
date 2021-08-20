@@ -359,6 +359,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $employee = Employee::where('user_id', $user->id)->first();
+        
         DB::connection()->enableQueryLog();
 
         $my_activities = tLog::selectRaw('t_logs.*, CONCAT_WS (" ", receiver.first_name, receiver.last_name) as reciever_name, sender.profile_photo, roles.name as role_name, CASE WHEN t_logs.send_by != "" THEN "My Activities" END as type')
