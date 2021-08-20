@@ -182,7 +182,8 @@
 		var currentdate = new Date(); 
 		var rightNow = moment(currentdate).utcOffset(0).format('YYYY-MM-DD HH:mm:ss');
 		var updatedDate = moment(created_at).utcOffset(0).format("YYYY-MM-DD HH:mm:ss");
-		// console.log(rightNow+" - "+updatedDate);
+		// console.log("created", created_at);
+		console.log(rightNow+" - "+updatedDate);
 
 		var diff = moment(rightNow).diff(updatedDate, 'minutes');
 		var mins = diff%60; // to get minutes
@@ -505,7 +506,7 @@
 							date += '-'+moment(dateArr[1]).format("DD/MM/YYYY");
 						}
 
-						var hours = getHoursDiff(row.date_time);
+						var hours = getHoursDiff(row.created_at);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						if(row.type == "My Activities"){						
 							activity += '<h6 class="mb-0">You '+row.action+' '+row.module+' ('+date+')</h6>';

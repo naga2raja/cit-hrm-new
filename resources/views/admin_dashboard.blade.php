@@ -316,7 +316,7 @@
 		var currentdate = new Date(); 
 		var rightNow = moment(currentdate).utcOffset(0).format('YYYY-MM-DD HH:mm:ss');
 		var updatedDate = moment(created_at).utcOffset(0).format("YYYY-MM-DD HH:mm:ss");
-		console.log("created", created_at);
+		// console.log("created", created_at);
 		console.log(rightNow+" - "+updatedDate);
 
 		var diff = moment(rightNow).diff(updatedDate, 'minutes');
