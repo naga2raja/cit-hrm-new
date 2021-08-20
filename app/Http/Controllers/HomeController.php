@@ -75,12 +75,13 @@ class HomeController extends Controller
                                 ->join('employees', 'employees.id', 't_leave_requests.employee_id')
                                 ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
                                 ->where('t_leave_requests.employee_id', '!=', $employeeId)
-                                ->where('t_leaves.status', $pending_status)
                                 ->where('t_leaves.approval_level', $approval_level);
                                 if(count($empIds)) {
                                     $leave_count->whereIn('t_leave_requests.employee_id', $empIds);
                                 }
-                                $leave_count = $leave_count->groupBy('t_leave_requests.id')->get();
+                                $leave_count = $leave_count->where('t_leave_requests.status', '!=' ,2)
+                                                ->groupBy('t_leave_requests.id')
+                                                ->get();
             $data = [
                 'my_data'  => $my_data,
                 'employees_count'  => count($employees_count),
