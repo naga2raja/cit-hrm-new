@@ -381,7 +381,6 @@ class AdminController extends Controller
                                 ->where('t_logs.status', '0')
                                 ->orderBy('t_logs.id', 'DESC')
                                 ->get()->toArray();
-        dd(DB::getQueryLog());
 
         $result_arr = array_merge($my_activities, $others_activities);
 
