@@ -102,7 +102,7 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-inline float-right">
-															<input type="hidden" name="employee_id" id="employee_id" value="{{ auth()->user()->id }}">
+															<input type="hidden" name="employee_id" id="employee_id" value="{{ getEmployeeId(auth()->user()->id) }}">
 															<input type="hidden" name="key" id="key" value="">
 									                        <div class="btn-group">
 									                            <a id="daily_button" class="btn btn-sm btn-outline-primary fc-state-active" href="javascript:void(0)">Daily</a>
