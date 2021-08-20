@@ -114,9 +114,9 @@
 														<tbody>
                                                             @foreach ($myLeaves as $leave)
                                                                 <tr>                                                                    
-                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}' )"> {{ $leave->name }} </a></td>
-                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}' )"> {{ $leave->from_date }} </a></td>
-                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}' )"> {{ $leave->to_date }} </a> </td>
+                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}', '{{ route('leave.show', $leave->id) }}' )"> {{ $leave->name }} </a></td>
+                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}', '{{ route('leave.show', $leave->id) }}' )"> {{ $leave->from_date }} </a></td>
+                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}', '{{ route('leave.show', $leave->id) }}' )"> {{ $leave->to_date }} </a> </td>
                                                                     <td> 
 																		{{ ($leave->leave_days+1) * $leave->length_days }} 
 																		(

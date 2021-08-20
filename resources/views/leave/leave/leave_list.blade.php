@@ -116,7 +116,7 @@
 
                                                             @foreach ($myLeaves as $leave)
                                                                 <tr>
-                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}' )"> {{ $leave->emp_name }} </a> </td>  
+                                                                    <td> <a href="#" onclick="showLeaveInfo('{{ $leave->id }}', '{{ route('leave.show', $leave->id) }}' )"> {{ $leave->emp_name }} </a> </td>  
                                                                     <td> {{ $leave->name }}</td>
                                                                     <td> {{ $leave->from_date }}</td>
                                                                     <td> {{ $leave->to_date }}</td>

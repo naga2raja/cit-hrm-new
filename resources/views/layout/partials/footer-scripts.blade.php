@@ -139,11 +139,17 @@
     $('.selectpicker').selectpicker();
 });
 
-function showLeaveInfo(id) {
+function showLeaveInfo(id, url = false) {
+	var ajaxUrl;
+	if(url) {
+		ajaxUrl = url;
+	} else {
+		ajaxUrl = '/leave/'+ id;
+	}
 
 	$.ajax({
 			method: 'GET',
-			url: '/leave/'+ id,			
+			url: ajaxUrl,			
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(response){				
