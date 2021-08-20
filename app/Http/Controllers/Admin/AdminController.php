@@ -96,7 +96,7 @@ class AdminController extends Controller
     public function getTodayNews()
     {
         $user = Auth::user();
-        $employee = Employee::where('id', $user->id)->first();
+        $employee = Employee::where('user_id', $user->id)->first();
 
         $project = mProject::select('m_projects.id')
                                 ->leftJoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
@@ -150,7 +150,7 @@ class AdminController extends Controller
     public function getTeamLeads(Request $request)
     {
         $user = Auth::user();
-        $employee = Employee::where('id', $user->id)->first();
+        $employee = Employee::where('user_id', $user->id)->first();
         DB::connection()->enableQueryLog();
 
         $team_info = [];
@@ -342,7 +342,7 @@ class AdminController extends Controller
     public function getUpcomingLeaves(Request $request)
     {
         $user = Auth::user();
-        $employee = Employee::where('id', $user->id)->first();
+        $employee = Employee::where('user_id', $user->id)->first();
 
         $upcoming_leaves = tLeave::select('t_leaves.*', 'm_leave_types.name', 'm_leave_status.name as leave_status')
                                 ->join('m_leave_types', 'm_leave_types.id', 't_leaves.leave_type_id')
@@ -358,7 +358,9 @@ class AdminController extends Controller
     public function getRecentActivities(Request $request)
     {
         $user = Auth::user();
-        $employee = Employee::where('id', $user->id)->first();
+        $employee = Employee::where('user_id', $user->id)->first();
+
+        DB::connection()->enableQueryLog();
 
         $my_activities = tLog::selectRaw('t_logs.*, CONCAT_WS (" ", receiver.first_name, receiver.last_name) as reciever_name, sender.profile_photo, roles.name as role_name, CASE WHEN t_logs.send_by != "" THEN "My Activities" END as type')
                                 ->join('employees as receiver', 'receiver.id', 't_logs.send_to')
@@ -395,6 +397,8 @@ class AdminController extends Controller
             }
             // dd($idsArr, $result_arr);
         }
+
+        // dd(DB::getQueryLog());
 
         // to sort by latest record
         $keys = array_column($result_arr, 'id');
