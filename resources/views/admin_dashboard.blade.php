@@ -30,7 +30,7 @@
 											@if($data['my_data']->profile_photo)												
 												<img src="{{ assetUrl($data['my_data']->profile_photo) }}" alt="{{ $data['my_data']->first_name }}" class="img-fluid rounded-circle" width="100">
 											@else
-												<img src="{{ assetUrl('img/profiles/admin.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+												<img src="{{ assetUrl('img/profiles/img-1.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
 											@endif
 										</div>
 										<div class="user-details">
@@ -146,7 +146,7 @@
 											</div>
 											<div class="card-right">
 												<a href="{{ route('leave.list') }}">
-													<h4 class="card-title">Leaves</h4>
+													<h4 class="card-title">Pending Leaves</h4>
 													<p class="card-text">{{ $data['leave_count'] }}</p>
 												</a>
 											</div>

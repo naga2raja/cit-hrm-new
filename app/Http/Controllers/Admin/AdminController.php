@@ -397,6 +397,8 @@ class AdminController extends Controller
             // dd($idsArr, $result_arr);
         }
 
+        // dd(DB::getQueryLog());
+
         // to sort by latest record
         $keys = array_column($result_arr, 'id');
         array_multisort($keys, SORT_DESC, $result_arr);
@@ -429,6 +431,7 @@ class AdminController extends Controller
             $status = 2;
             $pending_status = 2;
         }
+        DB::connection()->enableQueryLog();
 
         $leave = tLeaveRequest::select('t_leave_requests.*')
                                 ->join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
@@ -436,12 +439,11 @@ class AdminController extends Controller
                                 ->join('employees', 'employees.id', 't_leave_requests.employee_id')
                                 ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
                                 ->where('t_leave_requests.employee_id', '!=', $employeeId)
-                                ->where('t_leaves.status', $pending_status)
                                 ->where('t_leaves.approval_level', $approval_level);
                                 if(count($empIds)) {
                                     $leave->whereIn('t_leave_requests.employee_id', $empIds);
                                 }
-                                $leave = $leave->where('t_leave_requests.status', $status)
+                                $leave = $leave->where('t_leave_requests.status', '!=' ,2)
                                         ->groupBy('t_leave_requests.id')
                                         ->get();
 
