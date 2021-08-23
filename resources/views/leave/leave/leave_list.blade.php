@@ -125,16 +125,19 @@
 																	</td>                                                                    
                                                                     {{-- <td> {{ $leave->comments }}</td> --}}
                                                                     <td>
-                                                                        @if($leave->approval_level == 1 && $leave->status == 2 ) 
+                                                                    	@if($leave->approval_level == 1 && $leave->status == 2 ) 
                                                                             Pending Approval From Admin
-                                                                        @elseif($leave->approval_level == 2 && $leave->status == 2 ) 
-                                                                            <button class="btn btn-theme text-white"> Approved </button>                                                                        
-																		@elseif($leave->status == 4 || $leave->status == 5)
-																		<button class="btn btn-danger text-white"> {{ $leave->leave_status }} </button>
-																		@else
-                                                                            {{ $leave->leave_status }}
-                                                                        @endif
-                                                                       
+                                                                        @elseif($leave->approval_level == 2 && $leave->status == 2 )
+                                                                            <b><span class="text-success font-weight-bold"> Approved </span></b>
+                                                                        @elseif($leave->status == 1)
+														              		<b><span class="text-warning font-weight-bold"> Pending </span></b>
+														              	@elseif($leave->status == 3)
+														              		<b><span class="text-success font-weight-bold"> Taken </span></b>
+														              	@elseif($leave->status == 4)
+														              		<b><span class="text-danger font-weight-bold"> Rejected </span></b>
+														              	@elseif($leave->status == 5)
+														              		<b><span class="text-warning font-weight-bold"> Cancelled </span></b>
+														              	@endif 
                                                                     </td>
                                                                     <td> 
                                                                         <!--

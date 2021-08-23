@@ -346,14 +346,14 @@
                                                     <a class="dropdown-item {{ Request::is('leaveEntitlement/create') ? 'active' : '' }}" href="{{ route('leaveEntitlement.create') }}">Add Entitlements</a>
                                                 </li>
                                                 @endrole
+                                                <li>
+                                                    <a class="dropdown-item {{ Request::is('myEntitlements*') ? 'active' : '' }}" href="{{ route('myEntitlements.index') }}">My Entitlements</a>
+                                                </li>
                                                 @hasanyrole('Admin|Manager')
                                                 <li>
                                                     <a class="dropdown-item {{ Request::is('leaveEntitlement') ? 'active' : '' }}" href="{{ route('leaveEntitlement.index') }}">Employee Entitlements</a>
                                                 </li>
                                                 @endrole
-                                                <li>
-                                                    <a class="dropdown-item {{ Request::is('myEntitlements*') ? 'active' : '' }}" href="{{ route('myEntitlements.index') }}">My Entitlements</a>
-                                                </li>
                                             </ul>
                                         </li>
                                         @hasrole('Admin')
