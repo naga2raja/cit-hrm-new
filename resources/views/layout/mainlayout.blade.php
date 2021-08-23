@@ -61,6 +61,7 @@
 			$('#'+formId).find('textarea').val('');
 			$('#'+formId).find('select').val('');
 			$('#' + formId + ' select').val('').trigger('change');
+			$('#'+formId).find('input:file').val('');
 		}
 	</script>
 	<!-- Common multiple delete end-->
