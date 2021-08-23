@@ -157,7 +157,7 @@
 											
 														<p class="mb-2">Profile image</p>
 														<div class="form-group" id="upload_profile_image">
-															<input type='file' name="profile_photo" class="{{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" />
+															<input type='file' name="profile_photo" class="form-control {{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" />
 															<label class="mb-2">Accepts jpg, .png, .gif up to 1MB.</label>
 		
 															{!! $errors->first('profile_photo', '<span class="invalid-feedback" role="alert">:message</span>') !!}

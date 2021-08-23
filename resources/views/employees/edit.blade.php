@@ -185,9 +185,8 @@
 													</div>	
 												@endif
 												<div class="form-group" style="{{ ($employee->profile_photo) ? 'display:none' : '' }}" id="upload_profile_image">
-													<input type='file' name="profile_photo" class="{{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" />
-													<label class="mb-2">Accepts jpg, .png, .gif up to 1MB.</label>
-
+													<input type='file' name="profile_photo" class="form-control {{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" />
+													<label class="mb-2">Accepts jpg, .png, .gif up to 1MB.</label>													
 													{!! $errors->first('profile_photo', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 

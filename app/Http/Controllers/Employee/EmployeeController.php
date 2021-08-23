@@ -50,7 +50,7 @@ class EmployeeController extends Controller
             $employees = $employees->where('t_employee_report_to.manager_id', $managerDet->id);
         }
 
-        $employees = $employees->paginate(5);
+        $employees = $employees->paginate(10);
         // dd($employees);
         return view('employees/list', compact('employees'));
     }
@@ -81,7 +81,8 @@ class EmployeeController extends Controller
             'last_name' => 'required',
             'employee_id' => 'required|unique:employees,employee_id',
             'email' => 'required|unique:employees,email',
-            'status' => 'required',            
+            'status' => 'required', 
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable'           
         ];
 
         if($request->create_login) {
