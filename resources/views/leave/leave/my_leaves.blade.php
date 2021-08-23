@@ -140,7 +140,7 @@
                                                                         @endif
 																	</td>
                                                                     <td> 																		
-																		@if($leave->approval_level == 0)
+																		@if($leave->approval_level == 0 || ( $leave->approval_level == 1 && Auth::user()->hasRole('Manager')) )
 																			@if($leave->status == 1)
 																			<!-- if employee want to delete can do it before manager approve/reject-->																			
 																			<a href="javascript:void(0);" onclick="showDeleteModal({{ $leave->id }})" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">

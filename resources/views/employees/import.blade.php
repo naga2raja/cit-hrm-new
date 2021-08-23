@@ -42,7 +42,7 @@
 										</div>
 										@endif
 										
-											<form method="POST" enctype="multipart/form-data" action="{{ route('employees-import') }}">
+											<form method="POST" enctype="multipart/form-data" action="{{ route('employees-import') }}" id="pim_data_import">
 												@csrf
 												<div class="row">
 													<div class="col-md-12">
@@ -54,7 +54,7 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<button type="button" class="btn btn-danger text-white ctm-border-radius p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</button>
+															<button type="button" onclick="resetAllValues('pim_data_import')" class="btn btn-danger text-white ctm-border-radius p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
 															<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Upload</button>
 														</div>
 													</div>
@@ -96,7 +96,7 @@
 																	@foreach (@$results['success'] as $item)		
 																			<tr>
 																				<td>	
-																					<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>																				
+																					<a href="#" class="avatar"><img alt="avatar image" src="{{ assetUrl('img/profiles/img-5.jpg') }}" class="img-fluid"></a>																				
 																					<h2><a href="#">{{ $item['name'] }} </a></h2>
 																				</td>
 																				<td> {{ $item['email'] }}</td>
@@ -109,8 +109,8 @@
 																	@foreach (@$results['failed'] as $item)		
 																			<tr>
 																				<td>
-																					<a href="employment" class="avatar"><img alt="avatar image" src="img/profiles/img-5.jpg" class="img-fluid"></a>
-																					<h2><a href="employment">{{ $item['name'] }} </a></h2>
+																					<a href="#" class="avatar"><img alt="avatar image" src="{{ assetUrl('img/profiles/img-5.jpg') }}" class="img-fluid"></a>
+																					<h2><a href="#">{{ $item['name'] }} </a></h2>
 																				</td>
 																				<td> {{ $item['email'] }}</td>
 																				<td> <span class="btn btn-outline-danger text-dark btn-sm">Failed</span></td>
