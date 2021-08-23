@@ -196,13 +196,7 @@
 															<td class="text-center">
 																<input type="checkbox" name="pay_grade_currency" value="{{ $row->id }}">
 															</td>
-															<td>
-																<h2>
-																	<u><a href="javascript:void(0);" >
-																		{{ @$row->currencyName->currency_name }}
-																	</a></u>
-																</h2>
-															</td>
+															<td>{{ @$row->currencyName->currency_name }}</td>
 															<td>{{ $row->min_salary }}</td>
 															<td>{{ $row->max_salary }}</td>
 														</tr>
