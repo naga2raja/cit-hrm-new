@@ -208,6 +208,10 @@ class PunchInOutController extends Controller
         $utc_date = $utc_date->toDateTimeString();
 
         $punch = tPunchInOut::find($id);
+        if(strtotime($punch->punch_in_user_time) > strtotime($logout_date)) {
+            return redirect()->back()->with('error', 'Punch out time shout be greater than punched in time!');
+        }
+        // dd($punch, $logout_date, $utc_date);
         $punch->punch_out_utc_time = $utc_date;
         $punch->punch_out_note = $request->note;
         $punch->punch_out_time_offset = $time_diff;

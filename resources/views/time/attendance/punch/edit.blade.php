@@ -17,7 +17,12 @@
 									<div class="alert alert-success">
 										<p>{{$message}}</p>
 									</div>
-									@endif								
+									@endif	
+									@if($message = Session::get('error'))
+									<div class="alert alert-danger">
+										<p>{{$message}}</p>
+									</div>
+									@endif							
 									<form id="punchOutForm" method="POST" action="{{ route('punch.update', $punch_in[0]->id) }}">
 										@csrf
 										@method('PUT')
@@ -57,7 +62,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="input-group mb-3">
-													<input class="form-control datetimepicker" type="text" id="out_date" name="out_date" value="{{ $current_date }}" @if($edit_date_time == 0) readonly @endif>
+													<input class="form-control datetimepicker" type="text" id="out_date" name="out_date" value="{{ date('d/m/Y', strtotime($punch_in[0]->punch_in_user_time)) }}" @if($edit_date_time == 0) readonly @endif>
 													<input type="hidden" name="employee_id" value="{{$employee_id}}">
 													<div class="input-group-append">
 														<button class="btn btn-theme text-white" type="button" id="calendar_icon">

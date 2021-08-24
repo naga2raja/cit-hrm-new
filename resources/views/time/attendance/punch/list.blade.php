@@ -72,11 +72,13 @@
                                         <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                             <a href="{{ route('punch.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
                                         </div>
-										@endif
+										
 										@if( (attendanceDeleteEnabled() && $userRole == 'Manager') || (employeeDeleteEnabled() && $userRole == 'Employee') || $userRole == 'Admin' )									
                                         <div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
                                             <button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_myrecords_table', 'punch','{{ route('punch.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
                                         </div>
+										@endif
+
 										@endif
 									</div>                                    
 								</div>
@@ -112,7 +114,9 @@
                                                 @foreach ($data as $item)
                                                     <tr>
                                                         <td class="text-center">
-                                                            <input type="checkbox" name="id" value="{{ $item->id }}">
+                                                        	@if($item->status == 0)
+                                                            	<input type="checkbox" name="id" value="{{ $item->id }}">
+                                                            @endif
                                                         </td>
 														<td> <u><a href="#" onclick="showAttendanceInfo({{ $item->id }})"> {{ $item->emp_name }} </a></u> </td>
                                                         <td>
@@ -168,13 +172,13 @@
 
 												@if(!count($data)) 
 													<tr>
-														<td colspan="7">
+														<td colspan="100%">
 															<div class="alert alert-danger"> No data found!</div>
 														</td>
 													</tr>
 												@endif
 												<tr>
-													<td colspan="7">
+													<td colspan="100%">
 														<div class="d-flex justify-content-center">
 															{{ $data->links() }}
 														</div>
