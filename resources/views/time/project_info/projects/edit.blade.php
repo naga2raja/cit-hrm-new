@@ -76,12 +76,7 @@
 													<select class="admin_id form-control {{ $errors->has('admin_id') ? 'is-invalid' : ''}}" name="admin_id" id="admin_id" style="width: 100%" disabled>
 														<option value="{{ $projects[0]->admin_id }}" selected> {{ $projects[0]->admin_name }}</option>														
 													</select>
-													{!! $errors->first('admin_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
-													
-	                                    			{{-- <input type="hidden" name="admin_id" id="admin_id" value="{{ $projects[0]->admin_id }}">
-													<input type="text" class="form-control {{ $errors->has('project_admin') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="project_admin" value="{{ old('project_admin', $projects[0]->admin_name) }}" autocomplete="off" id="project_admin" disabled="disabled">													
-													<div id="project_admins_list" class="autocomplete"></div>
-													 --}}
+													{!! $errors->first('admin_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -502,56 +497,6 @@
 			});
 		}
 
-		$('#customer_name').keyup(function(){ 
-	        var customer_name = $(this).val();
-	        $('#customer').val('');
-	        if(customer_name != '')
-	        {
-	         var _token = $('input[name="_token"]').val();
-	         $.ajax({
-	          url:"{{ route('customers-search') }}",
-	          method:"POST",
-	          data:{customer_name:customer_name, _token:_token},
-	          success:function(data){
-	           $('#customers_list').fadeIn();
-	           $('#customers_list').html(data);
-	          }
-	         });
-	        } else{
-	        	$('#customers_list').html('');	        	
-	        }
-	    });
-
-	    $(document).on('click', '.customer', function(){  
-	        $('#customer_name').val($(this).text());  
-	        $('#customers_list').fadeOut();  
-	    });
-
-	    $('#project_admin').keyup(function(){ 
-	        var project_admin = $(this).val();
-	        $('#admin_id').val('');
-	        if(project_admin != '')
-	        {
-	         var _token = $('input[name="_token"]').val();
-	         $.ajax({
-	          url:"{{ route('project-admin-search') }}",
-	          method:"POST",
-	          data:{project_admin:project_admin, _token:_token},
-	          success:function(data){
-	           $('#project_admins_list').fadeIn();
-	           $('#project_admins_list').html(data);
-	          }
-	         });
-	        } else{
-	        	$('#project_admins_list').html('');	        	
-	        }
-	    });
-
-	    $(document).on('click', '.admin', function(){
-	        $('#project_admin').val($(this).text()); 
-	        $('#project_admins_list').fadeOut();  
-	    });
-
 	    function pass_customer_id(id){
 	    	document.getElementById('customer').value = id;
 	    }
@@ -561,42 +506,9 @@
 	    }
 
 		$('.employee_name, .managers, #admin_id').select2({
-		placeholder: 'Select',
-		ajax: {
-			url: '{{ route("ajax.employee_search") }}',
-			dataType: 'json',
-			delay: 250,
-			processResults: function (data) {
-				return {
-					results:  $.map(data, function (item) {
-						return {
-							text: item.name,
-							id: item.id
-						}
-					})
-				};
-			},
-			cache: true
-		}		
-	});
-
-	var urlParams = new URLSearchParams(window.location.search);
-	console.log('URL PARAM:: ', urlParams.has('message')); 
-	if(urlParams.has('message')) {
-		$('#alert_success_message_info').show();
-		setTimeout(function(){
-			$("#alert_success_message_info").hide();
-		}, 6000);
-	}
-
-	$('#customer').select2({
-		placeholder: 'Select',
-		allowClear: false,
-		enable: true,
-		readonly: false,
-		multiple: false,
+			placeholder: 'Select',
 			ajax: {
-				url: '{{ route("customer.AjaxSearch") }}',
+				url: '{{ route("ajax.employee_search") }}',
 				dataType: 'json',
 				delay: 250,
 				processResults: function (data) {
@@ -604,6 +516,39 @@
 						results:  $.map(data, function (item) {
 							return {
 								text: item.name,
+								id: item.id
+							}
+						})
+					};
+				},
+				cache: true
+			}		
+		});
+
+		var urlParams = new URLSearchParams(window.location.search);
+		console.log('URL PARAM:: ', urlParams.has('message')); 
+		if(urlParams.has('message')) {
+			$('#alert_success_message_info').show();
+			setTimeout(function(){
+				$("#alert_success_message_info").hide();
+			}, 6000);
+		}
+
+		$('#customer').select2({
+			placeholder: 'Select Customer Name',
+			allowClear: false,
+			enable: true,
+			readonly: false,
+			multiple: false,
+			ajax: {
+				url: '{{ route("ajax.customers_search") }}',
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+					return {
+						results:  $.map(data, function (item) {
+							return {
+								text: item.customer_name,
 								id: item.id
 							}
 						})

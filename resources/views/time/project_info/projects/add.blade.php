@@ -26,12 +26,7 @@
 													<select class="form-control select {{ $errors->has('customer') ? 'is-invalid' : ''}}" name="customer" id="customer" style="width: 100%">
 														
 													</select>
-													{!! $errors->first('customer', '<span class="invalid-feedback" role="alert">:message</span>') !!}	
-
-	                                    			{{-- <input type="hidden" name="customer2" id="customer2" value="">
-													<input type="text" class="form-control {{ $errors->has('customer') ? 'is-invalid' : ''}}" placeholder="Type for hints.." name="customer_name" value="{{ old('customer_name') }}" id="customer_name" autocomplete="off">
 													{!! $errors->first('customer', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-													<div id="customers_list" class="autocomplete"></div> --}}
 												</div>
 											</div>
 											<div class="col-sm-3">
@@ -49,7 +44,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="" name="project_name" value="{{ old('project_name') }}">
+													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="Enter Project Name" name="project_name" value="{{ old('project_name') }}">
 													{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -262,57 +257,7 @@
 			console.log('customer id', $('#customer').val());
 		  }
 		});
-	}	
-
-	$('#customer_name').keyup(function(){ 
-        var customer_name = $(this).val();
-        $('#customer').val('');
-        if(customer_name != '')
-        {
-         var _token = $('input[name="_token"]').val();
-         $.ajax({
-          url:"{{ route('customers-search') }}",
-          method:"POST",
-          data:{customer_name:customer_name, _token:_token},
-          success:function(data){
-           $('#customers_list').fadeIn();
-           $('#customers_list').html(data);
-          }
-         });
-        } else{
-        	$('#customers_list').html('');	        	
-        }
-    });
-
-    $(document).on('click', '.customer', function(){  
-        $('#customer_name').val($(this).text());  
-        $('#customers_list').fadeOut();  
-    });
-
-    $('#project_admin').keyup(function(){ 
-        var project_admin = $(this).val();
-        $('#admin_id').val('');
-        if(project_admin != '')
-        {
-         var _token = $('input[name="_token"]').val();
-         $.ajax({
-          url:"{{ route('project-admin-search') }}",
-          method:"POST",
-          data:{project_admin:project_admin, _token:_token},
-          success:function(data){
-           $('#project_admins_list').fadeIn();
-           $('#project_admins_list').html(data);
-          }
-         });
-        } else{
-        	$('#project_admins_list').html('');	        	
-        }
-    });
-
-    $(document).on('click', '.admin', function(){
-        $('#project_admin').val($(this).text());  
-        $('#project_admins_list').fadeOut();  
-    });
+	}
 
     function pass_customer_id(id){
     	document.getElementById('customer').value = id;
@@ -342,22 +287,22 @@
 		}		
 	});
 	
-$('#customer').select2({
-		placeholder: 'Select',
-    allowClear: false,
-    enable: true,
-    readonly: false,
-    multiple: false,
+	$('#customer').select2({
+		placeholder: 'Select Customer Name',
+	    allowClear: false,
+	    enable: true,
+	    readonly: false,
+	    multiple: false,
 
 		ajax: {
-			url: '{{ route("customer.AjaxSearch") }}',
+			url: '{{ route("ajax.customers_search") }}',
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {
 				return {
 					results:  $.map(data, function (item) {
 						return {
-							text: item.name,
+							text: item.customer_name,
 							id: item.id
 						}
 					})

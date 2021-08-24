@@ -27,14 +27,19 @@
 								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="{{ route('projects.index') }}">
+										<form id="searchProjects" method="GET" action="{{ route('projects.index') }}">
 
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Customer Name</label>
-														<input type="text" class="form-control" placeholder="Type for hint..." name="customer_name" value="{{ Request::get('customer_name') }}" autocomplete="off" id="customer_name">
-														<div id="customers_list" class="autocomplete"></div>
+														<select class="customer_name form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" name="customer_name" id="customer_name">
+															@if(Request::get('cust_name'))
+																<option selected="selected" id="{{ Request::get('customer_id') }}">{{ Request::get('cust_name'), old('customer_name') }}</option>
+															@endif
+														</select>
+														<input type="hidden" name="cust_name" id="cust_name" class="form-control" value="{{ (Request::get('cust_name')) ? Request::get('cust_name') : '' }}">
+														<input type="hidden" name="customer_id" id="customer_id" class="form-control" value="{{ (Request::get('customer_id')) ? Request::get('customer_id') : '' }}">
 													</div>														
 												</div>
 											</div>
@@ -43,8 +48,13 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Project</label>
-														<input type="text" class="form-control" placeholder="Type for hint..." name="project_name" value="{{ Request::get('project_name') }}" autocomplete="off" id="project_name">	
-														<div id="projects_list" class="autocomplete"></div>						
+														<select class="project_name form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" name="project_name" id="project_name">
+															@if(Request::get('pro_name'))
+																<option selected="selected" id="{{ Request::get('project_id') }}">{{ Request::get('pro_name'), old('project_name') }}</option>
+															@endif
+														</select>
+														<input type="hidden" name="pro_name" id="pro_name" class="form-control" value="{{ (Request::get('pro_name')) ? Request::get('pro_name') : '' }}">
+														<input type="hidden" name="project_id" id="project_id" class="form-control" value="{{ (Request::get('project_id')) ? Request::get('project_id') : '' }}">
 													</div>
 												</div>
 											</div>
@@ -53,8 +63,13 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Project Admin</label>
-														<input type="text" class="form-control" placeholder="Type for hint..." name="project_admin" value="{{ Request::get('project_admin') }}" autocomplete="off" id="project_admin">	
-														<div id="project_admins_list" class="autocomplete"></div>			
+														<select class="project_admin form-control {{ $errors->has('project_admin') ? 'is-invalid' : ''}}" name="project_admin" id="project_admin">
+															@if(Request::get('admin_name'))
+																<option selected="selected" id="{{ Request::get('admin_id') }}">{{ Request::get('admin_name'), old('project_admin') }}</option>
+															@endif
+														</select>
+														<input type="hidden" name="admin_name" id="admin_name" class="form-control" value="{{ (Request::get('admin_name')) ? Request::get('admin_name') : '' }}">
+														<input type="hidden" name="admin_id" id="admin_id" class="form-control" value="{{ (Request::get('admin_id')) ? Request::get('admin_id') : '' }}">
 													</div>
 												</div>
 											</div>
@@ -64,7 +79,7 @@
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchProjects')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
@@ -89,7 +104,7 @@
 												<a href="{{ route('projects.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 											</div>
 											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
-												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_projects_table','projects')"><i class="fa fa-trash"></i> Delete</button>
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_projects_table','projects','{{ route('projects.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
 											</div>
 										@endrole
 									</div>
@@ -144,78 +159,86 @@
 @endsection
 @push('scripts')
 	<script>
+		// ---------------- customer_name ----------------
+	    $('#customer_name').select2({
+			placeholder: 'Select a customer',
+			allowClear: true,
+			ajax: {
+				url: "{{ route('ajax.customers_search') }}",
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+					return {
+						results:  $.map(data, function (item) {
+							return {
+								text: item.customer_name,
+								id: item.id
+							}
+						})
+					};
+				},
+				cache: true
+			}		
+		});
+		$(document.body).on("change","#customer_name",function(){
+		 	$('#customer_id').val(this.value);
+		 	var cust_name = $("#customer_name option:selected").html();
+		 	$('#cust_name').val(cust_name);
+		}); 
 
-	 	$('#customer_name').keyup(function(){ 
-	        var customer_name = $(this).val();
-	        if(customer_name != '')
-	        {
-	         var _token = $('input[name="_token"]').val();
-	         $.ajax({
-	          url:"{{ route('customers-search') }}",
-	          method:"POST",
-	          data:{customer_name:customer_name, _token:_token},
-	          success:function(data){
-	           $('#customers_list').fadeIn();
-	           $('#customers_list').html(data);
-	          }
-	         });
-	        } else{
-	        	$('#customers_list').html('');	        	
-	        }
-	    });
+		// ---------------- project_name ----------------
+	    $('#project_name').select2({
+			placeholder: 'Select a project',
+			allowClear: true,
+			ajax: {
+				url: "{{ route('ajax.project_search') }}",
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+					return {
+						results:  $.map(data, function (item) {
+							return {
+								text: item.project_name,
+								id: item.id
+							}
+						})
+					};
+				},
+				cache: true
+			}		
+		});
+		$(document.body).on("change","#project_name",function(){
+		 	$('#project_id').val(this.value);
+		 	var pro_name = $("#project_name option:selected").html();
+		 	$('#pro_name').val(pro_name);
+		});
 
-	    $(document).on('click', '.customer', function(){  
-	        $('#customer_name').val($(this).text());  
-	        $('#customers_list').fadeOut();  
-	    });  
-
-	    $('#project_name').keyup(function(){ 
-	        var project_name = $(this).val();
-	        if(project_name != '')
-	        {
-	         var _token = $('input[name="_token"]').val();
-	         $.ajax({
-	          url:"{{ route('projects-search') }}",
-	          method:"POST",
-	          data:{project_name:project_name, _token:_token},
-	          success:function(data){
-	           $('#projects_list').fadeIn();
-	           $('#projects_list').html(data);
-	          }
-	         });
-	        } else{
-	        	$('#projects_list').html('');	        	
-	        }
-	    });
-
-	    $(document).on('click', '.project', function(){
-	        $('#project_name').val($(this).text());  
-	        $('#projects_list').fadeOut();  
-	    }); 
-
-	    $('#project_admin').keyup(function(){ 
-	        var project_admin = $(this).val();
-	        if(project_admin != '')
-	        {
-	         var _token = $('input[name="_token"]').val();
-	         $.ajax({
-	          url:"{{ route('project-admin-search') }}",
-	          method:"POST",
-	          data:{project_admin:project_admin, _token:_token},
-	          success:function(data){
-	           $('#project_admins_list').fadeIn();
-	           $('#project_admins_list').html(data);
-	          }
-	         });
-	        } else{
-	        	$('#project_admins_list').html('');	        	
-	        }
-	    });
-
-	    $(document).on('click', '.admin', function(){
-	        $('#project_admin').val($(this).text());  
-	        $('#project_admins_list').fadeOut();  
-	    }); 
+		// ---------------- project_admin ----------------
+		$('#project_admin').select2({
+			placeholder: 'Select a Admin',
+			allowClear: true,
+			ajax: {
+				url: "{{ route('ajax.project_admin_search') }}",
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+					return {
+						results:  $.map(data, function (item) {
+							return {
+								text: item.admin_name,
+								id: item.admin_id
+							}
+						})
+					};
+				},
+				cache: true
+			}		
+		});
+		$(document.body).on("change","#project_admin",function(){
+		 	$('#admin_id').val(this.value);
+		 	var admin_name = $("#project_admin option:selected").html();
+		 	$('#admin_name').val(admin_name);
+		});
 
 </script>
 @endpush

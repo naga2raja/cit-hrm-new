@@ -369,6 +369,7 @@ class AdminController extends Controller
                                 ->join('roles', 'roles.id', 'model_has_roles.role_id')
                                 ->where('t_logs.send_by', $employee->id)
                                 ->where('t_logs.status', '0')
+                                ->whereRaw('DATE(t_logs.created_at) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)')
                                 ->orderBy('t_logs.id', 'DESC')
                                 ->get()->toArray();
 
@@ -380,8 +381,10 @@ class AdminController extends Controller
                                 ->whereRaw('FIND_IN_SET ('.$employee->id.', t_logs.send_to)')
                                 ->where('t_logs.send_to', '!=', '0')
                                 ->where('t_logs.status', '0')
+                                ->whereRaw('DATE(t_logs.created_at) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)')
                                 ->orderBy('t_logs.id', 'DESC')
                                 ->get()->toArray();
+        // dd($others_activities);
 
         $result_arr = array_merge($my_activities, $others_activities);
 

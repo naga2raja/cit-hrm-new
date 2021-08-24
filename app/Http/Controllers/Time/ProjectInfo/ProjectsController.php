@@ -25,9 +25,9 @@ class ProjectsController extends Controller
      */
     public function index(Request $request)
     {
-        $customer_name = $request->input('customer_name');
-        $project_name = $request->input('project_name');
-        $project_admin = $request->input('project_admin');
+        $customer_id = $request->input('customer_id');
+        $project_id = $request->input('project_id');
+        $project_admin_id = $request->input('admin_id');
         
         DB::connection()->enableQueryLog(); 
 
@@ -35,15 +35,14 @@ class ProjectsController extends Controller
                 ->join('m_customers', 'm_projects.customer_id', 'm_customers.id')
                 ->leftjoin('t_project_admins', 't_project_admins.project_id', 'm_projects.id')
                 ->leftjoin('employees', 'employees.id', 't_project_admins.admin_id');
-        if ($customer_name) {
-            $projects->Where('m_customers.customer_name', 'like', "%$customer_name%");
+        if ($customer_id) {
+            $projects->Where('m_customers.id', $customer_id);
         }
-        if ($project_name) {
-            $projects->Where('m_projects.project_name', 'like', "%$project_name%");
+        if ($project_id) {
+            $projects->Where('m_projects.id', $project_id);
         }
-        if ($project_admin) {
-            $string = str_replace(' ', '', $project_admin);
-            $projects->Where(DB::raw("CONCAT(employees.first_name,employees.middle_name, employees.last_name)"), 'LIKE', "%$string%");
+        if ($project_admin_id) {
+            $projects->Where('t_project_admins.admin_id', $project_admin_id);
         }
         $projects = $projects->groupby('m_projects.id')
                        ->get();  
@@ -213,7 +212,7 @@ class ProjectsController extends Controller
             return false;
         }  
     }
-
+    
     public function customerAjaxSearch(Request $request)
     {
         $customer_name = $request->q;
@@ -222,97 +221,6 @@ class ProjectsController extends Controller
                                     ->orderBy('m_customers.customer_name', 'ASC')
                                     ->get();
         return $customers;
-    }
-
-    public function customers_search(Request $request)
-    {
-        DB::connection()->enableQueryLog(); 
-
-        $customer_name = $request->customer_name;
-
-        if(!empty(trim($customer_name))){
-            $customers = mCustomer::select('m_customers.customer_name', 'm_customers.id')
-                                    ->where('m_customers.customer_name', 'like', "%{$customer_name}%")
-                                    ->get();
-
-            if(count($customers) != 0){
-                $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
-                foreach($customers as $row)
-                {
-                   $output .= '<li class="customer"><a id='.$row->id.' onClick="pass_customer_id(this.id)" class="dropdown-item" href="#">'.$row->customer_name.'</a></li>';
-                }
-                $output .= '</ul>';
-                echo $output;
-            }  
-        } else{
-            $output = '';
-            echo $output;
-        }
-    }
-
-    public function projects_search(Request $request)
-    {
-        DB::connection()->enableQueryLog(); 
-
-        $project_name = $request->project_name;
-
-        if(!empty(trim($project_name))){
-            $projects = mProject::select('m_projects.project_name', 'm_projects.id')
-                                    ->where('m_projects.project_name', 'like', "%{$project_name}%")
-                                    ->get();
-
-            if(count($projects) != 0){
-                $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
-                foreach($projects as $row)
-                {
-                   $output .= '<li class="project"><a class="dropdown-item" href="#">'.$row->project_name.'</a></li>';
-                }
-                $output .= '</ul>';
-                echo $output;
-            } 
-        } else{
-            $output = '';
-            echo $output;
-        }
-    }
-
-    public function project_admin_search(Request $request)
-    {
-        DB::connection()->enableQueryLog(); 
-
-        $project_admin = $request->project_admin;
-
-        if(!empty(trim($project_admin))){
-            $admins = Employee::select('employees.first_name', 'employees.middle_name', 'employees.last_name', 'employees.id')
-                                    ->where('employees.first_name', 'like', "%{$project_admin}%")
-                                    ->orWhere('employees.middle_name', 'like', "%{$project_admin}%")
-                                    ->orWhere('employees.last_name', 'like', "%{$project_admin}%")
-                                    ->get();
-
-            if(count($admins) != 0){
-                $output = '<ul class="dropdown-menu" style="display:block; position:relative;">';
-                foreach($admins as $row)
-                {
-                    $emp_name = '';
-                    if($row->first_name != ''){
-                        $emp_name = $emp_name.$row->first_name;
-                    }                    
-                    if($row->middle_name != ''){
-                        $emp_name = $emp_name.' '.$row->middle_name;
-                    }
-                    if($row->last_name != ''){
-                        $emp_name = $emp_name.' '.$row->last_name;
-                    }
-
-                    $output .= '<li class="admin"><a id='.$row->id.' class="dropdown-item" onClick="pass_admin_id(this.id)" href="#">'.$emp_name.'</a></li>';
-                }
-                $output .= '</ul>';
-                echo $output;
-            }
-        } else{
-            $output = '';
-            echo $output;
-        }
     }
 
     public function project_save_customer(Request $request)
@@ -328,6 +236,20 @@ class ProjectsController extends Controller
         return response()->json(['customer_name' => $customers->customer_name, 'customer_id' => $customers->id]);
     }
 
+    // autocomplete
+    public function searchCustomerAjax(Request $request)
+    {
+        $customers = [];
+        if($request->has('q')){
+            $customer_name = $request->q;
+            $customers = mCustomer::select('m_customers.customer_name', 'm_customers.id')
+                                    ->where('m_customers.customer_name', 'like', "%{$customer_name}%")
+                                    ->get();
+        }
+        return response()->json($customers);
+    }
+
+    // autocomplete
     public function searchProjectAjax(Request $request)
     {
         $currentUserAssignedProjects = getCurrentUserAssignedProjects();
@@ -343,6 +265,25 @@ class ProjectsController extends Controller
             $projects = $projects->get();
         }
         return response()->json($projects);
+    }
+
+    // autocomplete
+    public function searchProjectAdminAjax(Request $request)
+    {
+        DB::connection()->enableQueryLog();
+        $project_admin = [];
+        if($request->has('q') && $request->q){
+            $admin_name = $request->q;
+            $where = '( employees.first_name LIKE "%'.$admin_name.'%" OR employees.middle_name LIKE "%'.$admin_name.'%" OR employees.last_name LIKE "%'.$admin_name.'%")';
+            $project_admin = tProjectAdmin::select('t_project_admins.admin_id', 't_project_admins.admin_id')
+                                    ->join('employees', 'employees.id', 't_project_admins.admin_id')
+                                    ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) AS admin_name');
+                                    $project_admin = $project_admin->whereRaw($where)
+                                                    ->groupby('t_project_admins.admin_id')
+                                                    ->get();
+        }
+        // dd(DB::getQueryLog());
+        return response()->json($project_admin);
     }
 
     public function insertProjectManagers($projectId, $managerIds) {        

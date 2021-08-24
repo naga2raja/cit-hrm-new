@@ -214,16 +214,10 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
 
     /* Time/ProjectInfo/Projects */
     Route::resource('/projects', 'Time\ProjectInfo\ProjectsController');
-    Route::post('/customers-search', 'Time\ProjectInfo\ProjectsController@customers_search')->name('customers-search');
-    //Customers autocomplete ajax
-    Route::get('/customers-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax')->name('ajax.customers_search');
 
-    Route::post('/projects-search', 'Time\ProjectInfo\ProjectsController@projects_search')->name('projects-search');
-    Route::post('/project-admin-search', 'Time\ProjectInfo\ProjectsController@project_admin_search')->name('project-admin-search'); 
     Route::post('/project-save-customer', 'Time\ProjectInfo\ProjectsController@project_save_customer')->name('project-save-customer');
     Route::post('/update-project', 'Time\ProjectInfo\ProjectsController@update_project')->name('update-project');
     Route::post('/projects/multiple-delete', 'Time\ProjectInfo\ProjectsController@deleteMultiple')->name('projects.deleteMultiple');
-    Route::get('/customers-ajax-search', 'Time\ProjectInfo\ProjectsController@customerAjaxSearch')->name('customer.AjaxSearch');
     Route::post('/check-assigned-manager-employees-ajax', 'Time\ProjectInfo\ProjectsController@checkAssignedEmployeeManagerAjax')->name('project.checkEmployeeAjax');
     
 
@@ -280,8 +274,12 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
 
     //Employee autocomplete ajax
     Route::get('/employee-autocomplete-ajax', 'Employee\EmployeeController@searchEmployeeAjax')->name('ajax.employee_search');
+    //Customers autocomplete ajax
+    Route::get('/customers-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchCustomerAjax')->name('ajax.customers_search');
     //Project autocomplete ajax
     Route::get('/project-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAjax')->name('ajax.project_search');
+    //Project admin autocomplete ajax
+    Route::get('/project-admin-autocomplete-ajax', 'Time\ProjectInfo\ProjectsController@searchProjectAdminAjax')->name('ajax.project_admin_search');
     //Activity autocomplete ajax
     Route::post('/getActivityName-ajax', 'Time\ProjectInfo\ActivitiesController@getActivityName')->name('getActivityName-ajax');
     //country autocomplete ajax
