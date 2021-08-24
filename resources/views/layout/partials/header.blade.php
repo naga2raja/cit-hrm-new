@@ -417,7 +417,7 @@
                                                 @endrole                                                                         
                                             </ul>
                                         </li>
-                                        @hasanyrole('Admin|Manager')
+                                        @hasanyrole('Admin')
                                         <li>
                                             <a class="dropdown-item dropdown-toggle {{ Request::is('customers*', 'projects*') ? 'active' : '' }}" href="#">Project Info</a>
                                             <ul class="dropdown-menu">

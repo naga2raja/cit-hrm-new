@@ -169,14 +169,13 @@
 										</div>
 
 										<div class="col-md-6 form-group mb-0">
-											<p class="mb-2">Date of Birth	</p>
+											<p class="mb-2">Date of Birth</p>
 											<div class="cal-icon">
-												<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date" name="date_of_birth" value="{{ old('date_of_birth', $employee->date_of_birth) }}" id="datetimepicker1">
+												<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date of Birth" name="date_of_birth" value="{{ old('date_of_birth', $employee->date_of_birth) }}" id="datetimepicker1" autocomplete="off">
 											</div>
 										</div>
 
-										<div class="col-md-6">
-											
+										<div class="col-md-6">											
 												<p class="mb-2">Profile image</p>
 												@if($employee->profile_photo)
 													<div id="preview_profile_image" style="max-width:150px;position: relative;">
@@ -332,6 +331,11 @@
 						<div class="card-body p-0">
 							<div id="emp_job_det" class="collapse show ctm-padding" aria-labelledby="jobDetails" data-parent="#accordion-details">
 								<div class="row">
+									<div class="col-12 form-group">
+										<p class="mb-2">Date of Join</p>
+										<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}">
+									</div>
+
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Title</p>
 										<select class="form-control select" name="job_id" id="job_id" @if(Request::is('my-info')) disabled @endif>
@@ -344,7 +348,7 @@
 
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Specification</p>
-										<div id="job_specification" style="font-weight: bold;"> {{ @$jobDetails->job_description }}</div>
+										<input type="text" name="job_specification" id="job_specification" class="form-control" value="{{ @$jobDetails->job_description }}" readonly="">
 									</div>
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Category</p>
@@ -354,11 +358,6 @@
 												<option value="{{ $job->id }}" {{old ('job_category_id', @$employee->job_category_id) == $job->id ? 'selected' : ''}}> {{ $job->name }}</option>
 											@endforeach
 										</select>												
-									</div>
-									<div class="col-12 form-group">
-										<p class="mb-2">Date of Join</p>
-										<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}">
-										
 									</div>
 									<div class="col-md-12 form-group mb-0">
 										<p class="mb-2">Location</p>
@@ -702,26 +701,37 @@
 		var jobId = this.value;
 		console.log(jobId);
 		if(jobId > 0) {
+			var route = "{{ route('jobTitles.update', ':id') }}";
+				route = route.replace(':id', jobId);
+
 			$.ajax({
-			method: 'GET',
-			url: '/jobTitles/'+ jobId,
-			dataType: "json",
-			contentType: 'application/json',
-			success: function(response){
-					console.log('response : ', response);
-					var job_specification = '';     
-					if(response && response.job_description) {
-						job_specification = response.job_description;
-					}
-					$('#job_specification').html(job_specification);
-				}					
+				method: 'GET',
+				url: route,
+				dataType: "json",
+				contentType: 'application/json',
+				success: function(response){
+						console.log('response : ', response);
+						var job_specification = '';     
+						if(response && response.job_description) {
+							job_specification = response.job_description;
+						}
+						$('#job_specification').val(job_specification);
+					}					
 			});
-		}		
+		}else{
+			$('#job_specification').val("");
+		}
 		
 	});
+
+	date_of_birth = '';
+	var dob = '{{ (@$employee->date_of_birth) }}'
+	if(dob != "1970-01-01"){
+		date_of_birth = '{{ (@$employee->date_of_birth) }}';
+	}
 	
 	$('#datetimepicker1').datetimepicker({
-		date: '{{ (@$employee->date_of_birth) }}',
+		date: date_of_birth,
 		format: "YYYY-MM-DD", 
 		maxDate: moment(),
 		icons: {

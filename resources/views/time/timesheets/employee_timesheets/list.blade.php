@@ -59,7 +59,7 @@
 													<button id="search" type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="reset" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchEmployeeTimesheet')"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchEmployeeTimesheet')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
@@ -124,7 +124,7 @@
 													</div>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
-													<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('timesheets','timesheets')"><i class="fa fa-trash"></i> Delete</button>
+													<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('timesheets','timesheets','{{ route('timesheets.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
 												</div>
 											</div>
 										</div>
@@ -333,11 +333,11 @@
 				    	var url = '{{ route("timesheets.create") }}' + '?' + urlParams.join('&');
 
 				    	tbody += '<tr>';
-		            	if(row.status == '0'){
-		            		tbody += '<td class="text-center"><input type="checkbox" name="timesheet_id" value='+row.id+'></td>'
-		            	}else{
-		            		tbody += '<td></td>';
+				    	var disabled = "";
+		            	if(row.status != '0'){
+		            		disabled = "disabled";
 		            	}
+		            	tbody += '<td class="text-center"><input type="checkbox" name="timesheet_id" value='+row.id+' '+disabled+'></td>';
 				        tbody += '<td><h2><u><a href="'+url+'">' + row.employee_name + '</a></u></h2></td>';
 		              	tbody += '<td><h2><u><a href="'+url+'">' + moment(row.start_date).format("DD/MM/YYYY") + '</a></u></h2></td>';
 				        var duration = 0;

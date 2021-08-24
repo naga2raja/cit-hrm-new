@@ -33,7 +33,7 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Employee Name</label>
-														<input type="text" class="form-control" placeholder="First/Middle/Last Name" name="employee_name" value="{{ Request::get('employee_name') }}">
+														<input type="text" class="form-control" placeholder="First/Middle/Last Name" name="employee_name" value="{{ Request::get('employee_name') }}" autocomplete="off">
 													</div>
 												</div>
 											</div>
@@ -42,7 +42,7 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Employee Id</label>
-														<input type="text" class="form-control" placeholder="Employee Id" name="employee_id" value="{{ Request::get('employee_id') }}">
+														<input type="text" class="form-control" placeholder="Employee Id" name="employee_id" value="{{ Request::get('employee_id') }}" autocomplete="off">
 													</div>
 												</div>
 											</div>
@@ -51,7 +51,7 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Email</label>
-														<input type="text" class="form-control" placeholder="Email" name="email" value="{{ Request::get('email') }}">
+														<input type="text" class="form-control" placeholder="Email" name="email" value="{{ Request::get('email') }}" autocomplete="off">
 													</div>
 												</div>
 											</div>
@@ -101,7 +101,7 @@
 												<a href="{{ route('employees.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><span class="fa fa-plus"></span> Add</a>												
 											</div>
 											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
-												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAllSelected()"><i class="fa fa-trash"></i> Delete</button>
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_emp_table','employees','{{ route('employees.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
 											</div>
 										@endrole
 									</div>
@@ -120,7 +120,7 @@
 												<thead>
 													<tr class="bg-light">
 														<th class="text-center">
-															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll()">
+															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_emp_table')">
 														</th>
 														<th>Employee Id</th>
 														<th>First Name</th>
@@ -134,11 +134,7 @@
 													@foreach($employees as $employee)
 													<tr>
 														<td class="text-center">
-															@if($employee->user_id == auth()->user()->id || $employee->user_id == 1)
-
-															@else
-																<input type="checkbox" name="chk_user" value="{{ $employee->id }}">
-															@endif
+															<input type="checkbox" name="chk_user" value="{{ $employee->id }}" {{ ($employee->user_id == auth()->user()->id || $employee->user_id == 1) ? 'disabled' : '' }}>
 														</td>
 														<td>
 															<u><a href="{{ route('employees.edit', $employee->id) }}"> {{ $employee->employee_id }}  </a></u>
@@ -269,15 +265,6 @@
 
 @push('scripts')
 	<script type="text/javascript">
-		function SelectAll() {
-			var isCheckedAll = $('#select_checkAll').val();
-			if ($('#select_checkAll').is(':checked')) {
-				$('#list_emp_table input[type="checkbox"]').prop("checked", true);
-			} else {
-				$('#list_emp_table input[type="checkbox"]').prop("checked", false);
-			}                
-		}
-
 		function deleteAllSelected() {
 			var selectedUserIds = [];
 			$('#list_emp_table input[type="checkbox"]:checked').each(function(){

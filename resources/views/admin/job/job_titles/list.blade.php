@@ -19,7 +19,7 @@
 												<a href="{{ route('jobTitles.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 											</div>
 											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-1">
-												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_job_title_table','jobTitles')"><i class="fa fa-trash"></i> Delete</button>
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_job_title_table','jobTitles','{{ route('jobTitles.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
 											</div>
 										@endrole
 									</div>

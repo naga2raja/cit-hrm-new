@@ -15,13 +15,13 @@
 		function SelectAll($table_tbody_id) {
 			var isCheckedAll = $('#select_checkAll').val();
 			if ($('#select_checkAll').is(':checked')) {
-				$('#'+$table_tbody_id+' input[type="checkbox"]').prop("checked", true);
+				$('#'+$table_tbody_id+' input[type="checkbox"]').not(":disabled").prop("checked", true);
 			}else {
-				$('#'+$table_tbody_id+' input[type="checkbox"]').prop("checked", false);
+				$('#'+$table_tbody_id+' input[type="checkbox"]').not(":disabled").prop("checked", false);
 			}                
 		}
 
-		function deleteAll($table_tbody_id, $module) {
+		function deleteAll($table_tbody_id, $module, url = false) {
 			var selectedIds = [];
 			$('#'+$table_tbody_id+' input[type="checkbox"]:checked').each(function(){
 				var selected_user_ids = $(this).val();
@@ -41,10 +41,14 @@
 			if (!confirm("Do you want to delete?")){
 				return false;
 			}
-			console.log('delete', selectedIds);
+			if(!url) {
+				url = '/'+$module+'.deleteMultiple';								
+			}
+
+			console.log(url, 'delete', selectedIds);
 		    $.ajax({
 	            method: 'POST',
-	            url: '/'+$module+'/multiple-delete',
+	            url: url,
 	            data: JSON.stringify({'delete_ids': selectedIds, "_token": "{{ csrf_token() }}" }),
 	            dataType: "json",
 	            contentType: 'application/json',
@@ -62,7 +66,15 @@
 			$('#'+formId).find('select').val('');
 			$('#' + formId + ' select').val('').trigger('change');
 			$('#'+formId).find('input:file').val('');
+			$('#'+formId).find('input:hidden').val('');
 			$('.alert.alert-success').hide();
+
+			var uri = window.location.toString();
+		    if (uri.indexOf("?") > 0) {
+		        var clean_uri = uri.substring(0, uri.indexOf("?"));
+		        window.history.replaceState({}, document.title, clean_uri);
+				location.reload();
+		    }
 		}
 	</script>
 	<!-- Common multiple delete end-->

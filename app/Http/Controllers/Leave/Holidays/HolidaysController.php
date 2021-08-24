@@ -145,7 +145,7 @@ class HolidaysController extends Controller
         $holidays->recurring = $recurring;
         $holidays->save();
 
-        return redirect()->back()->with('success', 'System User Updated successfully');
+        return redirect()->back()->with('success', 'Holiday Updated successfully');
     }
 
     /**

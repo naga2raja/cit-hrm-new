@@ -98,7 +98,7 @@
 												<a href="{{ route('news.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 											</div>
 											<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
-												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_news_table','news')"><i class="fa fa-trash"></i> Delete</button>
+												<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_news_table','news','{{ route('news.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
 											</div>
 										@endrole
 									</div>
@@ -133,7 +133,13 @@
 														<td>{{ $row->project_name }}</td>
 														<td>{{ $row->date }}</td>
 														<td>{{ $row->employee_name }}</td>
-														<td>{{ $row->status }}</td>
+														<td>
+															@if($row->status == 'In active')
+																<a class="btn btn-outline-danger btn-sm"> Inactive </a>
+															@elseif($row->status == 'Active')
+																<a class="btn  btn-outline-success btn-sm"> Active </a>
+															@endif
+														</td>
 													<tr>
 													@endforeach
 												@else
