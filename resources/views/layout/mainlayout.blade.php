@@ -62,6 +62,7 @@
 			$('#'+formId).find('select').val('');
 			$('#' + formId + ' select').val('').trigger('change');
 			$('#'+formId).find('input:file').val('');
+			$('.alert.alert-success').hide();
 		}
 	</script>
 	<!-- Common multiple delete end-->
