@@ -28,12 +28,12 @@
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form method="GET" action="#">
+										<form id="searchPunch" method="GET" action="#">
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
                                                     <label>Date</label>
 													<div class="input-group mb-3">                                                        
-                                                        <input class="form-control datetimepicker" type="text" id="date" name="date" value="{{ Request::get('date') }}">
+                                                        <input class="form-control datetimepicker" type="text" id="date" name="date" value="{{ Request::get('date') }}" autocomplete="off">
                                                         <div class="input-group-append">
                                                             <button class="btn btn-theme text-white" type="button" id="calendar_icon">
                                                                 <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -48,7 +48,7 @@
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchPunch')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>

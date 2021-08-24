@@ -326,22 +326,25 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        // $user = User::where('id', $id)->first();
-        // $user->delete(); 
-        
         $employee = Employee::where('id', $id)->first();
-        $employee->delete();
+        
+        $user = User::where('id', $employee->user_id)->first();
+        $user->delete();
+         
+        $employee->delete();     
+        
         return redirect('employees')->with('success','Deleted Successfully');
     }
 
     public function deleteMultiple(Request $request)
     {       
         if($request->delete_ids) {
-            // User::whereIn('id', $request->delete_ids)
-            //     ->get()
-            //     ->map(function($user) {
-            //         $user->delete();
-            //     });
+            User::join('employees', 'employees.user_id', 'users.id')->whereIn('employees.id', $request->delete_ids)
+                ->get()
+                ->map(function($user) {
+                    $user->delete();
+                });
+
             Employee::whereIn('id', $request->delete_ids)
                 ->get()
                 ->map(function($emp) {

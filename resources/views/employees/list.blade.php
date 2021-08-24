@@ -107,95 +107,91 @@
 									</div>
 									
 								</div>
-								<div class="card-body">
+								<div class="card-body  align-center">
 									@if($message = Session::get('success'))
 										<div class="alert alert-success">
 											<p>{{$message}}</p>
 										</div>
 									@endif	
 
-									<div class="card-body align-center">
-										<div class="table-responsive">
-											<table class="table custom-table table-hover" >
-												<thead>
-													<tr class="bg-light">
-														<th class="text-center">
-															<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_emp_table')">
-														</th>
-														<th>Employee Id</th>
-														<th>First Name</th>
-														<th>Last Name</th>
-														<th>Email</th>
-														<th>Status</th>
-														<th class="text-center">Action</th>
-													</tr>
-												</thead>
-												<tbody id="list_emp_table">
-													@foreach($employees as $employee)
+									<div class="table-responsive">
+										<table class="table custom-table table-hover">
+											<thead>
+												<tr class="bg-light">
+													<th class="text-center">
+														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_emp_table')">
+													</th>
+													<th>Employee Id</th>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>Email</th>
+													<th>Status</th>
+													<!-- <th class="text-center">Action</th> -->
+												</tr>
+											</thead>
+											<tbody id="list_emp_table">
+												@foreach($employees as $employee)
+												<tr>
+													<td class="text-center">
+														<input type="checkbox" name="chk_user" value="{{ $employee->id }}" {{ ($employee->user_id == auth()->user()->id || $employee->user_id == 1) ? 'disabled' : '' }}>
+													</td>
+													<td>
+														<u><a href="{{ route('employees.edit', $employee->id) }}"> {{ $employee->employee_id }}  </a></u>
+													</td>
+													<td>
+														{{ $employee->first_name }} 
+													</td> 
+													<td>
+														{{ $employee->last_name }} 
+													</td>
+													<td>
+														{{ $employee->email }} 
+													</td> 
+													<td>
+														@if($employee->status == 'In active')
+															<a class="btn btn-outline-danger btn-sm"> Inactive </a>
+														@endif
+
+														@if($employee->status == 'Active')
+															<a class="btn  btn-outline-success btn-sm"> {{ $employee->status }} </a>
+														@endif
+														 
+													</td> 
+													<td>
+														<div style="text-align: center;">
+														@if($employee->user_id == auth()->user()->id || $employee->user_id == 1)
+
+														@else
+														<!-- <form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->id)}}" method="post">
+															@method('DELETE')
+															@csrf
+															<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
+														 </form> -->
+														@endif
+														<!-- <a class="btn-sm btn-success" href="{{ route('employees.show', $employee->id) }}"><i class="fa fa-eye"></i></a> -->
+														</div>
+													</td>
+												</tr>														
+												@endforeach
+
+												@if(!count($employees)) 
 													<tr>
-														<td class="text-center">
-															<input type="checkbox" name="chk_user" value="{{ $employee->id }}" {{ ($employee->user_id == auth()->user()->id || $employee->user_id == 1) ? 'disabled' : '' }}>
-														</td>
-														<td>
-															<u><a href="{{ route('employees.edit', $employee->id) }}"> {{ $employee->employee_id }}  </a></u>
-														</td>
-														<td>
-															{{ $employee->first_name }} 
-														</td> 
-														<td>
-															{{ $employee->last_name }} 
-														</td>
-														<td>
-															{{ $employee->email }} 
-														</td> 
-														<td>
-															@if($employee->status == 'In active')
-																<a class="btn btn-outline-danger btn-sm"> Inactive </a>
-															@endif
-
-															@if($employee->status == 'Active')
-																<a class="btn  btn-outline-success btn-sm"> {{ $employee->status }} </a>
-															@endif
-															 
-														</td> 
-														<td>
-															<div style="text-align: center;">
-															<!-- <a class="btn-sm btn-primary" href="{{ route('employees.edit', $employee->id) }}"><i class="fa fa-pencil"></i></a> -->
-
-															@if($employee->user_id == auth()->user()->id || $employee->user_id == 1)
-
-															@else
-															<form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->id)}}" method="post">
-																@method('DELETE')
-																@csrf
-																<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
-															 </form>
-															@endif
-															<!-- <a class="btn-sm btn-success" href="{{ route('employees.show', $employee->id) }}"><i class="fa fa-eye"></i></a> -->
-															</div>
-														</td>
-													</tr>														
-													@endforeach
-
-													@if(!count($employees)) 
-														<tr>
-															<td colspan="7">
-																<div class="alert alert-danger"> No data found!</div>
-															</td>
-														</tr>
-													@endif
-													<tr>
-														<td colspan="7">
-															<div class="d-flex justify-content-center">
-																{{ $employees->links() }}
-															</div>
+														<td colspan="6">
+															<div class="alert alert-danger"> No data found!</div>
 														</td>
 													</tr>
-														
+												@endif
+												<tr>
+													<td colspan="6">
+														<div class="d-flex justify-content-center">
+															{{ $employees->links() }}
+														</div>
+													</td>
+												</tr>
 													
-												</tbody>
-											</table>
-										</div>
+												
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>

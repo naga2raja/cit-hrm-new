@@ -189,11 +189,10 @@ class SystemUserController extends Controller
                 ->map(function($user) {
                     $user->delete();
                 });
-            Employee::whereIn('user_id', $request->delete_ids)
-                ->get()
-                ->map(function($emp) {
-                    $emp->delete();
-                });
+
+            // --- need not to empty -----
+            // Employee::whereIn('user_id', $request->delete_ids)
+            //         ->update(['user_id' => ""]);
             return true;
         } else {   
             return false;
