@@ -127,7 +127,7 @@
 															<input type="checkbox" name="news_id" value="{{ $row->id }}">
 														</td>
 														<td>
-															<h2><u><a href="{{ route('news.edit', $row->id) }}">{{ $row->news }}</a></u></h2>
+															<h2><u><a href="{{ route('news.edit', $row->id) }}">{{ $row->title }}</a></u></h2>
 														</td>
 														<td>{{ $row->category }}</td>
 														<td>{{ $row->project_name }}</td>

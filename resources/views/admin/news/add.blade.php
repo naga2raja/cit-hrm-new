@@ -40,7 +40,7 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" name="title" autocomplete="off" maxlength="44">
+															<input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" name="title" autocomplete="off" maxlength="39" value="{{ old('title') }}">
 															{!! $errors->first('title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>

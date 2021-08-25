@@ -126,7 +126,7 @@
 													<th>Leave Type</th>
 													<th>Valid From</th>
 													<th>Valid To</th>
-													<th>Days</th>
+													<th class="text-right">Days</th>
 												</tr>
 											</thead>
 											<tbody id="mylist_entitlements_table">
@@ -158,7 +158,7 @@
 														@php
 															$total = $total + $row->no_of_days;
 														@endphp
-														<td>
+														<td class="text-right">
 															<h2>
 																<u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ number_format($row->no_of_days, 2) }}</a>
 																</u>
@@ -166,11 +166,11 @@
 														</td>
 													</tr>
 													@endforeach
-													<tr class="bg-light">
-														<th></th>
-														<th colspan="3"></th>
-														<th>Total :</th>
-														<th>{{ number_format($total, 2) }}</th>
+													<tr class="bg-light font-weight-bold">
+														<td></td>
+														<td colspan="3"></td>
+														<td>Total :</td>
+														<td class="text-right">{{ number_format($total, 2) }}</td>
 													</tr>
 												@else
 													<tr>

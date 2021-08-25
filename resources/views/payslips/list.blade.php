@@ -31,8 +31,8 @@
 															<div class="row filter-row">
 																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 																	<div class="form-group">
-																		<label>From Date</label>
-																		<input autocomplete="off" class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Date" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
+																		<label>From Month</label>
+																		<input autocomplete="off" class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Month" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
 																	</div>
 																</div>
 															</div>
@@ -40,8 +40,8 @@
 															<div class="row filter-row">
 																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 																	<div class="form-group">
-																		<label>To Date</label>
-																		<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Date" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2">
+																		<label>To Month</label>
+																		<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Month" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2">
 																	</div>
 																</div>
 															</div>															
@@ -120,7 +120,7 @@
 																<th>Document</th>
 																<th>Created At</th>
 																@hasrole('Admin')
-																<th class="text-right">Action</th>
+																<th>Action</th>
 																@endrole
 															</tr>
 														</thead>

@@ -96,7 +96,7 @@
 													<div class="col-sm-12">
 														<div class="form-group">
 															<label>Email Address <span class="text-danger">*</span></label>
-															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email') }}">
+															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email') }}" maxlength="30">
 															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>

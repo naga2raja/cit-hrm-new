@@ -108,7 +108,7 @@
 												</div>
 											</div>
 											<div class="col-sm-4">
-												<p class="mb-2">Middle Name <span class="text-danger">*</span></p>
+												<p class="mb-2">Middle Name</p>
 												<div class="form-group">
 													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}" maxlength="30">
 												</div>
@@ -123,7 +123,7 @@
 
 										<div class="col-12 form-group">
 											<p class="mb-2">Email Address <span class="text-danger">*</span></p>
-											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif>
+											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif maxlength="30">
 											{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 										</div>
 
