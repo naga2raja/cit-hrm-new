@@ -129,43 +129,50 @@
 														<td>{{ $row->leave_type_name }}</td>
 														<!-- <td>{{ $row->entitlement_id }}</td> -->
 														<td>
-															<h2><u>
+															<h2>
 																@hasrole('Admin')
-																	<a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">
+																	<u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">
 																@endrole
 																		{{ $row->from_date }}
 																@hasrole('Admin')
-																	</a>
+																	</a></u>
 																@endrole
-															</u></h2>
+															</h2>
 														</td>
 														<td>
-															<h2>
-																<u>
+															<h2>																
 																@hasrole('Admin')
-																	<a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">
+																	<u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">
 																@endrole																
 																		{{ $row->to_date }}
 																@hasrole('Admin')
-																	</a>
-																@endrole
-																</u>
+																	</a></u>
+																@endrole																
 															</h2>
 														</td>
 														@php
 															$total = $total + $row->no_of_days;
 														@endphp
 														<td>
-															<h2><u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">{{ number_format($row->no_of_days, 2) }}</a></u></h2>
+															<h2>
+																@hasrole('Admin')
+																	<u><a href="{{ route('leaveEntitlement.edit', $row->entitlement_id) }}">
+																@endrole	
+																	{{ number_format($row->no_of_days, 2) }}
+																@hasrole('Admin')
+																	</a></u>
+																@endrole
+															</h2>
 														</td>
 													</tr>
 													@endforeach
-													<tr class="bg-light">
+													<tr class="bg-light font-weight-bold">
 														@hasrole('Admin')
-														<th></th>
+														<td></td>
 														@endrole
-														<th colspan="3"><i>Total</i></th>
-														<th>{{ number_format($total, 2) }}</th>
+														<td colspan="2"></td>
+														<td>Total :</td>
+														<td>{{ number_format($total, 2) }}</td>
 													</tr>
 												@else
 													<tr>

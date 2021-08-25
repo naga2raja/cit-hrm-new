@@ -103,27 +103,27 @@
 										<div class="col-sm-4">
 											<p class="mb-2">First Name <span class="text-danger">*</span></p>
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}">
+													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}" maxlength="25">
 													{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 											<div class="col-sm-4">
-												<p class="mb-2">Middle Name <span class="text-danger">*</span></p>
+												<p class="mb-2">Middle Name</p>
 												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}">
+													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}" maxlength="25">
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<p class="mb-2">Last Name <span class="text-danger">*</span></p>
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}">
+													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}" maxlength="25">
 													{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 
 										<div class="col-12 form-group">
 											<p class="mb-2">Email Address <span class="text-danger">*</span></p>
-											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif>
+											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif maxlength="30">
 											{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 										</div>
 
