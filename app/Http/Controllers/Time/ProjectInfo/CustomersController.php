@@ -95,7 +95,7 @@ class CustomersController extends Controller
         ]);
 
         // return redirect('/listSkills');
-        return redirect()->back()->with('success', 'Employee updated successfully'); 
+        return redirect()->back()->with('success', 'Customer updated successfully'); 
     }
 
     /**

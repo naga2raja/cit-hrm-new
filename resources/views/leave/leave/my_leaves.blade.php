@@ -108,7 +108,9 @@
 																<th>Days</th>																
 																<th>Notes</th>
 																<th>Status</th>
-																<th class="text-center">Action</th>
+																@unlessrole('Admin')
+																	<th class="text-left">Action</th>
+																@endrole
 															</tr>
 														</thead>
 														<tbody>
@@ -144,19 +146,19 @@
 														              	@elseif($leave->status == 5)
 														              		<b><span class="text-warning font-weight-bold"> Cancelled </span></b>
 														              	@endif
-																	</td>
-                                                                    <td> 		
-																		@if( ($leave->approval_level == 1 || $leave->approval_level == 2) && $leave->status == 2 ) 
-                                                                            
-                                                                        @else
-																			@if($leave->status == 1)
-																			<!-- if employee want to delete can do it before manager approve/reject-->																			
+																	</td>	
+																	@if( ($leave->approval_level == 1 || $leave->approval_level == 2) && $leave->status == 2 ) 
+                                                                        
+                                                                    @else
+																		@if($leave->status == 1)
+																		<!-- if employee want to delete can do it before manager approve/reject-->	
+                                                                    	<td>	
 																			<a href="javascript:void(0);" onclick="showDeleteModal({{ $leave->id }})" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
 																				<span class="lnr lnr-trash"></span> Delete
 																			</a>
-																			@endif
-                                                                        @endif   
-                                                                    </td>
+                                                                    	</td>
+																		@endif
+                                                                    @endif
                                                                 </tr>
                                                             @endforeach
 
@@ -175,23 +177,6 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-															
-															{{-- <tr>
-																<td>
-																	<a href="employment" class="avatar"><img src="img/profiles/img-3.jpg" alt="Jenni Sims" class="img-fluid"></a>
-																	<h2><a href="employment">Jenni Sims</a></h2>
-																</td>
-																<td>Working From Home</td>
-																<td>05 Dec 2019</td>
-																<td>05 Dec 2019</td>
-																<td>1</td>
-																<td>11</td>
-																<td>Raining</td>
-																<td><a href="javascript:void(0)" class="btn btn-theme ctm-border-radius text-white btn-sm">Approved</a></td>
-																<td class="text-right text-danger"><a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																			<span class="lnr lnr-trash"></span> Delete
-																		</a></td>
-															</tr> --}}
 														</tbody>
 													</table>
 												</div>

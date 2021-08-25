@@ -16,7 +16,7 @@
 													<div class="custom-breadcrumb">
 														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
 															<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">Home</a></li>
-															<li class="breadcrumb-item d-inline-block active">Leave List</li>
+															<li class="breadcrumb-item d-inline-block active">Leave</li>
 														</ol>
 														<h4 class="text-dark">Leave List</h4>
 													</div>
@@ -107,7 +107,7 @@
 																{{-- <th>Remaining Days</th> --}}
 																{{-- <th>Notes</th> --}}
 																<th>Status</th>
-																<th class="text-right">Action</th>
+																<th class="text-left">Action</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -139,11 +139,7 @@
 														              		<b><span class="text-warning font-weight-bold"> Cancelled </span></b>
 														              	@endif 
                                                                     </td>
-                                                                    <td> 
-                                                                        <!--
-                                                                        <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-                                                                            <span class="lnr lnr-trash"></span> Delete
-                                                                        </a> -->
+                                                                    <td>
                                                                         @if( ($userRole == 'Manager' && $leave->approval_level == 0) || ($userRole == 'Admin' && $leave->approval_level == 1))
                                                                         <select class="form-control select" id="leave_{{ $leave->id }}" onchange="getLeaveStatus({{ $leave->id }})">
                                                                             <option value="">Select</option>
@@ -171,23 +167,6 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-															
-															{{-- <tr>
-																<td>
-																	<a href="employment" class="avatar"><img src="img/profiles/img-3.jpg" alt="Jenni Sims" class="img-fluid"></a>
-																	<h2><a href="employment">Jenni Sims</a></h2>
-																</td>
-																<td>Working From Home</td>
-																<td>05 Dec 2019</td>
-																<td>05 Dec 2019</td>
-																<td>1</td>
-																<td>11</td>
-																<td>Raining</td>
-																<td><a href="javascript:void(0)" class="btn btn-theme ctm-border-radius text-white btn-sm">Approved</a></td>
-																<td class="text-right text-danger"><a href="javascript:void(0);" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
-																			<span class="lnr lnr-trash"></span> Delete
-																		</a></td>
-															</tr> --}}
 														</tbody>
 													</table>
                                                     <button type="button" class="btn btn-theme button-1 text-white pull-right p-2" style="display: none;" id="approve_action" data-toggle="modal" data-target="#delete">Save</button>
@@ -224,7 +203,7 @@
 								<div class="col-md-12">
 									<div class="form-group mb-2">
 										<label>Your Comments:</label>
-										<textarea class="form-control " rows="3" id="comments" name="comments"></textarea>										
+										<textarea class="form-control " rows="3" id="comments" name="comments"></textarea>
 									</div>
 								</div>
 							</div>
