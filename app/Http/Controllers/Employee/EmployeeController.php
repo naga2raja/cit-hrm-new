@@ -368,11 +368,14 @@ class EmployeeController extends Controller
             $data = Employee::select("employees.id")
                     ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as name')
                     ->selectRaw('employees.employee_id')
-                    ->selectRaw('email')
-            		->where('first_name','LIKE',"%$search%")
-                    ->orWhere('middle_name','LIKE',"%$search%")
-                    ->orWhere('last_name','LIKE',"%$search%")
-                    ->orwhere(DB::raw("CONCAT(first_name, middle_name, last_name)"), 'LIKE', "%$string%");
+                    ->selectRaw('email');
+
+            // $data = $data->where('first_name','LIKE',"%$search%")
+            //         ->orWhere('middle_name','LIKE',"%$search%")
+            //         ->orWhere('last_name','LIKE',"%$search%")
+            //         ->orwhere(DB::raw("CONCAT(first_name, middle_name, last_name)"), 'LIKE', "%$string%");
+
+            $data = $data->whereRaw(' (first_name LIKE "%'.$search.'%" OR middle_name LIKE "%'.$search.'%" OR last_name LIKE "%'.$search.'%" OR CONCAT(first_name, middle_name, last_name) LIKE "%'.$search.'%" ) ');
             $empIds = [];
             if(Auth::user()->hasRole('Manager')) {
                 $employee = $leaveCtrl->getEmployeeDetails(Auth::user()->id);
@@ -384,7 +387,14 @@ class EmployeeController extends Controller
                 
                 $data = $data->join('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id')
                              ->whereIn('employees.id', $empIds);
-            }            
+            }
+            if($request->has('mgids') && $request->mgids) {
+                $data = $data->whereRaw('employees.id NOT IN ('.$request->mgids.')');
+            } 
+            if($request->has('managers_only') && $request->managers_only) {
+                $data = $data->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                    ->where('model_has_roles.role_id', '!=', 3); //show only managers
+            }           
             $data = $data->groupBy('employees.id')->get();
         }
         return response()->json($data);

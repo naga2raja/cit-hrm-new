@@ -248,34 +248,34 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">Street Address 1</p>
-												<input type="text" class="form-control" placeholder="" name="street_address_1" value="{{ old('street_address_1', @$contactInfo->street_address_1) }}">
+												<input type="text" class="form-control" placeholder="" name="street_address_1" maxlength="100" value="{{ old('street_address_1', @$contactInfo->street_address_1) }}">
 											</div>
 										</div>
 
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">Street Address 2</p>
-												<input type="text" class="form-control" placeholder="" name="street_address_2" value="{{ old('street_address_2', @$contactInfo->street_address_2) }}">
+												<input type="text" class="form-control" placeholder="" name="street_address_2" maxlength="100" value="{{ old('street_address_2', @$contactInfo->street_address_2) }}">
 											</div>
 										</div>
 
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">City</p>
-												<input type="text" class="form-control" placeholder="" name="city" value="{{ old('city', @$contactInfo->city) }}">
+												<input type="text" class="form-control" placeholder="" name="city" maxlength="50" value="{{ old('city', @$contactInfo->city) }}">
 											</div>
 										</div>
 
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">State/Province</p>
-												<input type="text" class="form-control" placeholder="" name="state" value="{{ old('state', @$contactInfo->state) }}">
+												<input type="text" class="form-control" placeholder="" name="state" maxlength="50" value="{{ old('state', @$contactInfo->state) }}">
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">Zip/Postal Code</p>
-												<input type="text" class="form-control" placeholder="" name="zip_code" value="{{ old('zip_code', @$contactInfo->zip_code) }}">
+												<input type="text" class="form-control" placeholder="" maxlength="7" name="zip_code" value="{{ old('zip_code', @$contactInfo->zip_code) }}">
 											</div>
 										</div>
 										<div class="col-md-12 form-group">
@@ -291,20 +291,20 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">Home Telephone</p>
-												<input type="text" class="form-control" placeholder="" name="home_telephone" value="{{ old('home_telephone', @$contactInfo->home_telephone) }}">
+												<input type="text" class="form-control" placeholder="" maxlength="11" name="home_telephone" value="{{ old('home_telephone', @$contactInfo->home_telephone) }}">
 											</div>
 										</div>
 
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">Mobile</p>
-												<input type="text" class="form-control" placeholder="" name="mobile" value="{{ old('mobile', @$contactInfo->mobile) }}">
+												<input type="text" class="form-control" placeholder="" maxlength="11" name="mobile" value="{{ old('mobile', @$contactInfo->mobile) }}">
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="form-group">
 												<p class="mb-2">Work Telephone</p>
-												<input type="text" class="form-control" placeholder="" name="work_telephone" value="{{ old('work_telephone', @$contactInfo->work_telephone) }}">
+												<input type="text" class="form-control" placeholder="" maxlength="11" name="work_telephone" value="{{ old('work_telephone', @$contactInfo->work_telephone) }}">
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -387,7 +387,7 @@
 								<div class="row">
 									@hasrole('Admin')
 									<div class="col-md-12 pull-right">
-										<a class="btn btn-theme button-1 text-white p-2" data-toggle="modal" data-target="#assign_manager" style="float: right;">Add</a>
+										<a class="btn btn-theme button-1 text-white p-2" data-toggle="modal" data-target="#assign_manager" onclick="openModalpopup()" style="float: right;">Add</a>
 									</div>
 									@endrole 
 									
@@ -794,12 +794,13 @@ function assignEmployee () {
 	$('#assigned_managers').val(empIds);
 	assigned_managers_final = empIds;
 }
-		
 
+function openModalpopup(){
+	$('#itemName').val('');
 	$('.itemName').select2({
-		placeholder: 'Select a employee',
+		placeholder: 'Select',
 		ajax: {
-			url: '{{ route("ajax.employee_search") }}',
+			url: '{{ route("ajax.employee_search") }}'+'?managers_only=1&mgids='+$("#assigned_managers").val(),
 			dataType: 'json',
 			delay: 250,
 			processResults: function (data) {
@@ -815,6 +816,7 @@ function assignEmployee () {
 			cache: true
 		}
 		});
+}
 		
 		function uniqueArray(arr) {
 			return arr.reduce(function(memo, e1){
