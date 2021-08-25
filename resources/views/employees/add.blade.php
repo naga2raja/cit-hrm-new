@@ -239,14 +239,14 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<p class="mb-2">Street Address 1</p>
-														<input type="text" class="form-control" placeholder="" name="street_address_1" value="{{ old('street_address_1') }}" maxlength="100">
+														<input type="text" class="form-control" placeholder="" name="street_address_1" value="{{ old('street_address_1') }}" maxlength="150">
 													</div>
 												</div>
 		
 												<div class="col-md-12">
 													<div class="form-group">
 														<p class="mb-2">Street Address 2</p>
-														<input type="text" class="form-control" placeholder="" name="street_address_2" value="{{ old('street_address_2') }}" maxlength="100">
+														<input type="text" class="form-control" placeholder="" name="street_address_2" value="{{ old('street_address_2') }}" maxlength="150">
 													</div>
 												</div>
 		
@@ -266,7 +266,7 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<p class="mb-2">Zip/Postal Code</p>
-														<input type="text" class="form-control" placeholder="" name="zip_code" value="{{ old('zip_code') }}" maxlength="7">
+														<input type="text" class="form-control" placeholder="" id="zip_code" name="zip_code" value="{{ old('zip_code') }}" maxlength="7" onkeyup="allowOnlyNumbers('zip_code')">
 													</div>
 												</div>
 												<div class="col-md-12 form-group">
@@ -282,20 +282,20 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<p class="mb-2">Home Telephone</p>
-														<input type="text" class="form-control" placeholder="" name="home_telephone" value="{{ old('home_telephone') }}" maxlength="11">
+														<input type="text" class="form-control" placeholder="" id="home_telephone" name="home_telephone" value="{{ old('home_telephone') }}" maxlength="11" onkeyup="allowOnlyNumbers('home_telephone')">
 													</div>
 												</div>
 		
 												<div class="col-md-12">
 													<div class="form-group">
 														<p class="mb-2">Mobile</p>
-														<input type="text" class="form-control" placeholder="" name="mobile" value="{{ old('mobile') }}" maxlength="11">
+														<input type="text" class="form-control" placeholder="" name="mobile" value="{{ old('mobile') }}" id="mobile" maxlength="11" onkeyup="allowOnlyNumbers('mobile')">
 													</div>
 												</div>
 												<div class="col-md-12">
 													<div class="form-group">
 														<p class="mb-2">Work Telephone</p>
-														<input type="text" class="form-control" placeholder="" name="work_telephone" value="{{ old('work_telephone') }}" maxlength="11">
+														<input type="text" class="form-control" placeholder="" id="work_telephone" name="work_telephone" value="{{ old('work_telephone') }}" maxlength="11" onkeyup="allowOnlyNumbers('work_telephone')">
 													</div>
 												</div>
 												<div class="col-md-12">
