@@ -73,20 +73,20 @@
 														<div class="form-group">
 															<label>First Name <span class="text-danger">*</span></label>
 
-															<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name') }}">
+															<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" maxlength="30" required value="{{ old('first_name') }}">
 															{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label>Middle Name <span class="text-danger">*</span></label>
-															<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name') }}">
+															<input type="text" class="form-control" placeholder="Middle Name" name="middle_name"  maxlength="30" value="{{ old('middle_name') }}">
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label>Last Name <span class="text-danger">*</span></label>
-															<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name') }}">
+															<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required  maxlength="30" name="last_name" value="{{ old('last_name') }}">
 															{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -493,8 +493,11 @@
 		
 	});
 
+	var startYear = moment().format("YYYY") - 100 +"-01-01";
+
 	$('#datetimepicker1').datetimepicker({
 		format: "YYYY-MM-DD", 
+		minDate: moment(startYear).format("YYYY-MM-DD"),
 		maxDate: moment(),
 		icons: {
 			up: "fa fa-angle-up",
@@ -507,6 +510,7 @@
 
 	$('.datetimepicker2').datetimepicker({
 		format: "YYYY-MM-DD", 
+		minDate: moment(startYear).format("YYYY-MM-DD"),
 		maxDate: moment(),
 		icons: {
 			up: "fa fa-angle-up",

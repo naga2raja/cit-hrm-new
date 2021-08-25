@@ -103,20 +103,20 @@
 										<div class="col-sm-4">
 											<p class="mb-2">First Name <span class="text-danger">*</span></p>
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}">
+													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}" maxlength="30">
 													{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<p class="mb-2">Middle Name <span class="text-danger">*</span></p>
 												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}">
+													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}" maxlength="30">
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<p class="mb-2">Last Name <span class="text-danger">*</span></p>
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}">
+													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}" maxlength="30">
 													{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -729,10 +729,11 @@
 	if(dob != "1970-01-01"){
 		date_of_birth = '{{ (@$employee->date_of_birth) }}';
 	}
-	
+	var startYear = moment().format("YYYY") - 100 +"-01-01";		
 	$('#datetimepicker1').datetimepicker({
 		date: date_of_birth,
 		format: "YYYY-MM-DD", 
+		minDate: moment(startYear).format("YYYY-MM-DD"),
 		maxDate: moment(),
 		icons: {
 			up: "fa fa-angle-up",
@@ -745,6 +746,7 @@
 	$('.datetimepicker2').datetimepicker({
 		date: '{{ (@$employee->joined_date) }}',
 		format: "YYYY-MM-DD", 
+		minDate: moment(startYear).format("YYYY-MM-DD"),
 		maxDate: moment(),
 		icons: {
 			up: "fa fa-angle-up",
