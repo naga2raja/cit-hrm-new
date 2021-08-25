@@ -446,7 +446,7 @@
                                     </a>
                                 </li>
                                 @endrole
-                                <li class="mr-1 {{ Request::is('payslips') ? 'active' : '' }}">
+                                <li class="mr-1 {{ Request::is('payslips*') ? 'active' : '' }}">
                                     <a class="nav-link btn-ctm-space {{ Request::is('payslips') ? 'active' : '' }} " href="{{ route('payslips.index') }}"><span class="fa fa-money pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Payroll</span></a>
                                 </li>
                                 @hasrole('Admin')

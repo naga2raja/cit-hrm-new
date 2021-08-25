@@ -24,7 +24,7 @@
 										<div class="row">
 											<div class="col-sm-2">
 												<div class="form-group">
-													<label>Skill <span class="text-danger">*</span></label>
+													<label>Name <span class="text-danger">*</span></label>
 												</div>
 											</div>
 											<div class="col-sm-3">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use DateTime;
 use Carbon\Carbon;
 use App\tNews;
 use App\mCustomer;
@@ -36,7 +37,11 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         $post_by = $request->input('post_by');
-        $date = date('Y-m-d', strtotime($request->input('date')));
+        $date = '';
+        if($request->input('date') != ""){
+            $date = DateTime::createFromFormat('d/m/Y', $request->input('date'));
+            $date = $date->format('Y-m-d');
+        }
         $status = $request->input('status');
 
         $news = tNews::selectRaw('t_news.*, CONCAT_WS (" ", employees.first_name, employees.middle_name, employees.last_name) as employee_name, m_projects.project_name')

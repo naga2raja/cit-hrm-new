@@ -50,7 +50,7 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Date</label>
-														<input class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="Date" name="date" value="{{ old('date', Request::get('date')) }}" id="date">
+														<input type="text" name="date" id="date" class="form-control datetimepicker cal-icon-input" placeholder="Date" value="{{ old('date', Request::get('date')) }}">
 													</div>
 												</div>
 											</div>
@@ -227,23 +227,5 @@
 		// calling validation_popup_msg
 		validation_popup_msg();
 	}
-
-	//Date picker's format
-	$("#date").datetimepicker({
-		date: '{{ (Request::get("date")) ? (date("m-d-Y", strtotime(Request::get("date")))) : "" }}',
-		format: 'DD-MM-YYYY',
-		locale:  moment.locale('en', {
-			week: { dow: 1 }
-		}),
-		maxDate: moment(),
-        icons: {
-            up: "fa fa-angle-up",
-            down: "fa fa-angle-down",
-            next: 'fa fa-angle-right',
-            previous: 'fa fa-angle-left'
-        },
-        daysOfWeekDisabled: [0,6],
-	});
-</script>    
-    <!-- <script src="{{ asset('js/system_users.js')}}"></script> -->
+</script>
 @endpush
