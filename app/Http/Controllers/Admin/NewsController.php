@@ -67,6 +67,7 @@ class NewsController extends Controller
     {
         // dd($request->all());
         $validated = $request->validate([
+            'title' => 'required',
             'news' => 'required',
             'category' => 'required'
         ]);

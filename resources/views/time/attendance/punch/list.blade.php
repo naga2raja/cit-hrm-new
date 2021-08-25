@@ -63,7 +63,7 @@
 							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-header">
 									<div class="row filter-row">
-										<div class="col-sm-6 col-md-8 col-lg-7 {{ (Route::is(['punch.employee-records'])) ? 'col-xl-10' : 'col-xl-8' }} ">  
+										<div class="col-sm-6 col-md-8 col-lg-7 {{ (Route::is(['punch.employee-records']) || $userRole == 'Admin') ? 'col-xl-10' : 'col-xl-8' }} ">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 												<h4 class="card-title mb-0 ml-2 mt-2">{{ Request::is('employee-records') ? 'Employee' : 'My' }} Records</h4>
 											</div>
@@ -73,10 +73,10 @@
                                             <a href="{{ route('punch.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
                                         </div>
 										
-										@if( (attendanceDeleteEnabled() && $userRole == 'Manager') || (employeeDeleteEnabled() && $userRole == 'Employee') || $userRole == 'Admin' )									
-                                        <div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
-                                            <button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_myrecords_table', 'punch','{{ route('punch.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
-                                        </div>
+										@if( (attendanceDeleteEnabled() && $userRole == 'Manager') || (employeeDeleteEnabled() && $userRole == 'Employee') )							
+	                                        <div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">
+	                                            <button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_myrecords_table', 'punch','{{ route('punch.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
+	                                        </div>	                                        
 										@endif
 
 										@endif
@@ -95,9 +95,11 @@
 										<table class="table custom-table table-hover">
 											<thead>
 												<tr class="bg-light">
+													@if(!Route::is(['punch.employee-records']))
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_myrecords_table')">
 													</th>
+													@endif
 													<th> Name </th>
 													<th>Punch in</th>													
 													{{-- <th>Punch in Note</th> --}}
@@ -113,11 +115,13 @@
 
                                                 @foreach ($data as $item)
                                                     <tr>
+                                                    	@if(!Route::is(['punch.employee-records']))
                                                         <td class="text-center">
                                                         	@if($item->status == 0)
                                                             	<input type="checkbox" name="id" value="{{ $item->id }}">
                                                             @endif
                                                         </td>
+                                                        @endif
 														<td> <u><a href="#" onclick="showAttendanceInfo({{ $item->id }})"> {{ $item->emp_name }} </a></u> </td>
                                                         <td>
                                                             <h2><a href="#" onclick="showAttendanceInfo({{ $item->id }})"> {{ $item->punch_in_user_time }} </a></h2>

@@ -228,8 +228,8 @@
 									</div>
 								</div>
 							</div>
-						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
 						<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Save</button>
+						<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
                         </form>
 					</div>
 				</div>

@@ -120,7 +120,7 @@
 																	<input type="hidden" name="timeItem[{{ $loop->index }}][activity_id]" id="activity_id{{ $loop->index }}" class="form-control activity_id" value="{{ @$row->activityName->id }}">
 																</td>
 	              												<td>				
-	              													<input type="time" class="form-control {{ $errors->has('duration') ? 'is-invalid' : ''}}" name="timeItem[{{ $loop->index }}][duration]" id="duration{{ $loop->index }}" value="{{ date('H:i', mktime(0, @$row->duration)) }}" placeholder="HH:MM" required="">
+	              													<input type="text" class="form-control {{ $errors->has('duration') ? 'is-invalid' : ''}}" name="timeItem[{{ $loop->index }}][duration]" id="duration{{ $loop->index }}" value="{{ date('H:i', mktime(0, @$row->duration)) }}" placeholder="HH:MM" required="">
 				                                                    {!! $errors->first('duration', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 				                                                </td>
 	              												<td>
@@ -242,6 +242,7 @@
 					// console.log('exists', arrayData);
 					// alert(row_id);
 					// alert("Already exist");
+					// validation_popup_msg("Warning", "Duplicate Activity");
 			   }else{
 					// alert("add");
 					arrayData.push({'row_id':row_id, 'project_id':project_id, 'activity_id': activity_id});
@@ -437,7 +438,7 @@
 	        			$rows += '<input type="hidden" name="timeItem['+i+'][activity_id]" id="activity_id'+i+'" class="form-control activity_id">';
 	            	$rows += '</td>';
 	            	$rows += '<td>';
-	        			$rows += '<input type="time" class="form-control {{ $errors->has("duration") ? "is-invalid" : ''}}" name="timeItem['+i+'][duration]" id="duration'+i+'" value="{{ old("duration") ? old("duration") : "00:00" }}" placeholder="HH:MM" required="">';
+	        			$rows += '<input type="text" class="form-control {{ $errors->has("duration") ? "is-invalid" : ''}}" name="timeItem['+i+'][duration]" id="duration'+i+'" value="{{ old("duration") ? old("duration") : "00:00" }}" placeholder="HH:MM" required="">';
 	            	$rows += '</td>';
 	            	$rows += '<td>';
 	            			$rows += '<textarea name="timeItem['+i+'][comments]" class="form-control" rows="1" width="200px"></textarea>';
