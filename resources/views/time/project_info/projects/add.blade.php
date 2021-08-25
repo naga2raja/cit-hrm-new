@@ -114,7 +114,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<textarea class="form-control {{ $errors->has('project_description') ? 'is-invalid' : ''}}" rows="3" name="project_description">{{ old('project_description') }}</textarea>{!! $errors->first('project_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<textarea class="form-control {{ $errors->has('project_description') ? 'is-invalid' : ''}}" rows="3" name="project_description" maxlength="255">{{ old('project_description') }}</textarea>{!! $errors->first('project_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -175,8 +175,10 @@
 								</div>
 								<div class="col-sm-8">
 									<div class="form-group">
-										<input type="text" class="form-control {{ $errors->has('modal_customer_name') ? 'is-invalid' : ''}}" placeholder="" name="modal_customer_name" value="{{ old('modal_customer_name') }}">
-	                                    {!! $errors->first('modal_customer_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+										<input type="text" class="form-control {{ $errors->has('modal_customer_name') ? 'is-invalid' : ''}}" placeholder="" name="modal_customer_name" value="{{ old('modal_customer_name') }}" maxlength="30">
+										<div id="validation_message_name" style="display: none;">
+											<label class="ctm-text-sm"><span class="text-danger"><p> The Name field is required </p></span></label>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -189,8 +191,7 @@
 								</div>
 								<div class="col-sm-8">
 									<div class="form-group">
-										<textarea class="form-control {{ $errors->has('modal_customer_description') ? 'is-invalid' : ''}}" rows="3" name="modal_customer_description">{{ old('modal_customer_description') }}</textarea>
-										{!! $errors->first('modal_customer_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+										<textarea class="form-control {{ $errors->has('modal_customer_description') ? 'is-invalid' : ''}}" rows="3" name="modal_customer_description" maxlength="255">{{ old('modal_customer_description') }}</textarea>									
 									</div>
 								</div>
 							</div>
@@ -236,26 +237,34 @@
 
 @push('scripts')
 <script type="text/javascript">
+
 	function save_customer(){
 		var modal_customer_name = $('input[name="modal_customer_name"]').val();
 		var modal_customer_description = $('input[name="modal_customer_description"]').val();
-		$.ajax({
-		   url:"{{ route('project-save-customer') }}",
-		   method:"POST",
-		   data:JSON.stringify({modal_customer_name:modal_customer_name, modal_customer_description:modal_customer_description,  "_token": "{{ csrf_token() }}"}),
-		   dataType: "json",
-		   contentType: 'application/json',
-		   success:function(data){
-		    $('#customer_model_cancel').click();
-			var respData = {
-				id: data.customer_id, 
-				text: data.customer_name
-			};
-			var newOption = new Option(respData.text, respData.id, false, false);
-			$('#customer').append(newOption).trigger('change');
-			console.log('customer id', $('#customer').val());
-		  }
-		});
+		if(modal_customer_name != ""){
+			$.ajax({
+			   url:"{{ route('project-save-customer') }}",
+			   method:"POST",
+			   data:JSON.stringify({modal_customer_name:modal_customer_name, modal_customer_description:modal_customer_description,  "_token": "{{ csrf_token() }}"}),
+			   dataType: "json",
+			   contentType: 'application/json',
+			   success:function(data){
+			    $('#customer_model_cancel').click();
+				var respData = {
+					id: data.customer_id, 
+					text: data.customer_name
+				};
+				var newOption = new Option(respData.text, respData.id, false, false);
+				$('#customer').append(newOption).trigger('change');
+				console.log('customer id', $('#customer').val());
+			  }
+			});
+		}else{
+			$('#validation_message_name').show();
+			setTimeout(function(){
+				$("#validation_message_name").hide();
+			}, 2500);
+		}
 	}
 
     function pass_customer_id(id){

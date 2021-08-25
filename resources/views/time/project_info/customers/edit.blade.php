@@ -29,7 +29,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" placeholder="" name="customer_name" value="{{ old('customer_name', $customers[0]->customer_name) }}">
+													<input type="text" class="form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" placeholder="" name="customer_name" value="{{ old('customer_name', $customers[0]->customer_name) }}" maxlength="30" autocomplete="off">
 													{!! $errors->first('customer_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -43,7 +43,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<textarea class="form-control {{ $errors->has('customer_description') ? 'is-invalid' : ''}}" rows="3" name="customer_description">{{ old('customer_description', $customers[0]->customer_description) }}</textarea>
+													<textarea class="form-control {{ $errors->has('customer_description') ? 'is-invalid' : ''}}" rows="3" name="customer_description" maxlength="255">{{ old('customer_description', $customers[0]->customer_description) }}</textarea>
 													{!! $errors->first('customer_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
