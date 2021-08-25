@@ -44,7 +44,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="Enter Project Name" name="project_name" value="{{ old('project_name') }}">
+													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="Enter Project Name" id="project_name" name="project_name" value="{{ old('project_name') }}" autocomplete="off">
 													{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -205,7 +205,7 @@
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-success text-white ctm-border-radius" onclick="save_customer()">Save</button>
-					        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Cancel</button>						
+					        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Cancel</button>
 					    </div>	
 				</div>
 			</div>
@@ -225,9 +225,8 @@
 										<div id="reporting_information" class="mb-2"></div>
 									</div>
 								</div>
-							<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
 							<button type="button" onclick="submitForm()" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Proceed</button>
-						
+							<button type="button" class="ml-3 btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>						
 						</div>
 					</div>
 				</div>
@@ -318,34 +317,40 @@
 
 	function submitProjectsForm() {
 		var employeeIds = $('#employee_ids').val();
-		var managerIds = $('#manager_ids').val();		
+		var managerIds = $('#manager_ids').val();	
 
-		//check assigned employees managers
-		$.ajax({
-			method: 'POST',
-			url: '{{ route("project.checkEmployeeAjax") }}',
-			data: JSON.stringify({"manager_ids": managerIds, "employee_ids": employeeIds, "_token": "{{ csrf_token() }}"}),
-			dataType: "json",
-			contentType: 'application/json',
-			success: function(response){
-				console.log('response : ', response);
-				var html = '';	
-				if(response && response.length)	{
-					html += '<table class="table"><tr><th>Employee Name</th><th>Reporting Managers</th></tr>';
-					response.forEach(element => {
-						console.log(element.manager_name);
-						html += '<tr><td>'+element.employee_name+'</td><td>'+element.manager_name+'</td></tr>';
-						
-					});
-					html += '</table>';					
-				} else {
-					html += '<div class="alert alert-danger"><p>No Employees Assigned!</p></div>';
-				}	
-				$('#reporting_information').html(html);
-				$('#reporting_information_modal').modal('show');	
-			}					
-		});
+		var customer_name = $('#customer').val();
+		var project_name = $('#project_name').val();
 
+		if(!customer_name || !project_name) {
+			submitForm();
+		}else {
+			//check assigned employees managers
+			$.ajax({
+				method: 'POST',
+				url: '{{ route("project.checkEmployeeAjax") }}',
+				data: JSON.stringify({"manager_ids": managerIds, "employee_ids": employeeIds, "_token": "{{ csrf_token() }}"}),
+				dataType: "json",
+				contentType: 'application/json',
+				success: function(response){
+					console.log('response : ', response);
+					var html = '';	
+					if(response && response.length)	{
+						html += '<table class="table"><tr><th>Employee Name</th><th>Reporting Managers</th></tr>';
+						response.forEach(element => {
+							console.log(element.manager_name);
+							html += '<tr><td>'+element.employee_name+'</td><td>'+element.manager_name+'</td></tr>';
+							
+						});
+						html += '</table>';					
+					} else {
+						html += '<div class="alert alert-danger"><p>No Employees Assigned!</p></div>';
+					}	
+					$('#reporting_information').html(html);
+					$('#reporting_information_modal').modal('show');	
+				}					
+			});			
+		}
 	}
 </script>
 @endpush

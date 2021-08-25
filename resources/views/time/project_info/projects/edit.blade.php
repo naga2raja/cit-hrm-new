@@ -174,7 +174,7 @@
 							<div class="card ctm-border-radius shadow-sm border">
 								<div class="card-header">
 									<div class="text-left ml-2">
-										<h4 class="card-title mb-0">Add Activity</h4> 
+										<h4 class="card-title mb-0" id="edit_activity_title">Add Activity</h4> 
 									</div>
 								</div>
 								<div class="card-body">
@@ -371,6 +371,7 @@
 		}
 
 		$('#activity_show').on('click', function(){
+			$('#edit_activity_title').html("Add Activity");
 			$('#activity_name').val("");
 			$('#activity_id').val("");
 			$('#save_activity').html("Save");
@@ -439,11 +440,10 @@
 				   success:function(data){
 				   	console.log(data);					  
 				   	disable_edit();
-						$('#success_message_info').show();
-						setTimeout(function(){
-							$("#success_message_info").hide();
-							}, 2500);
-					
+					$('#success_message_info').show();
+					setTimeout(function(){
+						$("#success_message_info").hide();
+					}, 2500);
 				  }
 				});
 			} else{
@@ -461,7 +461,8 @@
 			}
 		});
 
-		function edit_activity(id, name){
+		function edit_activity(id, name){			
+			$('#edit_activity_title').html("Edit Activity");
 			$('#activity_name').val(name);
 			$('#activity_id').val(id);
 			$('#save_activity').html("Update");
