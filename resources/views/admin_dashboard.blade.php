@@ -302,8 +302,8 @@
 <script type="text/javascript">
 
 	function getImagePath(img) {
-    	var profile_image = '{{ assetUrl(":id") }}';
-    	return profile_image.replace(':id', img);
+    	var profile_image = '{{ assetUrl("") }}'+ img;
+    	return profile_image;
 	}
 
 	function news_popup(title, details){
@@ -353,7 +353,7 @@
 						news += '<div class="notice-board mb-3">';
 						news += '<div class="table-img">';						
 						var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-						news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+'{{ assetUrl("") }}'+ profile+'" alt="Photo"></div>';
+						news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+getImagePath(profile)+'" alt="Photo"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
 						news += '<h6 class="mb-0">Today '+row.employee_name+' Birthday</h6>';						
@@ -368,7 +368,7 @@
 		            	news += '<div class="notice-board mb-3">';
 						news += '<div class="table-img">';
 						var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-						news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+'{{ assetUrl("") }}'+ profile+'" alt="Photo"></div>';
+						news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+getImagePath(profile)+'" alt="Photo"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
 						news += '<h6 class="mb-0">'+row.title+'</h6>';
@@ -439,7 +439,7 @@
 		            	});
 		            	leads += '<div class="media mb-3">';
 		            	var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-						leads += '<div class="e-avatar avatar-online mr-3"><img src="'+'{{ assetUrl("") }}'+ profile+'" alt="Profile" class="img-fluid"></div>';
+						leads += '<div class="e-avatar avatar-online mr-3"><img src="'+getImagePath(profile)+'" alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 						var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
@@ -495,7 +495,7 @@
 		            		projectAdminArr.push(row.employee_id);
 		            		leads += '<div class="media mb-3">';
 			            	var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src="'+'{{ assetUrl("") }}'+ profile+'" alt="Profile" class="img-fluid"></div>';
+							leads += '<div class="e-avatar avatar-online mr-3"><img src="'+getImagePath(profile)+'" alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
@@ -555,7 +555,7 @@
 		            		projectManagerArr.push(row.employee_id);
 			            	leads += '<div class="media mb-3">';
 			            	var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src="'+'{{ assetUrl("") }}'+ profile+'" alt="Profile" class="img-fluid"></div>';
+							leads += '<div class="e-avatar avatar-online mr-3"><img src="'+getImagePath(profile)+'" alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
@@ -577,7 +577,7 @@
 
 		            	leads += '<div class="media mb-3">';
 		            	var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-						leads += '<div class="e-avatar avatar-online mr-3"><img src="'+'{{ assetUrl("") }}'+ profile+'" alt="Profile" class="img-fluid"></div>';
+						leads += '<div class="e-avatar avatar-online mr-3"><img src="'+getImagePath(profile)+'" alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 						leads += '<p class="mb-0 ctm-text-sm">' +designation+ '</p>';
@@ -624,7 +624,7 @@
 		            		teamMemberArr.push(row.employee_id);
 			            	leads += '<div class="media mb-3 cit_employee_'+row.employee_id+'">';
 			            	var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-							leads += '<div class="e-avatar avatar-online mr-3"><img src="'+'{{ assetUrl("") }}'+ profile+'" alt="Profile" class="img-fluid"></div>';
+							leads += '<div class="e-avatar avatar-online mr-3"><img src="'+getImagePath(profile)+'" alt="Profile" class="img-fluid"></div>';
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
@@ -661,7 +661,7 @@
 						activity += '<div class="notice-board">';
 						activity += '<div class="table-img">';
 						var profile = (row.profile_photo) ? row.profile_photo : "/img/profiles/img-1.jpg";
-						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+'{{ assetUrl("") }}'+ profile+'" alt="Photo"></div>';
+						activity += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+getImagePath(profile)+'" alt="Photo"></div>';
 						activity += '</div>';
 						activity += '<div class="notice-body">';
 
