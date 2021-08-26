@@ -248,16 +248,16 @@
     var leavesArray = [];
     function getLeaveStatus(leave_id) {
         var status_id = $('#leave_'+leave_id).val();
-        if(status_id == '') {
+        //if(status_id == '') {
             leavesArray = leavesArray.filter(function( obj ) {
 				return obj.id != leave_id;
 			});
-        }
+        //}
         if(status_id) {
             leavesArray.push({'id': leave_id, 'status_id': status_id});
         }        
         var result = uniqueArray(leavesArray);        
-        console.log(result);
+        console.log(leavesArray, result, status_id);
         $('#leave_id_update').val(JSON.stringify(result));
 
         $('#approve_action').hide();

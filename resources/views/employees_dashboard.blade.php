@@ -26,7 +26,7 @@
 								<div class="user-card card shadow-sm bg-white text-center ctm-border-radius">
 									<div class="user-info card-body">
 										<div class="user-avatar mb-4">
-											@if($data['my_data']->profile_photo)												
+											@if(@$data['my_data'] && $data['my_data']->profile_photo)												
 												<img src="{{ assetUrl($data['my_data']->profile_photo) }}" alt="{{ $data['my_data']->first_name }}" class="img-fluid rounded-circle" width="100">
 											@else
 												<img src="{{ assetUrl('img/profiles/img-1.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
