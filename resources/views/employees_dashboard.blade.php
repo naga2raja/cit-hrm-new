@@ -513,7 +513,9 @@
 							activity += '<span class="ctm-text-sm">'+row.role_name+' '+row.action+' | '+diff+'</span>';
 						}
 						if(row.type == "Others Activities"){
-							var sendArr = row.send_to.split(',');
+							var sendArrRow = row.send_to;
+							sendArrRow = sendArrRow.toString();							
+							var sendArr = sendArrRow.split(',');
 							var admin = '';
 							if(sendArr && sendArr[0]){
 								if(sendArr[0] == '1'){
