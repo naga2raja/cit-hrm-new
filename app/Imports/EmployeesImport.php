@@ -15,6 +15,12 @@ use App\mJobCategory;
 use App\mCompanyLocation;
 use App\tEmployeeReportTo;
 use App\mCountry;
+use App\mProject;
+use App\mCustomer;
+use App\tProjectAdmin;
+use App\tProjectManager;
+use App\tProjectEmployee;
+use App\tActivity;
 
 class EmployeesImport implements ToModel, WithStartRow
 {
@@ -58,6 +64,13 @@ class EmployeesImport implements ToModel, WithStartRow
         $report_to = $row[27]; //Emmployee_id Comma Separated
         $user_role = $row[28];
         $user_password = $row[29];
+
+        $project_customer_name = $row[30];
+        $project_name = $row[31];
+        $project_admin_id = $row[32];
+        $project_manager_ids = $row[33];
+        $project_employee_ids = $row[34];
+        $project_activities = $row[35];
         //$isExists = User::where('email', $email)->first();
         $isExistsEmployee = Employee::where('employee_id', $employee_id)->orWhere('email', $email)->withTrashed()->first();
 
@@ -186,7 +199,107 @@ class EmployeesImport implements ToModel, WithStartRow
                         }
                     }
                 }
-            }            
+            }
+
+            //Project Info Start
+            if($project_name && $project_customer_name) {
+                //check project is already exists
+                $projectInfo = mProject::where('project_name', $project_name)->first();
+                $projectCustomer = mCustomer::where('customer_name', $project_customer_name)->first();
+
+                if(!$projectCustomer) {
+                    //create customer
+                    $projectCustomer = new mCustomer;
+                    $projectCustomer->customer_name = $project_customer_name;
+                    $projectCustomer->customer_description = '';
+                    $projectCustomer->save();
+                }
+
+                if(!$projectInfo && $projectCustomer) {
+                    // insert
+                    $projectInfo = new mProject;
+                    $projectInfo->project_name = $project_name;
+                    $projectInfo->project_description = '';
+                    $projectInfo->customer_id = $projectCustomer->id;
+                    $projectInfo->save();
+                }
+
+                if($projectInfo && $projectInfo->id) {
+                        //project Admins
+                        if($project_admin_id) {                    
+                                $adminEmp = Employee::where('employee_id', $project_admin_id)->first();
+                                if($adminEmp) {
+                                    $isExists = tProjectAdmin::where('project_id', $projectInfo->id)->where('admin_id', $adminEmp->id)->first();
+                                    if(!$isExists) {
+                                        $projectAdmin = new tProjectAdmin;   
+                                        $projectAdmin->project_id = $projectInfo->id;
+                                        $projectAdmin->admin_id = $adminEmp->id;
+                                        $projectAdmin->save();
+                                    }
+                                }                   
+                        }
+                        //Project Managers
+                        if($project_manager_ids) {
+                            $managerIds = explode(',', $project_manager_ids);
+                            if(count($managerIds)) {                                
+                                foreach($managerIds as $employeeId) {
+                                    $empDet = Employee::where('employee_id', trim($employeeId))->first();
+                                    if($empDet) {  
+                                        $isExists = tProjectManager::where('project_id', $projectInfo->id)
+                                            ->where('employee_id', $empDet->id)
+                                            ->first();
+                                        if(!$isExists) {
+                                            $projectManager = new tProjectManager;
+                                            $projectManager->project_id = $projectInfo->id;                                  
+                                            $projectManager->employee_id = $empDet->id;                             
+                                            $projectManager->save();                                            
+                                        }
+                                    }
+                                }           
+                                 
+                            }
+                        }
+                        //Project Employees
+                        if($project_employee_ids) {
+                            $employeeIds = explode(',', $project_employee_ids);
+                            if(count($employeeIds)) {
+                                foreach($employeeIds as $employeeId) {
+                                    $empDet = Employee::where('employee_id', trim($employeeId))->first();
+                                    if($empDet) {   
+                                        $isExists = tProjectEmployee::where('project_id', $projectInfo->id)
+                                            ->where('employee_id', $empDet->id)
+                                            ->first();
+                                        if(!$isExists) {
+                                            $tProjectEmployee = new tProjectEmployee;                                         
+                                            $tProjectEmployee->project_id = $projectInfo->id;
+                                            $tProjectEmployee->employee_id = $empDet->id;
+                                            $tProjectEmployee->save();                                            
+                                        }
+                                    }                            
+                                }  
+                            }
+                        }
+
+                        //Activities
+                        if($project_activities) {
+                            $activies = explode(',', $project_activities);
+                            foreach ($activies as $task) {
+                                $task = trim($task);
+                                $isExists = tActivity::where('project_id', $projectInfo->id)
+                                    ->where('activity_name', $task)
+                                    ->first();
+                                if(!$isExists) {
+                                    tActivity::create([
+                                        'project_id' => $projectInfo->id,
+                                        'activity_name' => $task,
+                                    ]);
+                                }
+                            }
+                        }
+                }                
+
+            }
+            //Project Info End
 
             $this->results['success'][] = ['name' => $first_name . ' '.$middle_name.' '.$last_name, 'email' => $email];
             ++$this->rows;
