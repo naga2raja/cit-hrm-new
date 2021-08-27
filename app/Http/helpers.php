@@ -16,10 +16,10 @@ if (! function_exists('assetUrl')) {
     function getProfileImage(){
         $user = Auth::user();
         $data = DB::table('employees')
-                    ->where('id', $user->id)
+                    ->where('user_id', $user->id)
                     ->selectRaw('profile_photo')
                     ->first();
-        if($data->profile_photo){
+        if($data && $data->profile_photo){
             return assetUrl($data->profile_photo);
         }else{
             return assetUrl("img/profiles/img-1.jpg");

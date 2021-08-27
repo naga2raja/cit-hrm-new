@@ -1,4 +1,4 @@
-FIRST_NAME,MIDDLE_NAME,LAST_NAME,EMPLOYEE_ID,EMAIL_ADDRESS,GENDER,DATE_OF_BIRTH,MARITAL_STATUS,ADDRESS_STREET_1,ADDRESS_STREET_2,CITY,STATE,POSTAL_CODE,COUNTRY,HOME_TELEPHONE,MOBILE
-Anbu,Dev,test,EMP001,test1@gmail.com,Male,20-10-1992,Yes,2nd street,Near lighthouse,Bangalore,Karnataka,560001,India,9870654321,9870654321
-Dev,User,test,EMP002,test2@gmail.com,Male,10-10-1992,No,2nd street,,,,560001,Japan,9870654321,9870654321
-Demo,Demo,test,EMP003,test3@gmail.com,Male,20-10-1993,Yes,2nd street,,,,560001,India,2345675,45676777
+FIRST_NAME,MIDDLE_NAME,LAST_NAME,EMPLOYEE_ID,EMAIL_ADDRESS,GENDER,DATE_OF_BIRTH,MARITAL_STATUS,ADDRESS_STREET_1,ADDRESS_STREET_2,CITY,STATE,POSTAL_CODE,COUNTRY,HOME_TELEPHONE,MOBILE,WORK_TELEPHONE,ALTERNATE_EMAIL,STATUS,JOB_TITLE,JOB_CATEGORY,DATE_OF_JOIN,COMPANY_NAME,COMPANY_COUNTRY,COMPANY_STATE,COMPANY_CITY,COMPANY_ADDRESS,REPORT_TO,USER_ROLE,PASSWORD
+Anbu,Dev,test,EMP1,testdev1@gmail.com,Male,20-10-1992,Yes,2nd street,Near lighthouse,Bangalore,Karnataka,560001,India,9870654321,9870654321,123456789,altemp@gmail.com,Active,Software Engineer,Developement,20-05-2021,Cabcs India Bangalore,India,Bangalore,Bangalore,Bangalore,002,Manager,welcome
+Dev,User,test,EMP2,testdev2@gmail.com,Male,10-10-1992,No,5th street,,,,560001,Japan,9870654321,9870654321,123456789,altemp@gmail.com,In active,Testing,Testing,07-05-2020,Cabcs India Japan,Japan,Tokyo,Tokyo,japan,001,Employee,welcome
+Demo,Demo,test,EMP3,testdev3@gmail.com,Male,20-10-1993,Yes,2nd street,,,,560001,India,2345675,45676777,123456789,altemp@gmail.com,Active,HR,HR,20-05-2019,Cabcs India branch2,India,Bangalore,Bangalore,Bangalore,002,,

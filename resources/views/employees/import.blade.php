@@ -68,7 +68,13 @@
 															<li  class="list-group-item">
 																All date fields should be in YYYY-MM-DD format                    </li>
 															<li  class="list-group-item">
-																If gender is specified, value should be either <b>Male</b> or <b>Female</b> </li>	
+																If Gender is specified, value should be either <b>Male</b> or <b>Female</b> </li>	
+															<li  class="list-group-item">
+																If Status is specified, value should be either <b>Active</b> or <b>In active</b> </li>
+															<li  class="list-group-item">
+																If Report To is specified, value should have Employee IDs in comma separated format. i.e EMP001,EMP002,EMP004 </li>
+															<li  class="list-group-item">
+																If User Role is specified, value should be either <b>Admin</b> or <b>Manager</b>or <b>Employee</b> </li>
 															<li  class="list-group-item">Sample CSV file:                         
 																<a class="download" href="{{ route('sample.download') }}?file=pim">Download</a>
 															</li>
