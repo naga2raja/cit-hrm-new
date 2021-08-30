@@ -128,11 +128,11 @@
 	              												</td>
 	              												<td>
 	              													@if($loop->index == 0)
-		              													@if(@$timesheet->status == 0)
+		              													@if(@$timesheet->status == 0 || @$timesheet->status == 3)
 		              														<button type="button" name="add" id="add" class="btn btn-primary text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Add Row</button>
 	              														@endif
 	              													@else
-	              														@if(@$timesheet->status == 0)
+	              														@if(@$timesheet->status == 0 || @$timesheet->status == 3)
 	              															<button type="button" name="timeItem[{{ $loop->index }}][remove]" id="{{ $loop->index }}" class="btn_remove btn btn-danger text-white ctm-border-radius">X</button>
 	              														@endif
 	              													@endif
@@ -154,10 +154,16 @@
 												<div class="col-sm-5"></div>
 												<div class="col-sm-7">
 													<div class="row">
-														@if(@$timesheet->status == 0)
+														@if(@$timesheet->status == 0 || @$timesheet->status == 3)
 														<div class="col-sm-2">
 															<div class="submit-section text-center btn-add">
-																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">
+																 @if(@$timesheet->status == 3)
+																 	Resubmit
+																 @else
+																	Save
+																 @endif
+																</button>
 															</div>
 														</div>
 														@endif
@@ -480,8 +486,8 @@
 			   success:function(data){
 			   	console.log(data);
 			   	// validation_popup_msg("Success", "Timesheets Updated successfully");
-			   	alert("Timesheets Updated successfully");
-			   	window.location.href = "{{ url()->previous() }}";
+			   	// alert("Timesheets Updated successfully");
+			   	// window.location.href = "{{ url()->previous() }}";
 			  }
 			});
 	    }

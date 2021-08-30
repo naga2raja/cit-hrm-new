@@ -10,6 +10,7 @@ use App\Employee;
 use App\tTimesheetItem;
 use App\tTimesheet;
 use APP\tActivity;
+use APP\tLog;
 use App\Http\Controllers\Leave\Leave\LeaveController;
 use Carbon\Carbon;
 use DateTime;
@@ -77,17 +78,46 @@ class TimesheetsController extends Controller
         $date = date('Y-m-d', strtotime($date));
         $employee_id = $data['employee_id'];
 
+        DB::connection()->enableQueryLog();
         // duplicate check
         $TimesheetExists = tTimesheet::where('start_date', $date)
                                     ->where('employee_id', $employee_id)
                                     ->first();
         if($TimesheetExists) {
-            $timesheet_id = $TimesheetExists->id;
-            // Delete TimesheetItem
-            $TimesheetItem = tTimesheetItem::where('timesheet_id', $timesheet_id)
-                                ->where('date', $date)
-                                ->where('employee_id', $employee_id)
-                                ->delete();
+
+          // update if rejected
+          if($TimesheetExists->status == 3){
+            $comments = $TimesheetExists->comments.' <br><b>'.Auth::user()->name.'</b> - Resubmitted on ' . getCurrentTime();
+            $employee = tTimesheet::where('start_date', $date)
+                                    ->where('employee_id', $employee_id)
+                                    ->where('status', 3)
+                                    ->update(array('status' => 1, 'comments' => $comments));
+
+            // In-active previous log
+            $tLog = DB::table('t_logs')
+                    ->where('module_id', $TimesheetExists->id)
+                    ->where('module', "Timesheet")
+                    ->where('status', 0)
+                    ->update(['status' => 1]);
+
+            // dd(DB::getQueryLog());
+
+            // =========== t_log table Start ===========
+                $action = "Resubmitted";
+                $send_to = getMyReportingManager($TimesheetExists->employee_id);
+                $send_by = getEmployeeId(Auth::user()->id);
+                $module_id = $TimesheetExists->id;
+                $date = $TimesheetExists->start_date;
+                activityLog($action, "Timesheet", $send_by, $send_to, $module_id, $date);
+            // =========== t_log table end =============
+          }
+
+          $timesheet_id = $TimesheetExists->id;
+          // Delete TimesheetItem
+          $TimesheetItem = tTimesheetItem::where('timesheet_id', $timesheet_id)
+                              ->where('date', $date)
+                              ->where('employee_id', $employee_id)
+                              ->delete();
             
         }else{
           $comments = '<b>'.Auth::user()->name.'</b> - Saved Timesheet on ' . getCurrentTime();
@@ -104,6 +134,7 @@ class TimesheetsController extends Controller
 
           $timesheet_id = $timesheet->id;
         }
+
         // create TimesheetItem
         $timeItem = $data['timeItem'];
         foreach ($timeItem as $row) {

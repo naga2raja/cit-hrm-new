@@ -9,6 +9,8 @@ use Auth;
 use DateTime;
 use Carbon\Carbon;
 use App\mHoliday;
+use App\mCompanyLocation;
+use App\mCountry;
 use Session;
 use DB;
 
@@ -51,7 +53,10 @@ class HolidaysController extends Controller
      */
     public function create()
     {
-        return view('leave/holidays/add');
+        $country = mCountry::whereIn('id', [103, 112])->get();
+        $company_location = mCompanyLocation::get();
+
+        return view('leave/holidays/add', compact('holidays', 'company_location', 'country'));
     }
 
     /**
@@ -63,6 +68,8 @@ class HolidaysController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'location_id' => 'required',
+            'sub_unit_id' => 'required',
             'description' => 'required',
             'date' => 'required'
         ]);
@@ -78,7 +85,12 @@ class HolidaysController extends Controller
         }
         $date = str_replace('/', '-', $request->date );
         $date = date('Y-m-d', strtotime($date ));
+
+        // dd($request->all());
+
         $holidays = mHoliday::create([
+            'operational_country_id'  => $request->input('location_id'),
+            'operational_sub_unit_id'  => $request->input('sub_unit_id'),
             'description'  => $request->input('description'),
             'date'  => date('Y-m-d', strtotime($date)),
             'recurring' => $recurring,
@@ -138,6 +150,8 @@ class HolidaysController extends Controller
         if ($request->input('recurring') == "on") {
             $recurring = '1';
         }
+        $date = str_replace('/', '-', $request->date );
+        $date = date('Y-m-d', strtotime($date ));
 
         $holidays = mHoliday::find($id);
         $holidays->description = $request->input('description');
