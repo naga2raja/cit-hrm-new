@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Time\ProjectInfo;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Employee;
 use App\mProject;
 use App\mCustomer;
@@ -19,9 +20,20 @@ class ProjectsImportController extends Controller
     }
 
     public function import(Request $request) {
-        $request->validate([
-            'upload_file' => 'max:1024|required|mimes: csv,xls,txt', //csv,txt
-        ]);
+        $validator = Validator::make(
+          [
+              'file'      => $request->upload_file,
+              'extension' => strtolower($request->upload_file->getClientOriginalExtension()),
+          ],
+          [
+              'file'          => 'required',
+              'extension'      => 'required|in:csv,xlsx,xls',
+          ]
+        );
+
+        // $request->validate([
+        //     'upload_file' => 'max:1024|required|mimes: xlsx,xls,csv,txt', //csv,txt
+        // ]);
 
         $fileName = $_FILES['upload_file']['name'];
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -32,6 +44,9 @@ class ProjectsImportController extends Controller
         }
         if($ext == 'csv') {
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+        }
+        if($ext == 'xlsx') {            
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         }
         $spreadsheet = $reader->load($tmpName);
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
