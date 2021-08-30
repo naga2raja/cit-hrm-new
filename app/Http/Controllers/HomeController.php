@@ -79,7 +79,7 @@ class HomeController extends Controller
                                 if(count($empIds)) {
                                     $leave_count->whereIn('t_leave_requests.employee_id', $empIds);
                                 }
-                                $leave_count = $leave_count->where('t_leave_requests.status', '!=' ,2)
+                                $leave_count = $leave_count->where('t_leave_requests.status', 1)
                                                 ->groupBy('t_leave_requests.id')
                                                 ->get();
             $data = [

@@ -79,7 +79,7 @@
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
-															<label>Middle Name <span class="text-danger">*</span></label>
+															<label>Middle Name</label>
 															<input type="text" class="form-control" placeholder="Middle Name" name="middle_name"  maxlength="30" value="{{ old('middle_name') }}">
 														</div>
 													</div>
