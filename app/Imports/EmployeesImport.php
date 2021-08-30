@@ -65,12 +65,12 @@ class EmployeesImport implements ToModel, WithStartRow
         $user_role = $row[28];
         $user_password = $row[29];
 
-        $project_customer_name = $row[30];
-        $project_name = $row[31];
-        $project_admin_id = $row[32];
-        $project_manager_ids = $row[33];
-        $project_employee_ids = $row[34];
-        $project_activities = $row[35];
+        // $project_customer_name = $row[30];
+        // $project_name = $row[31];
+        // $project_admin_id = $row[32];
+        // $project_manager_ids = $row[33];
+        // $project_employee_ids = $row[34];
+        // $project_activities = $row[35];
         //$isExists = User::where('email', $email)->first();
         $isExistsEmployee = Employee::where('employee_id', $employee_id)->orWhere('email', $email)->withTrashed()->first();
 
@@ -201,6 +201,7 @@ class EmployeesImport implements ToModel, WithStartRow
                 }
             }
 
+            /*
             //Project Info Start
             if($project_name && $project_customer_name) {
                 //check project is already exists
@@ -300,6 +301,7 @@ class EmployeesImport implements ToModel, WithStartRow
 
             }
             //Project Info End
+            */
 
             $this->results['success'][] = ['name' => $first_name . ' '.$middle_name.' '.$last_name, 'email' => $email];
             ++$this->rows;
