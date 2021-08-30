@@ -303,7 +303,7 @@ class LeaveController extends Controller
             ->selectRaw('SUM(length_days) as days, entitlement_id')
             ->first();
         
-        $leaveDays = $leaves->days;
+        $leaveDays = (float) $leaves->days;
         $entitlementId = $leaves->entitlement_id;
         $entitlementDet = mLeaveEntitlement::where('id', $entitlementId)->first();
         $entitlementDet->days_used = $entitlementDet->days_used - $leaveDays;

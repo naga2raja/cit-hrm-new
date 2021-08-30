@@ -147,7 +147,8 @@ if (! function_exists('assetUrl')) {
                 ->whereIn('t_leaves.status', [1,2,3]);
         })
         ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')  
-        ->where('m_leave_entitlements.emp_number', $employeeId)  
+        ->where('m_leave_entitlements.emp_number', $employeeId)
+        ->where('t_leaves.deleted_at', '=', NULL)  
         ->selectraw('m_leave_types.name, m_leave_entitlements.no_of_days, IFNULL(SUM(t_leaves.length_days), 0) as days_used, (IFNULL(m_leave_entitlements.no_of_days, 0) - IFNULL(SUM(t_leaves.length_days), 0) ) as remaining_days')
         ->orderBy('m_leave_types.name', 'ASC')
         ->groupBy('m_leave_entitlements.id')

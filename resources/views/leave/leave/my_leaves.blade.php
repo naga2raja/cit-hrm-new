@@ -107,10 +107,8 @@
 																<th>To</th>
 																<th>Days</th>																
 																<th>Notes</th>
-																<th>Status</th>
-																@unlessrole('Admin')
-																	<th class="text-left">Action</th>
-																@endrole
+																<th>Status</th>																
+																<th class="text-left">Action</th>																
 															</tr>
 														</thead>
 														<tbody>
@@ -147,10 +145,10 @@
 														              		<b><span class="text-danger font-weight-bold"> Cancelled </span></b>
 														              	@endif
 																	</td>	
-																	@if( ($leave->approval_level == 1 || $leave->approval_level == 2) && $leave->status == 2 ) 
+																	@if( ($leave->approval_level == 1 || $leave->approval_level == 2) && $leave->status == 2 && !Auth::user()->hasRole('Admin') ) 
                                                                         
                                                                     @else
-																		@if($leave->status == 1)
+																		@if($leave->status == 1 || Auth::user()->hasRole('Admin'))
 																		<!-- if employee want to delete can do it before manager approve/reject-->	
                                                                     	<td>	
 																			<a href="javascript:void(0);" onclick="showDeleteModal({{ $leave->id }})" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete">
