@@ -42,7 +42,7 @@ class EmployeeController extends Controller
         })
         ->when(request()->filled('status'), function ($query) {
             $query->where('employees.status', request('status'));
-        });
+        })->selectRaw('employees.id, employees.email, employees.first_name, employees.middle_name, employees.last_name, employees.status, employees.employee_id');
 
         if(Auth::user()->hasRole('Manager')) {
             $managerDet = Employee::where('user_id', Auth::user()->id)->first();
