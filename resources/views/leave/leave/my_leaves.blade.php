@@ -144,7 +144,7 @@
 														              	@elseif($leave->status == 4)
 														              		<b><span class="text-danger font-weight-bold"> Rejected </span></b>
 														              	@elseif($leave->status == 5)
-														              		<b><span class="text-warning font-weight-bold"> Cancelled </span></b>
+														              		<b><span class="text-danger font-weight-bold"> Cancelled </span></b>
 														              	@endif
 																	</td>	
 																	@if( ($leave->approval_level == 1 || $leave->approval_level == 2) && $leave->status == 2 ) 

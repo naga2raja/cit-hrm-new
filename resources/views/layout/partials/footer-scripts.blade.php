@@ -156,12 +156,12 @@ function showLeaveInfo(id, url = false) {
 				var info = response.info;
 				var logs = response.comments;
 				console.log('response : ', response, info.emp_name);
-				$('#employee_name').html(info.emp_name);
-				$('#leave_type').html(info.name);
-				$('#from_to_date').html(info.from_date +' - '+ info.to_date + ' ('+info.length_days+' Day)');
-				$('#notes').html(info.comments);
-				$('#leave_status').html(info.my_status);
-				$('#leave_created_at').html(moment(info.created_at).utcOffset("+05:30").format('YYYY-MM-DD hh:MM a'));
+				$('#employee_name').html(": "+info.emp_name);
+				$('#leave_type').html(": "+info.name);
+				$('#from_to_date').html(": "+info.from_date +' - '+ info.to_date + ' ('+info.length_days+' Day)');
+				$('#notes').html(": "+info.comments);
+				$('#leave_status').html(": "+info.my_status);
+				$('#leave_created_at').html(moment(": "+info.created_at).utcOffset("+05:30").format('YYYY-MM-DD hh:MM a'));
 				var logHtml = '';
 				if(logs && logs.length) {
 					logHtml = '<table class="table"><tr class="bg-light"><th>Name</th><th>Comments</th><th>Updated at</th></tr>';
