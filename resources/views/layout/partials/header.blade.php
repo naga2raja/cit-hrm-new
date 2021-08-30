@@ -425,7 +425,10 @@
                                                     <a class="dropdown-item {{ Request::is('customers*') ? 'active' : '' }}" href="{{ route('customers.index') }}">Customers</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item {{ Request::is('projects*') ? 'active' : '' }}" href="{{ route('projects.index') }}">Projects</a>
+                                                    <a class="dropdown-item {{ Request::is('projects') ? 'active' : '' }}" href="{{ route('projects.index') }}">Projects</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item {{ Request::is('projects-import') ? 'active' : '' }}" href="{{ route('projects.import') }}">Projects Import</a>
                                                 </li>
                                             </ul>
                                         </li>
