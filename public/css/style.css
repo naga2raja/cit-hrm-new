@@ -67,11 +67,8 @@ Version: 1.0
     box-shadow: 0px 0px 10px grey;
 }
 
-.logo-shadow{
-    text-shadow: -1px 1px 0 #fff,
-                  1px 1px 0 #fff,
-                  1px -1px 0 #fff,
-                 -1px -1px 0 #fff;
+.logo-shadow {
+    text-shadow: -1px 1px 0 #fff, 1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
 }
 
 .bold {
@@ -2250,5 +2247,37 @@ textarea.form-control {
     }
     .last-card-row1 {
         margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 991.98px) {
+    #cithrm_desktop_menu_section {
+        display: none !important;
+    }
+    #cithrm_mobile_menu .nav-link span.d-none {
+        display: inline-block !important;
+    }
+    #cithrm_mobile_menu .navbar-nav {
+        text-align: left;
+    }
+    #cithrm_mobile_menu .navbar-nav .lnr,
+    #cithrm_mobile_menu .navbar-nav .fa {
+        margin-right: 1rem !important;
+    }
+    #cithrm_mobile_menu ul li.active a,
+    #cithrm_mobile_menu ul li.focus a,
+    #cithrm_mobile_menu ul li.hover a {
+        color: #f1bd06 !important;
+    }
+    #cithrm_mobile_menu a.dropdown-item.dropdown-toggle.active {
+        color: #fff !important;
+    }
+    #cithrm_mobile_menu .cit_active {}
+    ul.dropdown-menu.cithrm_submenu_dropdown-menu {
+        display: contents;
+        position: unset !important;
+    }
+    .cithrm_submenu_dropdown-menu a.dropdown-item {
+        margin-left: 15px;
     }
 }
