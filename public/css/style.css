@@ -2272,7 +2272,9 @@ textarea.form-control {
     #cithrm_mobile_menu a.dropdown-item.dropdown-toggle.active {
         color: #fff !important;
     }
-    #cithrm_mobile_menu .cit_active {}
+    #cithrm_mobile_menu .cit_logout_mobile_menu {
+        display: block !important;
+    }
     ul.dropdown-menu.cithrm_submenu_dropdown-menu {
         display: contents;
         position: unset !important;

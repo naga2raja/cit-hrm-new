@@ -209,4 +209,7 @@
         <a class="nav-link btn-ctm-space {{ Request::is('news') ? 'active' : '' }} " href="{{ route('news.index') }}"><span class="lnr lnr-bullhorn pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">News</span></a>
     </li>
     @endrole
+    <li class="mr-1 cit_logout_mobile_menu" style="display: none;">
+        <a class="nav-link btn-ctm-space" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="lnr lnr-power-switch pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Logout</span></a>
+    </li>
 </ul>
