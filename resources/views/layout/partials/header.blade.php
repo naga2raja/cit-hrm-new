@@ -120,7 +120,7 @@
                                     <hr>
                                     <!-- Mobile Menu -->
                                     <div class="user-menu-items px-3 m-0" id="cithrm_mobile_menu">
-                                        @include('layout/partials/navigation');
+                                        @include('layout/partials/navigation')
                                         {{-- 
                                         <a class="px-0 pb-2 pt-0" href="index">
                                             <span class="media align-items-center">
@@ -249,7 +249,7 @@
                 <div class="collapse navbar-collapse header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom" id="navbarHover" >
                     <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
                         <div class="append mr-auto my-0 my-md-0 mr-auto">
-                            @include('layout/partials/navigation');
+                            @include('layout/partials/navigation')
                         </div>
                     </div>
                 </div>
