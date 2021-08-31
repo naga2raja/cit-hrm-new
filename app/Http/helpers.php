@@ -204,10 +204,22 @@ if (! function_exists('assetUrl')) {
     function getMyReportingManager($employee_id) {
         $data = DB::table('t_employee_report_to')->where('employee_id', $employee_id)
                     ->selectRaw('GROUP_CONCAT(manager_id) as reporting_manager_ids')
-                    ->first();
-        $return = '1';
+                    ->first();        
         if($data && $data->reporting_manager_ids){
             $return = $data->reporting_manager_ids;
+        } else {
+            $adminUsers = getAllAdminUsers();
+            $return = $adminUsers->admin_ids;
         }
         return $return;
+    }
+
+    function getAllAdminUsers() {
+        $data = DB::table('employees')
+                    ->join('users', 'users.id', 'employees.user_id')
+                    ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                    ->where('model_has_roles.role_id', 1)
+                    ->selectRaw('GROUP_CONCAT(employee.id) as admin_ids, GROUP_CONCAT(employee.email) as admin_emails')
+                    ->first();
+        return $data;
     }

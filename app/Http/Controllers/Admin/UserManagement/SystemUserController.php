@@ -62,7 +62,7 @@ class SystemUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('id', '!=', '1')->orderBy('id', 'desc')->get();
+        $roles = Role::orderBy('id', 'desc')->get();
         return view('admin/system_users/add', compact('roles'));
     }
 
@@ -141,10 +141,9 @@ class SystemUserController extends Controller
                     ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
                     ->join('roles', 'roles.id', 'model_has_roles.role_id')
                     ->where('users.id', $id)
-                    ->get();
-        // dd($users);
+                    ->get();        
         // In edit admin role is disabled
-        $roles = Role::where('id', '!=', '1')->orderBy('id', 'desc')->get();
+        $roles = Role::orderBy('id', 'desc')->get();
         return view('admin/system_users/edit', compact('users', 'roles'));
     }
 

@@ -472,16 +472,15 @@
 @push('scripts')
 	<script>
 		$(document.body).on("change","#job_id",function(){		
-		var jobId = this.value;
-		console.log(jobId);
+		var jobId = this.value;				
 		if(jobId > 0) {
 			$.ajax({
 			method: 'GET',
-			url: '/jobTitles/'+ jobId,
+			url: '{{ URL::to("/") }}'+'/jobTitles/'+ jobId,
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(response){
-					console.log('response : ', response);
+					// console.log('response : ', response);
 					var job_specification = '';     
 					if(response && response.job_description) {
 						job_specification = response.job_description;

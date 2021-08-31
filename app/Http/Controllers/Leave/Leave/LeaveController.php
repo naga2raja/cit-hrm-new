@@ -188,7 +188,8 @@ class LeaveController extends Controller
             }else if(Auth::user()->hasRole('Manager')){
                 $action = $leaveStatus->name;
                 $send_by = getEmployeeId(Auth::user()->id);
-                $send_to = $employeeId.','.'1';
+                $allAdmins = getAllAdminUsers();
+                $send_to = $employeeId.','.$allAdmins->admin_ids;
             }else{
                 $action = "Applied";
                 $send_by = $employeeId;
@@ -465,7 +466,8 @@ class LeaveController extends Controller
                 $action = $leaveStatus->name;
                 $send_by = getEmployeeId(Auth::user()->id);
                 if(Auth::user()->hasRole('Manager')){
-                    $send_to = $leaveRequest->employee_id.','.'1';
+                    $allAdmins = getAllAdminUsers();
+                    $send_to = $leaveRequest->employee_id.','.$allAdmins->admin_ids;
                 }else if(Auth::user()->hasRole('Admin')){
                     $send_to = $leaveRequest->employee_id;
                 }
