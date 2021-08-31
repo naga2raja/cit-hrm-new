@@ -12,7 +12,7 @@
 						<div class="card-header" id="basic1">
 							<h4 class="cursor-pointer mb-0">
 								<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
-									Add Leave Period
+									Edit Leave Period
 								</a>
 							</h4>
 						</div>
@@ -30,7 +30,8 @@
 								</div>
 								@endif
 
-								<form method="POST" action="{{ route('leavePeriod.store') }}">
+								<form method="POST" action="{{ route('leavePeriod.update', [$leave_period->id]) }}">
+									@method('put')
 									@csrf
 									<div class="row">
 										<div class="col-sm-2">
@@ -43,7 +44,7 @@
 												<select class="form-control select" name="location_id" id="location_id" required="">
                                                     <option value="">-- Select Location --</option>
                                                     @foreach ($country as $row)
-	                                                    <option value='{{ $row->id }}'>{{ $row->country }}</option>
+	                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : ($leave_period->country_id == $row->id) ? 'selected' : '' }}>{{ $row->country }}</option>
 	                                                @endforeach
                                                 </select>
 												{!! $errors->first('location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -60,9 +61,9 @@
 												<select class="form-control select" name="sub_unit_id" id="sub_unit_id" required="">
                                                     <option value="">-- Select Sub Unit --</option>
                                                     @foreach ($company_location as $company)
-	                                                    <option value='{{ $company->id }}'>{{ $company->company_name }}</option>
+	                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : ($leave_period->sub_unit_id == $company->id) ? 'selected' : '' }}>{{ $company->company_name }}</option>
 	                                                @endforeach
-                                                </select>
+                                                </select>                                                
 												{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -78,18 +79,18 @@
 											<div class="form-group">
 												<select class="form-control select {{ $errors->has('start_month') ? 'is-invalid' : ''}}" id="start_month" name="start_month" required="">
 													<option value="">-- Select Month --</option>
-													<option value="1" {{ old('start_month') == '1' ? 'selected' : '' }} >January</option>
-													<option value="2" {{ old('start_month') == '2' ? 'selected' : '' }} >February</option>
-													<option value="3" {{ old('start_month') == '3' ? 'selected' : '' }} >March</option>
-													<option value="4" {{ old('start_month') == '4' ? 'selected' : '' }} >April</option>
-													<option value="5" {{ old('start_month') == '5' ? 'selected' : '' }} >May</option>
-													<option value="6" {{ old('start_month') == '6' ? 'selected' : '' }} >June</option>
-													<option value="7" {{ old('start_month') == '7' ? 'selected' : '' }} >July</option>
-													<option value="8" {{ old('start_month') == '8' ? 'selected' : '' }} >August</option>
-													<option value="9" {{ old('start_month') == '9' ? 'selected' : '' }} >September</option>
-													<option value="10" {{ old('start_month') == '10' ? 'selected' : '' }} >October</option>
-													<option value="11" {{ old('start_month') == '11' ? 'selected' : '' }} >November</option>
-													<option value="12" {{ old('start_month') == '12' ? 'selected' : '' }} >December</option>
+													<option value="1" {{ $leave_period->start_month == '1' ? 'selected' : '' }} >January</option>
+													<option value="2" {{ $leave_period->start_month == '2' ? 'selected' : '' }} >February</option>
+													<option value="3" {{ $leave_period->start_month == '3' ? 'selected' : '' }} >March</option>
+													<option value="4" {{ $leave_period->start_month == '4' ? 'selected' : '' }} >April</option>
+													<option value="5" {{ $leave_period->start_month == '5' ? 'selected' : '' }} >May</option>
+													<option value="6" {{ $leave_period->start_month == '6' ? 'selected' : '' }} >June</option>
+													<option value="7" {{ $leave_period->start_month == '7' ? 'selected' : '' }} >July</option>
+													<option value="8" {{ $leave_period->start_month == '8' ? 'selected' : '' }} >August</option>
+													<option value="9" {{ $leave_period->start_month == '9' ? 'selected' : '' }} >September</option>
+													<option value="10" {{ $leave_period->start_month == '10' ? 'selected' : '' }} >October</option>
+													<option value="11" {{ $leave_period->start_month == '11' ? 'selected' : '' }} >November</option>
+													<option value="12" {{ $leave_period->start_month == '12' ? 'selected' : '' }} >December</option>
 												</select>
 												{!! $errors->first('start_month', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
@@ -154,7 +155,11 @@
 											<div class="row">
 												<div class="col-sm-6">
 													<div class="submit-section text-center btn-add">
-														<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+														@if($leave_period)
+															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Update</button>
+														@else
+															<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+														@endif														
 													</div>
 												</div>
 												<div class="col-sm-6">
@@ -256,6 +261,7 @@
 	window.onload = function() {
 		var year = new Date().getFullYear();
 		$('#current_year').html(year);
+		$('#start_date').val('{{ $leave_period->start_date }}');
 		setMonthDate();
 	}
 

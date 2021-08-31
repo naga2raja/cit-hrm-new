@@ -94,8 +94,11 @@ class LeaveEntitlementController extends Controller
         }
         // dd($employees);
         
-        $country = mCountry::whereIn('id', [103, 112])->get();
-        $company_location = mCompanyLocation::get();
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
         $leave_types = mLeaveType::get();
         $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
 

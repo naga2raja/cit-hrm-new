@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Carbon\Carbon;
 use App\mLeavePeriod;
+use App\mCountry;
+use App\mCompanyLocation;
 use Session;
 use DB;
 
@@ -18,9 +20,36 @@ class LeavePeriodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $country_id = $request->input('country_id');
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        DB::connection()->enableQueryLog();
+
+        $leave_period = mLeavePeriod::orderBy('id', 'asc');
+        if ($country_id) {
+            $leave_period->where('country_id', $country_id);
+        }
+        if ($start_date) {
+            $leave_period->where('start_period', 'like', '%'.$start_date.'%');
+        }
+        if ($end_date) {
+            $leave_period->where('end_period', 'like', '%'.$end_date.'%');
+        }
+        $leave_period = $leave_period->with('countryName', 'subUnitName')->paginate(7);
+
+        // dd(DB::getQueryLog());
+
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
+
+        return view('leave/leave_period/list', compact('leave_period', 'country', 'company_location'));
     }
 
     /**
@@ -29,9 +58,15 @@ class LeavePeriodController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { 
-        $leave_period = mLeavePeriod::get();
-        return view('leave/leave_period/add', compact('leave_period'));
+    {
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
+
+        return view('leave/leave_period/add', compact('country', 'company_location'));
     }
 
     /**
@@ -43,16 +78,37 @@ class LeavePeriodController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'location_id' => 'required',
+            'sub_unit_id' => 'required',
             'start_month' => 'required',
             'start_date' => 'required'
         ]);
 
-        $leave_period = mLeavePeriod::create([
-            'start_month'  => $request->input('start_month'),
-            'start_date'  => $request->input('start_date')
-        ]);
+        DB::connection()->enableQueryLog();
 
-        return redirect()->back()->with('success', 'Leave Period Added successfully');
+        // duplicate check
+        $isExists = mLeavePeriod::where('country_id', $request->input('location_id'))
+                                ->where('sub_unit_id', $request->input('sub_unit_id'))
+                                ->whereRaw('start_period <= "'.$request->input('start_period').'" AND end_period >= "'.$request->input('start_period').'"')
+                                ->orwhereRaw('start_period <= "'.$request->input('end_period').'" AND end_period >= "'.$request->input('end_period').'"')
+                                ->first();
+        // dd(DB::getQueryLog());
+
+        if($isExists){
+            return redirect()->back()->with('warning', 'Failed, Leave Period Already Exist');
+        }else{
+            // create mLeavePeriod
+            $leave_period = mLeavePeriod::create([
+                'start_month'  => $request->input('start_month'),
+                'start_date'  => $request->input('start_date'),
+                'start_period' => $request->input('start_period'),
+                'end_period' => $request->input('end_period'),
+                'country_id' => $request->input('location_id'),
+                'sub_unit_id' => $request->input('sub_unit_id')
+            ]);
+        }
+
+        return redirect()->route('leavePeriod.index')->with('success', 'Leave Period Added Successfully');
     }
 
     /**
@@ -72,9 +128,19 @@ class LeavePeriodController extends Controller
      * @param  \App\mLeavePeriod  $mLeavePeriod
      * @return \Illuminate\Http\Response
      */
-    public function edit(mLeavePeriod $mLeavePeriod)
+    public function edit($id)
     {
-        //
+        $leave_period = mLeavePeriod::find($id);       
+
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->where('country_id', $leave_period->country_id)->get();
+
+
+        return view('leave/leave_period/edit', compact('leave_period', 'country', 'company_location'));
     }
 
     /**
@@ -87,6 +153,8 @@ class LeavePeriodController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
+            'location_id' => 'required',
+            'sub_unit_id' => 'required',
             'start_month' => 'required',
             'start_date' => 'required'
         ]);
@@ -94,9 +162,13 @@ class LeavePeriodController extends Controller
         $leave_period = mLeavePeriod::find($id);
         $leave_period->start_month = $request->input('start_month');
         $leave_period->start_date = $request->input('start_date');
+        $leave_period->start_period = $request->input('start_period');
+        $leave_period->end_period = $request->input('end_period');
+        $leave_period->country_id = $request->input('location_id');
+        $leave_period->sub_unit_id = $request->input('sub_unit_id');
         $leave_period->save();
 
-        return redirect()->back()->with('success', 'Leave Peeriod Updated successfully');
+        return redirect()->back()->with('success', 'Leave Period Updated successfully');
     }
 
     /**

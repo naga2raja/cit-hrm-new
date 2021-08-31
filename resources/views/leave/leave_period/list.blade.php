@@ -18,7 +18,7 @@
 															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Leave</a></li>
 															<li class="breadcrumb-item d-inline-block active">Configuration</li>
 														</ol>
-														<h4 class="text-dark">Holidays</h4>
+														<h4 class="text-dark">Leave Period</h4>
 													</div>
 												</div>
 											</div>
@@ -28,15 +28,16 @@
 								<div class="card ctm-border-radius shadow-sm border">
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
-										<form id="searchHoliday" method="GET" action="{{ route('holidays.index') }}">
+										<form id="searchPeriod" method="GET" action="{{ route('leavePeriod.index') }}">
+
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Country</label>
-														<select class="form-control select" name="location_id" id="location_id">
-		                                                    <option value="" {{ Request::get('location_id')  == '' ? 'selected' : '' }}>All</option>
+														<select class="form-control select" name="country_id" id="country_id">
+		                                                    <option value='' {{ Request::get('country_id')  == '' ? 'selected' : '' }}>All</option>
 		                                                    @foreach ($country as $row)
-			                                                    <option value='{{ $row->id }}' {{ Request::get('location_id') == $row->id ? 'selected' : '' }}>{{ $row->country }}</option>
+			                                                    <option value='{{ $row->id }}' {{ Request::get('country_id') == $row->id ? 'selected' : '' }}>{{ $row->country }}</option>
 			                                                @endforeach
 		                                                </select>
 													</div>
@@ -46,8 +47,8 @@
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
-														<label>From Date</label>
-														<input type="text" name="from_date" id="from_date" class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}} datetimepicker" placeholder="" value="{{ Request::get('from_date') }}" autocomplete="off" required="">
+														<label>Start Period</label>
+														<input type="text" name="start_date" id="datetimepicker1" class="form-control datetimepicker1" value="{{ Request::get('start_date') }}" autocomplete="off">
 													</div>
 												</div>
 											</div>
@@ -55,18 +56,18 @@
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
-														<label>To Date</label>
-														<input type="text" name="to_date" id="to_date" class="form-control datetimepicker" placeholder="" value="{{ Request::get('to_date') }}" autocomplete="off" required="">
+														<label>End Period</label>
+														<input type="text" name="end_date" id="datetimepicker2" class="form-control datetimepicker2" value="{{ Request::get('end_date') }}" autocomplete="off">
 													</div>
 												</div>
 											</div>
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchHoliday')"><i class="fa fa-refresh"></i> Reset </button>
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchPeriod')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
 										</form>
@@ -83,14 +84,14 @@
 									<div class="row filter-row">
 										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
-												<h4 class="card-title mb-0 ml-2 mt-2">Holidays List </h4>
+												<h4 class="card-title mb-0 ml-2 mt-2">Leave Period List </h4>
 											</div>
 										</div>										
 										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-											<a href="{{ route('holidays.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
+											<a href="{{ route('leavePeriod.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 										</div>
 										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-											<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_holiday_table','holidays','{{ route('holidays.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
+											<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_period_table','leavePeriod','{{ route('holidays.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
 										</div>
 									</div>
 								</div>
@@ -101,53 +102,44 @@
 											<thead>
 												<tr>
 													<th class="text-center">
-														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_holiday_table')">
+														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_period_table')">
 													</th>
-													<th>Name</th>
-													<th>Date</th>
-													<th>Day</th>
-													<th>Repeats Annually</th>
+													<th>Leave Period</th>
 													<th>Country</th>
 													<th>Sub Unit</th>
+													<th>Status</th>
 												</tr>
 											</thead>
-											<tbody id="list_holiday_table">
-												@if(count($holidays) > 0)
-													@foreach ($holidays as $row)
+											<tbody id="list_period_table">
+												@if(count($leave_period) > 0)
+													@foreach ($leave_period as $row)
 													<tr>
 														<td class="text-center">
-															<input type="checkbox" name="holiday_id" value="{{ $row->id }}">
+															<input type="checkbox" name="leave_period_id" value="{{ $row->id }}">
 														</td>
 														<td>
-															<h2><u><a href="{{ route('holidays.edit', $row->id) }}">{{ $row->description }}</a></u></h2>
-														</td>
-														<td>{{ $row->date }}</td>
-														<td>
-															@if($row->length == '0')
-																Full Day
-															@elseif($row->length == '1')
-																Half Day
-															@endif</td>
-														<td>
-															@if($row->recurring == '1')
-																Yes
-															@else
-																No
-															@endif
+															<h2><u><a href="{{ route('leavePeriod.edit', $row->id) }}">{{ $row->start_period }} - {{ $row->end_period }}</a></u></h2>
 														</td>
 														<td>{{ $row->countryName->country }}</td>
 														<td>{{ $row->subUnitName->company_name }}</td>
+														<td>
+															@if($row->status == '0')
+																<input type="button" name="leave_period_status" class="btn btn-outline-secondary btn-sm btn-block" value="Active" disabled="" style="width: 50%">
+															@else
+																<input type="button" name="leave_period_status" class="btn btn-success btn-sm btn-block" value="Active" style="width: 50%">
+															@endif
+														</td>
 													</tr>
 													@endforeach
 												@else
 													<tr>
-														<td colspan="7"><p class="text-center alert alert-danger">No Data Found</p></td>
+														<td colspan="5"><p class="text-center alert alert-danger">No Data Found</p></td>
 													</tr>
 												@endif
 													<tr>
-														<td colspan="7">
+														<td colspan="5">
 															<div class="d-flex justify-content-center">
-																{{ $holidays->links() }}
+																{{ $leave_period->links() }}
 															</div>
 														</td>
 													</tr>
@@ -169,10 +161,28 @@
 
 @push('scripts')
 <script type="text/javascript">
-	// form submit
-	$('#search').click(function(){
-		$('#searchHoliday').submit();
-	});
+
+	$('#datetimepicker1').datetimepicker({
+        date: '{{ (@Request::get("start_date")) }}',
+        format: "YYYY-MM",
+        icons: {
+            up: "fa fa-angle-up",
+            down: "fa fa-angle-down",
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        }
+    });
+
+    $('.datetimepicker2').datetimepicker({
+        date: '{{ (@Request::get("end_date")) }}',
+        format: "YYYY-MM", 
+        icons: {
+            up: "fa fa-angle-up",
+            down: "fa fa-angle-down",
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        }
+    });
 
 </script>
 @endpush
