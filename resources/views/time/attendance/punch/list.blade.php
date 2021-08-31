@@ -122,9 +122,9 @@
                                                             @endif
                                                         </td>
                                                         @endif
-														<td> <u><a href="#" onclick="showAttendanceInfo({{ $item->id }})"> {{ $item->emp_name }} </a></u> </td>
+														<td> <u><a href="#" onclick="showAttendanceInfo({{ $item->id }}, '{{ route('punch.show', $item->id) }}')"> {{ $item->emp_name }} </a></u> </td>
                                                         <td>
-                                                            <h2><a href="#" onclick="showAttendanceInfo({{ $item->id }})"> {{ $item->punch_in_user_time }} </a></h2>
+                                                            <h2><a href="#" onclick="showAttendanceInfo({{ $item->id }}, '{{ route('punch.show', $item->id) }}')"> {{ $item->punch_in_user_time }} </a></h2>
                                                         </td>
                                                         {{-- <td>
                                                             <h2>{{ $item->punch_in_note }}</h2>
@@ -386,7 +386,7 @@
 		$('#date').datetimepicker("show");
 	});
 
-	function showAttendanceInfo(punch_id)
+	function showAttendanceInfo(punch_id, url = false)
 	{
 		$('#action_buttons').hide();
 		$('#punch_id').val(punch_id);
@@ -400,7 +400,7 @@
 
 		$.ajax({
 			method: 'GET',
-			url: '/punch/'+ punch_id,			
+			url: (url) ? url : '/punch/'+ punch_id,			
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(response){
