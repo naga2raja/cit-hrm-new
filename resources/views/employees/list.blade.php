@@ -63,7 +63,7 @@
 														<select class="form-control select" name="status">
 															<option value="">Status</option>
 															<option value="Active"  {{ Request::get('status') == 'Active' ? 'selected' : ''}}>Active</option>
-															<option value="Inactive" {{ Request::get('status') == 'Inactive' ? 'selected' : ''}}>Inactive</option>
+															<option value="In active" {{ Request::get('status') == 'In active' ? 'selected' : ''}}>Inactive</option>
 														</select>
 													</div>
 												</div>

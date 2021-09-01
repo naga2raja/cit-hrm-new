@@ -38,6 +38,12 @@ class HomeController extends Controller
         $my_data = Employee::where('user_id', $user->id)->first();
         if($my_data){  
             $employeeId = $my_data->id;
+
+            if($my_data->status != 'Active') {
+                Auth::logout();
+                return redirect('/login')->with('error', 'Your account is disabled.');
+            }
+            
         }else{
             $employeeId= "";
         }
