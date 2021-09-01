@@ -28,7 +28,7 @@
                             <div class="user-block d-none d-lg-block">
                                 <div class="row align-items-center">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="user-notification-block align-right d-inline-block">
+                                        {{-- <div class="user-notification-block align-right d-inline-block">
                                             <div class="top-nav-search item-animated">
                                                 <form>
                                                     <input type="text" class="form-control" placeholder="Search here">
@@ -45,7 +45,16 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> --}}
+                                        {{-- <div class="user-notification-block align-right d-inline-block">
+                                            <ul class="list-inline m-0">
+                                                <li class="list-inline-item item-animated" data-toggle="tooltip" data-placement="top" title="" data-original-title="Apply Leave">
+                                                    <a href="{{ route('leave.create') }}" class="font-23 menu-style text-white align-middle">
+                                                        <span class="lnr lnr-calendar-full position-relative"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>  --}}
                                         <!-- /User notification-->
                                         <!-- user info-->
                                         <div class="user-info align-right dropdown d-inline-block header-dropdown">
@@ -109,7 +118,7 @@
                                             </div>
                                         </a>
                                     </div>
-                                    <div class="user-notification-block align-center">
+                                    {{-- <div class="user-notification-block align-center">
                                         <div class="top-nav-search item-animated">
                                             <form>
                                                 <input type="text" class="form-control" placeholder="Search here">
@@ -117,7 +126,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <hr>
+                                    <hr> --}}
                                     <!-- Mobile Menu -->
                                     <div class="user-menu-items px-3 m-0" id="cithrm_mobile_menu">
                                         @include('layout/partials/navigation')
