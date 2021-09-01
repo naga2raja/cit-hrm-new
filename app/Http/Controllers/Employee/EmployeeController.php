@@ -82,7 +82,8 @@ class EmployeeController extends Controller
             'employee_id' => 'required|unique:employees,employee_id',
             'email' => 'required|unique:employees,email',
             'status' => 'required', 
-            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable'           
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',           
+            'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ];
 
         if($request->create_login) {
@@ -143,6 +144,16 @@ class EmployeeController extends Controller
             $path = $request->file('profile_photo')->storeAs('uploads', $imageName, 'public');
             $employee->profile_photo = '/storage/'.$path;
         }
+
+        // for resume_document
+        if ($request->file('resume_document')) {
+            $imagePath = $request->file('resume_document');
+            $imageName = time().'_'.$imagePath->getClientOriginalName();
+
+            $path = $request->file('resume_document')->storeAs('uploads/resume', $imageName, 'public');
+            $employee->resume_document = '/storage/'.$path;
+        }
+
         $employee->save();
 
         $contactInfo = [
@@ -237,7 +248,8 @@ class EmployeeController extends Controller
             'email' => 'required|unique:employees,email,'.$id,
             'status' => 'required',
             'alternate_email' => 'email|nullable',
-            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable'
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
+            'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ]);
 
         // $user = User::where('id', $id)->first();
@@ -269,6 +281,15 @@ class EmployeeController extends Controller
 
             $path = $request->file('profile_photo')->storeAs('uploads', $imageName, 'public');
             $employeeArr['profile_photo'] = '/storage/'.$path;
+        }
+
+        // for resume_document
+        if ($request->file('resume_document')) {
+            $imagePath = $request->file('resume_document');
+            $imageName = time().'_'.$imagePath->getClientOriginalName();
+
+            $path = $request->file('resume_document')->storeAs('uploads/resume', $imageName, 'public');
+            $employeeArr['resume_document'] = '/storage/'.$path;
         }
 
         $employee = Employee::where('id', $id)->update($employeeArr);        

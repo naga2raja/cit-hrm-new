@@ -164,6 +164,15 @@
 														</div>
 													</div>
 
+													<div class="col-md-6">											
+														<p class="mb-2">Resume</p>
+														<div class="form-group" id="upload_resume_document">
+															<input type='file' name="resume_document" class="form-control {{ $errors->has('resume_document') ? 'is-invalid' : ''}}" accept=".pdf, .doc, .docx" />
+															<label class="mb-2">Accepts pdf, .doc, .docx up to 1MB.</label>		
+															{!! $errors->first('resume_document', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
+
 												</div>
 
 												<div class="row">
