@@ -364,7 +364,7 @@
 										<select class="form-control select" name="company_location_id">
 											<option value="">Select </option>
 											@foreach ($locations as $item)
-												<option value="{{ $item->id }}" {{old ('company_location_id', @$employee->job_category_id) == $item->id ? 'selected' : ''}}> {{ $item->company_name }}</option>
+												<option value="{{ $item->id }}" {{ old ('company_location_id', @$employee->company_location_id) == $item->id ? 'selected' : ''}}> {{ $item->company_name }} - {{ $item->country }}</option>
 											@endforeach
 										</select>
 									</div>

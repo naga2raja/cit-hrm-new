@@ -25,6 +25,7 @@ class LeavePeriodController extends Controller
         $country_id = $request->input('country_id');
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
+        $status = $request->input('status');
 
         DB::connection()->enableQueryLog();
 
@@ -37,6 +38,9 @@ class LeavePeriodController extends Controller
         }
         if ($end_date) {
             $leave_period->where('end_period', 'like', '%'.$end_date.'%');
+        }
+        if ($status != '') {
+            $leave_period->where('status', $status);
         }
         $leave_period = $leave_period->with('countryName', 'subUnitName')->paginate(7);
 
@@ -97,18 +101,23 @@ class LeavePeriodController extends Controller
         if($isExists){
             return redirect()->back()->with('warning', 'Failed, Leave Period Already Exist');
         }else{
+            // to deactive other leave periods
+            $deActivate = mLeavePeriod::where('country_id', $request->input('location_id'))
+                                        ->where('sub_unit_id', $request->input('sub_unit_id'))
+                                        ->update(['status' => 0]);
+
             // create mLeavePeriod
             $leave_period = mLeavePeriod::create([
-                'start_month'  => $request->input('start_month'),
-                'start_date'  => $request->input('start_date'),
+                'start_month' => $request->input('start_month'),
+                'start_date' => $request->input('start_date'),
                 'start_period' => $request->input('start_period'),
                 'end_period' => $request->input('end_period'),
                 'country_id' => $request->input('location_id'),
                 'sub_unit_id' => $request->input('sub_unit_id')
             ]);
-        }
 
-        return redirect()->route('leavePeriod.index')->with('success', 'Leave Period Added Successfully');
+            return redirect()->route('leavePeriod.index')->with('success', 'Leave Period Added Successfully');
+        }
     }
 
     /**
@@ -130,7 +139,7 @@ class LeavePeriodController extends Controller
      */
     public function edit($id)
     {
-        $leave_period = mLeavePeriod::find($id);       
+        $leave_period = mLeavePeriod::find($id);
 
         $country = mCountry::selectRaw('m_countries.id, m_countries.country')
                             ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
@@ -159,16 +168,31 @@ class LeavePeriodController extends Controller
             'start_date' => 'required'
         ]);
 
-        $leave_period = mLeavePeriod::find($id);
-        $leave_period->start_month = $request->input('start_month');
-        $leave_period->start_date = $request->input('start_date');
-        $leave_period->start_period = $request->input('start_period');
-        $leave_period->end_period = $request->input('end_period');
-        $leave_period->country_id = $request->input('location_id');
-        $leave_period->sub_unit_id = $request->input('sub_unit_id');
-        $leave_period->save();
+        DB::connection()->enableQueryLog();
+        // duplicate check
+        $isExists = mLeavePeriod::where('country_id', $request->input('location_id'))
+                                ->where('sub_unit_id', $request->input('sub_unit_id'))
+                                ->whereRaw('(start_period <= "'.$request->input('start_period').'" AND end_period >= "'.$request->input('start_period').'" OR start_period <= "'.$request->input('end_period').'" AND end_period >= "'.$request->input('end_period').'")')
+                                ->where('id','!=', $id)
+                                ->first();
+        // dd(DB::getQueryLog());
 
-        return redirect()->back()->with('success', 'Leave Period Updated successfully');
+        if($isExists){
+            return redirect()->back()->with('warning', 'Failed, Leave Period Already Exist');
+        }else{
+            // update mLeavePeriod
+            $leave_period = mLeavePeriod::find($id);
+            $leave_period->start_month = $request->input('start_month');
+            $leave_period->start_date = $request->input('start_date');
+            $leave_period->start_period = $request->input('start_period');
+            $leave_period->end_period = $request->input('end_period');
+            $leave_period->country_id = $request->input('location_id');
+            $leave_period->sub_unit_id = $request->input('sub_unit_id');
+            $leave_period->status = $request->input('status');
+            $leave_period->save();
+
+            return redirect()->back()->with('success', 'Leave Period Updated successfully');
+        }
     }
 
     /**
@@ -180,5 +204,19 @@ class LeavePeriodController extends Controller
     public function destroy(mLeavePeriod $mLeavePeriod)
     {
         //
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        if($request->delete_ids) {
+            mLeavePeriod::whereIn('id', $request->delete_ids)
+                    ->get()
+                    ->map(function($news) {
+                        $news->delete();
+                    });
+            return true;
+        } else {
+            return false;
+        }       
     }
 }

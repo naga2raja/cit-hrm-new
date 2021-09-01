@@ -25,7 +25,7 @@
 								@endif
 
 								@if($message = Session::get('warning'))
-								<div class="alert alert-danger">
+								<div class="alert alert-warning">
 									<p>{{$message}}</p>
 								</div>
 								@endif
@@ -144,6 +144,22 @@
 
 									<div class="row">
 										<div class="col-sm-2">
+											<div class="form-group">
+												<label>Status</label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select class="form-control select" id="status" name="status">
+													<option value="1" {{ $leave_period->status == '1' ? 'selected' : '' }} >Active</option>
+													<option value="0" {{ $leave_period->status == '0' ? 'selected' : '' }} >In-active</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-2">
 											<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
 										</div>
 									</div>
@@ -182,6 +198,21 @@
 </div>
 
 <div class="sidebar-overlay" id="sidebar_overlay"></div>
+
+<!--  Validation Modal -->
+<div class="modal fade" id="validation_message">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">		
+			<!-- Modal body -->
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title mb-3"></h5><hr>
+				<p class="modal-message"></p>
+				<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3 mt-4" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 @endsection
 
@@ -307,6 +338,22 @@
 
 	// for search in select option
 	$('.select').select2();
+
+	// on change of status
+	$(document.body).on("change","#status",function(){
+		var status = $( "#status option:selected" ).text();
+		var value = this.value;
+		var alert_type = ''; var prev_status = ''; var others = '';
+		if(value == 0){
+			alert_style = 'warning'; 
+		}else{
+			alert_style = 'success'; others = '<br> Others in the same location will be change to In-active';
+		}
+		var msg = '<div class="alert alert-'+alert_style+'"><p>This Leave Period Status will change to <b class="font-weight-bold">'+status+'</b> '+others+' </p></div>';
+		$('#validation_message').modal('toggle');
+		$('.modal-title').html("For Your Information");
+		$('.modal-message').html(msg);
+	});
 	
 </script>  
 @endpush

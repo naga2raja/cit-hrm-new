@@ -65,7 +65,7 @@ class EmployeeController extends Controller
         $countries = mCountry::all();
         $jobTitles = mJobTitle::all();
         $jobCategories = mJobCategory::get();
-        $locations = mCompanyLocation::get();
+        $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
         return view('employees/add', compact('jobTitles', 'jobCategories', 'locations','countries'));
     }
 
@@ -200,8 +200,9 @@ class EmployeeController extends Controller
                 
         $countries = mCountry::all();
         $jobTitles = mJobTitle::all();
-        $jobCategories = mJobCategory::get();
-        $locations = mCompanyLocation::get();
+        $jobCategories = mJobCategory::get();        
+        $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
+        
         $jobDetails = '';
         if($employee && $employee->job_id) {
             $jobDetails = mJobTitle::find($employee->job_id);
@@ -410,7 +411,7 @@ class EmployeeController extends Controller
         $countries = mCountry::all();
         $jobTitles = mJobTitle::all();
         $jobCategories = mJobCategory::get();
-        $locations = mCompanyLocation::get();
+        $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
         $jobDetails = '';
         if($employee && $employee->job_id) {
             $jobDetails = mJobTitle::find($employee->job_id);

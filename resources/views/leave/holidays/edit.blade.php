@@ -24,13 +24,19 @@
 								</div>
 								@endif
 
+								@if($message = Session::get('warning'))
+								<div class="alert alert-warning">
+									<p>{{$message}}</p>
+								</div>
+								@endif
+
 								@if($message = Session::get('failed'))
 									<div class="alert alert-danger">
 										<p>{{$message}}</p>
 									</div>
 								@endif
 
-								<form method="POST" action="{{ route('holidays.update', [$holidays[0]->id]) }}">
+								<form method="POST" action="{{ route('holidays.update', [$holidays->id]) }}">
 									@csrf
 									@method('PUT')
 									<div class="row">
@@ -44,7 +50,7 @@
 												<select class="form-control select" name="location_id" id="location_id" required="">
                                                     <option value="">-- Select Location --</option>
                                                     @foreach ($country as $row)
-	                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : '' }} {{ $row->id == $holidays[0]->operational_country_id ? 'selected' : '' }}>{{ $row->country }}</option>
+	                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : '' }} {{ $row->id == $holidays->operational_country_id ? 'selected' : '' }}>{{ $row->country }}</option>
 	                                                @endforeach
                                                 </select>
 												{!! $errors->first('location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -61,7 +67,7 @@
 												<select class="form-control select" name="sub_unit_id" id="sub_unit_id" required="">
                                                     <option value="">-- Select Sub Unit --</option>
                                                     @foreach ($company_location as $company)
-	                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : '' }} {{ $company->id == $holidays[0]->operational_sub_unit_id ? 'selected' : '' }}>{{ $company->company_name }}</option>
+	                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : '' }} {{ $company->id == $holidays->operational_sub_unit_id ? 'selected' : '' }}>{{ $company->company_name }}</option>
 	                                                @endforeach
                                                 </select>
 												{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -76,7 +82,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('description', $holidays[0]->description) }}" required="" autocomplete="off">
+												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('description', $holidays->description) }}" required="" autocomplete="off">
 												{!! $errors->first('description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -90,7 +96,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="text" name="date" class="form-control datetimepicker {{ $errors->has('date') ? 'is-invalid' : ''}}" value="{{ old('date', $holidays[0]->holiday_date) }}" required="">
+												<input type="text" name="date" class="form-control datetimepicker {{ $errors->has('date') ? 'is-invalid' : ''}}" value="{{ old('date', $holidays->holiday_date) }}" required="">
 												{!! $errors->first('date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -104,7 +110,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="checkbox" name="recurring" {{ $holidays[0]->recurring == '1' ? 'checked' : '' }}>
+												<input type="checkbox" name="recurring" {{ $holidays->recurring == '1' ? 'checked' : '' }}>
 											</div>
 										</div>
 									</div>
@@ -118,8 +124,8 @@
 										<div class="col-sm-3">
 											<div class="form-group">
 												<select class="form-control select" name="length">
-                                                    <option value='0' {{ $holidays[0]->length == '0' ? 'selected' : '' }} {{ old('length') == '0' ? 'selected' : '' }}>Full Day</option>
-                                                    <option value='1' {{ $holidays[0]->length == '1' ? 'selected' : '' }} {{ old('length') == '1' ? 'selected' : '' }}>Half Day</option>
+                                                    <option value='0' {{ $holidays->length == '0' ? 'selected' : '' }} {{ old('length') == '0' ? 'selected' : '' }}>Full Day</option>
+                                                    <option value='1' {{ $holidays->length == '1' ? 'selected' : '' }} {{ old('length') == '1' ? 'selected' : '' }}>Half Day</option>
                                                 </select>
 											</div>
 										</div>

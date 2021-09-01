@@ -24,6 +24,12 @@
 								</div>
 								@endif
 
+								@if($message = Session::get('warning'))
+								<div class="alert alert-warning">
+									<p>{{$message}}</p>
+								</div>
+								@endif
+
 								<form method="POST" action="{{ route('holidays.store') }}">
 									@csrf
 									<div class="row">

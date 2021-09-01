@@ -62,6 +62,19 @@
 												</div>
 											</div>
 
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Status</label>
+														<select class="form-control select" id="status" name="status">
+															<option value="">All</option>
+															<option value="1" {{ Request::get('status') == '1' ? 'selected' : '' }} >Active</option>
+															<option value="0" {{ Request::get('status') == '0' ? 'selected' : '' }} >In-active</option>
+														</select>
+													</div>
+												</div>
+											</div>
+
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
@@ -91,7 +104,7 @@
 											<a href="{{ route('leavePeriod.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
 										</div>
 										<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
-											<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_period_table','leavePeriod','{{ route('holidays.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
+											<button id="deleteAll" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('list_period_table','leavePeriod','{{ route('leavePeriod.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
 										</div>
 									</div>
 								</div>
@@ -124,7 +137,7 @@
 														<td>{{ $row->subUnitName->company_name }}</td>
 														<td>
 															@if($row->status == '0')
-																<input type="button" name="leave_period_status" class="btn btn-outline-secondary btn-sm btn-block" value="Active" disabled="" style="width: 50%">
+																<input type="button" name="leave_period_status" class="btn btn-outline-danger btn-sm btn-block" value="In Active" disabled="" style="width: 50%">
 															@else
 																<input type="button" name="leave_period_status" class="btn btn-success btn-sm btn-block" value="Active" style="width: 50%">
 															@endif

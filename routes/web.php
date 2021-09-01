@@ -185,6 +185,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
 
     // leave_period
     Route::resource('/leavePeriod', 'Leave\LeavePeriod\LeavePeriodController');
+    Route::post('/leavePeriod/multiple-delete', 'Leave\leavePeriod\leavePeriodController@deleteMultiple')->name('leavePeriod.deleteMultiple');
     // leave_type
     Route::resource('/leaveTypes', 'Leave\LeaveType\LeaveTypeController');
     Route::post('/leaveTypes/multiple-delete', 'Leave\LeaveType\LeaveTypeController@deleteMultiple')->name('leaveTypes.deleteMultiple');

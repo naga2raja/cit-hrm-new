@@ -19,7 +19,8 @@ class ModifyLeavePeriodsTable extends Migration
             $table->date('end_period')->nullable()->after('start_period');
             $table->integer('country_id')->nullable()->after('end_period');
             $table->integer('sub_unit_id')->nullable()->after('country_id');
-            $table->tinyInteger('status')->default(0)->comment('0 - In-active, 1 - Active')->after('sub_unit_id');
+            $table->tinyInteger('status')->default(1)->comment('0 - In-active, 1 - Active')->after('sub_unit_id');
+            $table->softDeletes();
         });            
     }
 
