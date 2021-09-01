@@ -310,7 +310,8 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
-    Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');    
+    Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');
+    Route::post('getEmployeeHolidays-ajax', 'Leave\Leave\LeaveController@getEmployeeHolidays')->name('getEmployeeHolidays-ajax');
 
     Route::get('employee-records', 'Time\Attendance\PunchInOutController@getEmployeeRecords')->name('punch.employee-records');
     Route::post('attendance-admin-action', 'Time\Attendance\PunchInOutController@adminAction')->name('punch.action');

@@ -17,7 +17,11 @@
 															<li class="breadcrumb-item d-inline-block"><a href="{{ route('index') }}" class="text-dark">Home</a></li>
 															<li class="breadcrumb-item d-inline-block active">Leave</li>
 														</ol>
-														<h4 class="text-dark">Apply Leave</h4>
+														@if(@$assignLeave)
+															<h4 class="text-dark">Assign Leave</h4>
+														@else
+															<h4 class="text-dark">Apply Leave</h4>
+														@endif
 													</div>
 												</div>
 											</div>
@@ -73,20 +77,21 @@
 									@endif
 									<div class="card ctm-border-radius shadow-sm">
 										<div class="card-header">
-											<h4 class="card-title mb-0">Apply Leaves</h4>
+											@if(@$assignLeave)
+												<h4 class="card-title mb-0">Assign Leave</h4>
+											@else
+												<h4 class="card-title mb-0">Apply Leave</h4>
+											@endif
 										</div>
 										<div class="card-body">
 											<form id="searchLeave" method="POST" action="{{ route('leave.store') }}">
 												@csrf		
 												<input type="hidden" name="leave_entitlement_id" id="leave_entitlement_id">
-												@if(@$assignLeave)													
+												@if(@$assignLeave)
 													<div class="row">
 														<div class="col-sm-6">
 															<div class="form-group">
-																<label>
-																Employee Name
-																<span class="text-danger">*</span>
-																</label>
+																<label>Employee Name <span class="text-danger">*</span></label>
 																<select class="form-control employee_auto_search select {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" required name="employee_id" id="employee_id" style="width: 100%">
 																</select>
 																{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -396,12 +401,13 @@
 			holidayDates = JSON.parse(existing_holidays);
 			console.log('holidays', holidayDates);
 		}
-
+			
 		$('#datetimepicker4, #datetimepicker5').datetimepicker({
 			format: 'DD/MM/YYYY',
 			locale:  moment.locale('en', {
 				week: { dow: 1 }
 			}),
+			// minDate: new Date(),
 			daysOfWeekDisabled: [0,6],
 			icons: {
 				up: "fa fa-angle-up",
@@ -413,13 +419,36 @@
 			// debug: true,
 		});
 
-		$("#datetimepicker4, #datetimepicker5").datetimepicker().on('dp.change', function (e) {			
-			var from_date = $(this).val();			
+		$("#datetimepicker4").datetimepicker().on('dp.change', function (e) {
 			getLeaveBalance();
 			numberOfDaysLeave();
 
-			var number_of_days = 0;
-			// updateToDate(from_date);			
+			var from_date = $(this).val();
+			var to_date = $('#datetimepicker5').val();
+
+			var startDate = moment(from_date, 'DD/MM/YYYY');
+			var endDate = moment(to_date, 'DD/MM/YYYY');
+			var diff = endDate.diff(startDate, 'days');
+
+			if(diff < 0) {
+				$('#datetimepicker5').data("DateTimePicker").date(from_date);
+			}
+    	});
+
+    	$("#datetimepicker5").datetimepicker().on('dp.change', function (e) {
+			getLeaveBalance();
+			numberOfDaysLeave();
+
+			var from_date = $('#datetimepicker4').val();
+			var to_date = $(this).val();
+
+			var startDate = moment(from_date, 'DD/MM/YYYY');
+			var endDate = moment(to_date, 'DD/MM/YYYY');
+			var diff = endDate.diff(startDate, 'days');
+
+			if(diff < 0) {
+				$('#datetimepicker4').data("DateTimePicker").date(to_date);
+			}
     	});
 
 		function numberOfDaysLeave() {
@@ -449,21 +478,6 @@
 			$('#number_of_days').val(diff);
 		}
 
-		// function updateToDate(from_date) {
-		// 	console.log('set to', from_date);
-		// 	$('#datetimepicker5').datetimepicker({
-		// 		format: 'DD/MM/YYYY',
-		// 		minDate: moment(from_date, 'DD/MM/YYYY'),
-		// 		defaultDate: moment(from_date, 'DD/MM/YYYY'),
-		// 		icons: {
-		// 				up: "fa fa-angle-up",
-		// 				down: "fa fa-angle-down",
-		// 				next: 'fa fa-angle-right',
-		// 				previous: 'fa fa-angle-left'
-		// 			}
-		// 	}).show();
-		// }
-
 		$('.employee_auto_search').select2({
 			placeholder: 'Select a employee',
 			allowClear: true,
@@ -487,8 +501,29 @@
 
 		$(document.body).on("change",".employee_auto_search",function(){
 			console.log('live', this.value);
-			getLeaveBalance();
+			getLeaveBalance();			
+			getEmployeeHolidays($('#employee_id').val());
 		});
+
+		function getEmployeeHolidays(employeeId){
+			$.ajax({
+				method: 'POST',
+				url: "{{ route('getEmployeeHolidays-ajax') }}",
+				data: JSON.stringify({'employeeId': employeeId, '_token': '{{ csrf_token() }}' }),
+				dataType: "json",
+				contentType: 'application/json',
+				success: function(data){
+					console.log('EmployeeHolidays : ', data);
+					var employeeHolidays = [];
+					$.each(data, function(idx2,val) { 
+						employeeHolidays.push(moment(val));
+					}); 
+					$('#datetimepicker4').data("DateTimePicker").disabledDates(employeeHolidays);		
+					$('#datetimepicker5').data("DateTimePicker").disabledDates(employeeHolidays);	
+					$('#datetimepicker4, #datetimepicker5').val('');			
+				}
+			});
+		}
 
 	</script>
 @endsection
