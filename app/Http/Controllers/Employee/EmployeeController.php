@@ -43,7 +43,7 @@ class EmployeeController extends Controller
         })
         ->when(request()->filled('status'), function ($query) {
             $query->where('employees.status', request('status'));
-        });
+        })->selectRaw('employees.id, employees.email, employees.first_name, employees.middle_name, employees.last_name, employees.status, employees.employee_id');
 
         if(Auth::user()->hasRole('Manager')) {
             $managerDet = Employee::where('user_id', Auth::user()->id)->first();
@@ -85,7 +85,8 @@ class EmployeeController extends Controller
             'email' => 'required|unique:employees,email',
             'status' => 'required', 
             'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
-            'company_location_id' => 'required',
+            'company_location_id' => 'required',         
+            'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ];
 
         if($request->create_login) {
@@ -146,6 +147,16 @@ class EmployeeController extends Controller
             $path = $request->file('profile_photo')->storeAs('uploads', $imageName, 'public');
             $employee->profile_photo = '/storage/'.$path;
         }
+
+        // for resume_document
+        if ($request->file('resume_document')) {
+            $imagePath = $request->file('resume_document');
+            $imageName = time().'_'.$imagePath->getClientOriginalName();
+
+            $path = $request->file('resume_document')->storeAs('uploads/resume', $imageName, 'public');
+            $employee->resume_document = '/storage/'.$path;
+        }
+
         $employee->save();
 
         $contactInfo = [
@@ -250,7 +261,8 @@ class EmployeeController extends Controller
             'email' => 'required|unique:employees,email,'.$id,
             'status' => 'required',
             'alternate_email' => 'email|nullable',
-            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable'
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
+            'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ]);
 
         // $user = User::where('id', $id)->first();
@@ -294,7 +306,16 @@ class EmployeeController extends Controller
             $employeeArr['profile_photo'] = '/storage/'.$path;
         }
 
-        $employee = Employee::where('id', $id)->update($employeeArr);
+        // for resume_document
+        if ($request->file('resume_document')) {
+            $imagePath = $request->file('resume_document');
+            $imageName = time().'_'.$imagePath->getClientOriginalName();
+
+            $path = $request->file('resume_document')->storeAs('uploads/resume', $imageName, 'public');
+            $employeeArr['resume_document'] = '/storage/'.$path;
+        }
+
+        $employee = Employee::where('id', $id)->update($employeeArr);        
 
         //update contact details
         $contactDetails = ContactDetails::where('user_id', $id)->first();

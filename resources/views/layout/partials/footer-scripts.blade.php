@@ -207,4 +207,17 @@ function allowOnlyCharacters(id) {
 	$("#"+id).inputFilter(function(value) {
   	return /^[a-z]*$/i.test(value); });
 }
+
+$('#cithrm_mobile_menu a.nav-link.dropdown-toggle').click(function() {	
+	$(this).addClass('cit_active');
+	$(this).next().addClass('cithrm_dropdown-menu');
+	$(this).next().removeClass('dropdown-menu');
+})
+$('#cithrm_mobile_menu a.dropdown-item.dropdown-toggle').click(function() {	
+	// $('.dropdown-menu.cit_active, .cit_active .dropdown-menu').hide();
+	console.log('submenu');
+	$(this).addClass('cit_submenu_active');
+	$(this).next().addClass('cithrm_submenu_dropdown-menu');
+	$(this).next().removeClass('dropdown-toggle');
+})
 </script>

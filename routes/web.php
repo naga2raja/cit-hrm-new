@@ -217,6 +217,8 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
 
     /* Time/ProjectInfo/Projects */
     Route::resource('/projects', 'Time\ProjectInfo\ProjectsController');
+    Route::get('/projects-import', 'Time\ProjectInfo\ProjectsImportController@index')->name('projects.import');
+    Route::post('/projects-insert', 'Time\ProjectInfo\ProjectsImportController@import')->name('projects.insert');
 
     Route::post('/project-save-customer', 'Time\ProjectInfo\ProjectsController@project_save_customer')->name('project-save-customer');
     Route::post('/update-project', 'Time\ProjectInfo\ProjectsController@update_project')->name('update-project');

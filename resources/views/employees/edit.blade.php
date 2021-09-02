@@ -202,6 +202,20 @@
 											-->
 											
 										</div>
+										<div class="col-md-6">											
+											<p class="mb-2">Resume</p>
+											@if($employee->resume_document)
+												<div id="preview_resume_document" style="max-width:200px;position: relative;">
+													<a href="{{ assetUrl($employee->resume_document) }}" download=""> Download Resume </a>
+													<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editResume()"></a>
+												</div>	
+											@endif
+											<div class="form-group" style="{{ ($employee->resume_document) ? 'display:none' : '' }}" id="upload_resume_document">
+												<input type='file' name="resume_document" class="form-control {{ $errors->has('resume_document') ? 'is-invalid' : ''}}" accept=".pdf, .doc, .docx" />
+												<label class="mb-2">Accepts pdf, .doc, .docx up to 1MB.</label>													
+												{!! $errors->first('resume_document', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											</div>
+										</div>
 
 										
 										<!--
@@ -839,6 +853,10 @@
 		$('#upload_profile_image').show();
 	}
 
+	function editResume() {
+		$('#preview_resume_document').hide();
+		$('#upload_resume_document').show();
+	}
 	var assigned_managers = [];
 	var existing_manager_ids = $('#existing_manager_ids').html();
 	if(existing_manager_ids) {

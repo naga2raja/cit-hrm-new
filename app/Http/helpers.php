@@ -147,7 +147,8 @@ if (! function_exists('assetUrl')) {
                 ->whereIn('t_leaves.status', [1,2,3]);
         })
         ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')  
-        ->where('m_leave_entitlements.emp_number', $employeeId)  
+        ->where('m_leave_entitlements.emp_number', $employeeId)
+        ->where('t_leaves.deleted_at', '=', NULL)  
         ->selectraw('m_leave_types.name, m_leave_entitlements.no_of_days, IFNULL(SUM(t_leaves.length_days), 0) as days_used, (IFNULL(m_leave_entitlements.no_of_days, 0) - IFNULL(SUM(t_leaves.length_days), 0) ) as remaining_days')
         ->orderBy('m_leave_types.name', 'ASC')
         ->groupBy('m_leave_entitlements.id')
@@ -203,10 +204,22 @@ if (! function_exists('assetUrl')) {
     function getMyReportingManager($employee_id) {
         $data = DB::table('t_employee_report_to')->where('employee_id', $employee_id)
                     ->selectRaw('GROUP_CONCAT(manager_id) as reporting_manager_ids')
-                    ->first();
-        $return = '1';
+                    ->first();        
         if($data && $data->reporting_manager_ids){
             $return = $data->reporting_manager_ids;
+        } else {
+            $adminUsers = getAllAdminUsers();
+            $return = $adminUsers->admin_ids;
         }
         return $return;
+    }
+
+    function getAllAdminUsers() {
+        $data = DB::table('employees')
+                    ->join('users', 'users.id', 'employees.user_id')
+                    ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                    ->where('model_has_roles.role_id', 1)
+                    ->selectRaw('GROUP_CONCAT(employee.id) as admin_ids, GROUP_CONCAT(employee.email) as admin_emails')
+                    ->first();
+        return $data;
     }

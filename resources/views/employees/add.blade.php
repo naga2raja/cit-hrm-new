@@ -164,6 +164,15 @@
 														</div>
 													</div>
 
+													<div class="col-md-6">											
+														<p class="mb-2">Resume</p>
+														<div class="form-group" id="upload_resume_document">
+															<input type='file' name="resume_document" class="form-control {{ $errors->has('resume_document') ? 'is-invalid' : ''}}" accept=".pdf, .doc, .docx" />
+															<label class="mb-2">Accepts pdf, .doc, .docx up to 1MB.</label>		
+															{!! $errors->first('resume_document', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+														</div>
+													</div>
+
 												</div>
 
 												<div class="row">
@@ -472,16 +481,15 @@
 @push('scripts')
 	<script>
 		$(document.body).on("change","#job_id",function(){		
-		var jobId = this.value;
-		console.log(jobId);
+		var jobId = this.value;				
 		if(jobId > 0) {
 			$.ajax({
 			method: 'GET',
-			url: '/jobTitles/'+ jobId,
+			url: '{{ URL::to("/") }}'+'/jobTitles/'+ jobId,
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(response){
-					console.log('response : ', response);
+					// console.log('response : ', response);
 					var job_specification = '';     
 					if(response && response.job_description) {
 						job_specification = response.job_description;
