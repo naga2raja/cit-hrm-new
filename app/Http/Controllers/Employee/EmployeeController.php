@@ -10,6 +10,7 @@ use App\ContactDetails;
 use App\mCountry;
 use App\mJobTitle;
 use App\mJobCategory;
+use App\tJobDetailsHistory;
 use App\mCompanyLocation;
 use App\tEmployeeReportTo;
 use Auth;
@@ -77,12 +78,14 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $validationArr = ['first_name' => 'required',
+        $validationArr = [
+            'first_name' => 'required',
             'last_name' => 'required',
             'employee_id' => 'required|unique:employees,employee_id',
             'email' => 'required|unique:employees,email',
             'status' => 'required', 
-            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable'           
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
+            'company_location_id' => 'required',
         ];
 
         if($request->create_login) {
@@ -202,6 +205,15 @@ class EmployeeController extends Controller
         $jobTitles = mJobTitle::all();
         $jobCategories = mJobCategory::get();        
         $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
+
+        $jobDetailsHistory = tJobDetailsHistory::join('m_job_titles', 'm_job_titles.id', 't_job_details_histories.job_id')
+                                            ->join('m_job_categories', 'm_job_categories.id', 't_job_details_histories.job_category_id')
+                                            ->join('m_company_locations', 'm_company_locations.id', 't_job_details_histories.company_location_id')
+                                            ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')
+                                            ->where('employee_id', $id)
+                                            ->select('t_job_details_histories.*', 'm_job_titles.job_title', 'm_job_titles.job_description', 'm_job_categories.name', 'm_company_locations.company_name', 'm_countries.country')
+                                            ->orderBy('start_date', 'desc')
+                                            ->get();
         
         $jobDetails = '';
         if($employee && $employee->job_id) {
@@ -209,17 +221,17 @@ class EmployeeController extends Controller
         }
 
         $reportTo = tEmployeeReportTo::join('employees', 't_employee_report_to.manager_id', 'employees.id')
-            ->where('t_employee_report_to.employee_id', $id)
-            ->selectRaw('employees.id as id, CONCAT(first_name, " ", last_name) as name')
-            ->groupBy('t_employee_report_to.manager_id')
-            ->get();
+                                    ->where('t_employee_report_to.employee_id', $id)
+                                    ->selectRaw('employees.id as id, CONCAT(first_name, " ", last_name) as name')
+                                    ->groupBy('t_employee_report_to.manager_id')
+                                    ->get();
         $assigned_managers = [];
         foreach($reportTo as $manager) {
             $assigned_managers[] = $manager->id;
         } 
         $assigned_managers = implode(',',  $assigned_managers);
 
-        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'jobDetailsHistory', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
     }
 
     /**
@@ -245,6 +257,16 @@ class EmployeeController extends Controller
         // $user->name = $request->first_name . ' '.$request->last_name;
         // $user->email = $request->email;
         // $user->save();
+
+        $isSame = Employee::where('joined_date', $request->joined_date)
+                                ->where('job_category_id', $request->job_category_id)
+                                ->where('job_id', $request->job_id)
+                                ->where('company_location_id', $request->company_location_id)
+                                ->where('id', $id)
+                                ->first();
+        if(!$isSame){
+            
+        }
 
         $employeeArr = [
             'first_name' => $request->first_name,
@@ -272,7 +294,7 @@ class EmployeeController extends Controller
             $employeeArr['profile_photo'] = '/storage/'.$path;
         }
 
-        $employee = Employee::where('id', $id)->update($employeeArr);        
+        $employee = Employee::where('id', $id)->update($employeeArr);
 
         //update contact details
         $contactDetails = ContactDetails::where('user_id', $id)->first();

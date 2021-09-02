@@ -103,20 +103,20 @@
 										<div class="col-sm-4">
 											<p class="mb-2">First Name <span class="text-danger">*</span></p>
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}" maxlength="30">
+													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" id="first_name" required value="{{ old('first_name', $employee->first_name) }}" maxlength="30" onfocus="allowOnlyCharacters('first_name')">
 													{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<p class="mb-2">Middle Name</p>
 												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}" maxlength="30">
+													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" id="middle_name" value="{{ old('middle_name', $employee->middle_name) }}" maxlength="30" onfocus="allowOnlyCharacters('middle_name')">
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<p class="mb-2">Last Name <span class="text-danger">*</span></p>
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}" maxlength="30">
+													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" id="last_name" value="{{ old('last_name', $employee->last_name) }}" maxlength="30" onfocus="allowOnlyCharacters('last_name')">
 													{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -175,7 +175,7 @@
 											</div>
 										</div>
 
-										<div class="col-md-6">											
+										<div class="col-md-6">
 												<p class="mb-2">Profile image</p>
 												@if($employee->profile_photo)
 													<div id="preview_profile_image" style="max-width:150px;position: relative;">
@@ -245,42 +245,37 @@
 							<div id="employee-det" class="collapse show ctm-padding" aria-labelledby="contact" data-parent="#accordion-details">
 								
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">Street Address 1</p>
 												<input type="text" class="form-control" placeholder="" name="street_address_1" maxlength="150" value="{{ old('street_address_1', @$contactInfo->street_address_1) }}">
 											</div>
 										</div>
 
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">Street Address 2</p>
 												<input type="text" class="form-control" placeholder="" name="street_address_2" maxlength="150" value="{{ old('street_address_2', @$contactInfo->street_address_2) }}">
 											</div>
 										</div>
 
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">City</p>
-												<input type="text" class="form-control" placeholder="" name="city" maxlength="50" value="{{ old('city', @$contactInfo->city) }}">
+												<input type="text" class="form-control" placeholder="" name="city" maxlength="50" value="{{ old('city', @$contactInfo->city) }}" autocomplete="off">
 											</div>
 										</div>
 
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">State/Province</p>
-												<input type="text" class="form-control" placeholder="" name="state" maxlength="50" value="{{ old('state', @$contactInfo->state) }}">
+												<input type="text" class="form-control" placeholder="" name="state" maxlength="50" value="{{ old('state', @$contactInfo->state) }}" autocomplete="off">
 											</div>
 										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<p class="mb-2">Zip/Postal Code</p>
-												<input type="text" class="form-control" placeholder="" maxlength="7" name="zip_code" value="{{ old('zip_code', @$contactInfo->zip_code) }}" id="zip_code" onkeyup="allowOnlyNumbers('zip_code')">
-											</div>
-										</div>
-										<div class="col-md-12 form-group">
+
+										<div class="col-md-6 form-group">
 											<p class="mb-2">Country</p>
-											<select class="form-control select" name="country">
+											<select class="form-control select" name="country" id="country">
 												<option value="">Select </option>
 												@foreach ($countries as $country)
 													<option value="{{ $country->country }}" {{old ('country', @$contactInfo->country) == $country->country ? 'selected' : ''}}> {{ $country->country }}</option>
@@ -288,29 +283,36 @@
 											</select>
 										</div>
 
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
-												<p class="mb-2">Home Telephone</p>
-												<input type="text" class="form-control" placeholder="" maxlength="11" name="home_telephone" value="{{ old('home_telephone', @$contactInfo->home_telephone) }}" onkeyup="allowOnlyNumbers('home_telephone')" id="home_telephone">
+												<p class="mb-2">Zip/Postal Code</p>
+												<input type="text" class="form-control" placeholder="" maxlength="7" name="zip_code" value="{{ old('zip_code', @$contactInfo->zip_code) }}" id="zip_code" onfocus="allowOnlyNumbers('zip_code')" autocomplete="off">
 											</div>
 										</div>
 
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
-												<p class="mb-2">Mobile</p>
-												<input type="text" class="form-control" placeholder="" maxlength="11" name="mobile" value="{{ old('mobile', @$contactInfo->mobile) }}" id="mobile" onkeyup="allowOnlyNumbers('mobile')">
+												<p class="mb-2">Home Telephone</p>
+												<input type="text" class="form-control" placeholder="" maxlength="11" name="home_telephone" value="{{ old('home_telephone', @$contactInfo->home_telephone) }}" onfocus="allowOnlyNumbers('home_telephone')" id="home_telephone">
 											</div>
 										</div>
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">Work Telephone</p>
-												<input type="text" class="form-control" placeholder="" maxlength="11" name="work_telephone" value="{{ old('work_telephone', @$contactInfo->work_telephone) }}"  onkeyup="allowOnlyNumbers('work_telephone')" id="work_telephone">
+												<input type="text" class="form-control" placeholder="" maxlength="11" name="work_telephone" value="{{ old('work_telephone', @$contactInfo->work_telephone) }}"  onfocus="allowOnlyNumbers('work_telephone')" id="work_telephone">
 											</div>
 										</div>
-										<div class="col-md-12">
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<p class="mb-2">Mobile</p>
+												<input type="text" class="form-control" placeholder="" maxlength="11" name="mobile" value="{{ old('mobile', @$contactInfo->mobile) }}" id="mobile" onfocus="allowOnlyNumbers('mobile')">
+											</div>
+										</div>
+										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">Alternate Email</p>
-												<input type="email" class="form-control" placeholder="" name="alternate_email" value="{{ old('alternate_email', @$contactInfo->alternate_email) }}">
+												<input type="email" class="form-control" placeholder="" name="alternate_email" value="{{ old('alternate_email', @$contactInfo->alternate_email) }}" maxlength="30">
 											</div>
 										</div>
 									</div>
@@ -319,6 +321,7 @@
 						</div>
 					</div>
 
+					<!-- Job Details Start -->
 					<div class="card shadow-sm ctm-border-radius">
 						<div class="card-header" id="jobDetails">
 							<h4 class="cursor-pointer mb-0">
@@ -347,7 +350,7 @@
 									</div>
 
 									<div class="col-md-12 form-group">
-										<p class="mb-2">Job Specification</p>
+										<p class="mb-2">Job Description</p>
 										<input type="text" name="job_specification" id="job_specification" class="form-control" value="{{ @$jobDetails->job_description }}" readonly="">
 									</div>
 									<div class="col-md-12 form-group">
@@ -360,18 +363,35 @@
 										</select>												
 									</div>
 									<div class="col-md-12 form-group mb-0">
-										<p class="mb-2">Location</p>
-										<select class="form-control select" name="company_location_id">
+										<p class="mb-2">Job Location <sapn class="text-danger">*</sapn></p>
+										<select class="form-control select {{ $errors->has('company_location_id') ? 'is-invalid' : ''}}" name="company_location_id" required="">
 											<option value="">Select </option>
 											@foreach ($locations as $item)
 												<option value="{{ $item->id }}" {{ old ('company_location_id', @$employee->company_location_id) == $item->id ? 'selected' : ''}}> {{ $item->company_name }} - {{ $item->country }}</option>
 											@endforeach
 										</select>
+										{!! $errors->first('company_location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+									</div>
+								</div>
+								@if(count($jobDetailsHistory))
+									<div class="row">
+										<div class="col-md-2 pull-right">
+											<a class="btn btn-theme button-1 text-white btn-block p-2 mt-3" data-toggle="modal" data-target="#job_history_modal">Job History</a>
+										</div>
+									</div>
+								@endif
+
+								<div class="row">
+									<div class="col-sm-2 mt-3">
+										<div class="form-group">
+											<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Job Details End -->
 
 					<div class="card shadow-sm ctm-border-radius">
 						<div class="card-header" id="reportTo">
@@ -501,13 +521,12 @@
 				-->
 				</div>
 				<div class="row">
-					
-						<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">																			
-							<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
-						</div>
-						<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">									
-							<a href="{{ route('employees.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
-						</div>
+					<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+						<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
+					</div>
+					<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">									
+						<a href="{{ route('employees.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
+					</div>
 					<div class="col-12">
 						<div class="submit-section text-center btn-add">
 							
@@ -525,167 +544,222 @@
 <!-- Inner Wrapper -->
 
 
-			<div class="page-wrapper" style="display: none;">
-				<div class="container-fluid">
-					<div class="row">					
-						<div class="col-xl-12 col-lg-8  col-md-12">
-							<div class="card ctm-border-radius shadow-sm border">
-								<div class="card-header">
-									<div class="text-left">
-										<h4 class="card-title mb-0 text-left ml-3">Edit Employee</h4>
+		<div class="page-wrapper" style="display: none;">
+			<div class="container-fluid">
+				<div class="row">					
+					<div class="col-xl-12 col-lg-8  col-md-12">
+						<div class="card ctm-border-radius shadow-sm border">
+							<div class="card-header">
+								<div class="text-left">
+									<h4 class="card-title mb-0 text-left ml-3">Edit Employee</h4>
+								</div>
+							</div>
+							<div class="card-body">
+								@if($message = Session::get('success'))
+										<div class="alert alert-success">
+											<p>{{$message}}</p>
+										</div>
+										@endif	
+
+								<form method="POST" action="{{ route('employees.update', $id) }}">
+									@csrf
+									{{ method_field('PUT') }}
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label>Employee Name <span class="text-danger">*</span></label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}">
+												{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}">
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}">
+												{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											</div>
+										</div>
 									</div>
-								</div>
-								<div class="card-body">
-									@if($message = Session::get('success'))
-											<div class="alert alert-success">
-												<p>{{$message}}</p>
-											</div>
-											@endif	
 
-									<form method="POST" action="{{ route('employees.update', $id) }}">
-										@csrf
-										{{ method_field('PUT') }}
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Employee Name <span class="text-danger">*</span></label>
-												</div>
-											</div>
-											<div class="col-sm-3">
-												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" required value="{{ old('first_name', $employee->first_name) }}">
-													{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-											<div class="col-sm-3">
-												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ old('middle_name', $employee->middle_name) }}">
-												</div>
-											</div>
-											<div class="col-sm-3">
-												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required name="last_name" value="{{ old('last_name', $employee->last_name) }}">
-													{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label>Email Address <span class="text-danger">*</span></label>
 											</div>
 										</div>
-
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Email Address <span class="text-danger">*</span></label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}">
-													{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>										
-
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Employee Id <span class="text-danger">*</span></label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}">
-													{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
+										<div class="col-sm-4">
+											<div class="form-group">
+												<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}">
+												{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
+									</div>										
 
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label>Status <span class="text-danger">*</span></label>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}">
-														<option value="Active" {{old ('status', $employee->status) == 'Active' ? 'selected' : ''}}>Active</option>
-														<option value="In active" {{old ('status', $employee->status) == 'In active' ? 'selected' : ''}}>Inactive</option>
-													</select>
-													{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
-												</div>
-											</div>
-										</div>								
-
-										
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="form-group">
-													<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
-												</div>
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label>Employee Id <span class="text-danger">*</span></label>
 											</div>
 										</div>
-										<hr>
-
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<div class="col-sm-4 text-center">
-												<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0 " type="submit">Save</button>
-												<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
+										<div class="col-sm-4">
+											<div class="form-group">
+												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}">
+												{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
+									</div>
 
-									</form>
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label>Status <span class="text-danger">*</span></label>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="form-group">
+												<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}">
+													<option value="Active" {{old ('status', $employee->status) == 'Active' ? 'selected' : ''}}>Active</option>
+													<option value="In active" {{old ('status', $employee->status) == 'In active' ? 'selected' : ''}}>Inactive</option>
+												</select>
+												{!! $errors->first('status', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											</div>
+										</div>
+									</div>								
 
-									<div id="existing_manager_ids">{{ json_encode($reportTo) }}</div>
-								</div>
+									
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
+											</div>
+										</div>
+									</div>
+									<hr>
+
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-4 text-center">
+											<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0 " type="submit">Save</button>
+											<a href="{{ route('employees.index') }}" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
+										</div>
+									</div>
+
+								</form>
+
+								<div id="existing_manager_ids">{{ json_encode($reportTo) }}</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!--/Content-->
-			
 		</div>
-		
-		<div class="sidebar-overlay" id="sidebar_overlay"></div>
+		<!--/Content-->
+			
+	</div>
+	
+	<div class="sidebar-overlay" id="sidebar_overlay"></div>
 
-		<div class="modal fade" id="assign_manager">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title mb-1">Assign Manager</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					
-						<!-- Modal body -->
-						<div class="modal-body">
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label>Name <span class="text-danger">*</span></label>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">										
-										<select class="itemName form-control" name="itemName" id="itemName" style="width: 100%"></select>
-									</div>
+	<div class="modal fade" id="assign_manager">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title mb-1">Assign Manager</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label>Name <span class="text-danger">*</span></label>
 								</div>
 							</div>
-
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="form-group">
-										<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
-									</div>
+							<div class="col-sm-8">
+								<div class="form-group">										
+									<select class="itemName form-control" name="itemName" id="itemName" style="width: 100%"></select>
 								</div>
 							</div>
 						</div>
-						<div class="modal-footer">
-							<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="assignEmployee()" data-dismiss="modal">Save</button>
-					        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Cancel</button>						
-					    </div>	
-				</div>
+
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="assignEmployee()" data-dismiss="modal">Save</button>
+				        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Cancel</button>						
+				    </div>	
 			</div>
-		</div>		
+		</div>
+	</div>
+
+	<!-- Job History Modal Start -->
+	<div class="modal fade" id="job_history_modal">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title mb-1">Job Detials History</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="table-responsive">
+							<table class="table custom-table table-hover">
+								<thead>
+									<tr class="bg-light">
+										<th>Start Date</th>
+										<th>End Date</th>
+										<th>Job Title</th>
+										<th>Job Category</th>
+										<th>Location</th>
+									</tr>
+								</thead>
+								<tbody>
+									@if(count($jobDetailsHistory))
+										@foreach($jobDetailsHistory as $jobHistory)
+										<tr>
+											<td>{{ $jobHistory->start_date }}</td>
+											<td>{{ $jobHistory->end_date }}</td>
+											<td>{{ $jobHistory->job_title }}</td>
+											<td>{{ $jobHistory->name }}</td>
+											<td>{{ $jobHistory->company_name }} - {{ $jobHistory->country }}</td>
+										</tr>
+										@endforeach
+									@else
+										<tr>
+											<td colspan="5">
+												<div class="alert alert-danger"> No Job History found!</div>
+											</td>
+										</tr>
+									@endif
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+			        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Close</button>						
+			    </div>
+			</div>
+		</div>
+	</div>
+	<!-- Job History Modal End -->
+
 <style>
 #selected_managers i.fa.btn-primary.p-1.fa-close{	
     font-size: 13px;
@@ -846,6 +920,8 @@ function openModalpopup(){
 			$('#assigned_managers').val(empIds);
 			assigned_managers_final = empIds;
 		}
+
+		$('#country').select2();
 
 </script>
 @endsection
