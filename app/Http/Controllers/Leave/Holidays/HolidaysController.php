@@ -79,6 +79,7 @@ class HolidaysController extends Controller
                             ->get();
 
         $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
+        $holidays = '';
 
         return view('leave/holidays/add', compact('holidays', 'country', 'company_location'));
     }

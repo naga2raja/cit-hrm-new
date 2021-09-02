@@ -133,7 +133,7 @@
 												@foreach($employees as $employee)
 												<tr>
 													<td class="text-center">
-														<input type="checkbox" name="chk_user" value="{{ $employee->id }}" {{ ($employee->user_id == auth()->user()->id || $employee->user_id == 1) ? 'disabled' : '' }}>
+														<input type="checkbox" name="chk_user" value="{{ $employee->id }}" {{ ($employee->user_id == auth()->user()->id) ? 'disabled' : '' }}>
 													</td>
 													<td>
 														<u><a href="{{ route('employees.edit', $employee->id) }}"> {{ $employee->employee_id }}  </a></u>
@@ -159,7 +159,7 @@
 													</td> 
 													<td>
 														<div style="text-align: center;">
-														@if($employee->user_id == auth()->user()->id || $employee->user_id == 1)
+														@if($employee->user_id == auth()->user()->id)
 
 														@else
 														<!-- <form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->id)}}" method="post">
