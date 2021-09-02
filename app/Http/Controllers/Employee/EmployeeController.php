@@ -262,6 +262,7 @@ class EmployeeController extends Controller
             'status' => 'required',
             'alternate_email' => 'email|nullable',
             'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
+            'company_location_id' => 'required',
             'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ]);
 
@@ -270,14 +271,29 @@ class EmployeeController extends Controller
         // $user->email = $request->email;
         // $user->save();
 
-        $isSame = Employee::where('joined_date', $request->joined_date)
-                                ->where('job_category_id', $request->job_category_id)
-                                ->where('job_id', $request->job_id)
-                                ->where('company_location_id', $request->company_location_id)
-                                ->where('id', $id)
-                                ->first();
-        if(!$isSame){
-            
+        $employee = Employee::where('id', $id)->first();
+
+        $isNotSame = [];
+        if(($employee->joined_date != '')&&($employee->job_id != '')){
+            $isNotSame = Employee::where('id', $id)
+                            ->whereRaw('(joined_date != "'.$request->joined_date.'" or job_category_id !='.$request->job_category_id.' or job_id != '.$request->job_id.' or company_location_id != '.$request->company_location_id.')')
+                            ->first();
+        }
+
+        // end date (reduce 1 day from the latest join date)
+        $end_date = date('Y-m-d', strtotime('-1 day', strtotime($request->joined_date)));
+
+        if($isNotSame){
+            // insert history data into tJobDetailsHistory
+            $jobDetailsHistory = tJobDetailsHistory::create([
+                'employee_id'  => $isNotSame->id,
+                'start_date'  => $isNotSame->joined_date,
+                'end_date'  => $end_date,
+                'job_category_id'  => $isNotSame->job_category_id,
+                'job_id'  => $isNotSame->job_id,
+                'company_location_id' => $isNotSame->company_location_id,
+                'created_at' => Auth::user()->id
+            ]);
         }
 
         $employeeArr = [
@@ -455,6 +471,15 @@ class EmployeeController extends Controller
         $jobTitles = mJobTitle::all();
         $jobCategories = mJobCategory::get();
         $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
+
+        $jobDetailsHistory = tJobDetailsHistory::join('m_job_titles', 'm_job_titles.id', 't_job_details_histories.job_id')
+                                            ->join('m_job_categories', 'm_job_categories.id', 't_job_details_histories.job_category_id')
+                                            ->join('m_company_locations', 'm_company_locations.id', 't_job_details_histories.company_location_id')
+                                            ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')
+                                            ->where('employee_id', $id)
+                                            ->select('t_job_details_histories.*', 'm_job_titles.job_title', 'm_job_titles.job_description', 'm_job_categories.name', 'm_company_locations.company_name', 'm_countries.country')
+                                            ->orderBy('start_date', 'desc')
+                                            ->get();
         $jobDetails = '';
         if($employee && $employee->job_id) {
             $jobDetails = mJobTitle::find($employee->job_id);
@@ -471,7 +496,7 @@ class EmployeeController extends Controller
         } 
         $assigned_managers = implode(',',  $assigned_managers);
 
-        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobDetailsHistory', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
     }
 
     public function getEmployeeChartData(Request $request)

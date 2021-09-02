@@ -123,7 +123,7 @@
 
 										<div class="col-12 form-group">
 											<p class="mb-2">Email Address <span class="text-danger">*</span></p>
-											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif maxlength="30">
+											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif maxlength="30" autocomplete="off">
 											{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 										</div>
 
@@ -136,7 +136,7 @@
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<p class="mb-2">Status <span class="text-danger">*</span></p>
+												<p class="mb-2">Status</p>
 												<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}">
 													<option value="Active" {{old ('status', $employee->status) == 'Active' ? 'selected' : ''}}>Active</option>
 													<option value="In active" {{old ('status', $employee->status) == 'In active' ? 'selected' : ''}}>Inactive</option>
@@ -300,7 +300,7 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">Zip/Postal Code</p>
-												<input type="text" class="form-control" placeholder="" maxlength="7" name="zip_code" value="{{ old('zip_code', @$contactInfo->zip_code) }}" id="zip_code" onfocus="allowOnlyNumbers('zip_code')" autocomplete="off">
+												<input type="text" class="form-control" placeholder="" maxlength="7" name="zip_code" value="{{ old('zip_code', @$contactInfo->zip_code) }}" id="zip_code" onfocus="allowOnlyNumbers('zip_code')" autocomplete="off" maxlength="7">
 											</div>
 										</div>
 
@@ -350,7 +350,7 @@
 								<div class="row">
 									<div class="col-12 form-group">
 										<p class="mb-2">Date of Join</p>
-										<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}">
+										<input class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}" @if(Request::is('my-info')) disabled @endif autocomplete="off">
 									</div>
 
 									<div class="col-md-12 form-group">
@@ -378,7 +378,7 @@
 									</div>
 									<div class="col-md-12 form-group mb-0">
 										<p class="mb-2">Job Location <sapn class="text-danger">*</sapn></p>
-										<select class="form-control select {{ $errors->has('company_location_id') ? 'is-invalid' : ''}}" name="company_location_id" required="">
+										<select class="form-control select {{ $errors->has('company_location_id') ? 'is-invalid' : ''}}" name="company_location_id" required="" @if(Request::is('my-info')) disabled @endif>
 											<option value="">Select </option>
 											@foreach ($locations as $item)
 												<option value="{{ $item->id }}" {{ old ('company_location_id', @$employee->company_location_id) == $item->id ? 'selected' : ''}}> {{ $item->company_name }} - {{ $item->country }}</option>
@@ -420,9 +420,11 @@
 							<div id="emp_report_to" class="collapse show ctm-padding" aria-labelledby="reportTo" data-parent="#accordion-details">
 								<div class="row">
 									@hasrole('Admin')
+									@if(!Request::is('my-info'))
 									<div class="col-md-12 pull-right">
 										<a class="btn btn-theme button-1 text-white p-2" data-toggle="modal" data-target="#assign_manager" onclick="openModalpopup()" style="float: right;">Add</a>
 									</div>
+									@endif
 									@endrole 
 									
 									<input type="hidden" id="assigned_managers" name="assigned_managers" value="{{ $assigned_managers }}">
@@ -817,7 +819,7 @@
 	if(dob != "1970-01-01"){
 		date_of_birth = '{{ (@$employee->date_of_birth) }}';
 	}
-	var startYear = moment().format("YYYY") - 100 +"-01-01";		
+	var startYear = moment().format("YYYY") - 100 +"-01-01";
 	$('#datetimepicker1').datetimepicker({
 		date: date_of_birth,
 		format: "YYYY-MM-DD", 
@@ -831,11 +833,16 @@
 		}
 	});
 
+	var preJoinDate = '{{ @$employee->joined_date }}';
+	var minDate = moment().format("YYYY") - 100 +"-01-01";
+	if(preJoinDate) {
+		minDate = moment(preJoinDate).format("YYYY-MM-DD")
+	}
+
 	$('.datetimepicker2').datetimepicker({
 		date: '{{ (@$employee->joined_date) }}',
-		format: "YYYY-MM-DD", 
-		minDate: moment(startYear).format("YYYY-MM-DD"),
-		maxDate: moment(),
+		format: "YYYY-MM-DD",
+		minDate: minDate,
 		icons: {
 			up: "fa fa-angle-up",
 			down: "fa fa-angle-down",
@@ -864,82 +871,82 @@
 		console.log(JSON.parse(existing_manager_ids));
 	}	
 
-var list_managers = [];
-var assigned_managers_final = [];
-// Autocomplete ajax call
-function assignEmployee () {
-	var managerId = $('#itemName').val();
-	var name = $('#select2-itemName-container').html();
-	assigned_managers.push({'id':managerId, 'name': name});
-	console.log(managerId, name, assigned_managers);
-	
-	var result = uniqueArray(assigned_managers);
-	console.log(result);
-	var selected_managers_html = '';
-	var empIds = [];
-	result.forEach(element => {
-		console.log(element.name);
-		empIds.push(element.id);
-		selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
-	});
-	$('#selected_managers').html(selected_managers_html);
-	$('#assigned_managers').val(empIds);
-	assigned_managers_final = empIds;
-}
-
-function openModalpopup(){
-	$('#itemName').val('');
-	$('.itemName').select2({
-		placeholder: 'Select',
-		ajax: {
-			url: '{{ route("ajax.employee_search") }}'+'?managers_only=1&mgids='+$("#assigned_managers").val(),
-			dataType: 'json',
-			delay: 250,
-			processResults: function (data) {
-			return {
-				results:  $.map(data, function (item) {
-					return {
-						text: item.name,
-						id: item.id
-					}
-				})
-			};
-			},
-			cache: true
-		}
-		});
-}
+	var list_managers = [];
+	var assigned_managers_final = [];
+	// Autocomplete ajax call
+	function assignEmployee () {
+		var managerId = $('#itemName').val();
+		var name = $('#select2-itemName-container').html();
+		assigned_managers.push({'id':managerId, 'name': name});
+		console.log(managerId, name, assigned_managers);
 		
-		function uniqueArray(arr) {
-			return arr.reduce(function(memo, e1){
-			var matches = memo.filter(function(e2){
-				return e1.name == e2.name
-			})
-			if (matches.length == 0)
-				memo.push(e1)
-				return memo;
-			}, []);
-		}
+		var result = uniqueArray(assigned_managers);
+		console.log(result);
+		var selected_managers_html = '';
+		var empIds = [];
+		result.forEach(element => {
+			console.log(element.name);
+			empIds.push(element.id);
+			selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
+		});
+		$('#selected_managers').html(selected_managers_html);
+		$('#assigned_managers').val(empIds);
+		assigned_managers_final = empIds;
+	}
 
-		function removeAssignedEmployee(id) {						
-			console.log('emP dELETE', id, assigned_managers);
-			assigned_managers = assigned_managers.filter(function( obj ) {
-				return obj.id != id;
-			});
-			console.log(assigned_managers);
-			var selected_managers_html = '';
-			var empIds = [];
-			assigned_managers.forEach(element => {
-				console.log(element.name);
-				empIds.push(element.id);
-				selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
-			});
-			$('#selected_managers').html(selected_managers_html);
-			$('#assigned_managers').val(empIds);
-			assigned_managers_final = empIds;
-		}
+	function openModalpopup(){
+		$('#itemName').val('');
+		$('.itemName').select2({
+			placeholder: 'Select',
+			ajax: {
+				url: '{{ route("ajax.employee_search") }}'+'?managers_only=1&mgids='+$("#assigned_managers").val(),
+				dataType: 'json',
+				delay: 250,
+				processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
+				},
+				cache: true
+			}
+		});
+	}
+		
+	function uniqueArray(arr) {
+		return arr.reduce(function(memo, e1){
+		var matches = memo.filter(function(e2){
+			return e1.name == e2.name
+		})
+		if (matches.length == 0)
+			memo.push(e1)
+			return memo;
+		}, []);
+	}
 
-		$('#country').select2();
+	function removeAssignedEmployee(id) {
+		console.log('emP dELETE', id, assigned_managers);
+		assigned_managers = assigned_managers.filter(function( obj ) {
+			return obj.id != id;
+		});
+		console.log(assigned_managers);
+		var selected_managers_html = '';
+		var empIds = [];
+		assigned_managers.forEach(element => {
+			console.log(element.name);
+			empIds.push(element.id);
+			selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
+		});
+		$('#selected_managers').html(selected_managers_html);
+		$('#assigned_managers').val(empIds);
+		assigned_managers_final = empIds;
+	}
+
+	$('#country').select2();
 
 </script>
 @endsection
