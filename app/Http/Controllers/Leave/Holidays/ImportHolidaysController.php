@@ -86,7 +86,7 @@ class ImportHolidaysController extends Controller
                     $holiday_duration = ($duration == '0.5') ? 1 : 0;
 
                     $holidays = mHoliday::create([
-                        'description'  => '',
+                        'description'  => $holidayName,
                         'date'  => $date,
                         'recurring' => $recurring,
                         'length' => $holiday_duration, // 0 => fullday, 1 => halfday
