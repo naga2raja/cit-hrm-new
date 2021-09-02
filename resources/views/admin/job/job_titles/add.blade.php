@@ -40,7 +40,7 @@
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
-															<input type="text" name="job_title" required class="form-control {{ $errors->has('job_title') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_title') }}">
+															<input type="text" name="job_title" required class="form-control {{ $errors->has('job_title') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_title') }}" maxlength="20" minlength="3" id="job_title" onfocus="allowCharactersWithSpace('job_title')">
 															{!! $errors->first('job_title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -54,7 +54,7 @@
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
-															<textarea name="job_description" class="form-control" rows="3">{{ old('job_description') }}</textarea>
+															<textarea name="job_description" class="form-control" rows="3" pattern="[A-Za-z]{3}" minlength="3" maxlength="200">{{ old('job_description') }}</textarea>
 														</div>
 													</div>
 												</div>
@@ -81,7 +81,7 @@
 														</div>
 													</div>
 													<div class="col-sm-4">
-														<textarea name="note" class="form-control" rows="3">{{ old('job_description') }}</textarea>
+														<textarea name="note" class="form-control" rows="3"  pattern="[A-Za-z]{3}" minlength="3" maxlength="200">{{ old('note') }}</textarea>
 													</div>
 												</div>
 

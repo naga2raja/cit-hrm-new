@@ -40,7 +40,7 @@
 													</div>
 													<div class="col-sm-2">
 														<div class="form-group">
-															<input type="text" name="pay_grade" class="form-control {{ $errors->has('pay_grade') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('pay_grade') }}" required="">
+															<input type="text" name="pay_grade" class="form-control {{ $errors->has('pay_grade') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('pay_grade') }}" required=""  maxlength="30" minlength="3" id="pay_grade" onfocus="allowCharactersWithSpace('pay_grade')">
 															{!! $errors->first('pay_grade', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>

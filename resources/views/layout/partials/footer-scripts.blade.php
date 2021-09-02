@@ -208,6 +208,16 @@ function allowOnlyCharacters(id) {
   	return /^[a-z]*$/i.test(value); });
 }
 
+function allowCharactersWithSpace(id) {
+	$("#"+id).inputFilter(function(value) {
+  	return /^[a-zA-Z,]+(\s{0,1}[a-zA-Z, ])*$/i.test(value); });
+}
+
+function allowPriceFormat(id) {
+	$("#"+id).inputFilter(function(value) {
+  	return /^-?\d*[.]?\d{0,2}$/.test(value); });
+}
+
 $('#cithrm_mobile_menu a.nav-link.dropdown-toggle').click(function() {	
 	$(this).addClass('cit_active');
 	$(this).next().addClass('cithrm_dropdown-menu');
