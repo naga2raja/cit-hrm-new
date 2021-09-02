@@ -192,6 +192,8 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     // holidays
     Route::resource('/holidays', 'Leave\Holidays\HolidaysController');
     Route::post('/holidays/multiple-delete', 'Leave\Holidays\HolidaysController@deleteMultiple')->name('holidays.deleteMultiple');
+    Route::get('/holidays-import', 'Leave\Holidays\ImportHolidaysController@index')->name('holidays.import');
+    Route::post('/holidays-import', 'Leave\Holidays\ImportHolidaysController@import')->name('holidays-import');
     
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
     Route::post('/myEntitlements/multiple-delete', 'Leave\Entitlements\MyLeaveEntitlementController@deleteMultiple')->name('myEntitlements.deleteMultiple');
