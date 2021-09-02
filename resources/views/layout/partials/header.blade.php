@@ -255,7 +255,7 @@
             <!-- /Top Header Section -->
             <!-- Slide Nav -->
             <nav class="navbar navbar-expand-md navbar-hover" id="cithrm_desktop_menu_section">
-                <div class="collapse navbar-collapse header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom" id="navbarHover" >
+                <div class="collapse navbar-collapse header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom" id="navbarHover">
                     <div class="header-menu-list d-flex bg-white rt_nav_header horizontal-layout nav-bottom">
                         <div class="append mr-auto my-0 my-md-0 mr-auto">
                             @include('layout/partials/navigation')
