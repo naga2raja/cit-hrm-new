@@ -69,9 +69,9 @@
 						</div>
 					</div>
 				</div>
-
+				
 				<!-- Currency Add -->
-				<div class="container-fluid" id="currency_div" style="{{ $errors->has('currency') ? 'display: block' : 'display: none'}}">
+				<div class="container-fluid" id="currency_div" style="{{ ($errors->first()) ? 'display: block' : 'display: none'}}">
 					<div class="row">
 						<div class="col-xl-12 col-lg-12 col-md-12">
 							<div class="accordion add-employee" id="accordion-details">
@@ -91,7 +91,7 @@
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Currency <span class="text-danger">*</span></label>
-															<select class="currency form-control {{ $errors->has('currency') ? 'is-invalid' : ''}}" name="currency" id="currency" style="width: 100%">
+															<select class="currency form-control {{ $errors->has('currency') ? 'is-invalid' : ''}}" name="currency" id="currency" style="width: 100%" required>
 															</select>
 															{!! $errors->first('currency', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 															<input type="hidden" name="currency_id" id="currency_id" class="form-control" placeholder="">
@@ -102,14 +102,16 @@
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Minimum Salary</label>
-															<input type="text" name="min_salary" class="form-control" placeholder="" id="min_salary" onfocus="allowPriceFormat('min_salary')" maxlength="8">
+															<input type="text" name="min_salary" class="form-control {{ $errors->has('min_salary') ? 'is-invalid' : ''}}" placeholder="" id="min_salary" onfocus="allowPriceFormat('min_salary')" maxlength="8" value="{{ old('min_salary') }}" required>
+															{!! $errors->first('min_salary', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Maximum Salary</label>
-															<input type="text" name="max_salary" class="form-control" placeholder="" id="max_salary" onfocus="allowPriceFormat('max_salary')" maxlength="8">
+															<input type="text" name="max_salary" class="form-control {{ $errors->has('max_salary') ? 'is-invalid' : ''}}" placeholder="" id="max_salary" onfocus="allowPriceFormat('max_salary')" maxlength="8" required value="{{ old('max_salary') }}">
+															{!! $errors->first('max_salary', '<span class="invalid-feedback" role="alert">:message</span>') !!}															
 														</div>
 													</div>
 

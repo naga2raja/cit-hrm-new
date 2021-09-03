@@ -139,7 +139,7 @@
 										</div>
 										<div class="card-body">
 											<div class="input-group mb-3">
-												<input type="text" class="form-control" placeholder="Phone Number..." value="@if($company && $company->phone_number != null) {{ $company->phone_number }} @endif" id="phone_number" name="phone_number" disabled="disabled">
+												<input type="text" class="form-control numberonly" minlength="10" maxlength="10" placeholder="Phone Number..." value="@if($company && $company->phone_number != null) {{ $company->phone_number }} @endif" id="phone_number" name="phone_number" disabled="disabled">
 												<div class="input-group-append">
 													<button class="btn btn-theme text-white" type="button" id="phone_number_edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 												</div>
@@ -151,11 +151,13 @@
 												</div>
 											</div>
 											<div class="input-group mb-0">
-												<input type="email" class="form-control" placeholder="E-mail..." value="@if($company && $company->email != null) {{ $company->email }} @endif" id="email" name="email" disabled="disabled">
+												<input type="email" class="form-control" placeholder="E-mail..." value="@if($company && $company->email != null) {{ $company->email }} @endif" id="email" name="email" disabled="disabled" maxlength="30">
 												<div class="input-group-append">
 													<button class="btn btn-theme text-white" type="button" id="email_edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 												</div>
 											</div>
+											<div class="alert alert-success pull-left mt-3" id="contact_form_success_message" style="display:none;"><p>Contact Info Update Successfully</p></div>
+
 											<div class="text-center mt-3">
 												<button class="btn btn-theme text-white ctm-border-radius button-1" disabled="disabled" id="contact_add">Add </button>
 											</div>
@@ -204,7 +206,7 @@
 							@csrf
 							<div class="form-group">
 								<input class="form-control" type="hidden" value="@if($company){{ $company->id }}@endif" id="modal_company_id" name="modal_company_id">
-								<input type="text" class="form-control" placeholder="Office Name" value="@if($company && $company->company_name != null){{ $company->company_name }}@endif" id="modal_company_name" name="modal_company_name">
+								<input type="text" class="form-control" placeholder="Office Name" value="@if($company && $company->company_name != null){{ $company->company_name }}@endif" id="modal_company_name" name="modal_company_name" maxlength="50" onkeypress="allowCharactersWithSpace('modal_company_name')">
 							</div>
 							<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-theme text-white ctm-border-radius float-right" id="update_company_name">Save</button>
@@ -231,7 +233,7 @@
 		</div>
 		
 		<!-- New Team The Modal -->
-		<div class="modal fade" id="add-information" role="document">
+		<div class="modal fade" id="add-information" role="document" data-backdrop="static">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<!-- Modal body -->
@@ -240,17 +242,17 @@
 						<h4 class="modal-title mb-3">Add Company Information</h4>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Company Name" value="@if($company && $company->company_name != null) {{ $company->company_name }} @endif" id="company_name" name="company_name">
+								<input class="form-control" type="text" placeholder="Company Name" value="@if($company && $company->company_name != null) {{ $company->company_name }} @endif" id="company_name" name="company_name" minlength="3" maxlength="255" onkeypress="allowCharactersWithSpace('company_name')">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Registered Company Number" value="@if($company && $company->registration_number != null) {{ $company->registration_number }} @endif" id="registration_number" name="registration_number">
+								<input class="form-control" type="text" placeholder="Registered Company Number" value="@if($company && $company->registration_number != null) {{ $company->registration_number }} @endif" id="registration_number" name="registration_number" minlength="3" maxlength="20">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Tax Id" value="@if($company && $company->tax_id != null) {{ $company->tax_id }} @endif" id="tax_id" name="tax_id">
+								<input class="form-control numberonly" type="text" placeholder="Tax Id" value="@if($company && $company->tax_id != null){{trim($company->tax_id)}}@endif" id="tax_id" name="tax_id" maxlength="9">
 							</div>
 						</div>
 						<div class="form-group">
@@ -260,22 +262,22 @@
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Address Line1" value="@if($company && $company->address_street_1 != null) {{ $company->address_street_1 }} @endif" id="address_street_1" name="address_street_1">
+								<input class="form-control" type="text" placeholder="Address Line1" value="@if($company && $company->address_street_1 != null) {{ $company->address_street_1 }} @endif" id="address_street_1" name="address_street_1" maxlength="255">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Address Line2" value="@if($company && $company->address_street_2 != null) {{ $company->address_street_2 }} @endif" id="address_street_2" name="address_street_2">
+								<input class="form-control" type="text" placeholder="Address Line2" value="@if($company && $company->address_street_2 != null) {{ $company->address_street_2 }} @endif" id="address_street_2" name="address_street_2" maxlength="255">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="City" value="@if($company && $company->city != null) {{ $company->city }} @endif" id="city" name="city">
+								<input class="form-control" type="text" placeholder="City" value="@if($company && $company->city != null) {{ $company->city }} @endif" id="city" name="city" maxlength="50" onkeypress="allowCharactersWithSpace('city')">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="State/Province" value="@if($company && $company->state_province != null) {{ $company->state_province }} @endif" id="state_province" name="state_province">
+								<input class="form-control" type="text" placeholder="State/Province" value="@if($company && $company->state_province != null) {{ $company->state_province }} @endif" id="state_province" name="state_province" maxlength="50"  onkeypress="allowCharactersWithSpace('state_province')">
 							</div>
 						</div>
 						<div class="form-group">
@@ -299,9 +301,10 @@
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Post-Code" value="{{ ($company) ? $company->zip_code : '' }}" id="zip_code" name="zip_code">
+								<input class="form-control" type="text" placeholder="Post-Code" value="{{ ($company) ? $company->zip_code : '' }}" id="zip_code" name="zip_code" maxlength="7" onkeyup="allowOnlyNumbers('zip_code')">
 							</div>
 						</div>
+						<div class="alert alert-success pull-left" id="modal_form_success_message" style="display:none;"><p>Company Info Update Successfully</p></div>
 						<button type="button" class="btn btn-danger text-white ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
 						<button type="button" class="btn btn-theme ctm-border-radius text-white float-right button-1" id="update_company_info">Save</button>
 					</div>
@@ -414,6 +417,7 @@
 		   contentType: 'application/json',
 		   success:function(data){
 		   	console.log(data);
+			$('#modal_form_success_message').show();
 		   	window.location =  data.url;
 		  },
 		  error:function(data){
@@ -427,8 +431,9 @@
 		   		$('<span id="registration_number_info_error" class="invalid-feedback" role="alert">The registration number should not exceed 20 characters.</span>').insertAfter('#registration_number');
 		   	}
 		   	if(data.responseJSON.errors.tax_id){
-		  		$('#tax_id').addClass('is-invalid');          		
-		   		$('<span id="tax_id_info_error" class="invalid-feedback" role="alert">The tax id should not exceed 9 characters.</span>').insertAfter('#tax_id');
+		  		$('#tax_id').addClass('is-invalid');    
+				$('#tax_id_info_error').hide();
+		   		$('<span id="tax_id_info_error" class="invalid-feedback" role="alert">'+data.responseJSON.errors.tax_id[0]+'</span>').insertAfter('#tax_id');
 		   	}
 		   	if(data.responseJSON.errors.address_street_1){
 		  		$('#address_street_1').addClass('is-invalid');          		
@@ -481,6 +486,7 @@
 		   contentType: 'application/json',
 		   success:function(data){
 		   	console.log(data);
+			$('#contact_form_success_message').show();
 		   	window.location =  data.url;
 		  },
 		  error:function(data){

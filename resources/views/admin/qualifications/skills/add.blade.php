@@ -23,7 +23,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('skill') ? 'is-invalid' : ''}}" placeholder="" name="skill" value="{{ old('skill') }}">													
+													<input type="text" class="form-control {{ $errors->has('skill') ? 'is-invalid' : ''}}" placeholder="" name="skill" value="{{ old('skill') }}" minlength="3"  maxlength="20">
                                                     {!! $errors->first('skill', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
