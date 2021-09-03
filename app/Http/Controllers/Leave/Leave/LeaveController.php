@@ -396,7 +396,7 @@ class LeaveController extends Controller
         $out['status']  = ($leaveEntitlements) ? true : false;
         $out['leaves'] = $leavesTaken;
         $out['leave_balance'] = $leaveBalance;
-        $out['leave_entitlement_id'] = ($leaveEntitlements) ? $leaveEntitlements->id : 0;;
+        $out['leave_entitlement_id'] = ($leaveEntitlements) ? $leaveEntitlements->id : 0;
         return response()->json($out);
     }
 

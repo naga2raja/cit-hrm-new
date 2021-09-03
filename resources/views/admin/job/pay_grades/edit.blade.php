@@ -34,7 +34,7 @@
 													</div>
 													<div class="col-sm-2">
 														<div class="form-group">
-															<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $grades->name) }}">
+															<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $grades->name) }}" maxlength="30" minlength="3" id="pay_grade" onfocus="allowCharactersWithSpace('pay_grade')" >
 															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -102,14 +102,14 @@
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Minimum Salary</label>
-															<input type="text" name="min_salary" class="form-control" placeholder="">
+															<input type="text" name="min_salary" class="form-control" placeholder="" id="min_salary" onfocus="allowPriceFormat('min_salary')" maxlength="8">
 														</div>
 													</div>
 
 													<div class="col-sm-2 leave-col">
 														<div class="form-group">
 															<label>Maximum Salary</label>
-															<input type="text" name="max_salary" class="form-control" placeholder="">
+															<input type="text" name="max_salary" class="form-control" placeholder="" id="max_salary" onfocus="allowPriceFormat('max_salary')" maxlength="8">
 														</div>
 													</div>
 

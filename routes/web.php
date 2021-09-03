@@ -257,7 +257,6 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     
 
     Route::get('/emp-page', 'HomeController@demoEmployee');
-    Route::resource('/employees', 'Employee\EmployeeController');
 
     //Leave
     Route::get('leave-list', 'Leave\Leave\LeaveController@getLeaveList')->name('leave.list');
@@ -311,6 +310,9 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
     Route::post('/news/multiple-delete', 'Admin\NewsController@deleteMultiple')->name('news.deleteMultiple');
     Route::get('/getEmployeeChart-ajax', 'Employee\EmployeeController@getEmployeeChartData')->name('getEmployeeChart-ajax');
     Route::get('/getRequestChart-ajax', 'Admin\AdminController@getRequestChart')->name('getRequestChart-ajax');
+
+    // employee list
+    Route::resource('/employees', 'Employee\EmployeeController');
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');

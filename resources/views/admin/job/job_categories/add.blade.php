@@ -39,7 +39,7 @@
 													</div>
 													<div class="col-sm-2">
 														<div class="form-group">
-															<input type="text" name="job_category" class="form-control {{ $errors->has('job_category') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_category') }}" autocomplete="off">
+															<input type="text" name="job_category" class="form-control {{ $errors->has('job_category') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('job_category') }}" autocomplete="off"  maxlength="20" minlength="3" id="job_category" onfocus="allowCharactersWithSpace('job_category')">
 															{!! $errors->first('job_category', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>

@@ -103,7 +103,8 @@ class JobTitlesController extends Controller
     {
         $validated = $request->validate([
             'job_title' => 'required',
-            'job_specification' => 'max:1024|nullable'
+            'job_specification' => 'max:1024|nullable',
+            'job_description' => 'nullable|string'
         ]);
 
         $jobSpecification = NULL;

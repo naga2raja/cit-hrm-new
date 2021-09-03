@@ -59,7 +59,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="" name="project_name" id="project_name" value="{{ old('project_name', $projects[0]->project_name) }}" disabled="disabled">
+													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="" name="project_name" id="project_name" value="{{ old('project_name', $projects[0]->project_name) }}" disabled="disabled" maxlength="30">
 													{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
