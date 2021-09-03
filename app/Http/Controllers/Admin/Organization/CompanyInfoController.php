@@ -52,9 +52,9 @@ class CompanyInfoController extends Controller
     public function update_company_info(Request $request)
     {
         $validated = $request->validate([
-            'company_name' => 'nullable|string|max:255',
+            'company_name' => 'required|string|max:255',
             'registration_number' => 'nullable|string|max:20',
-            'tax_id' => 'nullable|string|max:9',
+            'tax_id' => 'nullable|string|min:9|max:9',
             // 'incorporation_date' => 'nullable|date|before:tomorrow',
             'address_street_1' => 'nullable|string|max:255',
             'address_street_2' => 'nullable|string|max:255',
@@ -77,9 +77,8 @@ class CompanyInfoController extends Controller
             'zip_code' => (empty($request->zip_code) ? '' :  $request->zip_code)
         ];
 
-        if($isExists) {
-            $company = mCompany::where('id', $request->modal_company_id)
-                            ->update($infoArr);
+        if($isExists) { 
+            $company = mCompany::where('id', $request->modal_company_id)->update($infoArr);
         } else {
             //insert
             $company = mCompany::insert($infoArr);

@@ -203,6 +203,16 @@ function allowOnlyNumbers(id) {
  	return /^-?\d*$/.test(value); });
 }
 
+$('.numberonly').keypress(function (e) {    
+    
+	var charCode = (e.which) ? e.which : event.keyCode    
+
+	if (String.fromCharCode(charCode).match(/[^0-9]/g))    
+
+		return false;                        
+
+}); 
+
 function allowOnlyCharacters(id) {
 	$("#"+id).inputFilter(function(value) {
   	return /^[a-z]*$/i.test(value); });

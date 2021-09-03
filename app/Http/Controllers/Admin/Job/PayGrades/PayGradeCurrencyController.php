@@ -44,8 +44,8 @@ class PayGradeCurrencyController extends Controller
     {
         $validated = $request->validate([
             'currency' => 'required',
-            'min_salary' => 'lte:max_salary',
-            'max_salary' => 'gte:min_salary'
+            'min_salary' => 'required|lte:max_salary',
+            'max_salary' => 'required|gte:min_salary'
         ]);
 
         $isExists = tPayGradeCurrency::where('currency_id', $request->input('currency_id'))
@@ -131,7 +131,7 @@ class PayGradeCurrencyController extends Controller
         DB::connection()->enableQueryLog();
         $data = [];
 
-        if($request->has('q')){
+        // if($request->has('q')){
             $search = $request->q;
             $string = str_replace(' ', '', $search);
             $data = mCurrency::select("m_currencies.id")
@@ -139,7 +139,7 @@ class PayGradeCurrencyController extends Controller
                     ->where('currency_id','LIKE',"%$search%")
                     ->orWhere('currency_name','LIKE',"%$search%");      
             $data = $data->groupBy('m_currencies.id')->get();
-        }
+        // }
 
         return response()->json($data);
     }
