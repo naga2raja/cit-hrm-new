@@ -113,7 +113,7 @@
                 <a class="dropdown-item dropdown-toggle {{ Request::is('leavePeriod*','leaveTypes*','holidays*') ? 'active' : '' }}" href="javascript:void(0)">Configuration</a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item {{ Request::is('leavePeriod*') ? 'active' : '' }}" href="{{ route('leavePeriod.create') }}">Leave Period</a>
+                        <a class="dropdown-item {{ Request::is('leavePeriod*') ? 'active' : '' }}" href="{{ route('leavePeriod.index') }}">Leave Period</a>
                     </li>
                     <li>
                         <a class="dropdown-item {{ Request::is('leaveTypes*') ? 'active' : '' }}" href="{{ route('leaveTypes.index') }}">Leave Types</a>
