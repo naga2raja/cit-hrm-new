@@ -10,6 +10,7 @@ use App\ContactDetails;
 use App\mCountry;
 use App\mJobTitle;
 use App\mJobCategory;
+use App\tJobDetailsHistory;
 use App\mCompanyLocation;
 use App\tEmployeeReportTo;
 use Auth;
@@ -42,7 +43,7 @@ class EmployeeController extends Controller
         })
         ->when(request()->filled('status'), function ($query) {
             $query->where('employees.status', request('status'));
-        })->selectRaw('employees.id, employees.email, employees.first_name, employees.middle_name, employees.last_name, employees.status, employees.employee_id');
+        })->selectRaw('employees.*');
 
         if(Auth::user()->hasRole('Manager')) {
             $managerDet = Employee::where('user_id', Auth::user()->id)->first();
@@ -65,7 +66,7 @@ class EmployeeController extends Controller
         $countries = mCountry::all();
         $jobTitles = mJobTitle::all();
         $jobCategories = mJobCategory::get();
-        $locations = mCompanyLocation::get();
+        $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
         return view('employees/add', compact('jobTitles', 'jobCategories', 'locations','countries'));
     }
 
@@ -77,12 +78,14 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $validationArr = ['first_name' => 'required',
+        $validationArr = [
+            'first_name' => 'required',
             'last_name' => 'required',
             'employee_id' => 'required|unique:employees,employee_id',
             'email' => 'required|unique:employees,email',
             'status' => 'required', 
-            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',           
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
+            'company_location_id' => 'required',         
             'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ];
 
@@ -211,25 +214,35 @@ class EmployeeController extends Controller
                 
         $countries = mCountry::all();
         $jobTitles = mJobTitle::all();
-        $jobCategories = mJobCategory::get();
-        $locations = mCompanyLocation::get();
+        $jobCategories = mJobCategory::get();        
+        $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
+
+        $jobDetailsHistory = tJobDetailsHistory::join('m_job_titles', 'm_job_titles.id', 't_job_details_histories.job_id')
+                                            ->join('m_job_categories', 'm_job_categories.id', 't_job_details_histories.job_category_id')
+                                            ->join('m_company_locations', 'm_company_locations.id', 't_job_details_histories.company_location_id')
+                                            ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')
+                                            ->where('employee_id', $id)
+                                            ->select('t_job_details_histories.*', 'm_job_titles.job_title', 'm_job_titles.job_description', 'm_job_categories.name', 'm_company_locations.company_name', 'm_countries.country')
+                                            ->orderBy('start_date', 'desc')
+                                            ->get();
+        
         $jobDetails = '';
         if($employee && $employee->job_id) {
             $jobDetails = mJobTitle::find($employee->job_id);
         }
 
         $reportTo = tEmployeeReportTo::join('employees', 't_employee_report_to.manager_id', 'employees.id')
-            ->where('t_employee_report_to.employee_id', $id)
-            ->selectRaw('employees.id as id, CONCAT(first_name, " ", last_name) as name')
-            ->groupBy('t_employee_report_to.manager_id')
-            ->get();
+                                    ->where('t_employee_report_to.employee_id', $id)
+                                    ->selectRaw('employees.id as id, CONCAT(first_name, " ", last_name) as name')
+                                    ->groupBy('t_employee_report_to.manager_id')
+                                    ->get();
         $assigned_managers = [];
         foreach($reportTo as $manager) {
             $assigned_managers[] = $manager->id;
         } 
         $assigned_managers = implode(',',  $assigned_managers);
 
-        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'jobDetailsHistory', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
     }
 
     /**
@@ -249,6 +262,7 @@ class EmployeeController extends Controller
             'status' => 'required',
             'alternate_email' => 'email|nullable',
             'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
+            'company_location_id' => 'required',
             'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ]);
 
@@ -256,6 +270,31 @@ class EmployeeController extends Controller
         // $user->name = $request->first_name . ' '.$request->last_name;
         // $user->email = $request->email;
         // $user->save();
+
+        $employee = Employee::where('id', $id)->first();
+
+        $isNotSame = [];
+        if(($employee->joined_date != '')&&($employee->job_id != '')){
+            $isNotSame = Employee::where('id', $id)
+                            ->whereRaw('(joined_date != "'.$request->joined_date.'" or job_category_id !='.$request->job_category_id.' or job_id != '.$request->job_id.' or company_location_id != '.$request->company_location_id.')')
+                            ->first();
+        }
+
+        // end date (reduce 1 day from the latest join date)
+        $end_date = date('Y-m-d', strtotime('-1 day', strtotime($request->joined_date)));
+
+        if($isNotSame){
+            // insert history data into tJobDetailsHistory
+            $jobDetailsHistory = tJobDetailsHistory::create([
+                'employee_id'  => $isNotSame->id,
+                'start_date'  => $isNotSame->joined_date,
+                'end_date'  => $end_date,
+                'job_category_id'  => $isNotSame->job_category_id,
+                'job_id'  => $isNotSame->job_id,
+                'company_location_id' => $isNotSame->company_location_id,
+                'created_at' => Auth::user()->id
+            ]);
+        }
 
         $employeeArr = [
             'first_name' => $request->first_name,
@@ -431,7 +470,16 @@ class EmployeeController extends Controller
         $countries = mCountry::all();
         $jobTitles = mJobTitle::all();
         $jobCategories = mJobCategory::get();
-        $locations = mCompanyLocation::get();
+        $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country')->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')->get();
+
+        $jobDetailsHistory = tJobDetailsHistory::join('m_job_titles', 'm_job_titles.id', 't_job_details_histories.job_id')
+                                            ->join('m_job_categories', 'm_job_categories.id', 't_job_details_histories.job_category_id')
+                                            ->join('m_company_locations', 'm_company_locations.id', 't_job_details_histories.company_location_id')
+                                            ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id')
+                                            ->where('employee_id', $id)
+                                            ->select('t_job_details_histories.*', 'm_job_titles.job_title', 'm_job_titles.job_description', 'm_job_categories.name', 'm_company_locations.company_name', 'm_countries.country')
+                                            ->orderBy('start_date', 'desc')
+                                            ->get();
         $jobDetails = '';
         if($employee && $employee->job_id) {
             $jobDetails = mJobTitle::find($employee->job_id);
@@ -448,7 +496,7 @@ class EmployeeController extends Controller
         } 
         $assigned_managers = implode(',',  $assigned_managers);
 
-        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
+        return view('employees/edit', compact('id', 'employee', 'countries', 'contactInfo', 'jobTitles', 'jobDetailsHistory', 'jobCategories', 'locations', 'jobDetails', 'reportTo', 'assigned_managers'));
     }
 
     public function getEmployeeChartData(Request $request)

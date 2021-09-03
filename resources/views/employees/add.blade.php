@@ -73,20 +73,20 @@
 														<div class="form-group">
 															<label>First Name <span class="text-danger">*</span></label>
 
-															<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" maxlength="30" required value="{{ old('first_name') }}">
+															<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" maxlength="30" required value="{{ old('first_name') }}" onfocus="allowOnlyCharacters('first_name')">
 															{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label>Middle Name</label>
-															<input type="text" class="form-control" placeholder="Middle Name" name="middle_name"  maxlength="30" value="{{ old('middle_name') }}">
+															<input type="text" class="form-control" placeholder="Middle Name" name="middle_name"  maxlength="30" value="{{ old('middle_name') }}" onfocus="allowOnlyCharacters('middle_name')">
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label>Last Name <span class="text-danger">*</span></label>
-															<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required  maxlength="30" name="last_name" value="{{ old('last_name') }}">
+															<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required  maxlength="30" name="last_name" value="{{ old('last_name') }}" onfocus="allowOnlyCharacters('last_name')">
 															{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -96,7 +96,7 @@
 													<div class="col-sm-12">
 														<div class="form-group">
 															<label>Email Address <span class="text-danger">*</span></label>
-															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email') }}" maxlength="30">
+															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email') }}" maxlength="30" autocomplete="off">
 															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -114,7 +114,7 @@
 
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label>Status <span class="text-danger">*</span></label>
+															<label>Status</label>
 															<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}">
 																<option value="Active" {{old ('status') == 'Active' ? 'selected' : ''}}>Active</option>
 																<option value="In active" {{old ('status') == 'In active' ? 'selected' : ''}}>Inactive</option>
@@ -245,72 +245,75 @@
 									<div id="employee-det" class="collapse show ctm-padding" aria-labelledby="contact" data-parent="#accordion-details">
 										
 											<div class="row">
-												<div class="col-md-12">
+												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Street Address 1</p>
 														<input type="text" class="form-control" placeholder="" name="street_address_1" value="{{ old('street_address_1') }}" maxlength="150">
 													</div>
 												</div>
 		
-												<div class="col-md-12">
+												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Street Address 2</p>
 														<input type="text" class="form-control" placeholder="" name="street_address_2" value="{{ old('street_address_2') }}" maxlength="150">
 													</div>
 												</div>
 		
-												<div class="col-md-12">
+												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">City</p>
 														<input type="text" class="form-control" placeholder="" name="city" value="{{ old('city') }}" maxlength="50">
 													</div>
 												</div>
 		
-												<div class="col-md-12">
+												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">State/Province</p>
 														<input type="text" class="form-control" placeholder="" name="state" value="{{ old('state') }}" maxlength="50">
 													</div>
 												</div>
-												<div class="col-md-12">
-													<div class="form-group">
-														<p class="mb-2">Zip/Postal Code</p>
-														<input type="text" class="form-control" placeholder="" id="zip_code" name="zip_code" value="{{ old('zip_code') }}" maxlength="7" onkeyup="allowOnlyNumbers('zip_code')">
-													</div>
-												</div>
-												<div class="col-md-12 form-group">
+
+												<div class="col-md-6 form-group">
 													<p class="mb-2">Country</p>
-													<select class="form-control select" name="country">
+													<select class="form-control select" name="country" id="country">
 														<option value="">Select </option>
 														@foreach ($countries as $country)
 															<option value="{{ $country->country }}" {{old ('country') == $country->country ? 'selected' : ''}}> {{ $country->country }}</option>
 														@endforeach
 													</select>
 												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+														<p class="mb-2">Zip/Postal Code</p>
+														<input type="text" class="form-control" placeholder="" id="zip_code" name="zip_code" value="{{ old('zip_code') }}" maxlength="7" autocomplete="off" onkeyup="allowOnlyNumbers('zip_code')">
+													</div>
+												</div>
 		
-												<div class="col-md-12">
+												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Home Telephone</p>
 														<input type="text" class="form-control" placeholder="" id="home_telephone" name="home_telephone" value="{{ old('home_telephone') }}" maxlength="11" onkeyup="allowOnlyNumbers('home_telephone')">
 													</div>
 												</div>
-		
-												<div class="col-md-12">
-													<div class="form-group">
-														<p class="mb-2">Mobile</p>
-														<input type="text" class="form-control" placeholder="" name="mobile" value="{{ old('mobile') }}" id="mobile" maxlength="11" onkeyup="allowOnlyNumbers('mobile')">
-													</div>
-												</div>
-												<div class="col-md-12">
+
+												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Work Telephone</p>
 														<input type="text" class="form-control" placeholder="" id="work_telephone" name="work_telephone" value="{{ old('work_telephone') }}" maxlength="11" onkeyup="allowOnlyNumbers('work_telephone')">
 													</div>
 												</div>
-												<div class="col-md-12">
+		
+												<div class="col-md-6">
+													<div class="form-group">
+														<p class="mb-2">Mobile</p>
+														<input type="text" class="form-control" placeholder="" name="mobile" value="{{ old('mobile') }}" id="mobile" maxlength="11" onkeyup="allowOnlyNumbers('mobile')">
+													</div>
+												</div>
+												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Alternate Email</p>
-														<input type="email" class="form-control" placeholder="" name="alternate_email" value="{{ old('alternate_email') }}">
+														<input type="email" class="form-control" placeholder="" name="alternate_email" value="{{ old('alternate_email') }}" maxlength="30">
 													</div>
 												</div>	
 												
@@ -332,6 +335,11 @@
 								<div class="card-body p-0">
 									<div id="emp_job_det" class="collapse show ctm-padding" aria-labelledby="jobDetails" data-parent="#accordion-details">
 										<div class="row">
+											<div class="col-12 form-group">
+												<p class="mb-2">Date of Join</p>
+												<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date') }}">
+											</div>
+
 											<div class="col-md-12 form-group">
 												<p class="mb-2">Job Title</p>
 												<select class="form-control select" name="job_id" id="job_id">
@@ -343,8 +351,8 @@
 											</div>
 		
 											<div class="col-md-12 form-group">
-												<p class="mb-2">Job Specification</p>
-												<div id="job_specification" style="font-weight: bold;">- </div>
+												<p class="mb-2">Job Description</p>
+												<input type="text" name="job_specification" id="job_specification" class="form-control" value="" readonly="">
 											</div>
 											<div class="col-md-12 form-group">
 												<p class="mb-2">Job Category</p>
@@ -354,11 +362,6 @@
 														<option value="{{ $job->id }}" {{old ('job_category_id') == $job->id ? 'selected' : ''}}> {{ $job->name }}</option>
 													@endforeach
 												</select>												
-											</div>
-											<div class="col-12 form-group">
-												<p class="mb-2">Date of Join</p>
-												<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Date" name="joined_date" value="{{ old('joined_date') }}">
-												
 											</div>
 											<div class="col-md-12 form-group mb-0">
 												<p class="mb-2">Location</p>
@@ -489,15 +492,17 @@
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(response){
-					// console.log('response : ', response);
+					console.log('job_description : ', response);
 					var job_specification = '';     
 					if(response && response.job_description) {
 						job_specification = response.job_description;
 					}
-					$('#job_specification').html(job_specification);
+					$('#job_specification').val(job_specification);
 				}					
 			});
-		}		
+		}else{
+			$('#job_specification').val("");
+		}
 		
 	});
 
@@ -622,6 +627,8 @@ function openModalpopup() {
 			$('#assigned_managers').val(empIds);
 			assigned_managers_final = empIds;
 		}
+
+	$('#country').select2();
 
 	</script>
 @endpush

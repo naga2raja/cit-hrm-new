@@ -119,7 +119,10 @@
                         <a class="dropdown-item {{ Request::is('leaveTypes*') ? 'active' : '' }}" href="{{ route('leaveTypes.index') }}">Leave Types</a>
                     </li>
                     <li>
-                        <a class="dropdown-item {{ Request::is('holidays*') ? 'active' : '' }}" href="{{ route('holidays.index') }}">Holidays</a>
+                        <a class="dropdown-item {{ Request::is('holidays') ? 'active' : '' }}" href="{{ route('holidays.index') }}">Holidays</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item {{ Request::is('holidays-import') ? 'active' : '' }}" href="{{ route('holidays.import') }}">Import Holidays</a>
                     </li>
                 </ul>
             </li>

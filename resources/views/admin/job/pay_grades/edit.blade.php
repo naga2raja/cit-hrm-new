@@ -76,15 +76,15 @@
 						<div class="col-xl-12 col-lg-12 col-md-12">
 							<div class="accordion add-employee" id="accordion-details">
 								<div class="card shadow-sm ctm-border-radius border">
-									<div class="card-header" id="basic1">
+									<div class="card-header" id="basic2">
 										<h4 class="cursor-pointer mb-0">
-											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
+											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-two" aria-expanded="true">
 												Add Currency
 											</a>
 										</h4>
 									</div>
 									<div class="card-body p-0">
-										<div id="basic-one" class="collapse show ctm-padding" aria-labelledby="basic1" data-parent="#accordion-details">
+										<div id="basic-two" class="collapse show ctm-padding" aria-labelledby="basic2" data-parent="#accordion-details">
 											<form method="post" action="{{ route('payGradeCurrency.store') }}">
 												@csrf
 												<div class="row">

@@ -185,12 +185,15 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
 
     // leave_period
     Route::resource('/leavePeriod', 'Leave\LeavePeriod\LeavePeriodController');
+    Route::post('/leavePeriod/multiple-delete', 'Leave\leavePeriod\leavePeriodController@deleteMultiple')->name('leavePeriod.deleteMultiple');
     // leave_type
     Route::resource('/leaveTypes', 'Leave\LeaveType\LeaveTypeController');
     Route::post('/leaveTypes/multiple-delete', 'Leave\LeaveType\LeaveTypeController@deleteMultiple')->name('leaveTypes.deleteMultiple');
     // holidays
     Route::resource('/holidays', 'Leave\Holidays\HolidaysController');
     Route::post('/holidays/multiple-delete', 'Leave\Holidays\HolidaysController@deleteMultiple')->name('holidays.deleteMultiple');
+    Route::get('/holidays-import', 'Leave\Holidays\ImportHolidaysController@index')->name('holidays.import');
+    Route::post('/holidays-import', 'Leave\Holidays\ImportHolidaysController@import')->name('holidays-import');
     
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
     Route::post('/myEntitlements/multiple-delete', 'Leave\Entitlements\MyLeaveEntitlementController@deleteMultiple')->name('myEntitlements.deleteMultiple');
@@ -313,13 +316,16 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
 
     //Leave
     Route::post('leave-admin-action', 'Leave\Leave\LeaveController@adminAction')->name('leave.action');
-    Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');    
+    Route::get('leave-assign', 'Leave\Leave\LeaveController@assign')->name('leave.assign');
+    Route::post('getEmployeeHolidays-ajax', 'Leave\Leave\LeaveController@getEmployeeHolidays')->name('getEmployeeHolidays-ajax');
 
     Route::get('employee-records', 'Time\Attendance\PunchInOutController@getEmployeeRecords')->name('punch.employee-records');
     Route::post('attendance-admin-action', 'Time\Attendance\PunchInOutController@adminAction')->name('punch.action');
 
     // Employee Entitlement List
     Route::resource('/leaveEntitlement', 'Leave\Entitlements\LeaveEntitlementController'); // add
+    Route::post('/getSubUnits-ajax', 'Leave\Entitlements\LeaveEntitlementController@getSubUnits')->name('getSubUnits-ajax');
+    
     Route::post('/leaveEntitlement/multiple-delete', 'Leave\Entitlements\LeaveEntitlementController@deleteMultiple')->name('leaveEntitlement.deleteMultiple');
 
     // Employee Timesheet List

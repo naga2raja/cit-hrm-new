@@ -20,6 +20,7 @@ use App\Mail\LeaveApproveStatus;
 use App\tEmployeeReportTo;
 use App\tLeaveComment;
 use App\mHoliday;
+use DB;
 
 class LeaveController extends Controller
 {
@@ -75,7 +76,7 @@ class LeaveController extends Controller
         if($leaveEntitlements) {
             $leaveType = mLeaveType::all();
             $assignLeave = false;
-            $holidays = $this->getHolidays();            
+            $holidays = $this->getHolidays($employeeId);
             return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave', 'holidays'));            
         } else {
             $message = 'Leave entitlements not added!';
@@ -562,34 +563,62 @@ class LeaveController extends Controller
         $employeeId = $employee->id;
         $leaveEntitlements = NULL; 
         $leaveType = mLeaveType::all();
-        $holidays = $this->getHolidays();            
+        $holidays = $this->getHolidays($employeeId);
         return view('leave/leave/apply_leave', compact('leaveType', 'leaveEntitlements', 'employeeId', 'assignLeave', 'holidays'));
     }
 
-    public function getHolidays()
+    public function getEmployeeHolidays(Request $request){
+
+        $employeeId = '';
+        if($request->employeeId != ''){
+            $employeeId = $request->employeeId;
+        }
+
+        $employeeHolidays = $this->getHolidays($employeeId);
+        return $employeeHolidays;
+    }
+
+    public function getHolidays($employeeId='')
     {
+        $location_id = '';
+        if($employeeId){
+            $employee = Employee::where('id', $employeeId)->first();
+            $location_id = $employee->company_location_id;
+        }
+
+        DB::connection()->enableQueryLog();
+
         $data = [];
-        $data['holidays'] = mHoliday::selectRaw('GROUP_CONCAT(date) as date')->first();
+        $data['holidays'] = mHoliday::selectRaw('GROUP_CONCAT(date) as date')
+                                    ->when($location_id, function ($query, $location_id) {
+                                        $query->where('operational_sub_unit_id', $location_id);
+                                    })
+                                    ->first();
 
         $currentYear = date('Y');
         $nextYear = $currentYear+1;
         $previousYear = $currentYear - 1;
         $data['recurring_holidays'] = mHoliday::where('recurring', 1)
-                ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$previousYear.'-%m-%d")) as previous')
-                ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$nextYear.'-%m-%d")) as next')
-                ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$currentYear.'-%m-%d")) as current')
-                ->first();
+                                        ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$previousYear.'-%m-%d")) as previous')
+                                        ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$nextYear.'-%m-%d")) as next')
+                                        ->selectRaw(' GROUP_CONCAT( DATE_FORMAT(date, "'.$currentYear.'-%m-%d")) as current')
+                                        ->when($location_id, function ($query, $location_id) {
+                                            $query->where('operational_sub_unit_id', $location_id);
+                                        })
+                                        ->first();
         $holidays = $data;
         $disableHolidaysArr = [];
         if($holidays) {                
             $disableHolidaysArr1 = explode(',', $holidays['holidays']->date);
             $disableHolidaysArr2 = explode(',', $holidays['recurring_holidays']->previous);
-            $disableHolidaysArr3 = explode(',', $holidays['recurring_holidays']->next);
-            $disableHolidaysArr4 = explode(',', $holidays['recurring_holidays']->current);
+            $disableHolidaysArr3 = explode(',', $holidays['recurring_holidays']->current);
+            $disableHolidaysArr4 = explode(',', $holidays['recurring_holidays']->next);
             $disableHolidaysArr1 = array_merge($disableHolidaysArr1, $disableHolidaysArr2, $disableHolidaysArr3, $disableHolidaysArr4);
             $disableHolidaysArr = $disableHolidaysArr1;
         }
-                
+
+        // dd(DB::getQueryLog());
+        // dd($disableHolidaysArr);
         return $disableHolidaysArr;
     }
 }

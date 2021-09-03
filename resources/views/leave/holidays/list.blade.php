@@ -32,6 +32,20 @@
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
+														<label>Country</label>
+														<select class="form-control select" name="location_id" id="location_id">
+		                                                    <option value="" {{ Request::get('location_id')  == '' ? 'selected' : '' }}>All</option>
+		                                                    @foreach ($country as $row)
+			                                                    <option value='{{ $row->id }}' {{ Request::get('location_id') == $row->id ? 'selected' : '' }}>{{ $row->country }}</option>
+			                                                @endforeach
+		                                                </select>
+													</div>
+												</div>
+											</div>
+
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
 														<label>From Date</label>
 														<input type="text" name="from_date" id="from_date" class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}} datetimepicker" placeholder="" value="{{ Request::get('from_date') }}" autocomplete="off" required="">
 													</div>
@@ -49,7 +63,7 @@
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-													<button id="search"  type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
+													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
 												</div>
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchHoliday')"><i class="fa fa-refresh"></i> Reset </button>
@@ -91,8 +105,10 @@
 													</th>
 													<th>Name</th>
 													<th>Date</th>
-													<th>Full Day/Half Day</th>
+													<th>Day</th>
 													<th>Repeats Annually</th>
+													<th>Country</th>
+													<th>Sub Unit</th>
 												</tr>
 											</thead>
 											<tbody id="list_holiday_table">
@@ -119,13 +135,22 @@
 																No
 															@endif
 														</td>
+														<td>{{ $row->countryName->country }}</td>
+														<td>{{ $row->subUnitName->company_name }}</td>
 													</tr>
 													@endforeach
 												@else
 													<tr>
-														<td colspan="5"><p class="text-center">No Data Found</p></td>
+														<td colspan="7"><p class="text-center alert alert-danger">No Data Found</p></td>
 													</tr>
 												@endif
+													<tr>
+														<td colspan="7">
+															<div class="d-flex justify-content-center">
+																{{ $holidays->links() }}
+															</div>
+														</td>
+													</tr>
 											</tbody>
 										</table>
 									</div>
@@ -144,27 +169,9 @@
 
 @push('scripts')
 <script type="text/javascript">
-	// from date to date validation
+	// form submit
 	$('#search').click(function(){
-		var from_date = $('#from_date').val();
-		var to_date = $('#to_date').val();
-
-		$('#from_date').removeClass('is-invalid');
-		$('#to_date').removeClass('is-invalid');
-		$("#from_not_exist").remove();
-		$("#to_not_exist").remove();
-
-		if((from_date != '')&&(to_date != '')){
-			$('#searchHoliday').submit();
-		}
-		if(from_date == '') {
-			$('#from_date').addClass('is-invalid');
-			$('<span id="from_not_exist" class="invalid-feedback" role="alert">From date required</span>').insertAfter('#from_date');
-		}
-		if(to_date == '') {
-			$('#to_date').addClass('is-invalid');
-			$('<span id="to_not_exist" class="invalid-feedback" role="alert">To date required</span>').insertAfter('#to_date');
-		}
+		$('#searchHoliday').submit();
 	});
 
 </script>

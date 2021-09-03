@@ -9,6 +9,8 @@ use Auth;
 use DateTime;
 use Carbon\Carbon;
 use App\mHoliday;
+use App\mCountry;
+use App\mCompanyLocation;
 use Session;
 use DB;
 
@@ -25,23 +27,43 @@ class HolidaysController extends Controller
         // convertion of date format
         if($request->input('from_date') != ""){
             $from = DateTime::createFromFormat('d/m/Y', $request->input('from_date'));
-            $from_date = $from->format('Y-m-d');
+            $from_date = '';
+            if($from){
+                $from_date = $from->format('Y-m-d');
+            }
         }
         // convertion of date format
-        if($request->input('from_date') != ""){
+        if($request->input('to_date') != ""){
             $to = DateTime::createFromFormat('d/m/Y', $request->input('to_date'));
-            $to_date = $to->format('Y-m-d');
+            $to_date = '';
+            if($to){
+                $to_date = $to->format('Y-m-d');
+            }
         }
 
         DB::connection()->enableQueryLog();
 
         $holidays = mHoliday::orderBy('date', 'asc');
-        if (($from_date)&&($from_date != '1970-01-01')&&($to_date)&&($to_date != '1970-01-01')) {
-            $holidays->whereBetween('date',[$from_date, $to_date]);
+        if (($from_date)&&($from_date != '1970-01-01')) {
+            $holidays->where('date', '>=', $from_date);
         }
-        $holidays = $holidays->paginate(5);
+        if (($to_date)&&($to_date != '1970-01-01')) {
+            $holidays->where('date', '<=', $to_date);
+        }
+        if (($request->input('location_id')) && $request->input('location_id') != "All") {
+            $holidays->where('operational_country_id', $request->input('location_id'));
+        }
+        $holidays = $holidays->with('countryName', 'subUnitName')->paginate(7);
         // dd(DB::getQueryLog());
-        return view('leave/holidays/list', compact('holidays'));
+
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
+
+        return view('leave/holidays/list', compact('holidays', 'country', 'company_location'));
     }
 
     /**
@@ -51,7 +73,15 @@ class HolidaysController extends Controller
      */
     public function create()
     {
-        return view('leave/holidays/add');
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
+        $holidays = '';
+
+        return view('leave/holidays/add', compact('holidays', 'country', 'company_location'));
     }
 
     /**
@@ -63,6 +93,8 @@ class HolidaysController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'location_id' => 'required',
+            'sub_unit_id' => 'required',
             'description' => 'required',
             'date' => 'required'
         ]);
@@ -77,15 +109,32 @@ class HolidaysController extends Controller
             $recurring = '1';
         }
         $date = str_replace('/', '-', $request->date );
-        $date = date('Y-m-d', strtotime($date ));
-        $holidays = mHoliday::create([
-            'description'  => $request->input('description'),
-            'date'  => date('Y-m-d', strtotime($date)),
-            'recurring' => $recurring,
-            'length' => $request->input('length')
-        ]);
+        $date = date('Y-m-d', strtotime($date));
 
-        return redirect()->route('holidays.index')->with('success', 'Holidays Added successfully');
+        DB::connection()->enableQueryLog();
+
+        // duplicate check
+        $isExists = mHoliday::where('operational_country_id', $request->input('location_id'))
+                            ->where('operational_sub_unit_id', $request->input('sub_unit_id'))
+                            ->where('date', $date)
+                            ->first();
+        // dd(DB::getQueryLog());
+
+        if($isExists){
+            return redirect()->back()->with('warning', 'Failed, Holidays Already Exist');
+        }else{
+
+            $holidays = mHoliday::create([
+                'description'  => $request->input('description'),
+                'date'  => $date,
+                'recurring' => $recurring,
+                'length' => $request->input('length'), // 0 => fullday, 1 => halfday
+                'operational_country_id'  => $request->input('location_id'),
+                'operational_sub_unit_id'  => $request->input('sub_unit_id')
+            ]);
+
+            return redirect()->route('holidays.index')->with('success', 'Holidays Added successfully');
+        }
     }
 
     /**
@@ -108,11 +157,17 @@ class HolidaysController extends Controller
     public function edit($id)
     {
         $holidays = mHoliday::select(DB::raw('DATE_FORMAT(date, "%d/%m/%Y") AS holiday_date'),'m_holidays.*')
-                    ->where('id', $id)
-                    ->get();
+                    ->find($id);
         // dd($holidays);
 
-        return view('leave/holidays/edit', compact('holidays'));
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->where('country_id', $holidays->operational_country_id)->get();
+
+        return view('leave/holidays/edit', compact('holidays', 'country', 'company_location'));
     }
 
     /**
@@ -138,14 +193,32 @@ class HolidaysController extends Controller
         if ($request->input('recurring') == "on") {
             $recurring = '1';
         }
+        $date = str_replace('/', '-', $request->date );
+        $date = date('Y-m-d', strtotime($date ));
 
-        $holidays = mHoliday::find($id);
-        $holidays->description = $request->input('description');
-        $holidays->date = date('Y-m-d', strtotime($date));
-        $holidays->recurring = $recurring;
-        $holidays->save();
+        // duplicate check
+        $isExists = mHoliday::where('operational_country_id', $request->input('location_id'))
+                            ->where('operational_sub_unit_id', $request->input('sub_unit_id'))
+                            ->where('date', $date)
+                            ->where('id','!=', $id)
+                            ->first();
+        // dd(DB::getQueryLog());
 
-        return redirect()->back()->with('success', 'Holiday Updated successfully');
+        if($isExists){
+            return redirect()->back()->with('warning', 'Failed, Holidays Already Exist');
+        }else{
+            // update mHoliday
+            $holidays = mHoliday::find($id);
+            $holidays->description = $request->input('description');
+            $holidays->date = date('Y-m-d', strtotime($date));
+            $holidays->recurring = $recurring;
+            $holidays->length = $request->input('length'); // 0 => fullday, 1 => halfday
+            $holidays->operational_country_id  = $request->input('location_id');
+            $holidays->operational_sub_unit_id  = $request->input('sub_unit_id');
+            $holidays->save();
+
+            return redirect()->back()->with('success', 'Holiday Updated successfully');
+        }
     }
 
     /**

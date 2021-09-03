@@ -41,9 +41,9 @@ class LeaveEntitlementController extends Controller
             if($reportTo)
                 $empIds = explode(',', $reportTo->reporting_manager_ids);
         }
+      DB::connection()->enableQueryLog();
 
       // for employees entitlement list
-      DB::connection()->enableQueryLog();
 
       $entitlement = [];
       $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_entitlements.id as entitlement_id', 'employees.*', 'm_leave_types.*', 'm_leave_types.name as leave_type_name')
@@ -94,8 +94,11 @@ class LeaveEntitlementController extends Controller
         }
         // dd($employees);
         
-        $country = mCountry::get();
-        $company_location = mCompanyLocation::get();
+        $country = mCountry::selectRaw('m_countries.id, m_countries.country')
+                            ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
+                            ->groupBy('m_company_locations.country_id')
+                            ->get();
+        $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
         $leave_types = mLeaveType::get();
         $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
 
@@ -310,4 +313,23 @@ class LeaveEntitlementController extends Controller
             return false;
         }       
     }
+
+    public function getSubUnits(Request $request){
+
+        $sub_units = [];
+        if($request->location_id != ''){
+            $location_id = $request->location_id;
+            DB::connection()->enableQueryLog();
+
+            $sub_units = mCompanyLocation::select('m_company_locations.id', 'm_company_locations.country_id', 'm_company_locations.company_name');
+                                    if($location_id){
+                                        $sub_units->where('m_company_locations.country_id', $location_id);
+                                    }
+                                    $sub_units = $sub_units->get();
+
+            // dd(DB::getQueryLog());
+        }
+        return response()->json($sub_units);
+    }
+
 }

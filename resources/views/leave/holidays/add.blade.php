@@ -24,8 +24,49 @@
 								</div>
 								@endif
 
+								@if($message = Session::get('warning'))
+								<div class="alert alert-warning">
+									<p>{{$message}}</p>
+								</div>
+								@endif
+
 								<form method="POST" action="{{ route('holidays.store') }}">
 									@csrf
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label>Location <span class="text-danger">*</span></label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select class="form-control select" name="location_id" id="location_id" required="">
+                                                    <option value="">-- Select Location --</option>
+                                                    @foreach ($country as $row)
+	                                                    <option value='{{ $row->id }}'>{{ $row->country }}</option>
+	                                                @endforeach
+                                                </select>
+												{!! $errors->first('location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											</div>
+										</div>
+
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="float-right">Sub Unit <span class="text-danger">*</span></label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select class="form-control select" name="sub_unit_id" id="sub_unit_id" required="">
+                                                    <option value="">-- Select Sub Unit --</option>
+                                                    @foreach ($company_location as $company)
+	                                                    <option value='{{ $company->id }}'>{{ $company->company_name }}</option>
+	                                                @endforeach
+                                                </select>
+												{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+											</div>
+										</div>
+									</div>
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="form-group">
@@ -34,7 +75,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" required="" autocomplete="off">
+												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" required="" autocomplete="off" value="{{ old('description') }}">
 												{!! $errors->first('description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -48,7 +89,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="text" name="date" class="form-control datetimepicker {{ $errors->has('date') ? 'is-invalid' : ''}}" placeholder="" required="">
+												<input type="text" name="date" class="form-control datetimepicker {{ $errors->has('date') ? 'is-invalid' : ''}}" placeholder="" required="" autocomplete="off">
 												{!! $errors->first('date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -124,5 +165,40 @@
 
 @push('scripts')
 <script type="text/javascript">
+
+	// on change of Location
+	$(document.body).on("change","#location_id",function(){
+		getSubUnits(this.value);
+	});
+
+	function getSubUnits(location_id){
+		$.ajax({
+			method: 'POST',
+			url: "{{ route('getSubUnits-ajax') }}",
+			data: JSON.stringify({'location_id': location_id, '_token': '{{ csrf_token() }}' }),
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				// console.log('subunit : ', data);
+				var option = "";
+				if(data.length > 0){
+					$("#sub_unit_id").empty();
+					option = $('<option></option>').attr("value", "").text("-- Select Sub Unit --");
+					$("#sub_unit_id").append(option);
+					data.forEach(function (row,index) {
+						option = $('<option></option>').attr("value", row.id).text(row.company_name);
+						$("#sub_unit_id").append(option);
+					});					
+				}else{
+					$("#sub_unit_id").empty();
+					option = $('<option></option>').attr("value", "").text("-- Select Sub Unit --");
+					$("#sub_unit_id").append(option);
+				}
+			}
+		});
+	}
+
+	// for search in select option
+	$('.select').select2();
 </script>  
 @endpush

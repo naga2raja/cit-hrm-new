@@ -163,7 +163,7 @@
 													@endforeach
 												@else
 													<tr>
-														<td colspan="5"><p class="text-center">No Data Found</p></td>
+														<td colspan="5"><p class="text-center alert alert-danger">No Data Found</p></td>
 													</tr>
 												@endif
 													<tr>
