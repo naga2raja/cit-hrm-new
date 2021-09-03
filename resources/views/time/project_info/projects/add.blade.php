@@ -44,7 +44,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="Enter Project Name" id="project_name" name="project_name" value="{{ old('project_name') }}" autocomplete="off">
+													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="Enter Project Name" id="project_name" name="project_name" value="{{ old('project_name') }}" autocomplete="off" maxlength="30">
 													{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
