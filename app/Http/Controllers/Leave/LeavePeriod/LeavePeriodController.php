@@ -88,14 +88,14 @@ class LeavePeriodController extends Controller
             'start_date' => 'required'
         ]);
 
-        DB::connection()->enableQueryLog();
+        // DB::connection()->enableQueryLog();
 
         // duplicate check
         $isExists = mLeavePeriod::where('country_id', $request->input('location_id'))
                                 ->where('sub_unit_id', $request->input('sub_unit_id'))
                                 ->whereRaw('(start_period <= "'.$request->input('start_period').'" AND end_period >= "'.$request->input('start_period').'" OR start_period <= "'.$request->input('end_period').'" AND end_period >= "'.$request->input('end_period').'")')
                                 ->first();
-        dd(DB::getQueryLog());
+        // dd(DB::getQueryLog());
 
         if($isExists){
             return redirect()->back()->with('warning', 'Failed, Leave Period Already Exist');
