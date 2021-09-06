@@ -486,8 +486,8 @@
 			   success:function(data){
 			   	console.log(data);
 			   	// validation_popup_msg("Success", "Timesheets Updated successfully");
-			   	// alert("Timesheets Updated successfully");
-			   	// window.location.href = "{{ url()->previous() }}";
+			   	alert("Timesheets Updated successfully");
+			   	window.location.href = "{{ url()->previous() }}";
 			  }
 			});
 	    }

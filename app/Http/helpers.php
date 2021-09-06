@@ -219,7 +219,7 @@ if (! function_exists('assetUrl')) {
                     ->join('users', 'users.id', 'employees.user_id')
                     ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
                     ->where('model_has_roles.role_id', 1)
-                    ->selectRaw('GROUP_CONCAT(employee.id) as admin_ids, GROUP_CONCAT(employee.email) as admin_emails')
+                    ->selectRaw('GROUP_CONCAT(employees.id) as admin_ids, GROUP_CONCAT(employees.email) as admin_emails')
                     ->first();
         return $data;
     }

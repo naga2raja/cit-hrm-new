@@ -42,7 +42,7 @@
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="form-group">
-												<label>Location<span class="text-danger">*</span></label>
+												<label>Location <span class="text-danger">*</span></label>
 											</div>
 										</div>
 										<div class="col-sm-3">
@@ -91,7 +91,7 @@
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="form-group">
-												<label>Date</label>
+												<label>Date <span class="text-danger">*</span></label>
 											</div>
 										</div>
 										<div class="col-sm-3">
