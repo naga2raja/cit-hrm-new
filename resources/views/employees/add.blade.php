@@ -262,14 +262,14 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">City</p>
-														<input type="text" class="form-control" placeholder="" name="city" value="{{ old('city') }}" maxlength="50">
+														<input type="text" class="form-control" placeholder="" name="city" id="city" value="{{ old('city') }}" maxlength="50" onfocus="allowOnlyCharacters('city')">
 													</div>
 												</div>
 		
 												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">State/Province</p>
-														<input type="text" class="form-control" placeholder="" name="state" value="{{ old('state') }}" maxlength="50">
+														<input type="text" class="form-control" placeholder="" name="state" id="state" value="{{ old('state') }}" maxlength="50" onfocus="allowOnlyCharacters('state')">
 													</div>
 												</div>
 
@@ -286,28 +286,28 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Zip/Postal Code</p>
-														<input type="text" class="form-control" placeholder="" id="zip_code" name="zip_code" value="{{ old('zip_code') }}" maxlength="7" autocomplete="off" onkeyup="allowOnlyNumbers('zip_code')">
+														<input type="text" class="form-control" placeholder="" id="zip_code" name="zip_code" value="{{ old('zip_code') }}" maxlength="7" autocomplete="off" onfocus="allowOnlyNumbers('zip_code')">
 													</div>
 												</div>
 		
 												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Home Telephone</p>
-														<input type="text" class="form-control" placeholder="" id="home_telephone" name="home_telephone" value="{{ old('home_telephone') }}" maxlength="11" onkeyup="allowOnlyNumbers('home_telephone')">
+														<input type="text" class="form-control" placeholder="" id="home_telephone" name="home_telephone" value="{{ old('home_telephone') }}" maxlength="11" onfocus="allowOnlyNumbers('home_telephone')">
 													</div>
 												</div>
 
 												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Work Telephone</p>
-														<input type="text" class="form-control" placeholder="" id="work_telephone" name="work_telephone" value="{{ old('work_telephone') }}" maxlength="11" onkeyup="allowOnlyNumbers('work_telephone')">
+														<input type="text" class="form-control" placeholder="" id="work_telephone" name="work_telephone" value="{{ old('work_telephone') }}" maxlength="11" onfocus="allowOnlyNumbers('work_telephone')">
 													</div>
 												</div>
 		
 												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Mobile</p>
-														<input type="text" class="form-control" placeholder="" name="mobile" value="{{ old('mobile') }}" id="mobile" maxlength="11" onkeyup="allowOnlyNumbers('mobile')">
+														<input type="text" class="form-control" placeholder="" name="mobile" value="{{ old('mobile') }}" id="mobile" maxlength="11" onfocus="allowOnlyNumbers('mobile')">
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -364,7 +364,7 @@
 												</select>												
 											</div>
 											<div class="col-md-12 form-group mb-0">
-												<p class="mb-2">Location</p>
+												<p class="mb-2">Job Location <sapn class="text-danger">*</sapn></p>
 												<select class="form-control select" name="company_location_id">
 													<option value="">Select </option>
 													@foreach ($locations as $item)

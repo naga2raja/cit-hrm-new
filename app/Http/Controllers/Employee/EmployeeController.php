@@ -262,7 +262,7 @@ class EmployeeController extends Controller
             'status' => 'required',
             'alternate_email' => 'email|nullable',
             'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
-            'company_location_id' => 'required',
+            'company_location_id' => 'sometimes|required',
             'resume_document' => 'nullable|mimes:pdf,doc,docx|max:1024'
         ]);
 

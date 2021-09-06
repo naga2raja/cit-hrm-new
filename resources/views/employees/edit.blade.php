@@ -276,14 +276,14 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">City</p>
-												<input type="text" class="form-control" placeholder="" name="city" maxlength="50" value="{{ old('city', @$contactInfo->city) }}" autocomplete="off">
+												<input type="text" class="form-control" placeholder="" name="city" id="city" maxlength="50" value="{{ old('city', @$contactInfo->city) }}" autocomplete="off" onfocus="allowOnlyCharacters('city')">
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">State/Province</p>
-												<input type="text" class="form-control" placeholder="" name="state" maxlength="50" value="{{ old('state', @$contactInfo->state) }}" autocomplete="off">
+												<input type="text" class="form-control" placeholder="" name="state" id"state" maxlength="50" value="{{ old('state', @$contactInfo->state) }}" autocomplete="off" onfocus="allowOnlyCharacters('state')">
 											</div>
 										</div>
 
