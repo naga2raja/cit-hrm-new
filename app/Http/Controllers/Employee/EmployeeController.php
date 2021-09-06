@@ -274,10 +274,12 @@ class EmployeeController extends Controller
         $employee = Employee::where('id', $id)->first();
 
         $isNotSame = [];
-        if(($employee->joined_date != '')&&($employee->job_id != '')){
-            $isNotSame = Employee::where('id', $id)
-                            ->whereRaw('(joined_date != "'.$request->joined_date.'" or job_category_id !='.$request->job_category_id.' or job_id != '.$request->job_id.' or company_location_id != '.$request->company_location_id.')')
-                            ->first();
+        if($request->my_info == 'no'){
+            if(($employee->joined_date != '')&&($employee->job_id != '')){
+                $isNotSame = Employee::where('id', $id)
+                                ->whereRaw('(joined_date != "'.$request->joined_date.'" or job_category_id !='.$request->job_category_id.' or job_id != '.$request->job_id.' or company_location_id != '.$request->company_location_id.')')
+                                ->first();
+            }
         }
 
         // end date (reduce 1 day from the latest join date)
@@ -314,6 +316,7 @@ class EmployeeController extends Controller
             'joined_date' => $request->joined_date, //date('Y-m-d', strtotime($request->joined_date)),
             'company_location_id' => $request->company_location_id
         ];
+
         if ($request->file('profile_photo')) {
             $imagePath = $request->file('profile_photo');
             $imageName = $imagePath->getClientOriginalName();

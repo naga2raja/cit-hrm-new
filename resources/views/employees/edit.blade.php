@@ -365,7 +365,7 @@
 
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Description</p>
-										<input type="text" name="job_specification" id="job_specification" class="form-control" value="{{ @$jobDetails->job_description }}" readonly="">
+										<input type="text" name="job_specification" id="job_specification" class="form-control" value="{{ @$jobDetails->job_description }}" readonly="" @if(Request::is('my-info')) disabled @endif>
 									</div>
 									<div class="col-md-12 form-group">
 										<p class="mb-2">Job Category</p>
