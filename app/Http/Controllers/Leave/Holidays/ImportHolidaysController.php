@@ -47,7 +47,7 @@ class ImportHolidaysController extends Controller
         // dd($output);
         
         return redirect()->back()
-                            ->with('success', 'Data imported successfully')
+                            ->with('success', 'Holiday imported successfully')
                             ->with('output', $output); 
     }
 

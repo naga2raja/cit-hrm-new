@@ -54,7 +54,7 @@ class ProjectsImportController extends Controller
         $output = $this->importData($sheetData);
         
         return redirect()->back()
-                            ->with('success', 'Data imported successfully')
+                            ->with('success', 'Project imported successfully')
                             ->with('output', $output); 
     }
 

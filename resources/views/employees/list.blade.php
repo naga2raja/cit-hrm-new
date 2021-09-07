@@ -149,11 +149,11 @@
 													</td> 
 													<td>
 														@if($employee->status == 'In active')
-															<a class="btn btn-outline-danger btn-sm"> Inactive </a>
+															<a class="btn btn-outline-danger btn-sm" style="width: 60%"> Inactive </a>
 														@endif
 
 														@if($employee->status == 'Active')
-															<a class="btn  btn-outline-success btn-sm"> {{ $employee->status }} </a>
+															<a class="btn  btn-outline-success btn-sm" style="width: 60%"> {{ $employee->status }} </a>
 														@endif
 														 
 													</td> 

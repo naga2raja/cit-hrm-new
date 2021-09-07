@@ -154,18 +154,28 @@
 												<div class="col-sm-5"></div>
 												<div class="col-sm-7">
 													<div class="row">
-														@if(@$timesheet->status == 0 || @$timesheet->status == 3)
-														<div class="col-sm-2">
-															<div class="submit-section text-center btn-add">
-																<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">
-																 @if(@$timesheet->status == 3)
-																 	Resubmit
-																 @else
-																	Save
-																 @endif
-																</button>
+														@if($timesheet)
+															@if((@$timesheet->status == 0 || @$timesheet->status == 3) && @$timesheet->employee_id == getEmployeeId(Auth::user()->id))
+															<div class="col-sm-2">
+																<div class="submit-section text-center btn-add">
+																	<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">
+																	 @if(@$timesheet->status == 3)
+																	 	Resubmit
+																	 @elseif(@$timesheet->status == 0)
+																	 	Update
+																	 @else
+																		Save
+																	 @endif
+																	</button>
+																</div>
 															</div>
-														</div>
+															@endif
+														@else
+															<div class="col-sm-2">
+																<div class="submit-section text-center btn-add">
+																	<button type="button" id="save" class="btn btn-theme ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Save</button>
+																</div>
+															</div>
 														@endif
 														<div class="col-sm-2">
 															<div class="submit-section text-center btn-add">
