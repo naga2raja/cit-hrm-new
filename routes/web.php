@@ -129,6 +129,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     Route::delete('leave/delete-leave', 'Leave\Leave\LeaveController@destroy')->name('leave.delete_modal');
     Route::resource('/myEntitlements', 'Leave\Entitlements\MyLeaveEntitlementController'); //only list of my entitlements
     Route::get('my-info', 'Employee\EmployeeController@myInfo')->name('myinfo');
+    Route::put('/employees/{id}', 'Employee\EmployeeController@update')->name('employees.update');
 
     /* Time/Timesheets/MyTimesheets */
     Route::resource('/mytimesheets', 'Time\Timesheets\MyTimesheetsController');
