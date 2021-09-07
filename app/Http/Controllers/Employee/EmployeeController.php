@@ -259,7 +259,7 @@ class EmployeeController extends Controller
             'last_name' => 'required',
             'employee_id' => 'required|unique:employees,employee_id,'.$id,
             'email' => 'required|unique:employees,email,'.$id,
-            'status' => 'required',
+            'status' => 'sometimes|required',
             'alternate_email' => 'email|nullable',
             'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024|nullable',
             'company_location_id' => 'sometimes|required',

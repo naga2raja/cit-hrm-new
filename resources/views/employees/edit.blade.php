@@ -137,7 +137,7 @@
 										<div class="col-sm-6">
 											<div class="form-group">
 												<p class="mb-2">Status</p>
-												<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}">
+												<select class="form-control select {{ $errors->has('status') ? 'is-invalid' : ''}}" name="status" required value="{{ old('status') }}" @if(Request::is('my-info')) disabled @endif>
 													<option value="Active" {{old ('status', $employee->status) == 'Active' ? 'selected' : ''}}>Active</option>
 													<option value="In active" {{old ('status', $employee->status) == 'In active' ? 'selected' : ''}}>Inactive</option>
 												</select>
@@ -283,7 +283,7 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">State/Province</p>
-												<input type="text" class="form-control" placeholder="" name="state" id"state" maxlength="50" value="{{ old('state', @$contactInfo->state) }}" autocomplete="off" onfocus="allowOnlyCharacters('state')">
+												<input type="text" class="form-control" placeholder="" name="state" id="state" maxlength="50" value="{{ old('state', @$contactInfo->state) }}" autocomplete="off" onfocus="allowOnlyCharacters('state')">
 											</div>
 										</div>
 
@@ -538,7 +538,7 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
-						<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Save</button>
+						<button class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" type="submit">Update</button>
 					</div>
 					<div class="col-sm-6 col-md-2 col-lg-3 col-xl-2">									
 						<a href="{{ route('employees.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>

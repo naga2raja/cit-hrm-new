@@ -54,19 +54,19 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<button type="button" onclick="resetAllValues('pim_data_import')" class="btn btn-danger text-white ctm-border-radius p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
 															<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Upload</button>
+															<button type="button" onclick="resetAllValues('pim_data_import')" class="ml-2 btn btn-danger text-white ctm-border-radius p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
 														</div>
 													</div>
 
 													<div class="col-md-12">
 														<ul class="list-group">
 															<li  class="list-group-item">
-																Column order should not be changed                    </li>
+																Column order should not be changed </li>
 															<li  class="list-group-item">
-																First Name, Last Name, Employee Id and Email are compulsory                    </li>
+																First Name, Last Name, Employee Id and Email are </li>
 															<li  class="list-group-item">
-																All date fields should be in YYYY-MM-DD format                    </li>
+																All date fields should be in YYYY-MM-DD format </li>
 															<li  class="list-group-item">
 																If Gender is specified, value should be either <b>Male</b> or <b>Female</b> </li>	
 															<li  class="list-group-item">
