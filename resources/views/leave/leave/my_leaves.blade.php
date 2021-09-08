@@ -208,8 +208,8 @@
 							@method('DELETE')
 							@csrf
 							<input type="hidden" id="delete_id" name="delete_id">
-							<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
 							<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2">Delete</button>
+							<button type="button" class="ml-2 btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Cancel</button>
 						</form>						
 					</div>
 				</div>
