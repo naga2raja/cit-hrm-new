@@ -27,6 +27,9 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
+        if(Auth::user()->hasRole('Employee')) {
+            return redirect('/');
+        }
         $employees = Employee::where('first_name', '!=', NULL);
         
         $where = '';
@@ -304,18 +307,25 @@ class EmployeeController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'employee_id' => $request->employee_id,
-            'status' => $request->status,
+            // 'status' => $request->status,
             'date_of_birth' => date('Y-m-d', strtotime($request->date_of_birth)),
             'marital_status' => $request->marital_status,
             'gender' => $request->gender,            
             'updated_by' => Auth::User()->id,
 
             //job details
-            'job_id' => $request->job_id,
-            'job_category_id' => $request->job_category_id,
-            'joined_date' => $request->joined_date, //date('Y-m-d', strtotime($request->joined_date)),
-            'company_location_id' => $request->company_location_id
+            // 'job_id' => $request->job_id,
+            // 'job_category_id' => $request->job_category_id,
+            // 'joined_date' => $request->joined_date, //date('Y-m-d', strtotime($request->joined_date)),
+            // 'company_location_id' => $request->company_location_id
         ];
+        if($request->my_info != 'yes'){
+            $employeeArr['company_location_id'] = $request->company_location_id;
+            $employeeArr['status'] = $request->status;
+            $employeeArr['joined_date'] = $request->joined_date;
+            $employeeArr['job_category_id'] = $request->job_category_id;
+            $employeeArr['job_id'] = $request->job_id;
+        }
 
         if ($request->file('profile_photo')) {
             $imagePath = $request->file('profile_photo');
