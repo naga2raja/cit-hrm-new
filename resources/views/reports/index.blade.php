@@ -45,7 +45,7 @@
 								<div class="card-body align-center">
 									<form method="GET" id="reportForm">
 										<input type="hidden" name="export" value="0" id="export">
-									<div class="row filter-row">
+										<div class="row filter-row">
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<label>Report</label>
@@ -178,7 +178,7 @@
 							</div>
 							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-body align-center">
-									<div class="employee-office-table">
+									<!-- <div class="employee-office-table"> -->
 										<div class="table-responsive">
 											<table class="table custom-table table-hover">
 											  @if(!Request::get('report') || Request::get('report') == 'employee_report')
@@ -424,7 +424,7 @@
 												</tbody>
 											</table>
 										</div>
-									</div>
+									<!-- </div> -->
 
 									@if(count($data))
 										<div class="text-center mt-3">
