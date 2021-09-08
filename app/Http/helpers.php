@@ -140,19 +140,23 @@ if (! function_exists('assetUrl')) {
         //     ->selectRaw('m_leave_types.name, m_leave_entitlements.no_of_days, m_leave_entitlements.days_used, (m_leave_entitlements.no_of_days - m_leave_entitlements.days_used) as remaining_days')
         //     ->get();
 
-        $leaves = DB::table('m_leave_entitlements')->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
-        // ->leftJoin('t_leaves', 't_leaves.entitlement_id', 'm_leave_entitlements.id')
-        ->leftjoin('t_leaves', function($query){
-            $query->on('t_leaves.entitlement_id', '=', 'm_leave_entitlements.id')
-                ->whereIn('t_leaves.status', [1,2,3]);
-        })
-        ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')  
-        ->where('m_leave_entitlements.emp_number', $employeeId)
-        ->where('t_leaves.deleted_at', '=', NULL)  
-        ->selectraw('m_leave_types.name, m_leave_entitlements.no_of_days, IFNULL(SUM(t_leaves.length_days), 0) as days_used, (IFNULL(m_leave_entitlements.no_of_days, 0) - IFNULL(SUM(t_leaves.length_days), 0) ) as remaining_days')
-        ->orderBy('m_leave_types.name', 'ASC')
-        ->groupBy('m_leave_entitlements.id')
-        ->get();
+        $leaves = DB::table('m_leave_entitlements')
+                    ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
+                    ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')  
+                    // ->leftJoin('t_leaves', 't_leaves.entitlement_id', 'm_leave_entitlements.id')
+                    ->leftjoin('t_leaves', function($query){
+                        $query->on('t_leaves.entitlement_id', '=', 'm_leave_entitlements.id')
+                              ->whereIn('t_leaves.status', [1,2,3])
+                              ->where('t_leaves.deleted_at', '=', NULL);
+                    })
+                    ->where('m_leave_entitlements.emp_number', $employeeId)
+                    // ->where('t_leaves.deleted_at', '=', NULL)  
+                    ->selectRaw('m_leave_types.name, m_leave_entitlements.no_of_days, IFNULL(SUM(t_leaves.length_days), 0) as days_used, (IFNULL(m_leave_entitlements.no_of_days, 0) - IFNULL(SUM(t_leaves.length_days), 0) ) as remaining_days')
+                    ->groupBy('m_leave_entitlements.id')
+                    ->orderBy('m_leave_types.name', 'ASC')
+                    ->get();
+
+                    // dd($leaves);
 
         return $leaves;
     }
