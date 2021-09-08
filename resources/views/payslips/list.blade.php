@@ -132,14 +132,16 @@
                                                                 <tr>
                                                                     <td> {{ $payslip->employee_name }} </td>  
                                                                     <td> {{ $payslip->payslip_month }}</td>
-                                                                    <td> <a href="{{ route('payslip.download') }}?file={{ base64_encode($payslip->id) }}">Download</a></td>
+                                                                    <td> 
+                                                                    	<a href="{{ route('payslip.download') }}?file={{ base64_encode($payslip->id) }}"><i class="fa fa-download"></i> Download</a>
+                                                                    </td>
                                                                     <td> {{ date('Y-m-d H:i a', strtotime($payslip->created_at)) }}</td>  
 																	@hasrole('Admin')
                                                                     <td> 
                                                                         <form onsubmit="return confirm('Are you sure?')" action="{{ route('payslips.destroy', $payslip->id)}}" method="post" style="margin-left: 5px;">
 																			@method('DELETE')
 																			@csrf
-																			<button class="btn  btn-outline-danger btn-sm" type="submit"> Delete </button>
+																			<button class="btn  btn-outline-danger btn-sm" type="submit"> <span class="lnr lnr-trash"></span> Delete </button>
 																		</form>
                                                                     </td>
 																	@endrole

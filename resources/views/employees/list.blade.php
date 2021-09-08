@@ -157,20 +157,20 @@
 														@endif
 														 
 													</td> 
-													<td>
-														<div style="text-align: center;">
-														@if($employee->user_id == auth()->user()->id)
+													<!-- <td> -->
+														<!-- <div style="text-align: center;"> -->
+														<!-- @if($employee->user_id == auth()->user()->id) -->
 
-														@else
+														<!-- @else -->
 														<!-- <form onsubmit="return confirm('Are you sure?')" action="{{ route('employees.destroy', $employee->id)}}" method="post">
 															@method('DELETE')
 															@csrf
 															<button class="btn-sm btn-danger" type="submit"> <i class="fa fa-trash"></i> </button>
 														 </form> -->
-														@endif
+														<!-- @endif -->
 														<!-- <a class="btn-sm btn-success" href="{{ route('employees.show', $employee->id) }}"><i class="fa fa-eye"></i></a> -->
-														</div>
-													</td>
+														<!-- </div> -->
+													<!-- </td> -->
 												</tr>														
 												@endforeach
 

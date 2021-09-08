@@ -53,9 +53,15 @@
 														</div>
 													</div>
 													<div class="col-md-6">
-														<div class="form-group">
-															<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Upload</button>
-															<button type="button" onclick="resetAllValues('pim_data_import')" class="ml-2 btn btn-danger text-white ctm-border-radius p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
+														<div class="row">
+															<div class="col-sm-3">
+																<div class="submit-section text-center btn-add">
+																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Upload</button>
+																</div>
+															</div>
+															<div class="col-sm-3">
+																<button type="button" onclick="resetAllValues('pim_data_import')" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
+															</div>
 														</div>
 													</div>
 
@@ -72,9 +78,9 @@
 															<li  class="list-group-item">
 																If Status is specified, value should be either <b>Active</b> or <b>In active</b> </li>
 															<li  class="list-group-item">
-																If Report To is specified, value should have Employee IDs in comma separated format. i.e EMP001,EMP002,EMP004 </li>
+																If Report To is specified, value should have Employee IDs in comma separated format. i.e EMP001,EMP002,...EMP004 </li>
 															<li  class="list-group-item">
-																If User Role is specified, value should be either <b>Admin</b> or <b>Manager</b>or <b>Employee</b> </li>
+																If User Role is specified, value should be either <b>Admin</b> or <b>Manager</b> or <b>Employee</b> </li>
 															<li  class="list-group-item">Sample CSV file:                         
 																<a class="download" href="{{ route('sample.download') }}?file=pim">Download</a>
 															</li>

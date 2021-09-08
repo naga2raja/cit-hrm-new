@@ -51,7 +51,7 @@
 														<td>
 															<h2><u><a href="{{ route('customers.edit', [$customer->id]) }}">{{$customer->customer_name}}</a></u></h2>
 														</td>
-														<td>{{$customer->customer_description}}</td>
+														<td>{{ ($customer->customer_description) ? $customer->customer_description : '-'}}</td>
 													</tr>
 														@endforeach
 													@else

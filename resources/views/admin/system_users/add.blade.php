@@ -138,7 +138,7 @@
 
 												<div class="row">
 													<div class="col-sm-2">
-														<label class="ctm-text-sm"><span class="text-danger">*</span> Required field</label>
+														<label class="ctm-text-sm"><span class="text-danger">*</span> Required fields</label>
 													</div>
 												</div>
 												<hr>

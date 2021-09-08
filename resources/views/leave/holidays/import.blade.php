@@ -57,10 +57,15 @@
 														</div>
 													</div>
 													<div class="col-md-6">
-														<div class="form-group">
-															<button type="submit" class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Upload</button>
-
-															<a href="{{ route('home') }}" class="ml-2 btn btn-danger text-white ctm-border-radius p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+														<div class="row">
+															<div class="col-sm-3">
+																<div class="submit-section text-center btn-add">
+																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Upload</button>
+																</div>
+															</div>
+															<div class="col-sm-3">
+																<a href="{{ route('home') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+															</div>
 														</div>
 													</div>
 

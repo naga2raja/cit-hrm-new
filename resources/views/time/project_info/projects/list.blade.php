@@ -132,8 +132,8 @@
 														<td>
 															<h2><u><a href="{{ route('projects.edit', $project->project_id) }}">{{$project->project_name}}</a></u></h2>
 														</td>
-														<td>{{$project->customer_name}}</td>
-														<td>{{$project->admin_name}}</td>
+														<td>{{ ($project->customer_name) ? $project->customer_name : '-' }}</td>
+														<td>{{ ($project->admin_name) ? $project->admin_name : '-' }}</td>
 													</tr>
 													@endforeach
 												@else

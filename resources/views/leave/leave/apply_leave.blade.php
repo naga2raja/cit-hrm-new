@@ -37,22 +37,25 @@
 											{{-- <p class="mb-0 ctm-text-sm">Head Office</p> --}}
 										</div>
 									</div>
-									<div class="card-body">
+									<div class="">
 										@if($leavesInfo = currentUserLeaveBalance())
-										<table class="table">
-											<tr>
-												{{-- <th>Type</th> --}}
-												<th>Allowance</th>
-												<th>Taken</th>
-												<th>Balance</th>
-											</tr>
-											@foreach ($leavesInfo as $leave)
-												<tr>													
-													<td> {{ $leave->name }} - {{ $leave->no_of_days }} </td>
-													<td> {{ $leave->days_used }} </td>
-													<td> {{ $leave->remaining_days }} </td>
+										<table class="table custom-table table-hover">
+											<thead>
+												<tr>
+													<th>Allowance</th>
+													<th>Taken</th>
+													<th>Balance</th>
 												</tr>
-											@endforeach
+											</thead>
+											<tbody>
+												@foreach ($leavesInfo as $leave)
+													<tr>													
+														<td> {{ $leave->name }} - {{ $leave->no_of_days }} </td>
+														<td> {{ $leave->days_used }} </td>
+														<td> {{ $leave->remaining_days }} </td>
+													</tr>
+												@endforeach
+											</tbody>
 										</table>
 										@endif
 									</div>
@@ -171,17 +174,41 @@
 												</div>
 												<div class="row">
 													<div class="col-sm-12">
-														<div class="form-group mb-0">
+														<div class="form-group">
 															<label>Reason</label>
 															<textarea class="form-control {{ $errors->has('reason') ? 'is-invalid' : ''}}" rows=4 required name="reason">{{ old('reason') }}</textarea>
 															{!! $errors->first('reason', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 												</div>
-												<div class="text-center">
+
+												<!-- <div class="text-center">
 													<button type="submit" class="btn btn-theme button-1 text-white ctm-border-radius mt-4">Apply</button>
 													<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius mt-4" onclick="resetAllValues('searchLeave')">Cancel</a>
+												</div> -->
+
+												<div class="row">
+													<div class="col-sm-2">
+														<label class="ctm-text-sm"><span class="text-danger">*</span> Required fields</label>
+													</div>
 												</div>
+												<hr>
+
+												<div class="">
+													<div class="col-sm-3 text-center">
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="submit-section text-center btn-add">
+																	<button id='submit' type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Apply</button>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="resetAllValues('searchLeave')">Cancel</a>
+															</div>
+														</div>
+													</div>
+												</div>
+
 											</form>
 										</div>
 									</div>
