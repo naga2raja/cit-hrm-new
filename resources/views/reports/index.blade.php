@@ -28,7 +28,7 @@
 								<div class="quicklink-sidebar-menu ctm-border-radius shadow-sm bg-white card">
 									<div class="card-body">
 										<ul class="list-group" id="reports_list">
-											<li class="list-group-item text-center employee_report_li {{ (!Request::get('report') || Request::get('report') == 'employee_report') ? 'active' : '' }}"><a href="#employee_report" class="text-dark">Employee Report</a></li>
+											<li class="list-group-item text-center employee_report_li {{ (Request::get('report') == 'employee_report') ? 'active' : '' }}"><a href="#employee_report" class="text-dark">Employee Report</a></li>
 											<li class="list-group-item text-center leave_report_li {{ (Request::get('report') == 'leave_report') ? 'active' : '' }}"><a class="text-dark" href="#leave_report">Leave Report</a></li>
 											<li class="list-group-item text-center attendance_report_li {{ (Request::get('report') == 'attendance_report') ? 'active' : '' }}"><a class="text-dark" href="#attendance_report">Attendance Report</a></li>
 											<li class="list-group-item text-center timesheet_report_li {{ (Request::get('report') == 'timesheet_report') ? 'active' : '' }}"><a class="text-dark" href="#timesheet_report">Timesheet Report</a></li>
@@ -51,7 +51,7 @@
 													<label>Report</label>
 													<select class="form-control select" name="report" id="report" required onchange="selectReportName()">
 														<option value="">Select</option>
-														<option value="employee_report" @if(!Request::get('report') || Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
+														<option value="employee_report" @if(Request::get('report') || Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
 														<option value="leave_report" @if(Request::get('report') == 'leave_report') selected @endif>Leave Report</option>
 														<option value="attendance_report" @if(Request::get('report') == 'attendance_report') selected @endif>Attendance Report</option>
 														<option value="timesheet_report" @if(Request::get('report') == 'timesheet_report') selected @endif>Timesheet Report</option>
@@ -170,7 +170,7 @@
 											</div>
 											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">  
 												<label> &nbsp; </label>
-												<button type="button" class="btn btn-danger ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="resetAllValues('reportForm')"> Reset </button>
+												<button id="reset" type="button" class="btn btn-danger ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="resetAllValues('reportForm')"> Reset </button>
 											</div>
 										</div>
 									</form>
@@ -180,9 +180,8 @@
 								<div class="card-body align-center">
 									<!-- <div class="employee-office-table"> -->
 										<div class="table-responsive">
-											<table class="table custom-table table-hover">
-											  @if(!Request::get('report') || Request::get('report') == 'employee_report')
-												<thead>
+											<table id="report_table" class="table custom-table table-hover">
+												<thead id="thead_employee_report">
 													<tr class="bg-light">
 														<th>Employee Id</th>
 														<th>First Name</th>
@@ -194,54 +193,64 @@
 														<th>Date of Joining</th>
 														<th>Marital Status</th>
 														<th>Status</th>
-														<th> Street address1 </th>
-														<th> Street address2 </th>
-														<th> City </th>
-														<th> State </th>
-														<th> Country </th>
-														<th> Zip code </th>
-														<th> Home Telephone </th>
-														<th> Mobile </th>
-														<th> Work Telephone </th>
-														<th> Alternate Email </th>
+														<th>Street address1 </th>
+														<th>Street address2 </th>
+														<th>City </th>
+														<th>State </th>
+														<th>Country </th>
+														<th>Zip code </th>
+														<th>Home Telephone </th>
+														<th>Mobile </th>
+														<th>Work Telephone </th>
+														<th>Alternate Email </th>
 														<th>Job Title</th>
 														<th>Report to</th>
 														<th>Created At</th>
 													</tr>
-												</thead>
-												<tbody>
+												</thead>												
+											  	
+											  	@if(!Request::get('report') || Request::get('report') == 'employee_report')
+													<tbody>													
+														@foreach ($data as $item)
+														<tr>
+															<td> {{ $item['employee_id'] }} </td>
+															<td> {{ $item['first_name'] }} </td>
+															<td> {{ $item['middle_name'] }} </td>
+															<td> {{ $item['last_name'] }} </td>
+															<td> {{ $item['email'] }} </td>				
+															<th> {{ $item['date_of_birth'] }}</th>
+															<td> {{ $item['gender'] }} </td>
+															<td> {{ $item['joined_date'] }} </td>
+															<td> {{ $item['marital_status'] }} </td>
+															<td> {{ $item['status'] }} </td>
+															<td> {{ $item['street_address_1'] }}</td>
+															<td> {{ $item['street_address_2'] }}</td>
+															<td> {{ $item['city'] }}</td>
+															<td> {{ $item['state'] }}</td>
+															<td> {{ $item['country'] }}</td>
+															<td> {{ $item['zip_code'] }}</td>
+															<td> {{ $item['home_telephone'] }}</td>
+															<td> {{ $item['mobile'] }}</td>
+															<td> {{ $item['work_telephone'] }}</td>
+															<td> {{ $item['alternate_email'] }}</td>
+															<td> {{ $item['job_title'] }}</td>
+															<td> {{ $item['report_to'] }}</td>
+															<td> {{ date('Y-m-d H:i:s a', strtotime($item['created_at'])) }} </td>
+														</tr>														
+														@endforeach
 
-													@foreach ($data as $item)
-													<tr>
-														<td> {{ $item['employee_id'] }} </td>
-														<td> {{ $item['first_name'] }} </td>
-														<td> {{ $item['middle_name'] }} </td>
-														<td> {{ $item['last_name'] }} </td>
-														<td> {{ $item['email'] }} </td>														
-														<th> {{ $item['date_of_birth'] }}</th>
-														<td> {{ $item['gender'] }} </td>
-														<td> {{ $item['joined_date'] }} </td>
-														<td> {{ $item['marital_status'] }} </td>
-														<td> {{ $item['status'] }} </td>
-														<td> {{ $item['street_address_1'] }}</td>
-														<td> {{ $item['street_address_2'] }}</td>
-														<td> {{ $item['city'] }}</td>
-														<td> {{ $item['state'] }}</td>
-														<td> {{ $item['country'] }}</td>
-														<td> {{ $item['zip_code'] }}</td>
-														<td> {{ $item['home_telephone'] }}</td>
-														<td> {{ $item['mobile'] }}</td>
-														<td> {{ $item['work_telephone'] }}</td>
-														<td> {{ $item['alternate_email'] }}</td>
-														<td> {{ $item['job_title'] }}</td>
-														<td> {{ $item['report_to'] }}</td>
-														<td> {{ date('Y-m-d H:i:s a', strtotime($item['created_at'])) }} </td>
-													</tr>														
-													@endforeach
+														@if(count($data) < 1)
+														<tr>
+															<td colspan="100%">
+																<div class="alert alert-danger text-left">No Data Found</div>
+															</td>
+														</tr>
+														@endif
+													</tbody>
 												@endif
-												
-												@if(Request::get('report') == 'leave_report')
-												<thead>
+
+											<!-- leave_report -->
+												<thead id="thead_leave_report">
 													<tr class="bg-light">
 														<th>Employee Name</th>
 														<th>Leave Type</th>
@@ -253,6 +262,7 @@
 														<th>Created At</th>														
 													</tr>
 												</thead>
+												@if(Request::get('report') == 'leave_report')
 												<tbody>
 													@foreach ($data as $leave)
 													<tr>                                                                    
@@ -268,15 +278,14 @@
 															{{ $leave['my_leave_status'] }}
 														</td>
 														<td> {{ date('Y-m-d H:i:s a', strtotime($item['created_at'])) }} </td>
-														
 													</tr>
-												@endforeach
-
+													@endforeach
 												</tbody>
 												@endif
+											<!-- leave_report end -->	
 
-												@if(Request::get('report') == 'attendance_report')
-												<thead>
+											<!-- attendance_report -->
+												<thead id="thead_attendance_report">
 													<tr class="bg-light">														
 														<th> Name </th>
 														<th>Punch in</th>		
@@ -286,6 +295,7 @@
 														<th>Type</th>
 													</tr>
 												</thead>
+												@if(Request::get('report') == 'attendance_report')
 												<tbody>
 													@foreach ($data as $attendance)
 													<tr>
@@ -310,9 +320,10 @@
 
 												</tbody>
 												@endif
-												
-												@if(Request::get('report') == 'timesheet_report')
-												<thead>
+											<!-- attendance_report end -->
+
+											<!-- timesheet_report -->
+												<thead id="thead_timesheet_report">
 													<tr class="bg-light">														
 														<th>Employee Name </th>
 														<th>Project Name</th>		
@@ -322,6 +333,7 @@
 														<th>Create At</th>
 													</tr>
 												</thead>
+												@if(Request::get('report') == 'timesheet_report')
 												<tbody>
 													@foreach ($data as $timesheet)
 													<tr>
@@ -334,15 +346,17 @@
 													@endforeach
 												</tbody>
 												@endif
+											<!-- timesheet_report end -->
 
-												@if(Request::get('report') == 'productivity_report')
-												<thead>
+											<!-- productivity_report -->
+												<thead id="thead_productivity_report">
 													<tr class="bg-light">														
 														<th>Project Name </th>
 														<th>Customer Name</th>																
 														<th>Duration (HH:MM)</th>
 													</tr>
 												</thead>
+												@if(Request::get('report') == 'productivity_report')
 												<tbody>
 													@foreach ($data as $timesheet)
 													<tr>
@@ -364,9 +378,10 @@
 													@endforeach
 												</tbody>
 												@endif
+											<!-- productivity_report end -->
 
-												@if(Request::get('report') == 'leave_balance_report')
-												<thead>
+											<!-- leave_balance_report -->
+												<thead id="thead_leave_balance_report">
 													<tr class="bg-light">														
 														<th>Employee Name </th>
 														<th>Leave Type</th>	
@@ -376,6 +391,7 @@
 														<th>Leave Balance</th>
 													</tr>
 												</thead>
+												@if(Request::get('report') == 'leave_balance_report')
 												<tbody>
 													@foreach ($data as $leave)
 														<tr>
@@ -386,44 +402,14 @@
 															<td> {{ (float) $leave['leaves_taken'] }} </td>
 															<td> {{ (float) ($leave['no_of_days'] - $leave['leaves_taken']) }} </td>
 														</tr>
-
 													@endforeach
 												</tbody>
 												@endif
+											<!-- leave_balance_report end -->
 
-													@if(count($data) < 1)
-														<tr>
-															<td colspan="100%">
-																<div class="alert alert-danger text-left">No Data Found</div>
-															</td>
-														</tr>
-													@endif
-													
-													{{--
-													<tr>
-														<td>
-															<a href="employment" class="avatar"><img class="img-fluid" alt="avatar image" src="img/profiles/img-8.jpg"></a>
-															<h2><a href="employment">Stacey Linville</a></h2>
-														</td>
-														<td>
-															<div class="dropdown action-label drop-active">
-																<a href="javascript:void(0)" class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown"> Active <i class="caret"></i></a>
-																<div class="dropdown-menu">
-																	<a class="dropdown-item" href="javascript:void(0)"> Active</a>
-																	<a class="dropdown-item" href="javascript:void(0)"> Inactive</a>
-																</div>
-															</div>
-														</td>
-														<td>staceylinville@example.com</td>
-														<td>12</td>
-														<td>5</td>
-														<td>0</td>
-														<td>2</td>
-														<td>5</td>
-													</tr> --}}
-												</tbody>
-											</table>
-										</div>
+												
+										</table>
+									</div>
 									<!-- </div> -->
 
 									@if(count($data))
@@ -460,6 +446,18 @@
 			var href = $('#reports_list li.list-group-item.active a').attr('href');
 			href = href.replace('#', '');
 			$('[name=report]').val(href).trigger('change');
+
+			if (window.location.href.indexOf(href) > -1){
+				// do nothing
+			}else{
+				// onclick remove table data
+				$('#report_table tbody').empty();
+				// append no data found row		
+				$("#report_table tbody").append(NoDataFound());
+				window.history.pushState({}, document.title, "/" + "cit-hrm-new/reports");
+			}
+
+			// calling manageSearchBox()
 			manageSearchBox(href);
 		});
 
@@ -469,18 +467,32 @@
 
 		function manageSearchBox(report) {
 			$('.cit_filter_box').hide();
+			// hide all thead
+			$('#thead_employee_report').hide();
+			$('#thead_leave_report').hide();
+			$('#thead_attendance_report').hide();
+			$('#thead_timesheet_report').hide();
+			$('#thead_productivity_report').hide();
+			$('#thead_leave_balance_report').hide();
+
 			if(!report || report == 'employee_report') {
 				$('.employee_report_filter').show();
+				$('#thead_employee_report').show();
 			} else if(report == 'leave_report') {
 				$('.leave_report_filter').show();
+				$('#thead_leave_report').show();
 			} else if(report == 'attendance_report') {
 				$('.attendance_report_filter').show();
+				$('#thead_attendance_report').show();
 			} else if(report == 'timesheet_report') {
 				$('.timesheet_report_filter').show();
+				$('#thead_timesheet_report').show();
 			} else if(report == 'productivity_report') {
  				$('.productivity_report_filter').show();
+ 				$('#thead_productivity_report').show();
 			} else if(report == 'leave_balance_report') {
  				$('.leave_balance_report_filter').show();
+ 				$('#thead_leave_balance_report').show();
 			}
 		}
 
@@ -489,9 +501,22 @@
 			manageSearchBox(seletedReport);
 		}
 
-		function resetFilter() {
-
+		function NoDataFound(){
+			var row = '';
+				row += '<tr><td colspan="100%">';
+				row += '<div class="alert alert-danger text-left">No Data Found</div>';
+				row += '</td></tr>';
+			return row;
 		}
+
+		$("#reset").click(function() {
+			var uri = window.location.toString();
+		    if (uri.indexOf("#") > 0) {
+		        var clean_uri = uri.substring(0, uri.indexOf("#"));
+		        window.history.replaceState({}, document.title, clean_uri);
+				location.reload();
+		    }
+		});
 		
 	</script>
 @endsection
