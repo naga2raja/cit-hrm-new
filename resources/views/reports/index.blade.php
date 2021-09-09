@@ -454,7 +454,10 @@
 				$('#report_table tbody').empty();
 				// append no data found row		
 				$("#report_table tbody").append(NoDataFound());
-				window.history.pushState({}, document.title, "/" + "cit-hrm-new/reports");
+
+				var uri = window.location.toString();
+				var clean_uri = uri.substring(0, uri.indexOf("?"));
+		        window.history.pushState({}, document.title, clean_uri);
 			}
 
 			// calling manageSearchBox()
