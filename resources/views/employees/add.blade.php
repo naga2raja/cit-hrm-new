@@ -73,20 +73,20 @@
 														<div class="form-group">
 															<label>First Name <span class="text-danger">*</span></label>
 
-															<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" name="first_name" maxlength="30" required value="{{ old('first_name') }}" onfocus="allowOnlyCharacters('first_name')">
+															<input type="text" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : ''}}" placeholder="First Name" id="first_name" name="first_name" maxlength="30" required value="{{ old('first_name') }}" onfocus="allowOnlyCharacters('first_name')">
 															{!! $errors->first('first_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label>Middle Name</label>
-															<input type="text" class="form-control" placeholder="Middle Name" name="middle_name"  maxlength="30" value="{{ old('middle_name') }}" onfocus="allowOnlyCharacters('middle_name')">
+															<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" id="middle_name" maxlength="30" value="{{ old('middle_name') }}" onfocus="allowOnlyCharacters('middle_name')">
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label>Last Name <span class="text-danger">*</span></label>
-															<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required  maxlength="30" name="last_name" value="{{ old('last_name') }}" onfocus="allowOnlyCharacters('last_name')">
+															<input type="text" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : ''}}" placeholder="Last Name" required  maxlength="30" name="last_name" id="last_name" value="{{ old('last_name') }}" onfocus="allowOnlyCharacters('last_name')">
 															{!! $errors->first('last_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
