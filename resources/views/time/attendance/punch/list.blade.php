@@ -491,5 +491,15 @@
 		$('#punch_id_update').val(JSON.stringify(punchRecordsArray));
 		console.log(punch_id, 'result', punchRecordsArray);
     }
+
+	$('#in_time, #out_time').datetimepicker({
+         format: 'hh:mm a',
+		 icons: {
+                up: "fa fa-angle-up",
+                down: "fa fa-angle-down",
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            }
+    });
 </script>   
 @endpush

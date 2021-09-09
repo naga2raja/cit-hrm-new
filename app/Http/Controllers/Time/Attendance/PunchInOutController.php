@@ -98,15 +98,16 @@ class PunchInOutController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'in_time' => 'date_format:'.'H:i',
+            'in_time' => 'date_format:'.'h:i a',
             'note' => 'nullable|string|max:255',
-        ]);
+        ]);        
 
         // convertion of date format
         if($request->input('in_date') != "" && $request->input('in_time') != ""){
             $in_date = DateTime::createFromFormat('d/m/Y', $request->input('in_date'));
             $in_date = $in_date->format('Y-m-d');
-            $login_date = $in_date.' '.$request->in_time.':00';
+            $login_date = $in_date.' '.$request->in_time;
+            $login_date = date('Y-m-d H:i:s', strtotime($login_date));
         }
 
         $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, 'Asia/Kolkata');
@@ -137,7 +138,7 @@ class PunchInOutController extends Controller
     public function show($id)
     {
         $data = tPunchInOut::where('id', $id)
-            ->selectRaw('id, employee_id, punch_in_note, punch_out_note, DATE_FORMAT(punch_in_user_time, "%d/%m/%Y") as punch_in, DATE_FORMAT(punch_out_user_time, "%d/%m/%Y") as punch_out, DATE_FORMAT(punch_in_user_time, "%H:%i") as in_time, DATE_FORMAT(punch_out_user_time, "%H:%i") as out_time, comments, status, created_at ')
+            ->selectRaw('id, employee_id, punch_in_note, punch_out_note, DATE_FORMAT(punch_in_user_time, "%d/%m/%Y") as punch_in, DATE_FORMAT(punch_out_user_time, "%d/%m/%Y") as punch_out, DATE_FORMAT(punch_in_user_time, "%h:%i %p") as in_time, DATE_FORMAT(punch_out_user_time, "%h:%i %p") as out_time, comments, status, created_at ')
             ->first();
         return $data;
     }
@@ -186,7 +187,7 @@ class PunchInOutController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'out_time' => 'date_format:'.'H:i',
+            'out_time' => 'date_format:'.'h:i a',
             'note' => 'nullable|string|max:255',
         ]);
 
@@ -195,8 +196,8 @@ class PunchInOutController extends Controller
         if($request->input('out_date') != "" && $request->input('out_time') != ""){
             $out_date = DateTime::createFromFormat('d/m/Y', $request->input('out_date'));
             $out_date = $out_date->format('Y-m-d');
-            $logout_date = $out_date.' '.$request->out_time.':00';
-            // $logout_date = date('Y-m-d H:i:s', strtotime($logout_date));
+            $logout_date = $out_date.' '.$request->out_time;
+            $logout_date = date('Y-m-d H:i:s', strtotime($logout_date));
         }
 
         $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
@@ -294,7 +295,8 @@ class PunchInOutController extends Controller
 
         $in_date = DateTime::createFromFormat('d/m/Y', $punch_in_date);
         $in_date = $in_date->format('Y-m-d');
-        $login_date = $in_date.' '.$request->in_time.':00';
+        $login_date = $in_date.' '.$request->in_time;
+        $login_date = date('Y-m-d H:i:s', strtotime($login_date));
 
         $in_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
         $in_utc_date->setTimezone('UTC'); //converts to UTC format
@@ -304,7 +306,8 @@ class PunchInOutController extends Controller
 
         $out_date = DateTime::createFromFormat('d/m/Y', $punch_out_date);
         $out_date = $out_date->format('Y-m-d');
-        $logout_date = $out_date.' '.$request->out_time.':00';
+        $logout_date = $out_date.' '.$request->out_time;
+        $logout_date = date('Y-m-d H:i:s', strtotime($logout_date));
 
         $out_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
         $out_utc_date->setTimezone('UTC'); //converts to UTC format
