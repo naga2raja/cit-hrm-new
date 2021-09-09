@@ -365,9 +365,9 @@
 										</div>
 										<hr>							
 							<div class="row">				
-								<div class="col-md-12 text-center">	
-									<button type="button" class="btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2"  id="action_buttons">Save</button>
+								<div class="col-md-12 text-center">
+									<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2"  id="action_buttons">Save</button>	
+									<button type="button" class="ml-2 btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
 								</div>
 							</div>
                         </form>
@@ -389,6 +389,14 @@
 	function showAttendanceInfo(punch_id, url = false)
 	{
 		$('#action_buttons').hide();
+		// disable all inputs
+		$('#punch_in_date').prop('disabled', true);
+		$('#in_time').prop('disabled', true);
+		$('#punch_in_note').prop('disabled', true);		
+		$('#punch_out_date').prop('disabled', true);
+		$('#out_time').prop('disabled', true);
+		$('#punch_out_note').prop('disabled', true);
+
 		$('#punch_id').val(punch_id);
 		$('#attendance_action_log').html('');
 		var punch_in_note, punch_out_note, punch_in_date, punch_out_date, in_time, out_time = '';
@@ -419,8 +427,16 @@
 				$('#out_time').val(out_time);
 				$('#attendance_action_log').html(response.comments);
 				$('#leave_created_at').html(moment(response.created_at).utcOffset("+05:30").format('YYYY-MM-DD hh:MM a'));
-				if(response.status == 0)
+				if(response.status == 0){
 					$('#action_buttons').show();
+					// enable all inputs
+					$('#punch_in_date').prop('disabled', false);
+					$('#in_time').prop('disabled', false);
+					$('#punch_in_note').prop('disabled', false);		
+					$('#punch_out_date').prop('disabled', false);
+					$('#out_time').prop('disabled', false);
+					$('#punch_out_note').prop('disabled', false);
+				}
 				$('#punch_status').html(attendanceStatus[response.status]);
 				$('#showInfo').modal({
 					backdrop: 'static',
