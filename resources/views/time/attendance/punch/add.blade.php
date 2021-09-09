@@ -37,7 +37,7 @@
 													<i class="fa fa-calendar" aria-hidden="true" style="font-size: 30px;"></i></h4>
 												</div> -->
 												<div class="input-group mb-3">
-													<input class="form-control datetimepicker" type="text" id="in_date" name="in_date" value="{{ $current_date }}" @if($edit_date_time == 0) readonly @endif >
+													<input class="form-control datetimepicker11" type="text" id="in_date" name="in_date" value="{{ $current_date }}" @if($edit_date_time == 0) readonly @endif >
 													<input type="hidden" name="employee_id" value="{{$employee_id}}">
 													<div class="input-group-append">
 														<button class="btn btn-theme text-white" type="button" id="calendar_icon">
@@ -118,7 +118,28 @@
 	});
 
 	$('#calendar_icon').on('click', function(){
-		$('#in_date').datetimepicker("show");
+		$('#in_date').datetimepicker("show");		
 	});
+
+	$('#in_date').datetimepicker({
+		format: "DD/MM/YYYY",
+		maxDate: new Date(),
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		}
+	});
+
+	$('#in_time').datetimepicker({
+         format: 'hh:mm a',
+		 icons: {
+                up: "fa fa-angle-up",
+                down: "fa fa-angle-down",
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            }
+    });
 </script>
 @endpush

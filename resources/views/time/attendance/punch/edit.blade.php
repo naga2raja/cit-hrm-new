@@ -62,7 +62,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="input-group mb-3">
-													<input class="form-control datetimepicker" type="text" id="out_date" name="out_date" value="{{ date('d/m/Y', strtotime($punch_in[0]->punch_in_user_time)) }}" @if($edit_date_time == 0) readonly @endif>
+													<input class="form-control" type="text" id="out_date" name="out_date" value="{{ date('d/m/Y', strtotime($punch_in[0]->punch_in_user_time)) }}" @if($edit_date_time == 0) readonly @endif>
 													<input type="hidden" name="employee_id" value="{{$employee_id}}">
 													<div class="input-group-append">
 														<button class="btn btn-theme text-white" type="button" id="calendar_icon">
@@ -145,5 +145,25 @@
 	$('#calendar_icon').on('click', function(){
 		$('#out_date').datetimepicker("show");
 	});
+
+	$('#out_date').datetimepicker({
+		format: "DD/MM/YYYY",
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		}
+	});
+
+	$('#out_time').datetimepicker({
+         format: 'hh:mm a',
+		 icons: {
+                up: "fa fa-angle-up",
+                down: "fa fa-angle-down",
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            }
+    });
 </script>
 @endpush
