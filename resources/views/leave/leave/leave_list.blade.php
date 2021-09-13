@@ -140,7 +140,7 @@
 														              	@endif 
                                                                     </td>
                                                                     <td>
-                                                                        @if( ($userRole == 'Manager' && $leave->approval_level == 0) || ($userRole == 'Admin' && $leave->approval_level == 1))
+                                                                        @if( ($userRole == 'Manager' && $leave->approval_level == 0) || ($userRole == 'Admin' && $leave->approval_level == 1) || ($leave->reporting_me && $leave->approval_level == 0) || ($userRole == 'Admin' && $leave->status > 3 ))
                                                                         <select class="form-control select" id="leave_{{ $leave->id }}" onchange="getLeaveStatus({{ $leave->id }})">
                                                                             <option value="">Select</option>
                                                                             @foreach ($leaveStatus as $item)

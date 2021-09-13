@@ -343,8 +343,14 @@ class LeaveController extends Controller
             ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
             ->join('employees', 'employees.id', 't_leave_requests.employee_id')
             ->join('m_leave_status', 't_leave_requests.status', 'm_leave_status.id')
-            ->where('t_leave_requests.employee_id', '!=', $employeeId)
-            ->whereIn('t_leaves.approval_level', $approval_level);
+            ->leftJoin('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id')
+            ->where('t_leave_requests.employee_id', '!=', $employeeId);
+            
+        if($userRole == 'Admin') {
+                $myLeaves = $myLeaves->whereRaw('IF(t_employee_report_to.manager_id = '.$employeeId.', t_leaves.approval_level IN (0,1,2), t_leaves.approval_level IN (1,2) ) = 1');
+        } else {
+            $myLeaves = $myLeaves->whereIn('t_leaves.approval_level', $approval_level);
+        }
         if(count($empIds)) {
             $myLeaves = $myLeaves->whereIn('t_leave_requests.employee_id', $empIds);
             // dd($empIds);
@@ -353,6 +359,7 @@ class LeaveController extends Controller
         $myLeaves = $myLeaves->select('t_leave_requests.*', 't_leaves.approval_level', 'm_leave_types.name', 't_leaves.leave_duration', 't_leaves.length_days')
             ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
             ->selectRaw('datediff(t_leave_requests.to_date, t_leave_requests.from_date) as leave_days, m_leave_status.name as leave_status')
+            ->selectRaw('IF(t_employee_report_to.manager_id = '.$employeeId.', 1 , 0 ) as reporting_me')
             ->when(request()->filled('status'), function ($query) {
                 $query->where('t_leave_requests.status', request('status'));
             })
@@ -455,9 +462,26 @@ class LeaveController extends Controller
                         $updateArr['approval_level'] = 2;
                     }                    
                 }
+                $leaveRequest = tLeaveRequest::where('id', $leave_request_id)->first();
+                $updateFlag = true;
+                //check before approve
+                if($status_id == 2) {
+                    $isLeaveExists = tLeave::where('t_leaves.date', '>=', $leaveRequest->from_date)
+                        ->where('t_leaves.date', '<=', $leaveRequest->to_date)
+                        ->where('employee_id', $leaveRequest->employee_id)
+                        ->whereIn('status', [2])
+                        ->whereNull('deleted_at')
+                        ->first();
+                    if($isLeaveExists) {
+                        $updateFlag = false;
+                        $status_id = $leaveRequest->status;
+                    }
+                }
+                $failedToUpdate = ($updateFlag) ? '' : '(Failed)';
+                    
                 //update in leaves table
                 tLeave::where('leave_request_id', $leave_request_id)->update($updateArr);
-                $leaveRequest = tLeaveRequest::where('id', $leave_request_id)->first();
+                // $leaveRequest = tLeaveRequest::where('id', $leave_request_id)->first();
                 $leaveRequest->status = $status_id;
                 $leaveRequest->save();
 
@@ -483,7 +507,7 @@ class LeaveController extends Controller
                     [
                         'leave_id' => $leave_request_id,
                         'employee_id' => $currentEmployeeDetails->id, //manager id
-                        'comments' => 'Updated to '.$leaveStatus->name. ' By '.Auth::user()->name
+                        'comments' => 'Updated to '.$leaveStatus->name. ' By '.Auth::user()->name.' '.$failedToUpdate
                     ]
                 );
                 if($comments) {
@@ -508,13 +532,14 @@ class LeaveController extends Controller
                         $entitlementDet->days_used = $entitlementDet->days_used - $leaves->days;
                         $entitlementDet->save();
                     }                    
-                }
+                }                
+                
                 //Send Email to Employee
                 $toEmails = [];                
                 $leaveEmployeeDetails = Employee::where('id', $leaveRequest->employee_id)->first();
                 $details = [
                     'leave_date' => $leaveRequest->from_date.' to '. $leaveRequest->to_date,
-                    'message'  =>  'Updated to '.$leaveStatus->name. ' By '.Auth::user()->name,
+                    'message'  =>  'Updated to '.$leaveStatus->name. ' By '.Auth::user()->name.' '.$failedToUpdate,
                     'employee_name' => $leaveEmployeeDetails->first_name.' '.$leaveEmployeeDetails->first_name
                 ];        
                 $toEmails[] = ['name' => $leaveEmployeeDetails->first_name.' '.$leaveEmployeeDetails->first_name, 'email' => $leaveEmployeeDetails->email];
