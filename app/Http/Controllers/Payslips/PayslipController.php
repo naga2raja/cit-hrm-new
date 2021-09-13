@@ -175,4 +175,65 @@ class PayslipController extends Controller
             return redirect()->back()->with('error', 'File Not Found');
         }
     }
+
+    public function uploadMultiple(Request $request) {        
+        if(!Auth::user()->hasRole('Admin')) {
+            return redirect()->back()->with('error', 'You don\'t have rights');
+        }
+        $out = [];
+        return view('payslips/multiple_upload', compact('out'));
+    }
+
+    public function storeMultipleFiles(Request $request) {
+        if(!Auth::user()->hasRole('Admin')) {
+            return redirect()->back()->with('error', 'You don\'t have rights');
+        }
+        $request->validate([ 
+            'payslip_doc'  => 'required', 
+            'payslip_doc.*' => 'max:1024|mimes:pdf',
+        ]);
+        $out = [];
+        $out['error'] =  [];
+        $out['success'] =  [];
+        if($request->hasfile('payslip_doc')) { 
+
+            foreach($request->file('payslip_doc') as $file)
+            {
+                $payslipPath = $file;
+                $payslipDocName = $payslipPath->getClientOriginalName();
+
+                $fileNameArray = explode('_', $payslipDocName);
+                $employee_id = $fileNameArray[0];
+                $pay_month = date('Y-m', strtotime(@$fileNameArray[1]));
+
+                $employee = Employee::where('employee_id', $employee_id)->first();
+                if($employee_id && $pay_month && $employee) {
+                    //check the payslip if exists
+                    $isExists = tPayslip::where('employee_id', $employee->id)
+                        ->where('pay_month', $pay_month.'-01')
+                        ->first();
+                    if($isExists) {
+                        $out['error'][] = ['file' => $payslipDocName, 'msg' => 'Payslip Already Exists'];
+                    } else {
+                        // $payslipPath = $file('payslip_doc');
+                        // $payslipDocName = $payslipPath->getClientOriginalName();
+                        $path = $file->storeAs('uploads/payslips', $payslipDocName, 'public');
+                        $payroll = new tPayslip;
+                        $payroll->pay_slip_pdf = '/storage/'.$path;
+                        $payroll->employee_id = $employee->id;
+                        $payroll->pay_month = $pay_month.'-01';
+                        $payroll->comments = $request->comments;
+                        $payroll->save();
+
+                        $out['success'][] = ['pay_month' => $pay_month, 'employee_id'=> $employee_id];
+                    }
+                } else {
+                    $out['error'][] = ['file' => $payslipDocName, 'msg' => ($employee) ? 'Invalid file name' : 'Invalid Employee ID'];
+                }
+            }
+        }        
+        return redirect()->back()
+            ->with('results', $out)
+            ->with('success', count($out['success']) ? '('.count($out['success']).') Payslips uploaded successfully' : '');
+    }
 }

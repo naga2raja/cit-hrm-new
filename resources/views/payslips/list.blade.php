@@ -94,14 +94,17 @@
 									<div class="card ctm-border-radius shadow-sm">
 										<div class="card-header">
                                             <div class="row filter-row">
-                                                <div class="col-sm-6 col-md-10 col-lg-9 col-xl-10">  
+                                                <div class="col-sm-4 col-md-8 col-lg-8 col-xl-8">  
                                                     <div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
                                                         <h4 class="card-title mb-0">Payslips List</h4>
                                                     </div>
                                                 </div>
                                                 @hasrole('Admin')
-                                                <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                                <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">
                                                     <a href="{{ route('payslips.create') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>
+                                                </div>
+												<div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                                    <a href="{{ route('payslip.multiple') }}" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add Multiple</a>
                                                 </div>
 												@endrole
                                                 
