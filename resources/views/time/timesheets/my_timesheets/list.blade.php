@@ -173,7 +173,11 @@
 		<!-- Inner Wrapper -->
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
-		
+		<style>
+			#timesheets span.select2.select2-container {
+				width: 100% !important;
+			}
+		</style>
 @endsection
 
 
