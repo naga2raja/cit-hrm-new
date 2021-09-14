@@ -208,9 +208,12 @@ class PayslipController extends Controller
                 $payslipPath = $file;
                 $payslipDocName = $payslipPath->getClientOriginalName();
 
-                $fileNameArray = explode('_', $payslipDocName);
+                $payslipDocName = explode('.', $payslipDocName);
+                $payslipDocName = $payslipDocName[0];
+                $fileNameArray = explode('_', $payslipDocName);                
                 $employee_id = $fileNameArray[0];
-                $pay_month = date('Y-m', strtotime(@$fileNameArray[1]));
+                $pay_month = date('M-Y', strtotime(@$fileNameArray[1]));
+                $pay_month = date('Y-m', strtotime($pay_month));
 
                 $employee = Employee::where('employee_id', $employee_id)->first();
                 if($employee_id && $pay_month && $employee) {
