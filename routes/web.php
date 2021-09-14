@@ -170,6 +170,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     Route::post('payslip/upload', 'Payslips\PayslipController@storeMultipleFiles')->name('payslip.uploadMultiple');
     Route::get('payslip-download', 'Payslips\PayslipController@download')->name('payslip.download');
     Route::get('download-sample-file', 'Payslips\PayslipController@sampleDownload')->name('sample.download');
+    Route::post('payslip-details-ajax', 'Payslips\PayslipController@downloadAjax')->name('payslip.ajax');
 
 });
 

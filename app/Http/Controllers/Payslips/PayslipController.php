@@ -37,13 +37,19 @@ class PayslipController extends Controller
             $currentEmployeeId = getEmployeeId(Auth::user()->id);
 
             $data = $data->where('t_payslips.employee_id', $currentEmployeeId);
+
+            $empData = tPayslip::where('t_payslips.employee_id', $currentEmployeeId)
+                    ->selectRaw('t_payslips.*, DATE_FORMAT(t_payslips.pay_month,"%b %Y") AS payslip_month')
+                    ->orderBy('t_payslips.pay_month', 'DESC')
+                    ->get();
+            return view('payslips/employees_list', compact('empData'));
         } 
-        $data = $data->selectRaw('t_payslips.*, DATE_FORMAT(t_payslips.pay_month,"%M %Y") AS payslip_month, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
+        $data = $data->selectRaw('t_payslips.*, DATE_FORMAT(t_payslips.pay_month,"%b %Y") AS payslip_month, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
             ->orderBy('t_payslips.pay_month', 'DESC')
             ->paginate(12);
         // dd($data);
-        $employees = Employee::where('status', 'Active')->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as name')->get();
-        return view('payslips/list', compact('data', 'employees'));
+        $employees = Employee::where('status', 'Active')->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as name')->get();        
+        return view('payslips/list', compact('data', 'employees'));        
     }
 
     /**
@@ -235,5 +241,20 @@ class PayslipController extends Controller
         return redirect()->back()
             ->with('results', $out)
             ->with('success', count($out['success']) ? '('.count($out['success']).') Payslips uploaded successfully' : '');
+    }
+
+    public function downloadAjax(Request $request) {
+        
+        $currentEmployeeId = getEmployeeId(Auth::user()->id);
+        if($request->date) {
+            $date = date('Y-m-d', strtotime($request->date.'-01'));
+    
+            $data = tPayslip::where('t_payslips.employee_id', $currentEmployeeId)
+                    ->where('pay_month', $date)
+                    ->first();
+           return response()->json($data);
+        } else {
+            return 'Please select a month';
+        }
     }
 }
