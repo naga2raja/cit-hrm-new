@@ -5,6 +5,9 @@
 	.bootstrap-datetimepicker-widget tr:hover {
 	    /*background-color: #eee;*/
 	}
+	.select2-container {
+		width: 170px !important;
+	}
 </style>
 <div class="page-wrapper">
 				<div class="container-fluid">
