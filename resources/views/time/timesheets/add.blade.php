@@ -394,27 +394,27 @@
 
 	function validation (j) {
 		if(!$('#timesheet_date').val()){
-    		$('#timesheet_date').focus();
+    		// $('#timesheet_date').focus();
     		validation_popup_msg("Warning", "Date is Invalid");
     		return false;
     	}
     	else if(!$('#employee_name').val()){
-    		$('#employee_name').select2('open');
+    		// $('#employee_name').select2('open');
     		validation_popup_msg("Warning", "Select Employee Name");
     		return false;
     	}
     	else if(!$('#project_name'+j).val()){
-			$('#project_name'+j).select2('open');
+			// $('#project_name'+j).select2('open');
 			validation_popup_msg("Warning", "Select Project Name");
 			return false;
     	}
     	else if(!$('#activity_name'+j).val()){
-    		$('#activity_name'+j).first().focus();
+    		// $('#activity_name'+j).first().focus();
     		validation_popup_msg("Warning", "Select Activity Name");
     		return false;
     	}
     	else if ((!$('#duration'+j).val()) || ($('#duration'+j).val() == '00:00')){
-    		$('#duration'+j).focus();
+    		// $('#duration'+j).focus();
     		validation_popup_msg("Warning", "Enter Duration");
     		$('#duration'+j).addClass("is-invalid");
     		return false;
