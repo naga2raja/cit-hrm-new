@@ -29,11 +29,11 @@
                         <a class="dropdown-item {{ Request::is('jobTitles*') ? 'active' : '' }}" href="{{ route('jobTitles.index') }}">Job Title</a>
                     </li>
                     <li>
-                        <a class="dropdown-item {{ Request::is('payGrades*') ? 'active' : '' }}" href="{{ route('payGrades.index') }}">Pay Grades</a>
+                        <a class="dropdown-item {{ Request::is('jobCategory*') ? 'active' : '' }}" href="{{ route('jobCategory.index') }}">Job Categories</a>
                     </li>
                     <li>
-                        <a class="dropdown-item {{ Request::is('jobCategory*') ? 'active' : '' }}" href="{{ route('jobCategory.index') }}">Job Categories</a>
-                    </li>                                                
+                        <a class="dropdown-item {{ Request::is('payGrades*') ? 'active' : '' }}" href="{{ route('payGrades.index') }}">Pay Grades</a>
+                    </li>
                 </ul>
             </li>
             <li>
