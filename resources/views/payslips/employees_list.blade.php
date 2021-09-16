@@ -27,38 +27,7 @@
 								</div>
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
-                                                        <form method="GET" id="filter_form">
-															
-
-															<div class="row filter-row">
-																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-																	{{-- <div class="form-group">
-																		<label>Select Month</label>
-																		<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Choose" name="to_date" id="datetimepicker2">
-																	</div> --}}
-
-                                                                    <div class="form-group">
-																		<label>Select Month</label>
-																		<select class="form-control select" name="payslip_id" id="payslip_id">
-                                                                            <option value="">Select</option>
-                                                                                @foreach($empData as $payslip)
-                                                                                    <option value="{{ $payslip->id }}"> {{ $payslip->payslip_month }}</option>
-                                                                                @endforeach																
-                                                                        </select>
-																	</div>
-
-																</div>
-															</div>
-
-															<div class="row">
-																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
-																	<button type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search" onclick="getPayslipPdfAjax()"><span class="fa fa-search"></span> Search</button>													
-																</div>
-																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-																	<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('filter_form')"><i class="fa fa-refresh"></i> Reset </button>
-																</div>
-															</div>
-                                                        </form>                                                   
+                                                                                                          
 
 									</div>
 								</div>
@@ -93,9 +62,74 @@
 											
 										</div>
 										<div class="card-body align-center">
+                                            <form method="GET" id="filter_form">
+															
+
+                                                <div class="row filter-row">
+                                                    <div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+                                                        {{-- <div class="form-group">
+                                                            <label>Select Month</label>
+                                                            <input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="Choose" name="to_date" id="datetimepicker2">
+                                                        </div> --}}
+
+                                                        {{-- <div class="form-group">
+                                                            <label>Select Month</label>
+                                                            <select class="form-control select" name="payslip_id" id="payslip_id">
+                                                                <option value="">Select</option>
+                                                                    @foreach($empData as $payslip)
+                                                                        <option value="{{ $payslip->id }}"> {{ $payslip->payslip_month }}</option>
+                                                                    @endforeach																
+                                                            </select>
+                                                        </div> --}}
+
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label>Month</label>
+                                                            <select class="form-control select" name="payslip_month" id="payslip_month">
+                                                                <option value="">Select</option>
+                                                                    <?php 
+                                                                    for($m=1; $m<=12; ++$m){
+                                                                        $month = date('M', mktime(0, 0, 0, $m, 1));
+                                                                        echo '<option value="'.$month.'">'.$month.'</option>';
+                                                                    }                                                                                
+                                                                    ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label>Year</label>
+                                                            <select class="form-control select" name="payslip_year" id="payslip_year">
+                                                                <option value="">Select</option>
+                                                                <?php
+                                                                    $currentYear = date('Y');
+                                                                    $limit = $currentYear - 20;
+                                                                    for($x = $currentYear; $x >= $limit; $x-- ) {
+                                                                        echo '<option>'.$x.' </option>';
+                                                                    }
+
+                                                                ?>															
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">	
+                                                        <label> </label>												
+                                                        <button type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block" name="search" onclick="getPayslipPdfAjax()"> Download </button>													
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                                        <label> </label>
+                                                        <button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block" onclick="resetAllValues('filter_form')"> Cancel </button>
+                                                    </div>
+
+                                                </div>
+                                            </form> 
+
 											<div class="">
                                                 <div class="col-md-8">
-                                                    <div id="payslipDownload"><p>Select a month to view Payslip!</p></div>
+                                                    <div id="payslipDownload"><p> </p></div>
                                                 </div>
                                                 
                                                 {{-- <div class="row filter-row">
@@ -162,32 +196,40 @@
         });
 
         function getPayslipPdfAjax() {
-            var payMonth = $('#payslip_id').val();
-            if(payMonth) {
-                var fileId = window.btoa(payMonth);
-                var htmlTxt = '<div class="download_payslip1"><a href="{{ route("payslip.download") }}?file='+ fileId +' }}" style="position:relative"><img src="{{ assetUrl("img/sample-payslip.png") }}"><div style="position:absolute;left:45%;top:40%;"><i class="fa fa-4x fa-download"></i> </div></a></div>';
-                $('#payslipDownload').html(htmlTxt);
+            // var payMonth = $('#payslip_id').val();
+            var payMonth = $('#payslip_month').val();
+            var payYear = $('#payslip_year').val();
+            if(payMonth && payYear) {
+                // var fileId = window.btoa(payMonth);
+                // var htmlTxt = '<div class="download_payslip1"><a href="{{ route("payslip.download") }}?file='+ fileId +' }}" style="position:relative"><img src="{{ assetUrl("img/sample-payslip.png") }}"><div style="position:absolute;left:45%;top:40%;"><i class="fa fa-4x fa-download"></i> </div></a></div>';
+                // $('#payslipDownload').html(htmlTxt);
 
-                // $.ajax({
-                //     method: 'POST',
-                //     url: "{{ route('payslip.ajax') }}",
-                //     data: JSON.stringify({'date': payMonth, '_token': '{{ csrf_token() }}' }),
-                //     dataType: "json",
-                //     contentType: 'application/json',
-                //     success: function(data){
-                //         console.log('EmployeeHolidays : ', data);			
-                //         if(data && data.id) {
-                //             var fileId = window.btoa(data.id);
-                //             var htmlTxt = '<div class="download_payslip1"><a href="{{ route("payslip.download") }}?file='+ fileId +' }}" style="position:relative"><img src="{{ assetUrl("img/sample-payslip.png") }}"><div style="position:absolute;left:45%;top:40%;"><i class="fa fa-4x fa-download"></i> </div></a></div>';
-                //             $('#payslipDownload').html(htmlTxt);
-                //         } else {
-                //             var htmlTxt = '<div class="alert alert-danger">Payslip not uploaded!</div>';
-                //             $('#payslipDownload').html(htmlTxt);
-                //         }
-                //     }
-                // });
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('payslip.ajax') }}",
+                    data: JSON.stringify({'date': payYear+'-'+payMonth, '_token': '{{ csrf_token() }}' }),
+                    dataType: "json",
+                    contentType: 'application/json',
+                    success: function(data){
+                        console.log('EmployeeHolidays : ', data);			
+                        if(data && data.id) {
+                            var fileId = window.btoa(data.id);
+                            // var htmlTxt = '<div class="download_payslip1"><a href="{{ route("payslip.download") }}?file='+ fileId +' }}" style="position:relative"><img src="{{ assetUrl("img/sample-payslip.png") }}"><div style="position:absolute;left:45%;top:40%;"><i class="fa fa-4x fa-download"></i> </div></a></div>';
+                            var htmlTxt = '<div class="col-md-12"><ul class="list-group"><li class="list-group-item">Note:</li>';
+                            htmlTxt += '<li  class="list-group-item"> Each month after 5th, you can download your payslip</li>';
+                            htmlTxt += '<li class="list-group-item">If you have any clarification in the payslip, Please contact HR for more details </li>';
+                            htmlTxt += '</ul></div>';															
+																
+                            $('#payslipDownload').html(htmlTxt);
+                            window.location.href = '{{ route("payslip.download") }}?file='+ fileId;
+                        } else {
+                            var htmlTxt = '<div class="alert alert-danger">Payslip not uploaded!</div>';
+                            $('#payslipDownload').html(htmlTxt);
+                        }
+                    }
+                });
             } else {
-                var htmlTxt = '<div class="alert alert-danger">Please select a Month!</div>';
+                var htmlTxt = '<div class="alert alert-danger">Please select a Month and Year!</div>';
                 $('#payslipDownload').html(htmlTxt);                
             }
         }
