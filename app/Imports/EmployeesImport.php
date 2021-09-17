@@ -34,11 +34,11 @@ class EmployeesImport implements ToModel, WithStartRow
     */
     public function model(array $row)
     {
-        $first_name = $row[0];
-        $middle_name = $row[1];
-        $last_name = $row[2];        
-        $employee_id = $row[3];
-        $email = $row[4];
+        $first_name = trim($row[0]);
+        $middle_name = trim($row[1]);
+        $last_name = trim($row[2]);        
+        $employee_id = trim($row[3]);
+        $email = trim($row[4]);
         $gender = $row[5];
         $dob = $row[6];
         $marital_status = $row[7];
