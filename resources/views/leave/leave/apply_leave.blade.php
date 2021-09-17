@@ -406,7 +406,12 @@
 
 		function getLeaveBalance() {
 			var leave_type_id = $("#leave_type_id option:selected").val();
-			var employeeId = $("#employee_id").val();
+			var employeeId = '';
+			if($("#employee_id").val() != ''){
+				employeeId = $("#employee_id").val();
+			}else{
+				employeeId = '{{ getEmployeeId(Auth::user()->id) }}';
+			}			
 
 			$.ajax({
 				method: 'POST',
