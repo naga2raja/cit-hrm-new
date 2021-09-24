@@ -948,7 +948,7 @@
 				    tooltip: {
 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-				            '<td style="padding:0">{point.y} Pending</td></tr>',
+				            '<td style="padding:0">{point.y}</td></tr>',
 				        footerFormat: '</table>',
 				        shared: true,
 				        useHTML: false
@@ -968,7 +968,7 @@
 				        }
 				    },
 				    series: [{
-				        name: '',
+				        name: ' Pending',
 				        colorByPoint: true,
 				        data: [leave, attendance, timesheet]
 

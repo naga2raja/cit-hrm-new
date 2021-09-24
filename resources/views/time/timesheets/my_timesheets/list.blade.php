@@ -42,7 +42,7 @@
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
 														<label>Search Project</label>
-		                                                <select class="project_name form-control select2 has-error{{ $errors->has('project_name') ? 'is-invalid' : ''}}" name="project_name" id="project_name" required="" style="width: 100%">
+		                                                <select class="project_name form-control select2 {{ $errors->has('project_name') ? 'is-invalid' : ''}}" name="project_name" id="project_name" required="" style="width: 100%">
 		                                                	@if(Request::get('pro_name'))
 																<option selected="selected" id="{{ Request::get('project_id') }}">{{ Request::get('pro_name'), old('pro_name') }}</option>
 															@endif
