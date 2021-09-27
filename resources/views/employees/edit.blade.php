@@ -878,6 +878,7 @@
 	function assignEmployee () {
 		var managerId = $('#itemName').val();
 		if(managerId) {
+			$('.assign_user_error').hide();
 			var name = $('#select2-itemName-container').html();
 			assigned_managers.push({'id':managerId, 'name': name});
 			console.log(managerId, name, assigned_managers);
