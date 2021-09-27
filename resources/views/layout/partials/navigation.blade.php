@@ -200,7 +200,7 @@
     </li>
     <li class="mr-1 {{ Request::is('import-biometric-data') ? 'active' : '' }}">
         <a class="nav-link btn-ctm-space {{ Request::is('import-biometric-data') ? 'active' : '' }}" href="{{ route('upload.biometric') }}">
-            <span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Biomatric Data</span>
+            <span class="lnr lnr-sync pr-0 pr-lg-2"></span><span class="d-none d-lg-inline">Biometric Data</span>
         </a>
     </li>
     @endrole
