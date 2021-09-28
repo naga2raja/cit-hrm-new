@@ -702,6 +702,7 @@
 							<div class="col-sm-8">
 								<div class="form-group">										
 									<select class="itemName form-control" name="itemName" id="itemName" style="width: 100%"></select>
+									<div class="assign_user_error invalid-feedback" style="display: none;">Please select a manager</div>
 								</div>
 							</div>
 						</div>
@@ -715,7 +716,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="assignEmployee()" data-dismiss="modal">Save</button>
+						<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="assignEmployee()">Save</button>
 				        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Cancel</button>						
 				    </div>	
 			</div>
@@ -876,22 +877,29 @@
 	// Autocomplete ajax call
 	function assignEmployee () {
 		var managerId = $('#itemName').val();
-		var name = $('#select2-itemName-container').html();
-		assigned_managers.push({'id':managerId, 'name': name});
-		console.log(managerId, name, assigned_managers);
-		
-		var result = uniqueArray(assigned_managers);
-		console.log(result);
-		var selected_managers_html = '';
-		var empIds = [];
-		result.forEach(element => {
-			console.log(element.name);
-			empIds.push(element.id);
-			selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
-		});
-		$('#selected_managers').html(selected_managers_html);
-		$('#assigned_managers').val(empIds);
-		assigned_managers_final = empIds;
+		if(managerId) {
+			$('.assign_user_error').hide();
+			var name = $('#select2-itemName-container').html();
+			assigned_managers.push({'id':managerId, 'name': name});
+			console.log(managerId, name, assigned_managers);
+			
+			var result = uniqueArray(assigned_managers);
+			console.log(result);
+			var selected_managers_html = '';
+			var empIds = [];
+			result.forEach(element => {
+				console.log(element.name);
+				empIds.push(element.id);
+				selected_managers_html += element.name + '<i class="fa btn-primary p-1 fa-close" onclick="removeAssignedEmployee('+element.id+')"></i> <hr>';
+			});
+			$('#selected_managers').html(selected_managers_html);
+			$('#assigned_managers').val(empIds);
+			assigned_managers_final = empIds;
+			$('#assign_manager').modal('hide');	
+		} else {
+			$('#itemName').addClass('is-invalid');
+			$('.assign_user_error').show();
+		}
 	}
 
 	function openModalpopup(){

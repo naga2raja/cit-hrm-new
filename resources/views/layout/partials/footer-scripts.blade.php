@@ -220,7 +220,8 @@ function allowOnlyCharacters(id) {
 
 function allowCharactersWithSpace(id) {
 	$("#"+id).inputFilter(function(value) {
-  	return /^[a-zA-Z,]+(\s{0,1}[a-zA-Z, ])*$/i.test(value); });
+		return /^[a-z ]*$/i.test(value);
+	});
 }
 
 function allowPriceFormat(id) {
