@@ -25,12 +25,12 @@
 										</div>
 									</div>
 								</div>
-								<div class="card ctm-border-radius shadow-sm">
+								{{-- <div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
                                                                                                           
 
 									</div>
-								</div>
+								</div> --}}
 								
 							</aside>
 						</div>
