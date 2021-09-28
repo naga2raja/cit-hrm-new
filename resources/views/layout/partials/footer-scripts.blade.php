@@ -226,7 +226,7 @@ function allowCharactersWithSpace(id) {
 
 function allowPriceFormat(id) {
 	$("#"+id).inputFilter(function(value) {
-  	return /^-?\d*[.]?\d{0,2}$/.test(value); });
+  	return /^\d*[.]?\d{0,2}$/.test(value); });
 }
 
 $('#cithrm_mobile_menu a.nav-link.dropdown-toggle').click(function() {	
