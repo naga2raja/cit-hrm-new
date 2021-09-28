@@ -23,7 +23,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('company_name') ? 'is-invalid' : ''}}" placeholder="" name="company_name" id="company_name" value="{{ old('company_name') }}" onfocus="allowOnlyCharacters('company_name')" autocomplete="off">
+													<input type="text" class="form-control {{ $errors->has('company_name') ? 'is-invalid' : ''}}" placeholder="" name="company_name" id="company_name" value="{{ old('company_name') }}" onfocus="allowOnlyCharacters('company_name')" autocomplete="off" maxlength="100">
 													{!! $errors->first('company_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -54,7 +54,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('state_province') ? 'is-invalid' : ''}}" placeholder="" name="state_province" id="state_province" value="{{ old('state_province') }}" maxlength="50" onfocus="allowOnlyCharacters('state_province')" autocomplete="off">
+													<input type="text" class="form-control {{ $errors->has('state_province') ? 'is-invalid' : ''}}" placeholder="" name="state_province" id="state_province" value="{{ old('state_province') }}" maxlength="64" onfocus="allowOnlyCharacters('state_province')" autocomplete="off">
 													{!! $errors->first('state_province', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>

@@ -72,13 +72,13 @@ class LocationsController extends Controller
     {
 
         $validated = $request->validate([
-            'company_name' => 'required|string|max:255',
+            'company_name' => 'required|string|min:3|max:100',
             'country' => 'required',
             'state_province' => 'nullable|string|max:64',
             'city' => 'nullable|string|max:64',
             'address' => 'nullable|string|max:255',
-            'zip_code' => 'nullable|numeric|digits_between:3,8',
-            'phone_number' => 'nullable|string|max:20',
+            'zip_code' => 'nullable|numeric|digits_between:5,7',
+            'phone_number' => 'nullable|string|max:11',
             'fax' => 'nullable|string|max:30',
             'notes' => 'nullable|string|max:255',
         ]);
@@ -138,13 +138,13 @@ class LocationsController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'company_name' => 'required|string|max:255',
+            'company_name' => 'required|string|min:3|max:100',
             'country' => 'required',
             'state_province' => 'nullable|string|max:64',
             'city' => 'nullable|string|max:64',
             'address' => 'nullable|string|max:255',
-            'zip_code' => 'nullable|numeric|digits_between:3,8',
-            'phone_number' => 'nullable|string|max:20',
+            'zip_code' => 'nullable|numeric|digits_between:5,7',
+            'phone_number' => 'nullable|string|max:11',
             'fax' => 'nullable|string|max:30',
             'notes' => 'nullable|string|max:255',
         ]);

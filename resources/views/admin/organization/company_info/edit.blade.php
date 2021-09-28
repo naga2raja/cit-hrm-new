@@ -206,7 +206,7 @@
 							@csrf
 							<div class="form-group">
 								<input class="form-control" type="hidden" value="@if($company){{ $company->id }}@endif" id="modal_company_id" name="modal_company_id">
-								<input type="text" class="form-control" placeholder="Office Name" value="@if($company && $company->company_name != null){{ $company->company_name }}@endif" id="modal_company_name" name="modal_company_name" maxlength="50" onkeypress="allowCharactersWithSpace('modal_company_name')">
+								<input type="text" class="form-control" placeholder="Office Name" value="@if($company && $company->company_name != null){{ $company->company_name }}@endif" id="modal_company_name" name="modal_company_name" minlength="3" maxlength="100" onkeypress="allowCharactersWithSpace('modal_company_name')">
 							</div>
 							<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-theme text-white ctm-border-radius float-right" id="update_company_name">Save</button>
@@ -242,7 +242,7 @@
 						<h4 class="modal-title mb-3">Add Company Information</h4>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Company Name" value="@if($company && $company->company_name != null) {{ $company->company_name }} @endif" id="company_name" name="company_name" minlength="3" maxlength="255" onkeypress="allowCharactersWithSpace('company_name')">
+								<input class="form-control" type="text" placeholder="Company Name" value="@if($company && $company->company_name != null) {{ $company->company_name }} @endif" id="company_name" name="company_name" minlength="3" maxlength="100" onkeypress="allowCharactersWithSpace('company_name')">
 							</div>
 						</div>
 						<div class="form-group">
@@ -272,12 +272,12 @@
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="City" value="@if($company && $company->city != null) {{ $company->city }} @endif" id="city" name="city" maxlength="50" onkeypress="allowCharactersWithSpace('city')">
+								<input class="form-control" type="text" placeholder="City" value="@if($company && $company->city != null) {{ $company->city }} @endif" id="city" name="city" maxlength="64" onkeypress="allowCharactersWithSpace('city')">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="State/Province" value="@if($company && $company->state_province != null) {{ $company->state_province }} @endif" id="state_province" name="state_province" maxlength="50"  onkeypress="allowCharactersWithSpace('state_province')">
+								<input class="form-control" type="text" placeholder="State/Province" value="@if($company && $company->state_province != null) {{ $company->state_province }} @endif" id="state_province" name="state_province" maxlength="64" onkeypress="allowCharactersWithSpace('state_province')">
 							</div>
 						</div>
 						<div class="form-group">
@@ -301,7 +301,7 @@
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control" type="text" placeholder="Post-Code" value="{{ ($company) ? $company->zip_code : '' }}" id="zip_code" name="zip_code" maxlength="7" onkeyup="allowOnlyNumbers('zip_code')">
+								<input class="form-control" type="text" placeholder="Post-Code" value="{{ ($company) ? $company->zip_code : '' }}" id="zip_code" name="zip_code" minlength="5" maxlength="7" onkeyup="allowOnlyNumbers('zip_code')">
 							</div>
 						</div>
 						<div class="alert alert-success pull-left" id="modal_form_success_message" style="display:none;"><p>Company Info Update Successfully</p></div>
@@ -390,7 +390,7 @@
 		  error:function(data){
 		  	console.log(data.responseJSON.errors.modal_company_name);
 		  	$('#modal_company_name').addClass('is-invalid');          		
-		   		$('<span id="modal_company_name_error" class="invalid-feedback" role="alert">The company name should not exceed 255 characters.</span>').insertAfter('#modal_company_name');
+		   		$('<span id="modal_company_name_error" class="invalid-feedback" role="alert">'+data.responseJSON.errors.modal_company_name[0]+'</span>').insertAfter('#modal_company_name');
 		  }
 		});
 	});
@@ -424,7 +424,7 @@
 		  	console.log(data.responseJSON.errors);
 		  	if(data.responseJSON.errors.company_name){     		
 		  		$('#company_name').addClass('is-invalid');          		
-		   		$('<span id="company_name_info_error" class="invalid-feedback" role="alert">The company name should not exceed 255 characters.</span>').insertAfter('#company_name');
+		   		$('<span id="company_name_info_error" class="invalid-feedback" role="alert">'+data.responseJSON.errors.company_name[0]+'</span>').insertAfter('#company_name');
 		   	}
 		   	if(data.responseJSON.errors.registration_number){
 		  		$('#registration_number').addClass('is-invalid');          		
@@ -453,7 +453,7 @@
 		   	}
 		   	if(data.responseJSON.errors.zip_code){
 		  		$('#zip_code').addClass('is-invalid');          		
-		   		$('<span id="zip_code_info_error" class="invalid-feedback" role="alert">The zip code should not exceed 7 characters.</span>').insertAfter('#zip_code');
+		   		$('<span id="zip_code_info_error" class="invalid-feedback" role="alert">'+data.responseJSON.errors.zip_code[0]+'.</span>').insertAfter('#zip_code');
 		   	}
 		  }
 		});
@@ -495,7 +495,7 @@
 		  		$('#phone_number_edit').remove();          		
 		  		$('#phone_number').addClass('is-invalid');   
 				$('#phone_number_error').remove();       		
-		   		$('<span id="phone_number_error" class="invalid-feedback" role="alert">The phone number should not exceed 10 characters.</span>').insertAfter('#phone_number');
+		   		$('<span id="phone_number_error" class="invalid-feedback" role="alert">'+data.responseJSON.errors.phone_number+'</span>').insertAfter('#phone_number');
 		   	}
 		   	if(data.responseJSON.errors.website){
 		   		$('#website_edit').remove();     
