@@ -252,7 +252,7 @@
 						</div>
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<input class="form-control numberonly" type="text" placeholder="Tax Id" value="@if($company && $company->tax_id != null){{trim($company->tax_id)}}@endif" id="tax_id" name="tax_id" maxlength="9">
+								<input class="form-control numberonly" type="text" placeholder="Tax Id" value="@if($company && $company->tax_id != null){{trim($company->tax_id)}}@endif" id="tax_id" name="tax_id" minlength="11" maxlength="11">
 							</div>
 						</div>
 						<div class="form-group">
@@ -495,7 +495,7 @@
 		  		$('#phone_number_edit').remove();          		
 		  		$('#phone_number').addClass('is-invalid');   
 				$('#phone_number_error').remove();       		
-		   		$('<span id="phone_number_error" class="invalid-feedback" role="alert">The phone number should not exceed 20 characters.</span>').insertAfter('#phone_number');
+		   		$('<span id="phone_number_error" class="invalid-feedback" role="alert">The phone number should not exceed 10 characters.</span>').insertAfter('#phone_number');
 		   	}
 		   	if(data.responseJSON.errors.website){
 		   		$('#website_edit').remove();     

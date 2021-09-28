@@ -54,7 +54,7 @@ class CompanyInfoController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'registration_number' => 'nullable|string|max:20',
-            'tax_id' => 'nullable|string|min:9|max:9',
+            'tax_id' => 'nullable|string|min:11|max:11',
             // 'incorporation_date' => 'nullable|date|before:tomorrow',
             'address_street_1' => 'nullable|string|max:255',
             'address_street_2' => 'nullable|string|max:255',
@@ -89,10 +89,9 @@ class CompanyInfoController extends Controller
     public function update_company_contact(Request $request)
     {
         $validated = $request->validate([
-            'phone_number' => 'nullable|string|max:20',
+            'phone_number' => 'nullable|string|min:10|max:10',
             'website' => 'nullable|url',
             'email' => 'nullable|email',
-
         ]);
 
         $isExists = mCompany::where('id', $request->modal_company_id)->first();
