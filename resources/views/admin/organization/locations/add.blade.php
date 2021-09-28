@@ -23,7 +23,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('company_name') ? 'is-invalid' : ''}}" placeholder="" name="company_name" value="{{ old('company_name') }}">
+													<input type="text" class="form-control {{ $errors->has('company_name') ? 'is-invalid' : ''}}" placeholder="" name="company_name" id="company_name" value="{{ old('company_name') }}" onfocus="allowOnlyCharacters('company_name')" autocomplete="off">
 													{!! $errors->first('company_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -54,7 +54,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('state_province') ? 'is-invalid' : ''}}" placeholder="" name="state_province" value="{{ old('state_province') }}">
+													<input type="text" class="form-control {{ $errors->has('state_province') ? 'is-invalid' : ''}}" placeholder="" name="state_province" id="state_province" value="{{ old('state_province') }}" maxlength="50" onfocus="allowOnlyCharacters('state_province')" autocomplete="off">
 													{!! $errors->first('state_province', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -68,7 +68,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('city') ? 'is-invalid' : ''}}" placeholder="" name="city" value="{{ old('city') }}">
+													<input type="text" class="form-control {{ $errors->has('city') ? 'is-invalid' : ''}}" placeholder="" name="city" id="city" value="{{ old('city') }}" onfocus="allowOnlyCharacters('city')" autocomplete="off">
 													{!! $errors->first('city', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -95,7 +95,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('zip_code') ? 'is-invalid' : ''}}" placeholder="" name="zip_code" value="{{ old('zip_code') }}">
+													<input type="text" class="form-control {{ $errors->has('zip_code') ? 'is-invalid' : ''}}" placeholder="" name="zip_code" value="{{ old('zip_code') }}" id="zip_code" onfocus="allowOnlyNumbers('zip_code')" autocomplete="off" maxlength="7">
 													{!! $errors->first('zip_code', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -109,7 +109,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('phone_number') ? 'is-invalid' : ''}}" placeholder="" name="phone_number" value="{{ old('phone_number') }}">
+													<input type="text" class="form-control {{ $errors->has('phone_number') ? 'is-invalid' : ''}}" placeholder="" name="phone_number" value="{{ old('phone_number') }}" id="phone_number" onfocus="allowOnlyNumbers('phone_number')" maxlength="11">
 													{!! $errors->first('phone_number', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -123,7 +123,7 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('fax') ? 'is-invalid' : ''}}" placeholder="" name="fax" value="{{ old('fax') }}">
+													<input type="text" class="form-control {{ $errors->has('fax') ? 'is-invalid' : ''}}" placeholder="" name="fax" id="fax" value="{{ old('fax') }}" onfocus="allowOnlyNumbers('fax')">
 													{!! $errors->first('fax', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
