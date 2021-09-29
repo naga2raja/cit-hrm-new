@@ -24,7 +24,7 @@
                 @endif
 
                 @if($message = Session::get('error'))
-                    <div class="alert alert-warning">
+                    <div class="alert alert-danger">
                         <p>{{$message}}</p>
                     </div>
                 @endif
@@ -33,7 +33,7 @@
                         @csrf
 
                         <div class="form-group">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', base64_decode(@$_COOKIE['cit_login_user_name'])) }}" required autocomplete="email" autofocus placeholder="Email Address">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="form-group">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"  placeholder="Password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"  placeholder="Password" value="{{ base64_decode(@$_COOKIE['cit_login_password']) }}">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
 
                         <div class="form-group">
                                 <div class="forgotpass">
-                                    <input class="form-check-input1" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <input class="form-check-input1" type="checkbox" name="remember" id="remember" {{ ( old('remember') || (@$_COOKIE['cit_login_user_name'] && @$_COOKIE['cit_login_password']) ) ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember" style="color: #a0a0a0;">
                                         {{ __('Remember Me') }}
