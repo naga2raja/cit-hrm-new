@@ -176,7 +176,7 @@
 													<div class="col-sm-12">
 														<div class="form-group">
 															<label>Reason</label>
-															<textarea class="form-control {{ $errors->has('reason') ? 'is-invalid' : ''}}" rows=4 required name="reason">{{ old('reason') }}</textarea>
+															<textarea class="form-control {{ $errors->has('reason') ? 'is-invalid' : ''}}" rows="4" required name="reason" maxlength="255">{{ old('reason') }}</textarea>
 															{!! $errors->first('reason', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
