@@ -206,6 +206,7 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
 Route::get('/', 'HomeController@index')->name('index');
 Route::post('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/index', 'HomeController@index');
 Route::get('/profile-settings', 'ProfileSettingsController@index')->name('profile-settings');
 Route::post('/change-password', 'ProfileSettingsController@changePassword')->name('change-password');
 Route::get('/profile-settings', 'ProfileSettingsController@index')->name('profile-settings');
