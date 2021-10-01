@@ -126,9 +126,9 @@
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Monthly Timesheets</h4>
 													</div>
 												</div>
-												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
+												{{-- <div class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
 													<button class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="deleteAll('timesheets','timesheets','{{ route('timesheets.deleteMultiple') }}')"><i class="fa fa-trash"></i> Delete</button>
-												</div>
+												</div> --}}
 											</div>
 										</div>
 
