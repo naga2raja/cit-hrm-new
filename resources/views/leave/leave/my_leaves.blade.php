@@ -220,7 +220,7 @@
         
 @section('my-scripts')
 	<script>
-        	$('#datetimepicker1').datetimepicker({
+    $('#datetimepicker1').datetimepicker({
 		date: '{{ (@Request::get("from_date")) }}',
 		format: "YYYY-MM-DD",
 		icons: {
@@ -239,6 +239,45 @@
 			down: "fa fa-angle-down",
 			next: 'fa fa-angle-right',
 			previous: 'fa fa-angle-left'
+		}
+	});
+
+	$("#datetimepicker1").datetimepicker().on('dp.change', function (e) {
+		var from_date = $(this).val();
+		var to_date = '';
+		if($('#datetimepicker2').val() == ''){
+			to_date = from_date;
+		}else{
+			to_date = $('#datetimepicker2').val();
+		}
+
+		var startDate = moment(from_date, 'YYYY-MM-DD');
+		var endDate = moment(to_date, 'YYYY-MM-DD');
+		var diff = endDate.diff(startDate, 'days');
+
+		// validation from and to date
+		if(diff < 0) {
+			$('#datetimepicker2').data("DateTimePicker").date(from_date);
+		}
+	});
+
+	$("#datetimepicker2").datetimepicker().on('dp.change', function (e) {
+		var from_date = '';
+		var to_date = $(this).val();
+
+		if($('#datetimepicker2').val() == ''){
+			from_date = to_date;
+		}else{
+			from_date = $('#datetimepicker1').val();
+		}
+
+		var startDate = moment(from_date, 'YYYY-MM-DD');
+		var endDate = moment(to_date, 'YYYY-MM-DD');
+		var diff = endDate.diff(startDate, 'days');
+
+		// validation from and to date
+		if(diff < 0) {
+			$('#datetimepicker1').data("DateTimePicker").date(to_date);
 		}
 	});
 

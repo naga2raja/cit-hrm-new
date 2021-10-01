@@ -462,6 +462,7 @@
 			var endDate = moment(to_date, 'DD/MM/YYYY');
 			var diff = endDate.diff(startDate, 'days');
 
+			// validation from and to date
 			if(diff < 0) {
 				$('#datetimepicker5').data("DateTimePicker").date(from_date);
 			}
@@ -478,6 +479,7 @@
 			var endDate = moment(to_date, 'DD/MM/YYYY');
 			var diff = endDate.diff(startDate, 'days');
 
+			// validation from and to date
 			if(diff < 0) {
 				$('#datetimepicker4').data("DateTimePicker").date(to_date);
 			}

@@ -27,48 +27,48 @@
 								</div>
 								<div class="card ctm-border-radius shadow-sm">
 									<div class="card-body">
-                                                        <form method="GET" id="filter_form">
-															<div class="row filter-row">
-																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-																	<div class="form-group">
-																		<label>From Date</label>
-																		<input autocomplete="off" class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Date" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
-																	</div>
-																</div>
-															</div>
+                                        <form method="GET" id="filter_form">
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>From Date</label>
+														<input autocomplete="off" class="form-control datetimepicker1 cal-icon-input" type="text" placeholder="From Date" name="from_date" value="{{ Request::get('from_date') }}" id="datetimepicker1">
+													</div>
+												</div>
+											</div>
 
-															<div class="row filter-row">
-																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-																	<div class="form-group">
-																		<label>To Date</label>
-																		<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Date" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2">
-																	</div>
-																</div>
-															</div>															
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>To Date</label>
+														<input autocomplete="off" class="form-control datetimepicker2 cal-icon-input" type="text" placeholder="To Date" name="to_date" value="{{ Request::get('to_date') }}" id="datetimepicker2">
+													</div>
+												</div>
+											</div>															
 
-															<div class="row filter-row">
-																<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
-																	<div class="form-group">
-																		<label>Status</label>
-																		<select class="form-control select" name="status">
-                                                                            <option value="">Status</option>
-                                                                                @foreach($leaveStatus as $status)
-                                                                                    <option value="{{ $status->id }}"  {{ Request::get('status') == $status->id ? 'selected' : ''}}> {{ $status->name }}</option>
-                                                                                @endforeach																
-                                                                        </select>
-																	</div>
-																</div>
-															</div>
+											<div class="row filter-row">
+												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
+													<div class="form-group">
+														<label>Status</label>
+														<select class="form-control select" name="status">
+                                                            <option value="">Status</option>
+                                                                @foreach($leaveStatus as $status)
+                                                                    <option value="{{ $status->id }}"  {{ Request::get('status') == $status->id ? 'selected' : ''}}> {{ $status->name }}</option>
+                                                                @endforeach																
+                                                        </select>
+													</div>
+												</div>
+											</div>
 
-															<div class="row">
-																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
-																	<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>													
-																</div>
-																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-																	<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('filter_form')"><i class="fa fa-refresh"></i> Reset </button>
-																</div>
-															</div>
-                                                        </form>                                                   
+											<div class="row">
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
+													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>													
+												</div>
+												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('filter_form')"><i class="fa fa-refresh"></i> Reset </button>
+												</div>
+											</div>
+                                        </form>                                                   
 
 									</div>
 								</div>
@@ -223,27 +223,66 @@
         
 @section('my-scripts')
 	<script>
-        	$('#datetimepicker1').datetimepicker({
-		date: '{{ (@Request::get("from_date")) }}',
-		format: "YYYY-MM-DD",
-		icons: {
-			up: "fa fa-angle-up",
-			down: "fa fa-angle-down",
-			next: 'fa fa-angle-right',
-			previous: 'fa fa-angle-left'
-		}
-	});
+        $('#datetimepicker1').datetimepicker({
+			date: '{{ (@Request::get("from_date")) }}',
+			format: "YYYY-MM-DD",
+			icons: {
+				up: "fa fa-angle-up",
+				down: "fa fa-angle-down",
+				next: 'fa fa-angle-right',
+				previous: 'fa fa-angle-left'
+			}
+		});
 
-	$('.datetimepicker2').datetimepicker({
-		date: '{{ (@Request::get("to_date")) }}',
-		format: "YYYY-MM-DD", 
-		icons: {
-			up: "fa fa-angle-up",
-			down: "fa fa-angle-down",
-			next: 'fa fa-angle-right',
-			previous: 'fa fa-angle-left'
-		}
-	});
+		$('.datetimepicker2').datetimepicker({
+			date: '{{ (@Request::get("to_date")) }}',
+			format: "YYYY-MM-DD",
+			icons: {
+				up: "fa fa-angle-up",
+				down: "fa fa-angle-down",
+				next: 'fa fa-angle-right',
+				previous: 'fa fa-angle-left'
+			}
+		});
+
+		$("#datetimepicker1").datetimepicker().on('dp.change', function (e) {
+			var from_date = $(this).val();
+			var to_date = '';
+			if($('#datetimepicker2').val() == ''){
+				to_date = from_date;
+			}else{
+				to_date = $('#datetimepicker2').val();
+			}
+
+			var startDate = moment(from_date, 'YYYY-MM-DD');
+			var endDate = moment(to_date, 'YYYY-MM-DD');
+			var diff = endDate.diff(startDate, 'days');
+
+			// validation from and to date
+			if(diff < 0) {
+				$('#datetimepicker2').data("DateTimePicker").date(from_date);
+			}
+    	});
+
+    	$("#datetimepicker2").datetimepicker().on('dp.change', function (e) {
+			var from_date = '';
+			var to_date = $(this).val();
+
+			if($('#datetimepicker2').val() == ''){
+				from_date = to_date;
+			}else{
+				from_date = $('#datetimepicker1').val();
+			}
+
+			var startDate = moment(from_date, 'YYYY-MM-DD');
+			var endDate = moment(to_date, 'YYYY-MM-DD');
+			var diff = endDate.diff(startDate, 'days');
+
+			// validation from and to date
+			if(diff < 0) {
+				$('#datetimepicker1').data("DateTimePicker").date(to_date);
+			}
+    	});
 
     var leavesArray = [];
     function getLeaveStatus(leave_id) {

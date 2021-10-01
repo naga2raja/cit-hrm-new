@@ -77,6 +77,7 @@ class SystemUserController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'name' => 'required',
+            'role' => 'required',
             'email' => 'required_if:generatePassword,on',
             'password' => 'required_if:generatePassword,on'
         ]);
