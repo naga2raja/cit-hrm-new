@@ -99,6 +99,15 @@ Version: 1.0
     background: grey !important;
 }
 
+/*word wrap in all list pages*/
+.word_wrap{     
+    max-width: 150px;
+    white-space: nowrap;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 /*all autocomplete input box*/
 

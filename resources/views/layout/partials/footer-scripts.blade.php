@@ -57,7 +57,7 @@
 									</div>
 									<div class="col-sm-8">
 										<div class="form-group">
-											<div id="notes"></div>
+											<div id="notes" style="word-break: break-all;"></div>
 										</div>
 									</div>
 								</div>

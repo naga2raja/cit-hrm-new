@@ -129,7 +129,7 @@
 																		@endif
 																		)
 																	</td>                                                                    
-                                                                    <td> {{ $leave->comments }}</td>
+                                                                    <td class="word_wrap"> {{ $leave->comments }}</td>
                                                                     <td>
                                                                         @if($leave->approval_level == 1 && $leave->status == 2 ) 
                                                                             Pending Approval From Admin

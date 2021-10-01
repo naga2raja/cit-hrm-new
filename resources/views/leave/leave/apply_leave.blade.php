@@ -134,14 +134,14 @@
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label>From</label>
+															<label>From <span class="text-danger">*</span></label>
 															<input type='text' class="form-control {{ $errors->has('from_date') ? 'is-invalid' : ''}}" id='datetimepicker4' name="from_date" required value="{{ old('from_date') }}"/ autocomplete="off">
 															{!! $errors->first('from_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
 													<div class="col-sm-6 leave-col">
 														<div class="form-group">
-															<label>To</label>
+															<label>To <span class="text-danger">*</span></label>
 															<input type='text' class="form-control {{ $errors->has('to_date') ? 'is-invalid' : ''}}" id='datetimepicker5' name="to_date" required value="{{ old('to_date') }}"/ autocomplete="off">
 															{!! $errors->first('to_date', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
@@ -175,7 +175,7 @@
 												<div class="row">
 													<div class="col-sm-12">
 														<div class="form-group">
-															<label>Reason</label>
+															<label>Reason <span class="text-danger">*</span></label>
 															<textarea class="form-control {{ $errors->has('reason') ? 'is-invalid' : ''}}" rows="4" required name="reason" maxlength="255">{{ old('reason') }}</textarea>
 															{!! $errors->first('reason', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>

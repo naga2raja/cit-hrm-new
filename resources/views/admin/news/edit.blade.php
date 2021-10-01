@@ -36,7 +36,7 @@
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">				
-															<label>Title</label>
+															<label>Title <span class="text-danger">*</span></label>
 														</div>
 													</div>
 													<div class="col-sm-3">

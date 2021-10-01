@@ -268,7 +268,7 @@
 			var from_date = '';
 			var to_date = $(this).val();
 
-			if($('#datetimepicker2').val() == ''){
+			if($('#datetimepicker1').val() == ''){
 				from_date = to_date;
 			}else{
 				from_date = $('#datetimepicker1').val();

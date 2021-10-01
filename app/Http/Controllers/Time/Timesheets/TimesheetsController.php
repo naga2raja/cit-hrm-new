@@ -74,6 +74,8 @@ class TimesheetsController extends Controller
         parse_str($request->data, $data);
         // dd($data);
 
+        // dd($data['timeItem'];);
+
         $date = str_replace('/', '-', $data['date']);
         $date = date('Y-m-d', strtotime($date));
         $employee_id = $data['employee_id'];
