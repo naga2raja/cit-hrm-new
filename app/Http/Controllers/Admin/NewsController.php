@@ -72,8 +72,8 @@ class NewsController extends Controller
     {
         // dd($request->all());
         $validated = $request->validate([
-            'title' => 'required',
-            'news' => 'required',
+            'title' => 'required|min:3|max:40',
+            'news' => 'required|min:3|max:400',
             'category' => 'required'
         ]);
 
@@ -125,8 +125,8 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'title' => 'required',
-            'news' => 'required',
+            'title' => 'required|min:3|max:40',
+            'news' => 'required|min:3|max:400',
             'category' => 'required'
         ]);
 

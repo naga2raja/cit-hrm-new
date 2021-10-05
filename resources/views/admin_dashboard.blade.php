@@ -371,7 +371,7 @@
 						news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+getImagePath(profile)+'" alt="Photo"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
-						news += '<h6 class="mb-0">'+row.title+'</h6>';
+						news += '<h6 class="mb-0" style="word-break: break-all">'+row.title+'</h6>';
 						var hours = getHoursDiff(row.created_at);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						news += '<span class="ctm-text-sm">' +row.employee_name+ ' | ' +diff+ '</span>';
@@ -449,7 +449,7 @@
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 						var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-						leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
+						leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all">' +designation+ ' '+ project +'</p>';
 						leads += '</div></div>';
 						leads += '<hr>';
 		        	});
@@ -505,7 +505,7 @@
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
+							leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all">' +designation+ ' '+ project +'</p>';
 							leads += '</div></div><hr>';
 		            	}		            	
 		        	});
@@ -565,7 +565,7 @@
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm"> ' +designation+ ' '+ project +'</p>';
+							leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all"> ' +designation+ ' '+ project +'</p>';
 							leads += '</div></div><hr>';
 						}
 		        	});
@@ -586,7 +586,7 @@
 						leads += '<div class="e-avatar avatar-online mr-3"><img src="'+getImagePath(profile)+'" alt="Profile" class="img-fluid"></div>';
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
-						leads += '<p class="mb-0 ctm-text-sm">' +designation+ '</p>';
+						leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all">' +designation+ '</p>';
 						leads += '</div></div>';
 						leads += '<hr>';
 		        	});
@@ -634,7 +634,7 @@
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
+							leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all"> ' +row.designation+ ' '+ project +'</p>';
 							leads += '</div></div>';
 							if (index != data[0].team_member.length - 1) {
 								leads += '<hr>';
@@ -683,17 +683,17 @@
 						if(row.type == "My Activities"){
 							var emp_id = "{{ getEmployeeId(Auth::user()->id) }}";
 							if(row.send_to == emp_id){
-								activity += '<h6 class="mb-0">Your '+row.module+' '+row.action+' ('+date+')</h6>';
+								activity += '<h6 class="mb-0" style="word-break: break-all">Your '+row.module+' '+row.action+' ('+date+')</h6>';
 							}else{
-								activity += '<h6 class="mb-0">You '+row.action+' '+row.reciever_name+ ' '+row.module+' ('+date+')</h6>';
+								activity += '<h6 class="mb-0" style="word-break: break-all">You '+row.action+' '+row.reciever_name+ ' '+row.module+' ('+date+')</h6>';
 							}
 						}
 
 						if(row.type == "Others Activities"){
 							if(row.action == "Submitted"){
-								activity += '<h6 class="mb-0">' +row.employee_name+ ' Sent '+row.module+' ('+date+') to Approval </h6>';
+								activity += '<h6 class="mb-0" style="word-break: break-all">' +row.employee_name+ ' Sent '+row.module+' ('+date+') to Approval </h6>';
 							}else{
-								activity += '<h6 class="mb-0">' +row.employee_name+ ' '+row.action+' '+row.module+' ('+date+')</h6>';
+								activity += '<h6 class="mb-0" style="word-break: break-all">' +row.employee_name+ ' '+row.action+' '+row.module+' ('+date+')</h6>';
 							}
 						}
 						
