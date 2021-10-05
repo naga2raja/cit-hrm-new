@@ -40,7 +40,7 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" name="title" autocomplete="off" maxlength="39" value="{{ old('title') }}">
+															<input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" name="title" autocomplete="off" maxlength="40" value="{{ old('title') }}">
 															{!! $errors->first('title', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -54,7 +54,7 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<textarea class="form-control {{ $errors->has('news') ? 'is-invalid' : ''}}" name="news" rows="3" placeholder="Detailed News"></textarea>
+															<textarea class="form-control {{ $errors->has('news') ? 'is-invalid' : ''}}" name="news" rows="3" maxlength="400" placeholder="Detailed News"></textarea>
 															{!! $errors->first('news', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>

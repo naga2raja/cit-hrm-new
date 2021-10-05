@@ -237,7 +237,7 @@
 						news += '<div class="e-avatar mr-3"><img class="img-fluid" src="'+getImagePath(profile)+'" alt="Photo"></div>';
 						news += '</div>';
 						news += '<div class="notice-body">';
-						news += '<h6 class="mb-0">'+row.title+'</h6>';
+						news += '<h6 class="mb-0" style="word-break: break-all">'+row.title+'</h6>';
 						var hours = getHoursDiff(row.created_at);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						news += '<span class="ctm-text-sm">' +row.employee_name+ ' | ' +diff+ '</span>';
@@ -315,7 +315,7 @@
 						leads += '<div class="media-body">';
 						leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 						var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-						leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
+						leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all">' +designation+ ' '+ project +'</p>';
 						leads += '</div></div>';
 						leads += '<hr>';
 		        	});
@@ -364,7 +364,7 @@
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm">' +designation+ ' '+ project +'</p>';
+							leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all">' +designation+ ' '+ project +'</p>';
 							leads += '</div></div>';
 							leads += '<hr>';
 		            	}		            	
@@ -425,7 +425,7 @@
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
+							leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all"> ' +row.designation+ ' '+ project +'</p>';
 							leads += '</div></div>';
 							leads += '<hr>';
 						}
@@ -467,7 +467,7 @@
 							leads += '<div class="media-body">';
 							leads += '<h6 class="m-0">' +row.employee_name+ '</h6>';
 							var project = (project_name) ? '- <span class="mb-0 ctm-text-sm"> (' +project_name+ ' Project)</span>' : "";
-							leads += '<p class="mb-0 ctm-text-sm"> ' +row.designation+ ' '+ project +'</p>';
+							leads += '<p class="mb-0 ctm-text-sm" style="word-break: break-all"> ' +row.designation+ ' '+ project +'</p>';
 							leads += '</div></div>';
 							if (index != data[0].team_member.length - 1) {
 								leads += '<hr>';
@@ -515,8 +515,8 @@
 						var hours = getHoursDiff(row.created_at);
 						var diff = (hours) ? hours+" ago" : "Just Now";
 						if(row.type == "My Activities"){						
-							activity += '<h6 class="mb-0">You '+row.action+' '+row.module+' ('+date+')</h6>';
-							activity += '<span class="ctm-text-sm">'+row.role_name+' '+row.action+' | '+diff+'</span>';
+							activity += '<h6 class="mb-0" style="word-break: break-all">You '+row.action+' '+row.module+' ('+date+')</h6>';
+							activity += '<span class="ctm-text-sm" style="word-break: break-all">'+row.role_name+' '+row.action+' | '+diff+'</span>';
 						}
 						if(row.type == "Others Activities"){
 							var sendArrRow = row.send_to;
@@ -534,9 +534,9 @@
 								}
 							}
 							if(admin != ''){
-								activity += '<h6 class="mb-0">' +admin+' ('+date+')</h6>';
+								activity += '<h6 class="mb-0" style="word-break: break-all">' +admin+' ('+date+')</h6>';
 							}else{
-								activity += '<h6 class="mb-0">'+row.module+' '+row.action+' ('+date+')</h6>';
+								activity += '<h6 class="mb-0" style="word-break: break-all">'+row.module+' '+row.action+' ('+date+')</h6>';
 							}
 							activity += '<span class="ctm-text-sm">(' +row.employee_name+ ') '+row.role_name+' '+row.action+' | '+diff+'</span>';						
 						}
