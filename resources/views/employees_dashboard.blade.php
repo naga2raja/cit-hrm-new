@@ -154,8 +154,8 @@
 					<!-- Modal body -->
 					<div class="modal-body">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h5 class="modal-title mb-3"></h5><hr>
-						<p class="modal-message"></p>
+						<h5 class="modal-title mb-3" style="word-break: break-all;"></h5><hr>
+						<p class="modal-message" style="word-break: break-all;"></p>
 						<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3 mt-4" data-dismiss="modal">Close</button>
 					</div>
 				</div>
