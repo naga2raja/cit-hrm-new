@@ -42,8 +42,8 @@
 										</tr>
 									</thead>
 									<tbody id="list_pay_grade_table">
-										@if(count($pay_grades) > 0)
-											@foreach ($pay_grades as $grade)
+										@if(count($payGrade) > 0)
+											@foreach ($payGrade as $grade)
 											<tr>
 												<td class="text-center" style="width: 5%">
 													<input type="checkbox" name="pay_grades_id" value="{{ $grade->id }}">
@@ -52,15 +52,7 @@
 													<h2><u><a href="{{ route('payGrades.edit', $grade->id) }}">{{ $grade->name }}</a></u></h2>
 												</td>
 												<td>
-													@if(count($pay_grade_currency) > 0)
-														@foreach ($pay_grade_currency as $row)
-															@if($row->pay_grade_id == $grade->id)
-																{{ $row->currencyName->currency_name }}@if (!$loop->last),@endif
-															@endif
-														@endforeach
-													@else
-														{{ "-" }}
-													@endif
+													{{ $grade->currencies_name }}
 												</td>
 											</tr>
 											@endforeach

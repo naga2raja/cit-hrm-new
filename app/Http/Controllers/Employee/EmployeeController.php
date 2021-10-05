@@ -279,8 +279,21 @@ class EmployeeController extends Controller
         $isNotSame = [];
         if($request->my_info == 'no'){
             if(($employee->joined_date != '')&&($employee->job_id != '')){
+                
                 $isNotSame = Employee::where('id', $id)
-                                ->whereRaw('(joined_date != "'.$request->joined_date.'" or job_category_id !='.$request->job_category_id.' or job_id != '.$request->job_id.' or company_location_id != '.$request->company_location_id.')')
+                                ->when($request->joined_date, function ($q) use ($request) {
+                                    $q->orWhere('joined_date', '!=', $request->joined_date);
+                                })
+                                ->when($request->job_category_id, function ($q) use ($request) {
+                                    $q->orWhere('job_category_id', '!=', $request->job_category_id);
+                                })
+                                ->when($request->job_id, function ($q) use ($request) {
+                                    $q->orWhere('job_id', '!=', $request->job_id);
+                                })
+                                ->when($request->company_location_id, function ($q) use ($request) {
+                                    $q->orWhere('company_location_id', '!=', $request->company_location_id);
+                                })
+                                // ->whereRaw('(joined_date != "'.$request->joined_date.'" or job_category_id !='.$request->job_category_id.' or job_id != '.$request->job_id.' or company_location_id != '.$request->company_location_id.')')
                                 ->first();
             }
         }
