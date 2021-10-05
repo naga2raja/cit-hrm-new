@@ -384,7 +384,13 @@
 						if(row.category == 'Important'){
 							category = 'fa fa-exclamation'; style = "text-danger";
 						}
-						news += '<div class="dash-card-icon '+style+'"><i class="'+category+'" aria-hidden="true"></i></div>';
+						if(row.category == 'Event'){
+							category = 'fa fa-calendar'; style = "text-dark";
+						}
+						if(row.category == 'Project'){
+							category = 'fa fa-tasks'; style = "text-primary";
+						}
+						news += '<div class="dash-card-icon '+style+'" title="'+row.category+'"><i class="'+category+'" aria-hidden="true"></i></div>';
 						news += '</div>';
 						news += '</div></a>';
 						if (news_index != data[0].news.length - 1) {
