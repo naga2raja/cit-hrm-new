@@ -21,10 +21,16 @@ class PayGradesController extends Controller
      */
     public function index()
     {
-        $pay_grades = mPayGrade::get();
-        $pay_grade_currency = tPayGradeCurrency::with('currencyName')->get();
-        $mCurrency = mCurrency::get();
-        return view('admin/job/pay_grades/list', compact('pay_grades', 'pay_grade_currency', 'mCurrency'));
+        // $pay_grades = mPayGrade::get();
+        // $pay_grade_currency = tPayGradeCurrency::with('currencyName')->get();
+        // $mCurrency = mCurrency::get();
+        $payGrade = mPayGrade::join('t_pay_grade_currencies', 't_pay_grade_currencies.pay_grade_id', '=' , 'm_pay_grades.id')
+            ->join('m_currencies', 'm_currencies.currency_id', '=', 't_pay_grade_currencies.currency_id')
+            ->selectRaw('m_pay_grades.*, GROUP_CONCAT(m_currencies.currency_name) as currencies_name')
+            ->groupBy('m_pay_grades.id')
+            ->get();
+
+        return view('admin/job/pay_grades/list', compact('payGrade')); //'pay_grades', 'pay_grade_currency', 'mCurrency',
     }
 
     /**
