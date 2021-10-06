@@ -121,7 +121,7 @@
                                                     </div>
                                                     <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
                                                         <label> </label>
-                                                        <button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block" onclick="resetAllValues('filter_form')"> Cancel </button>
+                                                        <button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block" onclick="resetAllValues('filter_form'), hideErrorMessage()"> Cancel </button>
                                                     </div>
 
                                                 </div>
@@ -232,6 +232,10 @@
                 var htmlTxt = '<div class="alert alert-danger">Please select a Month and Year!</div>';
                 $('#payslipDownload').html(htmlTxt);                
             }
+        }
+
+        function hideErrorMessage() {
+            $('#payslipDownload').html('');
         }
 
 	</script>
