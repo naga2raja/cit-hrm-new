@@ -251,7 +251,7 @@
 											</div>
 											<div class="col-sm-5">
 												<div class="input-group mb-3">
-													<input class="form-control datetimepicker" type="text" id="punch_in_date" name="punch_in_date" value="" required>
+													<input class="form-control" type="text" id="punch_in_date" name="punch_in_date" value="" required>
 													<div class="input-group-append">
 														<button class="btn btn-theme text-white" type="button" id="calendar_icon">
 															<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -293,7 +293,7 @@
 											</div>
 											<div class="col-sm-5">
 												<div class="input-group mb-3">
-													<input class="form-control datetimepicker" type="text" id="punch_out_date" name="punch_out_date" value="" required>
+													<input class="form-control" type="text" id="punch_out_date" name="punch_out_date" value="" required>
 													<div class="input-group-append">
 														<button class="btn btn-theme text-white" type="button" id="calendar_icon">
 															<i class="fa fa-calendar" aria-hidden="true"></i>
@@ -459,8 +459,12 @@
 				success: function(data)
 				{
 					console.log(data); // show response from the php script.
-					alert('Updated successfully!');
-					window.location.reload();
+					if(data && data == 'error') {
+						alert('Punch out date should be greater than Punch in');
+					} else {
+						alert('Updated successfully!');
+						window.location.reload();
+					}
 				}
 			});
 		});
@@ -517,5 +521,17 @@
                 previous: 'fa fa-angle-left'
             }
     });
+
+	$('#punch_in_date, #punch_out_date').datetimepicker({
+		format: "DD/MM/YYYY",
+		maxDate: new Date(),
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		}
+	});
+
 </script>   
 @endpush

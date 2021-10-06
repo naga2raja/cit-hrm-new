@@ -148,6 +148,7 @@
 
 	$('#out_date').datetimepicker({
 		format: "DD/MM/YYYY",
+		maxDate: new Date(),
 		icons: {
 			up: "fa fa-angle-up",
 			down: "fa fa-angle-down",
