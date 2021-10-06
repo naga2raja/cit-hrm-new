@@ -17,7 +17,7 @@ class BiometricImportController extends Controller
 
     public function import(Request $request) {
         $request->validate([
-            'upload_file' => 'max:10240|required|mimes:csv,xls',
+            'upload_file' => 'max:10240|required|mimes:xls',
         ]);
 
         $fileName = $_FILES['upload_file']['name'];
