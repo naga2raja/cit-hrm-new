@@ -12,7 +12,7 @@
 									<div class="card-header" id="basic1">
 										<h4 class="cursor-pointer mb-0">
 											<a class="ml-2 coll-arrow d-block text-dark" href="javascript:void(0)" data-toggle="collapse" data-target="#basic-one" aria-expanded="true">
-												Add PaySlip
+												Add Multiple PaySlip
 											</a>
 										</h4>
 									</div>
@@ -96,7 +96,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="submit-section text-center btn-add">
-																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Upload</button>
 																</div>
 															</div>
 															<div class="col-sm-6">

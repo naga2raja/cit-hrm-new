@@ -106,7 +106,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="submit-section text-center btn-add">
-																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Save</button>
+																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Upload</button>
 																</div>
 															</div>
 															<div class="col-sm-6">
