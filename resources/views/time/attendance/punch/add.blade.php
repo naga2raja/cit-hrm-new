@@ -75,7 +75,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<textarea class="form-control {{ $errors->has('note') ? 'is-invalid' : ''}}" rows="3" name="note">{{ old('note') }}</textarea>
+													<textarea class="form-control {{ $errors->has('note') ? 'is-invalid' : ''}}" rows="3" name="note" maxlength="250">{{ old('note') }}</textarea>
                                                     {!! $errors->first('note', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
