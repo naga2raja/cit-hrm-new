@@ -15,9 +15,9 @@
 										<div class="custom-breadcrumb">
 											@if(!Request::is('my-info'))
 											<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-												<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">Home</a></li>												
+												<li class="breadcrumb-item d-inline-block"><a href="{{ route('index') }}" class="text-dark">Home</a></li>												
 												<li class="breadcrumb-item d-inline-block active">
-													<a href="{{ route('employees.index') }}">Employees</a>
+													PIM
 												</li>												
 											</ol>
 											@endif

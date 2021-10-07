@@ -16,7 +16,7 @@
 												<div class="custom-search input-group">
 													<div class="custom-breadcrumb">
 														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-															<li class="breadcrumb-item d-inline-block"><a href="/" class="text-dark">Home</a></li>
+															<li class="breadcrumb-item d-inline-block"><a href="{{ route('index') }}" class="text-dark">Home</a></li>
 															<li class="breadcrumb-item d-inline-block active">Leave</li>
 														</ol>
 														<h4 class="text-dark">My Leaves</h4>
