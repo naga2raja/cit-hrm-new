@@ -197,7 +197,7 @@
 								<div class="col-md-12">
 									<div class="form-group mb-2">
 										<label>Your Comments:</label>
-										<textarea class="form-control " rows="3" id="comments" name="comments"></textarea>
+										<textarea class="form-control " rows="3" id="comments" name="comments" maxlength="250"></textarea>
 									</div>
 								</div>
 							</div>
