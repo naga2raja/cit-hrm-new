@@ -314,6 +314,9 @@ class PunchInOutController extends Controller
         $out_time_diff = $out_utc_date->diff($logout_date)->format('%H.%I');
         $out_utc_date = $out_utc_date->toDateTimeString();
 
+        if(strtotime($logout_date) < strtotime($login_date)) {
+            return 'error';
+        }
 
         $punchInfo = tPunchInOut::where('id', $id)->first();
         $punchInfo->punch_in_user_time = $login_date;
@@ -326,6 +329,10 @@ class PunchInOutController extends Controller
         $punchInfo->punch_out_note = $request->punch_out_note;
         $punchInfo->punch_out_time_offset = $out_time_diff;
         $punchInfo->state = 'PUNCHED OUT';
+
+        if(Auth::user()->hasRole('Admin')) {
+            $punchInfo->status = 2;
+        }
 
         $punchInfo->updated_by = Auth::user()->id;
         $punchInfo->save();

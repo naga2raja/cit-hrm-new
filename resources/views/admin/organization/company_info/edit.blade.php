@@ -14,9 +14,10 @@
 													<div class="custom-breadcrumb">
 														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
 															<li class="breadcrumb-item d-inline-block"><a href="index" class="text-dark">Home</a></li>
-															<li class="breadcrumb-item d-inline-block active">Company</li>
+															<li class="breadcrumb-item d-inline-block"><a>Admin</a></li>
+															<li class="breadcrumb-item d-inline-block active">Organization</li>
 														</ol>
-														<h4 class="text-dark">Company</h4>
+														<h4 class="text-dark">General Information</h4>
 													</div>
 												</div>
 											</div>

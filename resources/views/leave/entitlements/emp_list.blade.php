@@ -15,7 +15,8 @@
 												<div class="custom-search input-group">
 													<div class="custom-breadcrumb">
 														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-															<li class="breadcrumb-item d-inline-block"><a href="index.html" class="text-dark">Leave</a></li>
+															<li class="breadcrumb-item d-inline-block"><a href="{{ route('index') }}" class="text-dark">Home</a></li>
+															<li class="breadcrumb-item d-inline-block"><a>Leave</a></li>
 															<li class="breadcrumb-item d-inline-block active">Entitlements</li>
 														</ol>
 														<h4 class="text-dark">Employee Entitlements</h4>

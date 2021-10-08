@@ -13,8 +13,8 @@
 											<div class="col-md-12 mr-auto text-left">
 												<div class="custom-search input-group">
 													<div class="custom-breadcrumb">
-														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">
-															<li class="breadcrumb-item d-inline-block"><a href="index" class="text-dark">Home</a></li>
+														<ol class="breadcrumb no-bg-color d-inline-block p-0 m-0 mb-2">															
+															<li class="breadcrumb-item d-inline-block"><a href="{{ route('index') }}" class="text-dark">Home</a></li>
 															<li class="breadcrumb-item d-inline-block active">PIM</li>
 														</ol>
 														<h4 class="text-dark">Add Employee</h4>
