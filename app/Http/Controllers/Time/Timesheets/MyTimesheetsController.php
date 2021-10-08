@@ -11,6 +11,7 @@ use App\tTimesheet;
 use App\tTimesheetItem;
 use APP\tActivity;
 use Carbon\Carbon;
+use App\Http\Controllers\Leave\Leave\LeaveController;
 use DateTime;
 use Session;
 use DB;
@@ -43,7 +44,10 @@ class MyTimesheetsController extends Controller
         }
         // dd($my_timesheets);
 
-        return view('time/timesheets/my_timesheets/list', compact('my_timesheets'));
+        $leaveCtrl = new LeaveController;
+        $holidays = $leaveCtrl->getHolidays($employees->id);
+
+        return view('time/timesheets/my_timesheets/list', compact('my_timesheets', 'holidays'));
     }
 
     /**

@@ -122,6 +122,7 @@
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-8">  
 													<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 														<h4 class="card-title mt-3 mb-0 ml-3" id="timesheet_table_header">Daily Timesheets</h4>
+														<div id="holidays_array" style="display: none;">{{ json_encode($holidays) }}</div>
 													</div>
 												</div>
 												<div id="button_div" class="col-sm-6 col-md-6 col-lg-6 col-xl-2">
@@ -358,13 +359,20 @@
 				    		// append add button
 				            var add_button = $('<a id="add_button" href="'+url+'" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"><i class="fa fa-plus"></i> Add</a>');
 				    		$("#button_div").append(add_button);
+
+				    		// to hide the Add button when holidays
+							Holidays();
+							// to hide the Add button when weekends
+							Weekends();
 				    	}
 			    	}
 		        }
 		        $('#timesheets > thead').html(thead);
 		        $('#timesheets > tbody').html(tbody);
+		        
+				
 			}
-		});
+		});		
 	}
 
 	window.onload = function() {
@@ -373,6 +381,31 @@
 		setCurrentMonth();
 		// to load the data
 	   	LoadData($('#dailyDatePicker').val(),'daily');
+	}
+
+	function Holidays() {
+	   	var holidayDates= [];
+		var existing_holidays = $('#holidays_array').html();
+		var selectedDate = moment($('#dailyDatePicker').val(), "DD-MM-YYYY").format("YYYY-MM-DD");
+		if(existing_holidays) {
+			holidayDates = JSON.parse(existing_holidays);			
+
+			for (let i = 0; i < holidayDates.length; i++) {
+				a = new Date(selectedDate);
+				b = new Date(holidayDates[i]);
+
+			  	if (a.getTime() === b.getTime()) {
+			  		$("#button_div").empty(); //cache it
+			  	}
+			}			
+		}
+	}
+
+	function Weekends() {
+		var dow = moment($('#dailyDatePicker').val(), "DD/MM/YYYY").day();
+		if(dow == 0 || dow == 6) {
+			$("#button_div").empty(); //cache it
+		}
 	}
 
 	// onclick of search
