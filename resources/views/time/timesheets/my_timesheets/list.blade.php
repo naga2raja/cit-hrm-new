@@ -5,6 +5,17 @@
 	.bootstrap-datetimepicker-widget tr:hover {
 	    /*background-color: #eee;*/
 	}
+
+	/*datepicker*/
+	td.day.disabled {
+		background: #f1bd06 !important;
+		color: #fff !important;
+		border-radius: 0px;
+	}
+	td.day.disabled.weekend {
+		background: none !important;
+		color: #777 !important;
+	}
 </style>
 <div class="page-wrapper">
 				<div class="container-fluid">
@@ -416,20 +427,29 @@
 		LoadData($('#'+active[0]+'DatePicker').val(), active[0]);
 	});
 
+	var holidayDates= [];
+	var existing_holidays = $('#holidays_array').html();
+	if(existing_holidays) {
+		holidayDates = JSON.parse(existing_holidays);
+		console.log('holidays', holidayDates);
+	}
+
 	//Date picker's format
 	$("#dailyDatePicker").datetimepicker({
-		format: 'DD-MM-YYYY',
+		format: 'DD/MM/YYYY',
 		locale:  moment.locale('en', {
 			week: { dow: 1 }
-		}),		
-		maxDate: moment(),
-        icons: {
-            up: "fa fa-angle-up",
-            down: "fa fa-angle-down",
-            next: 'fa fa-angle-right',
-            previous: 'fa fa-angle-left'
-        },
-        daysOfWeekDisabled: [0,6],
+		}),
+		// minDate: new Date(),
+		daysOfWeekDisabled: [0,6],
+		icons: {
+			up: "fa fa-angle-up",
+			down: "fa fa-angle-down",
+			next: 'fa fa-angle-right',
+			previous: 'fa fa-angle-left'
+		},
+		disabledDates: holidayDates,
+		// debug: true,
 	});
 
 	$("#weeklyDatePicker").datetimepicker({
