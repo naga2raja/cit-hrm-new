@@ -143,7 +143,17 @@
 															{{ ($item->is_import == 1) ? 'Import' : 'Manual' }}
 														</td>
 														<td>
-															{{ currentPunchStatus($item->status) }}
+															@if($item->status == 0 ) 
+                                                                Not submitted
+                                                            @elseif($item->status == 1 )
+                                                                <b><span class="text-warning font-weight-bold"> Submitted </span></b>
+                                                            @elseif($item->status == 2)
+											              		<b><span class="text-success font-weight-bold"> Approved </span></b>
+											              	@elseif($item->status == 3)
+											              		<b><span class="text-danger font-weight-bold"> Rejected </span></b>
+											              	@endif
+
+															<!-- {{ currentPunchStatus($item->status) }} -->
 														</td>
 														<td>
 															

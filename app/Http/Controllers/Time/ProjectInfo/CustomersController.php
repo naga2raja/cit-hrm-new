@@ -40,7 +40,7 @@ class CustomersController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'customer_name' => 'required|string|max:255',
+            'customer_name' => 'required|string|min:3|max:255',
             'customer_description' => 'nullable|string|max:255',
         ]);
 
@@ -85,7 +85,7 @@ class CustomersController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'customer_name' => 'required|string|max:255',
+            'customer_name' => 'required|string|min:3|max:255',
             'customer_description' => 'nullable|string|max:255',
         ]);
 

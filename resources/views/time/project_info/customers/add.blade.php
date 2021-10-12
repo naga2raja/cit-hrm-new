@@ -23,7 +23,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" placeholder="" name="customer_name" value="{{ old('customer_name') }}" maxlength="30" autocomplete="off">
+													<input type="text" class="form-control {{ $errors->has('customer_name') ? 'is-invalid' : ''}}" placeholder="" name="customer_name" id="customer_name" value="{{ old('customer_name') }}" maxlength="30" autocomplete="off" onfocus="allowOnlyCharacters('customer_name')">
                                                     {!! $errors->first('customer_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>

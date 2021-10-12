@@ -685,7 +685,7 @@
 							if(row.send_to == emp_id){
 								activity += '<h6 class="mb-0" style="word-break: break-all">Your '+row.module+' '+row.action+' ('+date+')</h6>';
 							}else{
-								activity += '<h6 class="mb-0" style="word-break: break-all">You '+row.action+' '+row.reciever_name+ ' '+row.module+' ('+date+')</h6>';
+								activity += '<h6 class="mb-0" style="word-break: break-all">You '+row.action+' '+row.module+' ('+date+') to '+row.reciever_name+ ' </h6>';
 							}
 						}
 
