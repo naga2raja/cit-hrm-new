@@ -98,6 +98,13 @@
 								
 								<div class="card-body align-center">									
 									<div class="table-responsive">
+										@if($message = Session::get('success'))
+										<div class="col-md-12">
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
+											</div>
+										</div>
+										@endif
 										<table class="table custom-table table-hover">
 											<thead>
 												<tr>

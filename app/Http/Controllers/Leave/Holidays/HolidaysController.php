@@ -133,7 +133,7 @@ class HolidaysController extends Controller
                 'operational_sub_unit_id'  => $request->input('sub_unit_id')
             ]);
 
-            return redirect()->route('holidays.index')->with('success', 'Holidays Added successfully');
+            return redirect()->route('holidays.index')->with('success', 'Holiday Added successfully');
         }
     }
 

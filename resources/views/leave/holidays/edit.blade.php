@@ -82,7 +82,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('description', $holidays->description) }}" required="" autocomplete="off">
+												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('description', $holidays->description) }}" required="" autocomplete="off" maxlength="30" minlength="3" id="description" onfocus="allowCharacterNumbersWithSpace('description')">
 												{!! $errors->first('description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>

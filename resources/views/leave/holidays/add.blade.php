@@ -75,7 +75,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" required="" autocomplete="off" value="{{ old('description') }}">
+												<input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" placeholder="" required="" autocomplete="off" value="{{ old('description') }}" maxlength="30" minlength="3" id="description" onfocus="allowCharacterNumbersWithSpace('description')">
 												{!! $errors->first('description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>

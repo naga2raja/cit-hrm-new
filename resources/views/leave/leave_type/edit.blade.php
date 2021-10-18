@@ -41,7 +41,7 @@
 													</div>
 													<div class="col-sm-3">
 														<div class="form-group">
-															<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $leave_type->name) }}" autocomplete="off">
+															<input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : ''}}" placeholder="" value="{{ old('name', $leave_type->name) }}" autocomplete="off"  id="leave_type_name"  maxlength="30" minlength="3" onfocus="allowCharactersWithSpace('leave_type_name')">
 															{!! $errors->first('name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
