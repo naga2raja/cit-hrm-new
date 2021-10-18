@@ -268,24 +268,25 @@
 
 		if (start_month.length > 0) {
 			$('#start_date').prop('disabled', false);
-			$('#start_date').find('option').remove();
+			$('#start_date').find('option').remove();					
 
 			var daysInSelectedMonth = daysInMonth(start_month);
 			for (var i = 1; i <= daysInSelectedMonth; i++) {
 				var selected = "";
 				if(i == start_date){
-					selected = "selected='selected'";
+					//selected = "selected='selected'";
 				}else{
 					selected = "";
 				}
 	  
 	            $('#start_date').append('<option value="'+i+'" '+selected+'>'+i+'</option>');
-			}
+			}			
 
 			setLeavePeriod();
 		} else {
 			$('#start_date').prop('disabled', true);
 			$('#start_date').find('option').remove();
+			$('#start_date').append('<option value="">-- Select Date --</option>');
 		}
 	}
 
@@ -297,7 +298,7 @@
 	}
 
 	$('#start_month').change(function() {
-		setMonthDate();
+		setMonthDate();		
 	});
 
 	$('#start_date').change(function() {		

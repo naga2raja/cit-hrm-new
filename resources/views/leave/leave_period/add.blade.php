@@ -235,6 +235,7 @@
 			$('#start_date').find('option').remove();
 
 			var daysInSelectedMonth = daysInMonth(start_month);
+			$('#start_date').append('<option value="">-- Select Date --</option>');
 			for (var i = 1; i <= daysInSelectedMonth; i++) {
 				var selected = "";
 				if(i == start_date){
@@ -250,6 +251,7 @@
 		} else {
 			$('#start_date').prop('disabled', true);
 			$('#start_date').find('option').remove();
+			$('#start_date').append('<option value="">-- Select Date --</option>');
 		}
 	}
 
