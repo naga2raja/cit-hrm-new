@@ -123,14 +123,14 @@
 
 										<div class="col-12 form-group">
 											<p class="mb-2">Email Address <span class="text-danger">*</span></p>
-											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif maxlength="30" autocomplete="off">
+											<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email', $employee->email) }}" @if(Request::is('my-info')) readonly @endif maxlength="30" autocomplete="off" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
 											{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 										</div>
 
 										<div class="col-sm-6">
 											<div class="form-group">
 												<p class="mb-2">Employee Id <span class="text-danger">*</span></p>
-												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}" @if(Request::is('my-info')) readonly @endif>
+												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}" @if(Request::is('my-info')) readonly @endif minlength="3" maxlength="8" onfocus="allowCharactersAndNumbers('employee_id')" id="employee_id">
 												{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -326,7 +326,8 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<p class="mb-2">Alternate Email</p>
-												<input type="email" class="form-control" placeholder="" name="alternate_email" value="{{ old('alternate_email', @$contactInfo->alternate_email) }}" maxlength="30">
+												<input type="email" class="form-control {{ $errors->has('alternate_email') ? 'is-invalid' : ''}}"  placeholder="" name="alternate_email" value="{{ old('alternate_email', @$contactInfo->alternate_email) }}" maxlength="30"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+												{!! $errors->first('alternate_email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
 									</div>
@@ -627,7 +628,7 @@
 										</div>
 										<div class="col-sm-4">
 											<div class="form-group">
-												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}">
+												<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" minlength="3" maxlength="8" placeholder="" required name="employee_id" value="{{ old('employee_id', $employee->employee_id) }}"  onfocus="allowCharactersAndNumbers('employee_id')" id="employee_id">
 												{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
@@ -853,7 +854,12 @@
 	});
 
 	$("#user_profile_list a.list-group-item").click(function() {
-    	$(this).addClass('active').siblings().removeClass('active');
+		var acc_section = $(this).attr('href'); 
+		if($(acc_section + ' a').hasClass( "collapsed" )) {
+			$(acc_section + ' a').trigger('click');
+		}
+    	
+    	$(this).addClass('active').siblings().removeClass('active');    	
     });
 
 	function editImage() {

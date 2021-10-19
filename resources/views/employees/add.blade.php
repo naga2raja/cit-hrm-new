@@ -96,7 +96,7 @@
 													<div class="col-sm-12">
 														<div class="form-group">
 															<label>Email Address <span class="text-danger">*</span></label>
-															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email') }}" maxlength="30" autocomplete="off">
+															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email') }}" maxlength="30" autocomplete="off" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
 															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -107,7 +107,7 @@
 														<div class="form-group">
 															<label>Employee Id <span class="text-danger">*</span></label>
 
-															<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id') }}">
+															<input type="text" class="form-control {{ $errors->has('employee_id') ? 'is-invalid' : ''}}" placeholder="" required name="employee_id" value="{{ old('employee_id') }}" minlength="3" maxlength="8" onfocus="allowCharactersAndNumbers('employee_id')" id="employee_id">
 															{!! $errors->first('employee_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -192,13 +192,13 @@
 														</div>
 														<div class="col-sm-4">
 															<div class="form-group">
-																<input type="password" name="password" id="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="">
+																<input type="password" name="password" id="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''}}" placeholder="" maxlength="12">
 																{!! $errors->first('password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 															</div>													
 														</div>
 														<div class="col-sm-3">
 															<div class=" custom-control custom-checkbox mb-0">
-																<input type="checkbox" onclick="showPassword('password')" id="show_password" class="custom-control-input" >
+																<input type="checkbox" onclick="showPassword('password')" id="show_password" class="custom-control-input">
 																<label class="mb-0 custom-control-label" for="show_password">Show Password</label>
 															</div>
 														</div>
@@ -212,7 +212,7 @@
 														</div>
 														<div class="col-sm-4">
 															<div class="form-group">
-																<input type="password" name="confirm_password" id="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="">
+																<input type="password" name="confirm_password" id="confirm_password" class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : ''}}" placeholder="" maxlength="12">
 																{!! $errors->first('confirm_password', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 															</div>	
 														</div>
@@ -313,7 +313,8 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<p class="mb-2">Alternate Email</p>
-														<input type="email" class="form-control" placeholder="" name="alternate_email" value="{{ old('alternate_email') }}" maxlength="30">
+														<input type="email" class="form-control {{ $errors->has('alternate_email') ? 'is-invalid' : ''}}" placeholder="" name="alternate_email" value="{{ old('alternate_email') }}"  maxlength="30"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+														{!! $errors->first('alternate_email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 													</div>
 												</div>	
 												
@@ -365,12 +366,13 @@
 											</div>
 											<div class="col-md-12 form-group mb-0">
 												<p class="mb-2">Job Location <sapn class="text-danger">*</sapn></p>
-												<select class="form-control select" name="company_location_id">
+												<select class="form-control select {{ $errors->has('company_location_id') ? 'is-invalid' : '' }}" name="company_location_id">
 													<option value="">Select </option>
 													@foreach ($locations as $item)
 														<option value="{{ $item->id }}" {{old ('company_location_id') == $item->id ? 'selected' : ''}}> {{ $item->company_name }}</option>
 													@endforeach
 												</select>
+												{!! $errors->first('company_location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
 									</div>
@@ -535,6 +537,10 @@
 	});
 
 	$("#user_profile_list a.list-group-item").click(function() {
+		var acc_section = $(this).attr('href'); 
+		if($(acc_section + ' a').hasClass( "collapsed" )) {
+			$(acc_section + ' a').trigger('click');
+		}
     	$(this).addClass('active').siblings().removeClass('active');
     });
 

@@ -230,6 +230,12 @@ function allowCharacterNumbersWithSpace(id) {
 	});
 }
 
+function allowCharactersAndNumbers(id) {
+	$("#"+id).inputFilter(function(value) {
+		return /^[0-9a-z]*$/i.test(value);
+	});
+}
+
 function allowPriceFormat(id) {
 	$("#"+id).inputFilter(function(value) {
   	return /^\d*[.]?\d{0,2}$/.test(value); });
