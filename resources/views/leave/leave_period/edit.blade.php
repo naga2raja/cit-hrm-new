@@ -44,7 +44,7 @@
 												<select class="form-control select" name="location_id" id="location_id" required="">
                                                     <option value="">-- Select Location --</option>
                                                     @foreach ($country as $row)
-	                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : ($leave_period->country_id == $row->id) ? 'selected' : '' }}>{{ $row->country }}</option>
+	                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : (($leave_period->country_id == $row->id) ? 'selected' : '') }}>{{ $row->country }}</option>
 	                                                @endforeach
                                                 </select>
 												{!! $errors->first('location_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -61,7 +61,7 @@
 												<select class="form-control select" name="sub_unit_id" id="sub_unit_id" required="">
                                                     <option value="">-- Select Sub Unit --</option>
                                                     @foreach ($company_location as $company)
-	                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : ($leave_period->sub_unit_id == $company->id) ? 'selected' : '' }}>{{ $company->company_name }}</option>
+	                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : (($leave_period->sub_unit_id == $company->id) ? 'selected' : '') }}>{{ $company->company_name }}</option>
 	                                                @endforeach
                                                 </select>                                                
 												{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
