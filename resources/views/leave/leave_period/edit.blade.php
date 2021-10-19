@@ -254,8 +254,13 @@
 		var end_day = daysInMonth(end_month_number);
 
 		var to_date = moment(end_year+" "+end_month_number+" "+end_day).format('Y-MM-DD');
+		
+		if(end_month_name && day > 0) {
+			$('#end_date').html(""+end_month_name+" "+end_day+" ("+end_year+")");
+		} else {
+			$('#end_date').html("");
+		}
 
-		$('#end_date').html(""+end_month_name+" "+end_day+" ("+end_year+")");
 		$('#leave_period').html(from_date+' to '+to_date);
 
 		$('#start_period').val(from_date);
