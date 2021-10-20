@@ -220,11 +220,13 @@
 		var to_date = moment(end_year+" "+end_month_number+" "+end_day).format('Y-MM-DD');
 		
 		if(end_month_name && day > 0) 
-{			$('#end_date').html(""+end_month_name+" "+end_day+" ("+end_year+")");
+		{			
+			$('#end_date').html(""+end_month_name+" "+end_day+" ("+end_year+")");
+			$('#leave_period').html(from_date+' to '+to_date);
 		} else {
 			$('#end_date').html("");
-		}
-		$('#leave_period').html(from_date+' to '+to_date);
+			$('#leave_period').html("");
+		}		
 
 		$('#start_period').val(from_date);
 		$('#end_period').val(to_date);
@@ -256,6 +258,8 @@
 			$('#start_date').prop('disabled', true);
 			$('#start_date').find('option').remove();
 			$('#start_date').append('<option value="">-- Select Date --</option>');
+			$('#end_date').html("");
+			$('#leave_period').html("");
 		}
 	}
 
