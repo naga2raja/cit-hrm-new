@@ -59,9 +59,9 @@
 											<div class="form-group">
 												<select class="form-control select" name="sub_unit_id" id="sub_unit_id" required="">
                                                     <option value="">-- Select Sub Unit --</option>
-                                                    @foreach ($company_location as $company)
+                                                    <!-- @foreach ($company_location as $company)
 	                                                    <option value='{{ $company->id }}'>{{ $company->company_name }}</option>
-	                                                @endforeach
+	                                                @endforeach -->
                                                 </select>
 												{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
