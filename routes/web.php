@@ -192,6 +192,7 @@ Route::group(['middleware' => ['role:Admin|Manager', 'auth']], function () {
     // Employee Entitlement List
     Route::resource('/leaveEntitlement', 'Leave\Entitlements\LeaveEntitlementController'); // add
     Route::post('/getSubUnits-ajax', 'Leave\Entitlements\LeaveEntitlementController@getSubUnits')->name('getSubUnits-ajax');
+    Route::post('/getLeavePeriods-ajax', 'Leave\Entitlements\LeaveEntitlementController@getLeavePeriods')->name('getLeavePeriods-ajax');
     
     Route::post('/leaveEntitlement/multiple-delete', 'Leave\Entitlements\LeaveEntitlementController@deleteMultiple')->name('leaveEntitlement.deleteMultiple');
 

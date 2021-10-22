@@ -194,7 +194,7 @@
 												</div>
 												<hr>
 
-												<div class="">
+												<div class="row">
 													<div class="col-sm-3 text-center">
 														<div class="row">
 															<div class="col-sm-6">
@@ -203,10 +203,21 @@
 																</div>
 															</div>
 															<div class="col-sm-6">
-																<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="resetAllValues('searchLeave')">Cancel</a>
+																<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" style="background: grey;border-color: grey;border-bottom:5px solid #736565;" onclick="resetAllValues('searchLeave')">Reset</a>
 															</div>
-														</div>
+														</div>														
 													</div>
+													<div class="col-sm-3 text-center pull-right">
+														<div class="row">
+															<div class="col-sm-6">
+																@if(@$assignLeave)
+																<a href="{{ route('home') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0 pull-right">Cancel</a>
+																@else
+																	<a href="{{ route('leave.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0 pull-right">Cancel</a>
+																@endif
+															</div>
+													</div>
+													
 												</div>
 
 											</form>

@@ -44,7 +44,8 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<select class="form-control select" name="location_id" id="location_id">
+													<select class="form-control select {{ $errors->has('location_id') ? 'is-invalid' : ''}}" name="location_id" id="location_id">
+														<option value='' {{ old('location_id') == '' ? 'selected' : '' }}>Select</option>
 	                                                    <option value='0' {{ old('location_id') == '0' ? 'selected' : '' }}>All</option>
 	                                                    @foreach ($country as $row)
 		                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : '' }}>{{ $row->country }}</option>
@@ -62,10 +63,11 @@
 											<div class="col-sm-3">
 												<div class="form-group">
 													<select class="form-control select" name="sub_unit_id" id="sub_unit_id">
-	                                                    <option value='0' {{ old('sub_unit_id') == '0' ? 'selected' : '' }}>All</option>
+														<option value='' {{ old('sub_unit_id') == '' ? 'selected' : '' }}>Select</option>
+	                                                    {{-- <option value='0' {{ old('sub_unit_id') == '0' ? 'selected' : '' }}>All</option>
 	                                                    @foreach ($company_location as $company)
 		                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : '' }}>{{ $company->company_name }}</option>
-		                                                @endforeach
+		                                                @endforeach --}}
 	                                                </select>
 													{!! $errors->first('sub_unit_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
@@ -106,9 +108,9 @@
 										<div class="col-sm-3">
 											<div class="form-group">
 												<select class="form-control select {{ $errors->has('leave_type') ? 'is-invalid' : ''}}" name="leave_type">
-													<option value="">Select Leave Type</option>
+													<option value="">Select</option>
                                                     @foreach ($leave_types as $type)
-	                                                    <option value='{{ $type->id }}' {{ old('leave_type_id') == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
+	                                                    <option value='{{ $type->id }}' {{ old('leave_type') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
 	                                                @endforeach
                                                 </select>
                                                 {!! $errors->first('leave_type', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -124,8 +126,12 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period">
-	                                                <option value='{{ $leave_period_value }}' {{ old('leave_period_value') == $leave_period_value ? 'selected' : '' }}>{{ $leave_period_name }}</option>
+												<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period" id="leave_period">
+													<option value="">Select</option>
+                                                    @foreach ($leavePeriodsArr as $type)
+	                                                    <option value='{{ $type["value"] }}' {{ old('leave_period') == $type["value"] ? 'selected' : '' }}>{{ $type["name"] }}</option>
+	                                                @endforeach
+	                                                {{-- <option value='{{ $leave_period_value }}' {{ old('leave_period_value') == $leave_period_value ? 'selected' : '' }}>{{ $leave_period_name }}</option> --}}
                                                 </select>
                                                 {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
                                                 <input type="hidden" name="from_date" id="from_date" class="form-control" value="{{ $from_date }}">
@@ -166,7 +172,7 @@
 													</div>
 												</div>
 												<div class="col-sm-6">
-													<a href="{{ url()->previous() }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
+													<a href="{{ route('myEntitlements.index') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
 												</div>
 											</div>
 										</div>
@@ -241,11 +247,13 @@
 		$('#emp_number').val(emp_number);
 	 	var emp_name = $("#employee_name option:selected").html();
 	 	$('#emp_name').val(emp_name);
+		 getLeavePeriods(true);
 	}
 
 	$("#multiple_employee").change(function() {
 		// onchange calling enable or disable function
 	    display();
+		getLeavePeriods();
 	});
 
 	// Autocomplete ajax call
@@ -280,6 +288,10 @@
 		getSubUnits(this.value);
 	});
 
+	$(document.body).on("change","#sub_unit_id",function(){
+		getLeavePeriods();
+	});
+
 	function getSubUnits(location_id){
 		$.ajax({
 			method: 'POST',
@@ -292,16 +304,54 @@
 				var option = "";
 				if(data.length > 0){
 					$("#sub_unit_id").empty();
+					$("#sub_unit_id").append($('<option></option>').attr("value", '').text("Select"));
 					option = $('<option></option>').attr("value", 0).text("All");
 					$("#sub_unit_id").append(option);
 					data.forEach(function (row,index) {
-						option = $('<option></option>').attr("value", row.country_id).text(row.company_name);
+						option = $('<option></option>').attr("value", row.id).text(row.company_name);
 						$("#sub_unit_id").append(option);
 					});					
 				}else{
 					$("#sub_unit_id").empty();
-					option = $('<option></option>').attr("value", '').text("No data");
+					option = $('<option></option>').attr("value", '').text("Select");
 					$("#sub_unit_id").append(option);
+				}
+			}
+		});
+	}
+
+	function getLeavePeriods(load = false) {
+		var sub_unit_id = $('#sub_unit_id').val();
+		var location_id = $('#location_id').val();
+
+		$.ajax({
+			method: 'POST',
+			url: "{{ route('getLeavePeriods-ajax') }}",
+			data: JSON.stringify({'location_id': location_id, 'sub_unit_id': sub_unit_id, 'is_multiple' : $('#multiple_employee').is(':checked'), '_token': '{{ csrf_token() }}' }),
+			dataType: "json",
+			contentType: 'application/json',
+			success: function(data){
+				console.log('subunit : ', data);
+				var option = "";
+				if(data.length > 0){
+					var leave_period_old = '{{ old("leave_period") }}'
+					$("#leave_period").empty();
+					$("#leave_period").append($('<option></option>').attr("value", '').text("Select"));
+					data.forEach(function (row,index) {
+						var option_label = row.name +' - '+ row.company_name;
+						if(leave_period_old == row.value) {
+							option = $('<option>', { value: row.value, text : option_label, selected: "selected"});
+						} else {
+							option = $('<option></option>').attr("value", row.value).text(option_label);
+						}
+						$("#leave_period").append(option);
+					});					
+				}else{
+					$("#leave_period").empty();
+					option = $('<option></option>').attr("value", '').text("Select");
+					$("#leave_period").append(option);
+					if(!load && location_id && sub_unit_id)
+						alert('Leave Period Not Added for this Location!');
 				}
 			}
 		});

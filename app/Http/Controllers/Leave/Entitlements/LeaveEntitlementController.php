@@ -100,20 +100,32 @@ class LeaveEntitlementController extends Controller
                             ->get();
         $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
         $leave_types = mLeaveType::get();
-        $leave_periods = mLeavePeriod::orderBy('id', 'desc')->first();
-
+        $leave_periods = mLeavePeriod::whereRaw('DATE_FORMAT(start_period, "%Y") = '. date('Y'))
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->groupBy('id')
+            ->get();
+        $leavePeriodsArr = [];
         if($leave_periods){
             $year = date('Y');
-            $month = $leave_periods->start_month;
-            $date = $leave_periods->start_date;
-            $from_date = $year."-" .str_pad($month, 2, "0", STR_PAD_LEFT)."-".str_pad($date, 2, "0", STR_PAD_LEFT);
+            foreach($leave_periods as $leave_period) {
+                $month = $leave_period->start_month;
+                $date = $leave_period->start_date;
+                $from_date = $year."-" .str_pad($month, 2, "0", STR_PAD_LEFT)."-".str_pad($date, 2, "0", STR_PAD_LEFT);
 
-            $end = new DateTime($from_date);
-            $end->modify('+1 years -1 days');
-            $end_date = $end->format('Y-m-d');
+                $end = new DateTime($from_date);
+                $end->modify('+1 years -1 days');
+                $end_date = $end->format('Y-m-d');
 
-            $leave_period_value = $from_date.' - '.$end_date;
-            $leave_period_name = $from_date.' - '.$end_date;
+                $leave_period_value = $from_date.' - '.$end_date;
+                $leave_period_name = $from_date.' - '.$end_date;
+                $leavePeriodsArr[] = [
+                    'id' => $leave_period->id,
+                    'value' => $leave_period_value,
+                    'name'  => $leave_period_name
+                ];
+            }
+            
         }else{
             $from_date = "";
             $end_date = "";
@@ -121,7 +133,7 @@ class LeaveEntitlementController extends Controller
             $leave_period_name = 'No Leave Period';
         }
 
-        return view('leave/entitlements/add', compact('employees', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value', 'company_location', 'country'));
+        return view('leave/entitlements/add', compact('employees', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value', 'company_location', 'country', 'leavePeriodsArr'));
     }
 
     /**
@@ -134,6 +146,7 @@ class LeaveEntitlementController extends Controller
     {
         // dd($request->all());
         $validated = $request->validate([
+            'location_id' => 'required_if:multiple_employee,on',
             'employee' => 'required_if:multiple_employee,off',
             'entitlement' => 'required|max:2',
             'leave_type' => 'required',
@@ -330,6 +343,52 @@ class LeaveEntitlementController extends Controller
             // dd(DB::getQueryLog());
         }
         return response()->json($sub_units);
+    }
+
+    public function getLeavePeriods(Request $request) {
+        $country_id = $request->location_id;
+        $sub_unit_id = $request->sub_unit_id;
+        $leavePeriodsArr = [];
+
+        if((!$request->is_multiple) || ($country_id != null && $country_id >= 0 && $sub_unit_id >= 0)) {
+            
+            $leave_periods = mLeavePeriod::join('m_company_locations', 'm_company_locations.id', 'm_leave_periods.sub_unit_id')
+                ->whereRaw('DATE_FORMAT(start_period, "%Y") = '. date('Y'))
+                ->selectRaw('m_leave_periods.*, m_company_locations.company_name')
+                ->where('m_leave_periods.status', 1);
+
+            if($request->is_multiple && $sub_unit_id > 0) {
+                $leave_periods = $leave_periods->where('m_leave_periods.sub_unit_id', $sub_unit_id);
+            }
+            if($request->is_multiple && $country_id > 0) {
+                $leave_periods = $leave_periods->where('m_leave_periods.country_id', $country_id);
+            }         
+            $leave_periods = $leave_periods->orderBy('m_leave_periods.id', 'desc')
+                ->groupBy('m_leave_periods.id')
+                ->get(); 
+                
+                $year = date('Y');
+                foreach($leave_periods as $leave_period) {
+                    $month = $leave_period->start_month;
+                    $date = $leave_period->start_date;
+                    $from_date = $year."-" .str_pad($month, 2, "0", STR_PAD_LEFT)."-".str_pad($date, 2, "0", STR_PAD_LEFT);
+    
+                    $end = new DateTime($from_date);
+                    $end->modify('+1 years -1 days');
+                    $end_date = $end->format('Y-m-d');
+    
+                    $leave_period_value = $from_date.' - '.$end_date;
+                    $leave_period_name = $from_date.' - '.$end_date;
+                    $leavePeriodsArr[] = [
+                        'id' => $leave_period->id,
+                        'value' => $leave_period_value,
+                        'name'  => $leave_period_name,
+                        'company_name' => $leave_period->company_name
+                    ];
+                }
+
+        }                  
+        return response()->json($leavePeriodsArr);
     }
 
 }
