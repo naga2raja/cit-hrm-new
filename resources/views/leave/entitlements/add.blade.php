@@ -326,6 +326,9 @@
 				}
 			}
 		});
+		$("#leave_period").empty();
+		option = $('<option></option>').attr("value", '').text("Select");
+		$("#leave_period").append(option);
 	}
 
 	function getLeavePeriods(load = false) {
