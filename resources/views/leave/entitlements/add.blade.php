@@ -247,6 +247,9 @@
 		$('#emp_number').val(emp_number);
 	 	var emp_name = $("#employee_name option:selected").html();
 	 	$('#emp_name').val(emp_name);
+		 
+		 var location_id = $('#location_id').val();
+		 getSubUnits(location_id);
 		 getLeavePeriods(true);
 	}
 
@@ -302,13 +305,18 @@
 			success: function(data){
 				// console.log('subunit : ', data);
 				var option = "";
+				var sub_unit_id_old = '{{ old("sub_unit_id") }}'
 				if(data.length > 0){
 					$("#sub_unit_id").empty();
 					$("#sub_unit_id").append($('<option></option>').attr("value", '').text("Select"));
 					option = $('<option></option>').attr("value", 0).text("All");
 					$("#sub_unit_id").append(option);
 					data.forEach(function (row,index) {
-						option = $('<option></option>').attr("value", row.id).text(row.company_name);
+						if(sub_unit_id_old == row.id) {
+							option = $('<option>', { value: row.id, text : row.company_name, selected: "selected"});
+						} else {
+							option = $('<option></option>').attr("value", row.id).text(row.company_name);
+						}
 						$("#sub_unit_id").append(option);
 					});					
 				}else{
@@ -323,6 +331,10 @@
 	function getLeavePeriods(load = false) {
 		var sub_unit_id = $('#sub_unit_id').val();
 		var location_id = $('#location_id').val();
+		if(load) {
+			sub_unit_id = '{{ old("sub_unit_id") }}';
+			location_id = '{{ old("location_id") }}';
+		}
 
 		$.ajax({
 			method: 'POST',
