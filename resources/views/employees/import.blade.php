@@ -48,7 +48,7 @@
 													<div class="col-md-12">
 														<div class="form-group">
 															<label>Upload Excel</label>
-															<input type="file" class="form-control {{ $errors->has('upload_file') ? 'is-invalid' : ''}}" name="upload_file" required>
+															<input type="file" class="form-control {{ $errors->has('upload_file') ? 'is-invalid' : ''}}" name="upload_file" required accept=".csv">
 															{!! $errors->first('upload_file', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>
@@ -60,7 +60,10 @@
 																</div>
 															</div>
 															<div class="col-sm-3">
-																<button type="button" onclick="resetAllValues('pim_data_import')" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Reset</button>
+																<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" style="background: grey;border-color: grey;border-bottom:5px solid #736565;" onclick="resetAllValues('pim_data_import')">Reset</a>
+															</div>
+															<div class="col-sm-3">
+																<a href="{{ route('home') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0">Cancel</a>
 															</div>
 														</div>
 													</div>
@@ -70,9 +73,9 @@
 															<li  class="list-group-item">
 																Column order should not be changed </li>
 															<li  class="list-group-item">
-																First Name, Last Name, Employee Id and Email are </li>
+																First Name, Last Name, Employee Id and Email are Mandatory</li>
 															<li  class="list-group-item">
-																All date fields should be in YYYY-MM-DD format </li>
+																All date fields should be in DD-MM-YYYY format </li>
 															<li  class="list-group-item">
 																If Gender is specified, value should be either <b>Male</b> or <b>Female</b> </li>	
 															<li  class="list-group-item">

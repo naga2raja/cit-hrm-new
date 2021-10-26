@@ -47,7 +47,7 @@
 											@endif
 										@endif
 										
-											<form method="POST" enctype="multipart/form-data" action="{{ route('holidays-import') }}">
+											<form method="POST" enctype="multipart/form-data" action="{{ route('holidays-import') }}" id="holiday_data_import">
 												@csrf
 												<div class="row">
 													<div class="col-md-12">
@@ -63,6 +63,9 @@
 																<div class="submit-section text-center btn-add">
 																	<button type="submit" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Upload</button>
 																</div>
+															</div>
+															<div class="col-sm-3">
+																<a href="javascript:void(0);" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" style="background: grey;border-color: grey;border-bottom:5px solid #736565;" onclick="resetAllValues('holiday_data_import')">Reset</a>
 															</div>
 															<div class="col-sm-3">
 																<a href="{{ route('home') }}" class="btn btn-danger text-white ctm-border-radius btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Cancel</a>
