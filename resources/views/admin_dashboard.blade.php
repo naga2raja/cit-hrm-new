@@ -130,7 +130,11 @@
 												<i class="fa fa-building-o"></i>
 											</div>
 											<div class="card-right">
-												<a href="{{ route('company.index') }}">
+												@hasrole('Admin')												
+													<a href="{{ route('company.index') }}">
+												@else
+													<a href="#">
+												@endhasrole												
 													<h4 class="card-title">Companies</h4>
 													<p class="card-text">{{ $data['company_count'] }}</p>
 												</a>
