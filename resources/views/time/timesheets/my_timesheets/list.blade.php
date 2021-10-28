@@ -492,11 +492,16 @@
    		var value = $("#weeklyDatePicker").val();
    		var firstDate = moment(value, "DD-MM-YYYY").day(1).format("DD/MM/YYYY");
    		var lastDate =  moment(value, "DD-MM-YYYY").day(7).format("DD/MM/YYYY");
-   		// console.log(value);
-   		$("#weeklyDatePicker").val(firstDate + " - " + lastDate);
+   		console.log('Week', value);
+   		if(value) {   			
+   			$("#weeklyDatePicker").val(firstDate + " - " + lastDate);   
+   			// Load table data
+   			LoadData($('#weeklyDatePicker').val(),'weekly');			
+   		} else {   	
+   			console.log('in', value);		
+   			LoadData('','daily');
+   		}   		
    		
-   		// Load table data
-   		LoadData($('#weeklyDatePicker').val(),'weekly');
    	});
 
    	$('#monthlyDatePicker').on('dp.change', function(e){
