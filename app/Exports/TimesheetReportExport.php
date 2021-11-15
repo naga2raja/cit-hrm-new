@@ -37,7 +37,7 @@ class TimesheetReportExport implements FromArray, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
-            "Employee Name", "Project Name", "Date", "Duration", "Status", "Type", "Created at"
+            "Employee Name", "Project Name", "Date", "Duration", "Status", "Created at"
         ];
     }
 }
