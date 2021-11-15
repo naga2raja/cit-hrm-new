@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Employee;
 use App\mCompany;
+use App\mCompanyLocation;
 use App\tLeave;
 use App\tLeaveRequest;
 use App\mProject;
@@ -73,7 +74,7 @@ class HomeController extends Controller
                               }
                               $employees_count = $employees_count->get();
 
-            $company_count = mCompany::get();
+            $company_count = mCompanyLocation::get();
 
             $leave_count = tLeaveRequest::select('t_leave_requests.*')
                                 ->join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')

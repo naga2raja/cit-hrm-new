@@ -131,7 +131,7 @@
 											</div>
 											<div class="card-right">
 												@hasrole('Admin')												
-													<a href="{{ route('company.index') }}">
+													<a href="{{ route('locations.index') }}">
 												@else
 													<a href="#">
 												@endhasrole												
