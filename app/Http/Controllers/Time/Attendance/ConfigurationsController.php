@@ -18,7 +18,7 @@ class ConfigurationsController extends Controller
      */
     public function index()
     {
-        $configurations = mAttendanceConfigure::whereIn('id', [1,2,3])->get();
+        $configurations = mAttendanceConfigure::whereIn('id', [1])->get();
         $employees = [];
         $employeeConfig = mAttendanceConfigure::where('id', 4)->first();
         // if($employeeConfig) {
