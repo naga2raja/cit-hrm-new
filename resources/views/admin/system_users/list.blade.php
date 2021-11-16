@@ -170,7 +170,7 @@
 													<tr>
 														<td colspan="5">
 															<div class="d-flex justify-content-center">
-																{{ $users->links() }}
+																{{ $users->appends($_GET)->links() }}
 															</div>
 														</td>
 													</tr>

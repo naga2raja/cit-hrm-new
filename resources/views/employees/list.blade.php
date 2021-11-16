@@ -184,7 +184,7 @@
 												<tr>
 													<td colspan="6">
 														<div class="d-flex justify-content-center">
-															{{ $employees->links() }}
+															{{ $employees->appends($_GET)->links() }}
 														</div>
 													</td>
 												</tr>
