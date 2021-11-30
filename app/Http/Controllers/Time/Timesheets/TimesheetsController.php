@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use DateTime;
 use Session;
 use DB;
+use Mail;
+use App\Mail\TimesheetStatus;
 
 
 class TimesheetsController extends Controller
@@ -330,7 +332,7 @@ class TimesheetsController extends Controller
                     'employee_name' => $employeeDetails->first_name.' '.$employeeDetails->first_name
                 ]; 
                 $toEmails[] = ['name' => $employeeDetails->first_name.' '.$employeeDetails->first_name, 'email' => $employeeDetails->email];
-                Mail::to($toEmails)->send(new AttendanceStatusMail($details));
+                Mail::to($toEmails)->send(new TimesheetStatus($details));
             }
         }
         return redirect()->back()->with('success', 'Timesheet Status Updated Successfully!');
