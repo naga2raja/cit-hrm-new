@@ -227,3 +227,10 @@ if (! function_exists('assetUrl')) {
                     ->first();
         return $data;
     }
+
+    function getSuperAdminEmail() {
+        $data = DB::table('users')
+                    ->where('id', 1)
+                    ->first();
+        return $data->email;
+    }

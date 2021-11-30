@@ -322,15 +322,15 @@ class TimesheetsController extends Controller
               // =========== t_log table end =============
 
                 // Send Email to Employee
-                // $toEmails = [];
-                // $employeeDetails = $leaveCtrl->getEmployeeDetails($timesheetInfo->employee_id);
-                // $details = [
-                //     'date' => $timesheetInfo->timesheet_in_user_time.' to '. $timesheetInfo->timesheet_out_user_time,
-                //     'message'  =>  'Updated to <b>'.$newtimesheetStatus. '</b> By '.Auth::user()->name,
-                //     'employee_name' => $employeeDetails->first_name.' '.$employeeDetails->first_name
-                // ]; 
-                // $toEmails[] = ['name' => $employeeDetails->first_name.' '.$employeeDetails->first_name, 'email' => $employeeDetails->email];
-                // Mail::to($toEmails)->send(new AttendanceStatusMail($details));
+                $toEmails = [];
+                $employeeDetails = $leaveCtrl->getEmployeeDetails($timesheetInfo->employee_id);
+                $details = [
+                    'date' => $timesheetInfo->timesheet_in_user_time.' to '. $timesheetInfo->timesheet_out_user_time,
+                    'message'  =>  'Updated to <b>'.$newtimesheetStatus. '</b> By '.Auth::user()->name,
+                    'employee_name' => $employeeDetails->first_name.' '.$employeeDetails->first_name
+                ]; 
+                $toEmails[] = ['name' => $employeeDetails->first_name.' '.$employeeDetails->first_name, 'email' => $employeeDetails->email];
+                Mail::to($toEmails)->send(new AttendanceStatusMail($details));
             }
         }
         return redirect()->back()->with('success', 'Timesheet Status Updated Successfully!');

@@ -439,7 +439,7 @@ class PunchInOutController extends Controller
                     'employee_name' => $employeeDetails->first_name.' '.$employeeDetails->first_name
                 ]; 
                 $toEmails[] = ['name' => $employeeDetails->first_name.' '.$employeeDetails->first_name, 'email' => $employeeDetails->email];
-                // Mail::to($toEmails)->send(new AttendanceStatusMail($details));                
+                Mail::to($toEmails)->send(new AttendanceStatusMail($details));                
             }
         }
         return redirect()->back()->with('success', 'You updated Attendance status successfully!');

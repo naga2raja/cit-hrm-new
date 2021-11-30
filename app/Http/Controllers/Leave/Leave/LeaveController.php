@@ -21,6 +21,7 @@ use App\tEmployeeReportTo;
 use App\tLeaveComment;
 use App\mHoliday;
 use DB;
+use App\User;
 
 class LeaveController extends Controller
 {
@@ -226,10 +227,13 @@ class LeaveController extends Controller
         $details = [
             'employee_name' => $employee->first_name . ' '.$employee->last_name,
             'date'  =>  $fromDate . ' to '. $toDate
-        ];        
-        $managerEmails[] = ['name' => 'Admin', 'email' => 'cithrm@yopmail.com'];
-        // if($sendMailFlag)
-            // Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
+        ];
+        
+        //Get Super Admin Email Address in getSuperAdminEmail()
+
+        $managerEmails[] = ['name' => 'Admin', 'email' => getSuperAdminEmail()];
+        if($sendMailFlag)
+            Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
         
         return redirect()->back()->with('success', 'You applied successfully!');      
                 
@@ -544,7 +548,7 @@ class LeaveController extends Controller
                 ];        
                 $toEmails[] = ['name' => $leaveEmployeeDetails->first_name.' '.$leaveEmployeeDetails->first_name, 'email' => $leaveEmployeeDetails->email];
         
-                // Mail::to($toEmails)->send(new LeaveApproveStatus($details));
+                Mail::to($toEmails)->send(new LeaveApproveStatus($details));
                 
 
             }
