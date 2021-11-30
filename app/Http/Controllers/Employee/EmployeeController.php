@@ -333,6 +333,21 @@ class EmployeeController extends Controller
             // 'joined_date' => $request->joined_date, //date('Y-m-d', strtotime($request->joined_date)),
             // 'company_location_id' => $request->company_location_id
         ];
+
+        // if email is changed update in the users table also 
+        if($employee->user_id && ($employee->email != $request->email ) ) {
+
+            $request->validate([           
+                'email' => 'required|email:rfc,dns|unique:users,email,'.$employee->user_id
+            ]);
+
+            $userDet = User::where('id', $employee->user_id)->first();
+            if($userDet) {
+                $userDet->email = $request->email;
+                $userDet->save();      
+            }
+        }
+
         if($request->my_info != 'yes'){
             $employeeArr['company_location_id'] = $request->company_location_id;
             $employeeArr['status'] = $request->status;
