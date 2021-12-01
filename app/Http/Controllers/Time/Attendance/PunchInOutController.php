@@ -65,6 +65,15 @@ class PunchInOutController extends Controller
         date_default_timezone_set('Asia/Kolkata');
         $current_date = date('d-m-Y');
         $current_time = date('H:i');
+
+        if($_COOKIE['tz_offset_client']) {
+            $ts = new DateTime('now', new \DateTimeZone('UTC'));
+            $ts->add(\DateInterval::createFromDateString($_COOKIE['tz_offset_client'].' minutes'));
+            
+            $current_date = $ts->format('d-m-Y');
+            $current_time = $ts->format('H:i');
+        }
+
         date_default_timezone_set('UTC');
 
         $leaveCtrl = new LeaveController;
@@ -109,8 +118,11 @@ class PunchInOutController extends Controller
             $login_date = $in_date.' '.$request->in_time;
             $login_date = date('Y-m-d H:i:s', strtotime($login_date));
         }
-
-        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, 'Asia/Kolkata');
+        $timeZoneName = 'Asia/Kolkata';
+        if(@$_COOKIE['tz_client']) {
+            $timeZoneName = $_COOKIE['tz_client'];
+        }
+        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, $timeZoneName);
         $utc_date->setTimezone('UTC');
 
         $time_diff =  $utc_date->diff($login_date)->format('%H.%I');
@@ -158,6 +170,13 @@ class PunchInOutController extends Controller
         $current_date = date('d-m-Y');
         $current_time = date('H:i');
         date_default_timezone_set('UTC');
+        if(@$_COOKIE['tz_offset_client']) {
+            $ts = new DateTime('now', new \DateTimeZone('UTC'));
+            $ts->add(\DateInterval::createFromDateString($_COOKIE['tz_offset_client'].' minutes'));
+            
+            $current_date = $ts->format('d-m-Y');
+            $current_time = $ts->format('H:i');
+        }
 
         $punch_in = tPunchInOut::where('id', $id)->get();
 
@@ -200,7 +219,11 @@ class PunchInOutController extends Controller
             $logout_date = date('Y-m-d H:i:s', strtotime($logout_date));
         }
 
-        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
+        $timeZoneName = 'Asia/Kolkata';
+        if(@$_COOKIE['tz_client']) {
+            $timeZoneName = $_COOKIE['tz_client'];
+        }
+        $utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, $timeZoneName); // Keep as Asia/Kolkata Timezone
         $utc_date->setTimezone('UTC'); //converts to UTC format
         // dd($utc_date->toDateTimeString());
 
@@ -298,7 +321,12 @@ class PunchInOutController extends Controller
         $login_date = $in_date.' '.$request->in_time;
         $login_date = date('Y-m-d H:i:s', strtotime($login_date));
 
-        $in_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
+        $timeZoneName = 'Asia/Kolkata';
+        if(@$_COOKIE['tz_client']) {
+            $timeZoneName = $_COOKIE['tz_client'];
+        }
+
+        $in_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $login_date, $timeZoneName); // Keep as Asia/Kolkata Timezone
         $in_utc_date->setTimezone('UTC'); //converts to UTC format
         $in_time_diff = $in_utc_date->diff($login_date)->format('%H.%I');
         $in_utc_date = $in_utc_date->toDateTimeString();
@@ -309,7 +337,7 @@ class PunchInOutController extends Controller
         $logout_date = $out_date.' '.$request->out_time;
         $logout_date = date('Y-m-d H:i:s', strtotime($logout_date));
 
-        $out_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, 'Asia/Kolkata'); // Keep as Asia/Kolkata Timezone
+        $out_utc_date = Carbon::createFromFormat('Y-m-d H:i:s', $logout_date, $timeZoneName); // Keep as Asia/Kolkata Timezone
         $out_utc_date->setTimezone('UTC'); //converts to UTC format
         $out_time_diff = $out_utc_date->diff($logout_date)->format('%H.%I');
         $out_utc_date = $out_utc_date->toDateTimeString();

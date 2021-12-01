@@ -253,4 +253,17 @@ $('#cithrm_mobile_menu a.dropdown-item.dropdown-toggle').click(function() {
 	$(this).next().addClass('cithrm_submenu_dropdown-menu');
 	$(this).next().removeClass('dropdown-toggle');
 })
+function getCookie(name) {
+    function escape(s) { return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, '\\$1'); }
+    var match = document.cookie.match(RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)'));
+    return match ? match[1] : null;
+}
+
+ if (navigator.cookieEnabled) {
+   document.cookie = "tz_client="+ Intl.DateTimeFormat().resolvedOptions().timeZone + "; path=/"; //(- new Date().getTimezoneOffset());
+   var offset = new Date().getTimezoneOffset();   
+   document.cookie = "tz_offset_client="+ (-offset) + "; path=/";
+   document.cookie = "tz_offset_formatted="+ -(offset / 60) + "; path=/";   
+ }
+
 </script>
