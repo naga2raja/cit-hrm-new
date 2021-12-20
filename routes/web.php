@@ -118,8 +118,9 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     Route::get('/getTeamLeads-ajax', 'Admin\AdminController@getTeamLeads')->name('getTeamLeads-ajax');
     Route::get('/getUpcomingLeaves-ajax', 'Admin\AdminController@getUpcomingLeaves')->name('getUpcomingLeaves-ajax');
     Route::get('/getRecentActivities-ajax', 'Admin\AdminController@getRecentActivities')->name('getRecentActivities-ajax');
-    
 
+    Route::get('/all-recent-activities', 'Admin\AdminController@getAllRecentActivities')->name('allRecentActivities');
+    
     // employee list
     Route::resource('/employees', 'Employee\EmployeeController');
     

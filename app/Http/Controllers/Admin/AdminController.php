@@ -410,6 +410,33 @@ class AdminController extends Controller
         return ($result_arr);
     }
 
+    public function getAllRecentActivities(Request $request) 
+    {   
+        $activities = tLog::selectRaw('t_logs.*, CONCAT_WS (" ", first_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
+                                ->join('employees', 'employees.id', 't_logs.send_by')
+                                ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
+                                ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                                // ->selectRaw('(select GROUP_CONCAT (emp.first_name) FROM employees emp WHERE emp.user_id IN (1,2) ) as send_to_managers')                                
+                                ->selectRaw(DB::raw('( select group_concat(emp.first_name) FROM employees emp WHERE emp.user_id IN (t_logs.send_to) ) as send_to_user'))
+                                //->whereRaw('FIND_IN_SET ('.$employee->id.', t_logs.send_to)')                                     
+                                ->when($request->employee_id, function ($q) use ($request) {
+                                    $q->orWhere('employees.user_id', $request->employee_id);
+                                    $q->orWhere('t_logs.send_by', $request->employee_id);
+                                    $q->orWhereIn('t_logs.send_to', [$request->employee_id]);
+                                }) 
+                                ->when($request->date, function ($q) use ($request) {
+                                    $date = \DateTime::createFromFormat('d/m/Y', request('date'));
+                                    $date = $date->format('Y-m-d');
+                                    $q->whereRaw('DATE_FORMAT(t_logs.created_at, "%Y-%m-%d") = "'. $date.'"');
+                                })                          
+                                ->orderBy('t_logs.created_at', 'DESC')
+                                ->groupBy('t_logs.id')
+                                ->paginate(100);
+
+        return view('admin/recent_activities_list', compact('activities'));
+
+    }
+
     public function getRequestChart(Request $request)
     {
         $leaveCtrl = new LeaveController;

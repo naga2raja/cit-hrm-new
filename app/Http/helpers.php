@@ -234,3 +234,12 @@ if (! function_exists('assetUrl')) {
                     ->first();
         return $data->email;
     }
+
+    function getSendToUsers($users) {
+        $userArray = explode(',', $users);
+       $data = DB::table('users')
+                    ->whereIn('id', $userArray)
+                    ->selectRaw('GROUP_CONCAT(users.name) as e_name')
+                    ->first();
+        return $data->e_name;
+    }
