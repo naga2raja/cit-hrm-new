@@ -100,7 +100,7 @@ class LeaveEntitlementController extends Controller
                             ->get();
         $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
         $leave_types = mLeaveType::get();
-        $leave_periods = mLeavePeriod::whereRaw('DATE_FORMAT(start_period, "%Y") = '. date('Y'))
+        $leave_periods = mLeavePeriod::whereRaw('(DATE_FORMAT(start_period, "%Y") = '. date('Y').' OR DATE_FORMAT(end_period, "%Y") = '. date('Y') .')')
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->groupBy('id')
@@ -353,7 +353,7 @@ class LeaveEntitlementController extends Controller
         if((!$request->is_multiple) || ($country_id != null && $country_id >= 0 && $sub_unit_id >= 0)) {
             
             $leave_periods = mLeavePeriod::join('m_company_locations', 'm_company_locations.id', 'm_leave_periods.sub_unit_id')
-                ->whereRaw('DATE_FORMAT(start_period, "%Y") = '. date('Y'))
+                ->whereRaw('(DATE_FORMAT(start_period, "%Y") = '. date('Y').' OR DATE_FORMAT(end_period, "%Y") = '. date('Y') .')')
                 ->selectRaw('m_leave_periods.*, m_company_locations.company_name')
                 ->where('m_leave_periods.status', 1);
 

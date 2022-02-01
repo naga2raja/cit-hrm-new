@@ -181,12 +181,12 @@ class LeavePeriodController extends Controller
         }else{
             // update mLeavePeriod
             $leave_period = mLeavePeriod::find($id);
-            $leave_period->start_month = $request->input('start_month');
-            $leave_period->start_date = $request->input('start_date');
-            $leave_period->start_period = $request->input('start_period');
-            $leave_period->end_period = $request->input('end_period');
-            $leave_period->country_id = $request->input('location_id');
-            $leave_period->sub_unit_id = $request->input('sub_unit_id');
+            // $leave_period->start_month = $request->input('start_month');
+            // $leave_period->start_date = $request->input('start_date');
+            // $leave_period->start_period = $request->input('start_period');
+            // $leave_period->end_period = $request->input('end_period');
+            // $leave_period->country_id = $request->input('location_id');
+            // $leave_period->sub_unit_id = $request->input('sub_unit_id');
             $leave_period->status = $request->input('status');
             $leave_period->save();
 
