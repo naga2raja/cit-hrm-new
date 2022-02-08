@@ -148,7 +148,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="number" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" value="{{ old('entitlement') }}" placeholder="" autocomplete="off">
+												<input type="number" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" value="{{ old('entitlement') }}" placeholder="" step=".01" autocomplete="off">
 												{!! $errors->first('entitlement', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>

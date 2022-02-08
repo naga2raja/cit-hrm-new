@@ -148,9 +148,16 @@ class LeaveEntitlementController extends Controller
         $validated = $request->validate([
             'location_id' => 'required_if:multiple_employee,on',
             'employee' => 'required_if:multiple_employee,off',
-            'entitlement' => 'required|max:2',
+            // 'entitlement' => 'required|numeric|between:0,99.99',
             'leave_type' => 'required',
-            'leave_period' => 'required'
+            'leave_period' => 'required',
+            'entitlement' => ['required','numeric','between:0,99.99', function ($attribute, $value, $fail) {
+                                $x = fmod($value, 0.5);
+                                 if ($x != 0 ) {
+                                    $fail('Entitlement days must be full day OR half a day only allowed'); // your message
+                                 }
+                            },
+                        ],
         ]);
 
         // for single employee
@@ -290,7 +297,13 @@ class LeaveEntitlementController extends Controller
     {
         $validated = $request->validate([
             'leave_period' => 'required',
-            'entitlement' => 'required|max:2',
+            'entitlement' => ['required','numeric','between:0,99.99', function ($attribute, $value, $fail) {
+                                $x = fmod($value, 0.5);
+                                 if ($x != 0 ) {
+                                    $fail('Entitlement days must be full day OR half a day only allowed'); // your message
+                                 }
+                            }, 
+                ],
         ]);
 
         $entitlement = mLeaveEntitlement::find($id);

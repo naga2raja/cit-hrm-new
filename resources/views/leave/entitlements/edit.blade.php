@@ -80,7 +80,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<input type="number" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" value="{{ number_format($entitlement->no_of_days) }}" placeholder="" autocomplete="off">
+												<input type="number" step=".01" name="entitlement" class="form-control {{ $errors->has('entitlement') ? 'is-invalid' : ''}}" value="{{ number_format($entitlement->no_of_days, 2) }}" placeholder="" autocomplete="off">
 												{!! $errors->first('entitlement', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 											</div>
 										</div>
