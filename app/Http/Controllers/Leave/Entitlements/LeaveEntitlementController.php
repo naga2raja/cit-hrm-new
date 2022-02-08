@@ -87,6 +87,11 @@ class LeaveEntitlementController extends Controller
     public function create(Request $request)
     {
         $employees = [];
+        $from_date = "";
+        $end_date = "";
+        $leave_period_value = '';
+        $leave_period_name = 'No Leave Period';
+            
         if($request->employee_id) {
             $employees = Employee::where('id', $request->employee_id)
                                 ->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
@@ -126,11 +131,6 @@ class LeaveEntitlementController extends Controller
                 ];
             }
             
-        }else{
-            $from_date = "";
-            $end_date = "";
-            $leave_period_value = '';
-            $leave_period_name = 'No Leave Period';
         }
 
         return view('leave/entitlements/add', compact('employees', 'leave_types', 'from_date', 'end_date', 'leave_period_name', 'leave_period_value', 'company_location', 'country', 'leavePeriodsArr'));
