@@ -62,7 +62,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period">
+												<select class="form-control select {{ $errors->has('leave_period') ? 'is-invalid' : ''}}" name="leave_period" id="leave_period">
 	                                                <option value='{{ $leave_period_value }}' {{ old('leave_period_value') == $leave_period_value ? 'selected' : '' }}>{{ $leave_period_name }}</option>
                                                 </select>
                                                 {!! $errors->first('leave_period', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -208,6 +208,12 @@
 	 	$('#emp_number').val(this.value);
 	});
 
+	$('#leave_period').on('change', function() {
+		$period = this.value.split(' - ');
+		$('#from_date').val($period[0]);
+		$('#to_date').val($period[1]);
+	  	console.log( this.value.split(' - ') );
+	});
 
 </script>  
 @endpush

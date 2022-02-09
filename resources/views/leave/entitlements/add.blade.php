@@ -372,5 +372,12 @@
 		});
 	}
 
+	$('#leave_period').on('change', function() {
+		$period = this.value.split(' - ');
+		$('#from_date').val($period[0]);
+		$('#to_date').val($period[1]);
+	  	console.log( this.value.split(' - ') );
+	});
+
 </script>  
 @endpush

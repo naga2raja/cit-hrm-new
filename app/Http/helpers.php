@@ -130,6 +130,9 @@ if (! function_exists('assetUrl')) {
     }
 
     function currentUserLeaveBalance() {
+        $leave = new \App\Http\Controllers\Leave\Leave\LeaveController();
+        $active_leave_period = $leave->getActiveLeavePeriod();
+
         $employeeId = getEmployeeId(Auth::User()->id);
         $today = date('Y-m-d');
         // $leaves = DB::table('m_leave_types')
@@ -150,6 +153,7 @@ if (! function_exists('assetUrl')) {
                               ->where('t_leaves.deleted_at', '=', NULL);
                     })
                     ->where('m_leave_entitlements.emp_number', $employeeId)
+                    ->whereRaw(' from_date <= "'.$active_leave_period->end_period.'" AND to_date >= "'.$active_leave_period->start_period.'"')
                     // ->where('t_leaves.deleted_at', '=', NULL)  
                     ->selectRaw('m_leave_types.name, m_leave_entitlements.no_of_days, IFNULL(SUM(t_leaves.length_days), 0) as days_used, (IFNULL(m_leave_entitlements.no_of_days, 0) - IFNULL(SUM(t_leaves.length_days), 0) ) as remaining_days')
                     ->groupBy('m_leave_entitlements.id')

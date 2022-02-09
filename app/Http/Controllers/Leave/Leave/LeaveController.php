@@ -20,6 +20,7 @@ use App\Mail\LeaveApproveStatus;
 use App\tEmployeeReportTo;
 use App\tLeaveComment;
 use App\mHoliday;
+use App\mLeavePeriod;
 use DB;
 use App\User;
 
@@ -385,18 +386,23 @@ class LeaveController extends Controller
         $leaveTypeId = $request->leave_type_id;
         $date = date('Y-m-d');
         $out = [];
+        $leaveEntitlements = null;
+        $active_leave_period = $this->getActiveLeavePeriod();
 
-        //Get Leave Entitlements for the date
-        $leaveEntitlements = mLeaveEntitlement::where('emp_number', $employeeId)
-                                ->whereRaw(' from_date <= "'.$date.'" AND to_date >= "'.$date.'"')
-                                ->where('leave_type_id', $leaveTypeId)
-                                ->first();
-        //find used leaves
-        $leavesTaken = tLeave::where('employee_id', $employeeId)
-                    ->where('leave_type_id', $leaveTypeId)
-                    ->whereIn('status', [1,2,3])
-                    ->selectraw('SUM(length_days) as leaves_taken')
-                    ->first();
+        if($active_leave_period) {
+
+            //Get Leave Entitlements for the date
+            $leaveEntitlements = mLeaveEntitlement::where('emp_number', $employeeId)
+                                    ->whereRaw(' from_date <= "'.$active_leave_period->end_period.'" AND to_date >= "'.$active_leave_period->start_period.'"')
+                                    ->where('leave_type_id', $leaveTypeId)
+                                    ->first();
+            //find used leaves
+            $leavesTaken = tLeave::where('employee_id', $employeeId)
+                        ->where('leave_type_id', $leaveTypeId)
+                        ->whereIn('status', [1,2,3])
+                        ->selectraw('SUM(length_days) as leaves_taken')
+                        ->first();
+        }
 
         $leaveBalance = 0;
         if($leaveEntitlements) {
@@ -408,6 +414,7 @@ class LeaveController extends Controller
         $out['leaves'] = $leavesTaken;
         $out['leave_balance'] = $leaveBalance;
         $out['leave_entitlement_id'] = ($leaveEntitlements) ? $leaveEntitlements->id : 0;
+        $out['active_leave_period'] = $active_leave_period;
         return response()->json($out);
     }
 
@@ -649,5 +656,12 @@ class LeaveController extends Controller
         // dd(DB::getQueryLog());
         // dd($disableHolidaysArr);
         return $disableHolidaysArr;
+    }
+
+    public function getActiveLeavePeriod() {
+        $active_leave_period = mLeavePeriod::whereRaw('(DATE_FORMAT(start_period, "%Y") = '. date('Y').' OR DATE_FORMAT(end_period, "%Y") = '. date('Y') .')')
+            ->where('status', 1)
+            ->first();
+        return $active_leave_period;
     }
 }

@@ -91,7 +91,7 @@ class LeaveEntitlementController extends Controller
         $end_date = "";
         $leave_period_value = '';
         $leave_period_name = 'No Leave Period';
-            
+
         if($request->employee_id) {
             $employees = Employee::where('id', $request->employee_id)
                                 ->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
@@ -126,8 +126,8 @@ class LeaveEntitlementController extends Controller
                 $leave_period_name = $from_date.' - '.$end_date;
                 $leavePeriodsArr[] = [
                     'id' => $leave_period->id,
-                    'value' => $leave_period_value,
-                    'name'  => $leave_period_name
+                    'value' => $leave_period->start_period .' '. $leave_period->end_period,
+                    'name' => $leave_period->start_period .' '. $leave_period->end_period
                 ];
             }
             
@@ -151,6 +151,8 @@ class LeaveEntitlementController extends Controller
             // 'entitlement' => 'required|numeric|between:0,99.99',
             'leave_type' => 'required',
             'leave_period' => 'required',
+            'from_date' => 'required',
+            'to_date' => 'required',
             'entitlement' => ['required','numeric','between:0,99.99', function ($attribute, $value, $fail) {
                                 $x = fmod($value, 0.5);
                                  if ($x != 0 ) {
@@ -281,7 +283,10 @@ class LeaveEntitlementController extends Controller
                     ->selectRaw('employees.id as employee_id, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
                     ->orderBy('m_leave_entitlements.from_date', 'asc')
                     ->find($id);
-        // dd($entitlement);
+        
+        $from_date = $entitlement->from_date;
+        $to_date = $entitlement->to_date;
+        $leave_period_value = $leave_period_name = $from_date.' - '.$to_date;        
 
         return view('leave/entitlements/edit', compact('entitlement', 'from_date', 'to_date', 'leave_period_name', 'leave_period_value'));
     }
@@ -390,8 +395,8 @@ class LeaveEntitlementController extends Controller
                     $end->modify('+1 years -1 days');
                     $end_date = $end->format('Y-m-d');
     
-                    $leave_period_value = $from_date.' - '.$end_date;
-                    $leave_period_name = $from_date.' - '.$end_date;
+                    $leave_period_value = $leave_period->start_period.' - '.$leave_period->end_period;
+                    $leave_period_name = $leave_period->start_period.' - '.$leave_period->end_period;
                     $leavePeriodsArr[] = [
                         'id' => $leave_period->id,
                         'value' => $leave_period_value,
