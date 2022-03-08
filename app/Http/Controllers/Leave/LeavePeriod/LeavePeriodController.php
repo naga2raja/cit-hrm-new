@@ -190,7 +190,7 @@ class LeavePeriodController extends Controller
             $leave_period->status = $request->input('status');
             $leave_period->save();
 
-            return redirect()->back()->with('success', 'Leave Period Updated successfully');
+            return redirect('/leavePeriod')->with('success', 'Leave Period Updated successfully');
         }
     }
 

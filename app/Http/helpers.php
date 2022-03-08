@@ -130,11 +130,14 @@ if (! function_exists('assetUrl')) {
     }
 
     function currentUserLeaveBalance() {
-        $leave = new \App\Http\Controllers\Leave\Leave\LeaveController();
-        $active_leave_period = $leave->getActiveLeavePeriod();
-
         $employeeId = getEmployeeId(Auth::User()->id);
         $today = date('Y-m-d');
+
+        $leave = new \App\Http\Controllers\Leave\Leave\LeaveController();
+        $active_leave_period = $leave->getActiveLeavePeriod($employeeId);
+        if(!$active_leave_period) {
+            return [];
+        }
         // $leaves = DB::table('m_leave_types')
         //     ->join('m_leave_entitlements', 'm_leave_entitlements.leave_type_id', 'm_leave_types.id')
         //     ->where('m_leave_entitlements.emp_number', $employeeId)
@@ -147,6 +150,7 @@ if (! function_exists('assetUrl')) {
                     ->join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
                     ->join('employees', 'employees.id', 'm_leave_entitlements.emp_number')  
                     // ->leftJoin('t_leaves', 't_leaves.entitlement_id', 'm_leave_entitlements.id')
+                    ->join('m_leave_periods', 'm_leave_periods.sub_unit_id', 'employees.company_location_id')
                     ->leftjoin('t_leaves', function($query){
                         $query->on('t_leaves.entitlement_id', '=', 'm_leave_entitlements.id')
                               ->whereIn('t_leaves.status', [1,2,3])
@@ -155,6 +159,7 @@ if (! function_exists('assetUrl')) {
                     ->where('m_leave_entitlements.emp_number', $employeeId)
                     ->whereRaw(' from_date <= "'.$active_leave_period->end_period.'" AND to_date >= "'.$active_leave_period->start_period.'"')
                     // ->where('t_leaves.deleted_at', '=', NULL)  
+                    ->where('m_leave_periods.status', '=', 1)
                     ->selectRaw('m_leave_types.name, m_leave_entitlements.no_of_days, IFNULL(SUM(t_leaves.length_days), 0) as days_used, (IFNULL(m_leave_entitlements.no_of_days, 0) - IFNULL(SUM(t_leaves.length_days), 0) ) as remaining_days')
                     ->groupBy('m_leave_entitlements.id')
                     ->orderBy('m_leave_types.name', 'ASC')

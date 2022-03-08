@@ -178,6 +178,15 @@
 														<td colspan="6"><p class="text-center">No Data Found !</p></td>
 													</tr>
 												@endif
+
+												<tr>
+													<td colspan="6">
+														<div class="d-flex justify-content-center">
+															{{ $entitlement->appends($_GET)->links() }}
+														</div>
+													</td>
+												</tr>
+
 											</tbody>
 										</table>
 									</div>

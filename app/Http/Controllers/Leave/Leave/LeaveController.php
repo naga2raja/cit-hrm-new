@@ -99,6 +99,18 @@ class LeaveController extends Controller
         $toDate = str_replace('/', '-', $request->to_date);
         $toDate = date('Y-m-d', strtotime($toDate));
 
+        //validate the leave date is inbetween the current leave period    
+        $active_leave_period = $this->getActiveLeavePeriod($request->employee_id);              
+        if($active_leave_period && strtotime($fromDate) && strtotime($toDate) && strtotime($fromDate) <= strtotime($active_leave_period->end_period) && strtotime($fromDate) >= strtotime($active_leave_period->start_period) && strtotime($toDate) <= strtotime($active_leave_period->end_period) && strtotime($toDate) >= strtotime($active_leave_period->start_period) ) {
+            // is_valid_leave_dates  true;
+        } else {
+            $message = 'Please select the leave dates within the current leave period';
+            if(!$active_leave_period) {
+                $message = 'Leave period is not active for the current year. Please contact Administrator';
+            }
+            return redirect()->back()->with('error', $message);
+        }
+
         $leaveDates = CarbonPeriod::create($fromDate, $toDate);
         // Convert the period to an array of dates
         $dates = $leaveDates->toArray();
@@ -342,7 +354,7 @@ class LeaveController extends Controller
             $approval_level = [1,2];
         }
 
-        $leaveStatus = mLeaveStatus::whereIn('id', [2,4,5])->get();
+        $leaveStatus = mLeaveStatus::whereIn('id', [1,2,4,5])->get();
 
         $myLeaves = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
             ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
@@ -375,6 +387,7 @@ class LeaveController extends Controller
                 $query->where('t_leave_requests.to_date', '<=', request('to_date'));
             })
             ->groupBy('t_leave_requests.id')
+            ->orderBy('t_leave_requests.status', 'ASC')
             ->paginate(10);
 
         return view('leave/leave/leave_list', compact('leaveStatus', 'myLeaves', 'userRole'));           
@@ -387,7 +400,8 @@ class LeaveController extends Controller
         $date = date('Y-m-d');
         $out = [];
         $leaveEntitlements = null;
-        $active_leave_period = $this->getActiveLeavePeriod();
+        $active_leave_period = $this->getActiveLeavePeriod($employeeId);
+        $leavesTaken = null;
 
         if($active_leave_period) {
 
@@ -402,6 +416,18 @@ class LeaveController extends Controller
                         ->whereIn('status', [1,2,3])
                         ->selectraw('SUM(length_days) as leaves_taken')
                         ->first();
+            //validate the leave date is inbetween the current leave period
+            $fromDate = str_replace('/', '-', $request->from_date);
+            $fromDate = date('Y-m-d', strtotime($fromDate));
+            $toDate = str_replace('/', '-', $request->to_date);
+            $toDate = date('Y-m-d', strtotime($toDate)); 
+            $out['is_valid_leave_dates'] = false;           
+            if(strtotime($fromDate) && strtotime($toDate) && strtotime($fromDate) <= strtotime($active_leave_period->end_period) && strtotime($fromDate) >= strtotime($active_leave_period->start_period) && strtotime($toDate) <= strtotime($active_leave_period->end_period) && strtotime($toDate) >= strtotime($active_leave_period->start_period) ) {
+                $out['is_valid_leave_dates'] = true;
+            }
+            if(strtotime($fromDate) && strtotime($toDate) && !$out['is_valid_leave_dates']){
+                $out['is_valid_leave_dates'] = false;
+            }
         }
 
         $leaveBalance = 0;
@@ -658,8 +684,12 @@ class LeaveController extends Controller
         return $disableHolidaysArr;
     }
 
-    public function getActiveLeavePeriod() {
+    public function getActiveLeavePeriod($employeeId) {
+        //get current user location
+        $employee = Employee::where('id', $employeeId)->first();
+
         $active_leave_period = mLeavePeriod::whereRaw('(DATE_FORMAT(start_period, "%Y") = '. date('Y').' OR DATE_FORMAT(end_period, "%Y") = '. date('Y') .')')
+            ->where('sub_unit_id', $employee->company_location_id)
             ->where('status', 1)
             ->first();
         return $active_leave_period;

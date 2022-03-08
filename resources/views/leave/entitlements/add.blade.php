@@ -230,10 +230,31 @@
 	function display() {
 		if($('#multiple_employee').is(':checked')) {
 	        $('#location_div').css("display", "block");
-	        $('#employee_div').css("display", "none");
+	        $('#employee_div').css("display", "none");			
+			
+			$("#employee_name").select2('destroy').val("").select2({
+				placeholder: 'Select a employee',
+				ajax: {
+					url: '{{ route("ajax.employee_search") }}',
+					dataType: 'json',
+					delay: 250,
+					processResults: function (data) {
+						return {
+							results:  $.map(data, function (item) {
+								return {
+									text: item.name,
+									id: item.id
+								}
+							})
+						};
+					},
+					cache: true
+				}		
+			});
+			// $('#employee_name').val("-1").trigger("change");
 	    }else{
 	    	$('#location_div').css("display", "none");
-	    	$('#employee_div').css("display", "block");
+	    	$('#employee_div').css("display", "block");			
 	    }
 	}
 	
@@ -253,7 +274,7 @@
 		 getLeavePeriods(true);
 	}
 
-	$("#multiple_employee").change(function() {
+	$("#multiple_employee, #employee_name").change(function() {
 		// onchange calling enable or disable function
 	    display();
 		getLeavePeriods();
@@ -334,6 +355,8 @@
 	function getLeavePeriods(load = false) {
 		var sub_unit_id = $('#sub_unit_id').val();
 		var location_id = $('#location_id').val();
+		var employee_id = $('#employee_name').val();
+		
 		if(load) {
 			sub_unit_id = '{{ old("sub_unit_id") }}';
 			location_id = '{{ old("location_id") }}';
@@ -342,7 +365,7 @@
 		$.ajax({
 			method: 'POST',
 			url: "{{ route('getLeavePeriods-ajax') }}",
-			data: JSON.stringify({'location_id': location_id, 'sub_unit_id': sub_unit_id, 'is_multiple' : $('#multiple_employee').is(':checked'), '_token': '{{ csrf_token() }}' }),
+			data: JSON.stringify({'location_id': location_id, 'sub_unit_id': sub_unit_id, 'is_multiple' : $('#multiple_employee').is(':checked'), 'employee_id': employee_id, '_token': '{{ csrf_token() }}' }),
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data){

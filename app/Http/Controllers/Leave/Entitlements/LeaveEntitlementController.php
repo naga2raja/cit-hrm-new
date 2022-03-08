@@ -67,7 +67,7 @@ class LeaveEntitlementController extends Controller
                 }
 
       $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
-                       ->get();
+                       ->paginate(10);
       // dd(DB::getQueryLog());
 
       $leave_types = mLeaveType::get();
@@ -381,6 +381,13 @@ class LeaveEntitlementController extends Controller
             if($request->is_multiple && $country_id > 0) {
                 $leave_periods = $leave_periods->where('m_leave_periods.country_id', $country_id);
             }         
+            if($request->employee_id) {
+                //get employee job location id
+                $employee = Employee::where('id', $request->employee_id)->select('company_location_id')->first();
+                if($employee->company_location_id) {
+                    $leave_periods = $leave_periods->where('m_leave_periods.sub_unit_id', $employee->company_location_id);
+                }
+            }
             $leave_periods = $leave_periods->orderBy('m_leave_periods.id', 'desc')
                 ->groupBy('m_leave_periods.id')
                 ->get(); 

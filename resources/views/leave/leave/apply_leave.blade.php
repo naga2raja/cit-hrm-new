@@ -422,18 +422,25 @@
 				employeeId = $("#employee_id").val();
 			}else{
 				employeeId = '{{ getEmployeeId(Auth::user()->id) }}';
-			}			
+			}	
+			var from_date = $('#datetimepicker4').val();
+			var to_date = $('#datetimepicker5').val();		
 
 			$.ajax({
 				method: 'POST',
 				url: "{{ route('leave-balance-ajax') }}",
-				data: JSON.stringify({'leave_type_id': leave_type_id, 'employee_id' : employeeId,  '_token': '{{ csrf_token() }}' }),
+				data: JSON.stringify({'leave_type_id': leave_type_id, 'employee_id' : employeeId, 'from_date': from_date, 'to_date':to_date, '_token': '{{ csrf_token() }}' }),
 				dataType: "json",
 				contentType: 'application/json',
 				success: function(response){
 					console.log('response : ', response);
 					$('#leave_balance').val(response.leave_balance);
 					$('#leave_entitlement_id').val(response.leave_entitlement_id);
+					//Show alert message and reload the page
+					console.log(response.is_valid_leave_dates)
+					if(leave_type_id && from_date && to_date && !response.is_valid_leave_dates) {
+						alert('Please select the leave date with in the current leave period!');
+					}
 				}					
 			});
 		}
