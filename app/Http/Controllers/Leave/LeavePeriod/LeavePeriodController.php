@@ -161,10 +161,11 @@ class LeavePeriodController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'location_id' => 'required',
-            'sub_unit_id' => 'required',
-            'start_month' => 'required',
-            'start_date' => 'required'
+            // 'location_id' => 'required',
+            // 'sub_unit_id' => 'required',
+            // 'start_month' => 'required',
+            // 'start_date' => 'required'
+            'status' => 'required'
         ]);
 
         DB::connection()->enableQueryLog();

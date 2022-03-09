@@ -55,6 +55,7 @@ class LeaveController extends Controller
                 $query->where('t_leave_requests.to_date', '<=', request('to_date'));
             })
             ->groupBy('t_leave_requests.id')
+            ->orderBy('t_leave_requests.status', 'ASC')
             ->paginate(10); 
             // dd($myLeaves);
 
@@ -414,6 +415,8 @@ class LeaveController extends Controller
             $leavesTaken = tLeave::where('employee_id', $employeeId)
                         ->where('leave_type_id', $leaveTypeId)
                         ->whereIn('status', [1,2,3])
+                        ->where('date', '>=', $active_leave_period->start_period)
+                        ->where('date', '<=', $active_leave_period->end_period)
                         ->selectraw('SUM(length_days) as leaves_taken')
                         ->first();
             //validate the leave date is inbetween the current leave period

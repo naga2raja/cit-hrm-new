@@ -41,7 +41,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select" name="location_id" id="location_id" required="">
+												<select class="form-control select" name="location_id" id="location_id" required="" disabled>
                                                     <option value="">-- Select Location --</option>
                                                     @foreach ($country as $row)
 	                                                    <option value='{{ $row->id }}' {{ old('location_id') == $row->id ? 'selected' : (($leave_period->country_id == $row->id) ? 'selected' : '') }}>{{ $row->country }}</option>
@@ -58,7 +58,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select" name="sub_unit_id" id="sub_unit_id" required="">
+												<select class="form-control select" name="sub_unit_id" id="sub_unit_id" required="" disabled>
                                                     <option value="">-- Select Sub Unit --</option>
                                                     @foreach ($company_location as $company)
 	                                                    <option value='{{ $company->id }}' {{ old('sub_unit_id') == $company->id ? 'selected' : (($leave_period->sub_unit_id == $company->id) ? 'selected' : '') }}>{{ $company->company_name }}</option>
@@ -77,7 +77,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="form-group">
-												<select class="form-control select {{ $errors->has('start_month') ? 'is-invalid' : ''}}" id="start_month" name="start_month" required="">
+												<select class="form-control select {{ $errors->has('start_month') ? 'is-invalid' : ''}}" id="start_month" name="start_month" required="" disabled>
 													<option value="">-- Select Month --</option>
 													<option value="1" {{ $leave_period->start_month == '1' ? 'selected' : '' }} >January</option>
 													<option value="2" {{ $leave_period->start_month == '2' ? 'selected' : '' }} >February</option>
@@ -272,7 +272,7 @@
 		var start_month = $('#start_month').val();
 
 		if (start_month.length > 0) {
-			$('#start_date').prop('disabled', false);
+			$('#start_date').prop('disabled', true);
 			$('#start_date').find('option').remove();					
 
 			var daysInSelectedMonth = daysInMonth(start_month);
