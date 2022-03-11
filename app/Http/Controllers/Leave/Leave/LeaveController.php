@@ -355,7 +355,8 @@ class LeaveController extends Controller
             $approval_level = [1,2];
         }
 
-        $leaveStatus = mLeaveStatus::whereIn('id', [1,2,4,5])->get();
+        $leaveStatus = mLeaveStatus::whereIn('id', [2,4,5])->get();
+        $filterLeaveStatus = mLeaveStatus::whereIn('id', [1,2,4,5])->get();
 
         $myLeaves = tLeaveRequest::join('m_leave_types', 'm_leave_types.id', 't_leave_requests.leave_type_id')
             ->join('t_leaves', 't_leaves.leave_request_id', 't_leave_requests.id')
@@ -387,11 +388,21 @@ class LeaveController extends Controller
             ->when(request()->filled('to_date'), function ($query) {
                 $query->where('t_leave_requests.to_date', '<=', request('to_date'));
             })
-            ->groupBy('t_leave_requests.id')
-            ->orderBy('t_leave_requests.status', 'ASC')
-            ->paginate(10);
+            ->selectRaw('(IF (t_leaves.approval_level =1 && t_leaves.status = 2, "Pending Approval From Admin", 
+            IF(approval_level =2 && t_leaves.status = 2, "Approved", m_leave_status.name)  )) AS my_status')
+            ->selectRaw('datediff(t_leave_requests.to_date, t_leave_requests.from_date) + 1 as no_leave_days')
+            ->groupBy('t_leave_requests.id');
+        
+            if($request->sort_by && $request->sort_field) {
+                $myLeaves = $myLeaves->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                // $myLeaves = $myLeaves->orderBy('approval_level', 'ASC')
+                //     ->orderByRaw("FIELD(t_leave_requests.status, 1,3,2,4)");
+                $myLeaves = $myLeaves->orderByRaw("FIELD(my_status, 'Pending','Pending Approval From Admin','Approved','Rejected')");
+            }             
+            $myLeaves = $myLeaves->paginate(10);
 
-        return view('leave/leave/leave_list', compact('leaveStatus', 'myLeaves', 'userRole'));           
+        return view('leave/leave/leave_list', compact('leaveStatus', 'filterLeaveStatus', 'myLeaves', 'userRole'));           
     }
 
     public function getLeaveBalance(Request $request)

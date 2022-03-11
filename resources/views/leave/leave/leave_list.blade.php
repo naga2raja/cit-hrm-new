@@ -52,13 +52,16 @@
 														<label>Status</label>
 														<select class="form-control select" name="status">
                                                             <option value="">Status</option>
-                                                                @foreach($leaveStatus as $status)
+                                                                @foreach($filterLeaveStatus as $status)
                                                                     <option value="{{ $status->id }}"  {{ Request::get('status') == $status->id ? 'selected' : ''}}> {{ $status->name }}</option>
                                                                 @endforeach																
                                                         </select>
 													</div>
 												</div>
 											</div>
+
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
@@ -98,15 +101,15 @@
 												<div class="table-responsive ">
 													<table class="table custom-table table-hover">
 														<thead>
-															<tr class="bg-light">
-                                                                <th>Employee Name</th>
-																<th>Leave Type</th>
-																<th>From</th>
-																<th>To</th>
-																<th>Days</th>
+															<tr class="bg-light sort_row">
+                                                                <th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'emp_name') ? 'active' : '' }}" onclick="sorting('emp_name')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'm_leave_types.name') ? 'active' : '' }}" onclick="sorting('m_leave_types.name')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>From <a href="#" class="{{ (Request::get('sort_field') == 't_leave_requests.from_date') ? 'active' : '' }}" onclick="sorting('t_leave_requests.from_date')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>To <a href="#" class="{{ (Request::get('sort_field') == 't_leave_requests.to_date') ? 'active' : '' }}" onclick="sorting('t_leave_requests.to_date')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>Days <a href="#" class="{{ (Request::get('sort_field') == 'no_leave_days') ? 'active' : '' }}" onclick="sorting('no_leave_days')"><i class="fa fa-fw fa-sort"></i></th>
 																{{-- <th>Remaining Days</th> --}}
 																{{-- <th>Notes</th> --}}
-																<th>Status</th>
+																<th>Status<a href="#" class="{{ (Request::get('sort_field') == 'my_status') ? 'active' : '' }}" onclick="sorting('my_status', 'asc')"><i class="fa fa-fw fa-sort"></i></th>
 																<th class="text-left">Action</th>
 															</tr>
 														</thead>
@@ -125,6 +128,8 @@
 																	</td>                                                                    
                                                                     {{-- <td> {{ $leave->comments }}</td> --}}
                                                                     <td>
+																		<!-- {{ $leave->my_status }} -->
+																		
                                                                     	@if($leave->approval_level == 1 && $leave->status == 2 ) 
                                                                             Pending Approval From Admin
                                                                         @elseif($leave->approval_level == 2 && $leave->status == 2 )
@@ -138,6 +143,7 @@
 														              	@elseif($leave->status == 5)
 														              		<b><span class="text-danger font-weight-bold"> Cancelled </span></b>
 														              	@endif 
+																	
                                                                     </td>
                                                                     <td>
                                                                         @if( ($userRole == 'Manager' && $leave->approval_level == 0) || ($userRole == 'Admin' && $leave->approval_level == 1) || ($leave->reporting_me && $leave->approval_level == 0) || ($userRole == 'Admin' && $leave->status > 3 ))
@@ -163,7 +169,7 @@
                                                             <tr>
                                                                 <td colspan="7">
                                                                     <div class="d-flex justify-content-center">
-                                                                        {{ $myLeaves->links() }}
+                                                                        {{ $myLeaves->appends($_GET)->links() }}
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -217,6 +223,9 @@
 
         <style>
             td .select2-container { width: 150px !important;}
+
+			.sort_row a {color: #000; }
+			.sort_row a.active {color: #007bff; }
         </style>
         
 @endsection
@@ -315,5 +324,19 @@
             return memo;
         }, []);
     }    
+
+	function sorting(col) {
+
+		$('#sort_field').val(col);
+		//var sort_field =  
+		var sort_by = $('#sort_by').val();
+		if(sort_by=='' || sort_by=='desc') {
+			sort_by = 'asc';
+		} else {
+			sort_by = 'desc';
+		}
+		$('#sort_by').val(sort_by);
+		$('#filter_form').submit();
+	}
 	</script>
 @endsection
