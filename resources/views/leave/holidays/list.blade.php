@@ -62,6 +62,9 @@
 												</div>
 											</div>
 
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button id="search" type="button" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
@@ -107,16 +110,16 @@
 										@endif
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr>
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_holiday_table')">
 													</th>
-													<th>Name</th>
-													<th>Date</th>
-													<th>Day</th>
-													<th>Repeats Annually</th>
-													<th>Country</th>
-													<th>Sub Unit</th>
+													<th>Name  <a href="#" class="{{ (Request::get('sort_field') == 'm_holidays.description') ? 'active' : '' }}" onclick="sorting('m_holidays.description', 'searchHoliday')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Date  <a href="#" class="{{ (Request::get('sort_field') == 'm_holidays.date') ? 'active' : '' }}" onclick="sorting('m_holidays.date', 'searchHoliday')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Day  <a href="#" class="{{ (Request::get('sort_field') == 'm_holidays.length') ? 'active' : '' }}" onclick="sorting('m_holidays.length', 'searchHoliday')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Repeats Annually <a href="#" class="{{ (Request::get('sort_field') == 'm_holidays.recurring') ? 'active' : '' }}" onclick="sorting('m_holidays.recurring', 'searchHoliday')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Country <a href="#" class="{{ (Request::get('sort_field') == 'm_countries.country') ? 'active' : '' }}" onclick="sorting('m_countries.country', 'searchHoliday')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Sub Unit <a href="#" class="{{ (Request::get('sort_field') == 'm_company_locations.company_name') ? 'active' : '' }}" onclick="sorting('m_company_locations.company_name', 'searchHoliday')"><i class="fa fa-fw fa-sort"></i></th>
 												</tr>
 											</thead>
 											<tbody id="list_holiday_table">
@@ -155,7 +158,7 @@
 													<tr>
 														<td colspan="7">
 															<div class="d-flex justify-content-center">
-																{{ $holidays->links() }}
+																{{ $holidays->appends($_GET)->links() }}
 															</div>
 														</td>
 													</tr>

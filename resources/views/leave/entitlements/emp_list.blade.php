@@ -77,6 +77,9 @@
 												</div>
 											</div>
 
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
@@ -117,17 +120,17 @@
 									<div class="table-responsive">
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														@hasrole('Admin')
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('mylist_entitlements_table')">
 														@endrole
 													</th>
-													<th>Employee Name</th>
-													<th>Leave Type</th>
-													<th>Valid From</th>
-													<th>Valid To</th>
-													<th class="text-right">Days</th>
+													<th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'leave_type_name') ? 'active' : '' }}" onclick="sorting('leave_type_name', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Valid From <a href="#" class="{{ (Request::get('sort_field') == 'from_date') ? 'active' : '' }}" onclick="sorting('from_date', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Valid To <a href="#" class="{{ (Request::get('sort_field') == 'to_date') ? 'active' : '' }}" onclick="sorting('to_date', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
+													<th class="text-right">Days <a href="#" class="{{ (Request::get('sort_field') == 'no_of_days') ? 'active' : '' }}" onclick="sorting('no_of_days', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
 												</tr>
 											</thead>
 											<tbody id="mylist_entitlements_table">

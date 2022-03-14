@@ -266,4 +266,21 @@ function getCookie(name) {
    document.cookie = "tz_offset_formatted="+ -(offset / 60) + "; path=/";   
  }
 
+ function sorting(col, form_id = false) {
+	$('#sort_field').val(col);
+	//var sort_field =  
+	var sort_by = $('#sort_by').val();
+	if(sort_by=='' || sort_by=='desc') {
+		sort_by = 'asc';
+	} else {
+		sort_by = 'desc';
+	}
+	$('#sort_by').val(sort_by);
+	if(form_id) {
+		$('#'+form_id).submit();
+	} else {
+		$('#filter_form').submit();
+	}
+	
+}
 </script>

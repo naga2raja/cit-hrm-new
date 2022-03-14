@@ -22,7 +22,7 @@ class MyLeaveEntitlementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user_id = Auth::User()->id;
         $employees = Employee::where('user_id', $user_id)->first();
@@ -49,9 +49,14 @@ class MyLeaveEntitlementController extends Controller
                             ->when(request()->filled('to_date'), function($query) {
                                 $query->where('m_leave_entitlements.to_date', request('to_date'));
                             });
+            
+            if($request->sort_by && $request->sort_field) {
+                $entitlement = $entitlement->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc');
+            }
 
-            $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
-                            ->get();
+            $entitlement = $entitlement->paginate(10);
 
             $leave_types = mLeaveType::get();
             $leave_period = mLeaveEntitlement::select('from_date', 'to_date')

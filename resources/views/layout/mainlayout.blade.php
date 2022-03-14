@@ -53,9 +53,18 @@
 	            dataType: "json",
 	            contentType: 'application/json',
 	            success: function(response){
-	                console.log('response : ', response);
-					alert('Deleted successfully!');
+	                console.log('response : Dele', response);
+					if(response == 'error') {
+						alert('Can\'t delete the '+ $module);
+					} else {
+						alert('Deleted successfully!');
+					}					
 					window.location.reload();
+	            },
+				error: function(response, status){
+	                console.log('error', response, 'status:', status);					
+					alert('Can\'t delete the '+ $module);
+					
 	            }
 	        });
 		}

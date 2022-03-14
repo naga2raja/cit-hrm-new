@@ -60,8 +60,11 @@
 														</select>
 													</div>
 												</div>
-											</div>										
-
+											</div>	
+											
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+											
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>													
@@ -100,14 +103,14 @@
 											<div class="">
 												<div class="table-responsive">
 													<table class="table custom-table table-hover">
-														<thead>
-															<tr class="bg-light">
-																<th>Leave Type</th>
-																<th>From</th>
-																<th>To</th>
-																<th>Days</th>																
-																<th>Notes</th>
-																<th>Status</th>																
+														<thead>															
+															<tr class="bg-light sort_row">																
+																<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'name') ? 'active' : '' }}" onclick="sorting('name', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>From <a href="#" class="{{ (Request::get('sort_field') == 'from_date') ? 'active' : '' }}" onclick="sorting('from_date', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>To <a href="#" class="{{ (Request::get('sort_field') == 'to_date') ? 'active' : '' }}" onclick="sorting('to_date', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>Days <a href="#" class="{{ (Request::get('sort_field') == 'leave_duration') ? 'active' : '' }}" onclick="sorting('leave_duration', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>																
+																<th>Notes <a href="#" class="{{ (Request::get('sort_field') == 'comments') ? 'active' : '' }}" onclick="sorting('comments', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>Status <a href="#" class="{{ (Request::get('sort_field') == 'my_status') ? 'active' : '' }}" onclick="sorting('my_status', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>																
 																<th class="text-left">Action</th>																
 															</tr>
 														</thead>
@@ -171,7 +174,7 @@
                                                             <tr>
                                                                 <td colspan="7">
                                                                     <div class="d-flex justify-content-center">
-                                                                        {{ $myLeaves->links() }}
+                                                                        {{ $myLeaves->appends($_GET)->links() }}
                                                                     </div>
                                                                 </td>
                                                             </tr>

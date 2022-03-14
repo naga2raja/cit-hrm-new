@@ -223,9 +223,6 @@
 
         <style>
             td .select2-container { width: 150px !important;}
-
-			.sort_row a {color: #000; }
-			.sort_row a.active {color: #007bff; }
         </style>
         
 @endsection
@@ -323,20 +320,6 @@
             memo.push(e1)
             return memo;
         }, []);
-    }    
-
-	function sorting(col) {
-
-		$('#sort_field').val(col);
-		//var sort_field =  
-		var sort_by = $('#sort_by').val();
-		if(sort_by=='' || sort_by=='desc') {
-			sort_by = 'asc';
-		} else {
-			sort_by = 'desc';
-		}
-		$('#sort_by').val(sort_by);
-		$('#filter_form').submit();
-	}
+    }    	
 	</script>
 @endsection

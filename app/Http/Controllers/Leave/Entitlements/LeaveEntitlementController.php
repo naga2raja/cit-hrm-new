@@ -66,8 +66,13 @@ class LeaveEntitlementController extends Controller
                     $entitlement->whereIn('m_leave_entitlements.emp_number', $empIds);
                 }
 
-      $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc')
-                       ->paginate(10);
+        if($request->sort_by && $request->sort_field) {
+            $entitlement = $entitlement->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc');
+        }
+
+      $entitlement = $entitlement->paginate(10);
       // dd(DB::getQueryLog());
 
       $leave_types = mLeaveType::get();

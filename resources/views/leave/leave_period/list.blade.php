@@ -76,6 +76,9 @@
 												</div>
 											</div>
 
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
@@ -121,14 +124,14 @@
 										@endif
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr>
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_period_table')">
 													</th>
-													<th>Leave Period</th>
-													<th>Country</th>
-													<th>Sub Unit</th>
-													<th>Status</th>
+													<th>Leave Period <a href="#" class="{{ (Request::get('sort_field') == 'start_period') ? 'active' : '' }}" onclick="sorting('start_period', 'searchPeriod')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Country <a href="#" class="{{ (Request::get('sort_field') == 'm_countries.country') ? 'active' : '' }}" onclick="sorting('m_countries.country', 'searchPeriod')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Sub Unit <a href="#" class="{{ (Request::get('sort_field') == 'm_company_locations.company_name') ? 'active' : '' }}" onclick="sorting('m_company_locations.company_name', 'searchPeriod')"><i class="fa fa-fw fa-sort"></i></th>
+													<th style="width: 100px;">Status <a href="#" class="{{ (Request::get('sort_field') == 'status') ? 'active' : '' }}" onclick="sorting('status', 'searchPeriod')"><i class="fa fa-fw fa-sort"></i></th>
 												</tr>
 											</thead>
 											<tbody id="list_period_table">
@@ -145,9 +148,9 @@
 														<td>{{ $row->subUnitName->company_name }}</td>
 														<td>
 															@if($row->status == '0')
-																<input type="button" name="leave_period_status" class="btn btn-outline-danger btn-sm btn-block" value="In Active" disabled="" style="width: 50%">
+																<input type="button" name="leave_period_status" class="btn btn-outline-danger btn-sm btn-block" value="In Active" disabled="">
 															@else
-																<input type="button" name="leave_period_status" class="btn btn-success btn-sm btn-block" value="Active" style="width: 50%">
+																<input type="button" name="leave_period_status" class="btn btn-success btn-sm btn-block" value="Active">
 															@endif
 														</td>
 													</tr>
@@ -160,7 +163,7 @@
 													<tr>
 														<td colspan="5">
 															<div class="d-flex justify-content-center">
-																{{ $leave_period->links() }}
+																{{ $leave_period->appends($_GET)->links() }}
 															</div>
 														</td>
 													</tr>

@@ -99,8 +99,10 @@ Version: 1.0
     background: grey !important;
 }
 
+
 /*word wrap in all list pages*/
-.word_wrap{     
+
+.word_wrap {
     max-width: 150px;
     white-space: nowrap;
     width: 150px;
@@ -2278,7 +2280,8 @@ textarea.form-control {
     #cithrm_mobile_menu ul li.hover a {
         color: #f1bd06 !important;
     }
-    #cithrm_mobile_menu a.dropdown-item.dropdown-toggle.active, #cithrm_mobile_menu a.dropdown-item.active {
+    #cithrm_mobile_menu a.dropdown-item.dropdown-toggle.active,
+    #cithrm_mobile_menu a.dropdown-item.active {
         color: #fff !important;
     }
     #cithrm_mobile_menu .cit_logout_mobile_menu {
@@ -2291,4 +2294,12 @@ textarea.form-control {
     .cithrm_submenu_dropdown-menu a.dropdown-item {
         margin-left: 15px;
     }
+}
+
+.sort_row a {
+    color: #000;
+}
+
+.sort_row a.active {
+    color: #007bff;
 }

@@ -43,7 +43,9 @@ class HolidaysController extends Controller
 
         DB::connection()->enableQueryLog();
 
-        $holidays = mHoliday::orderBy('date', 'asc');
+        $holidays = mHoliday::join('m_company_locations', 'm_company_locations.id', 'm_holidays.operational_sub_unit_id')
+        ->join('m_countries', 'm_holidays.operational_country_id', 'm_countries.id');
+        //orderBy('date', 'asc');
         if (($from_date)&&($from_date != '1970-01-01')) {
             $holidays->where('date', '>=', $from_date);
         }
@@ -53,7 +55,13 @@ class HolidaysController extends Controller
         if (($request->input('location_id')) && $request->input('location_id') != "All") {
             $holidays->where('operational_country_id', $request->input('location_id'));
         }
-        $holidays = $holidays->with('countryName', 'subUnitName')->paginate(7);
+        if($request->sort_by && $request->sort_field) {
+            $holidays = $holidays->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $holidays = $holidays->orderBy('m_holidays.id', 'asc');
+        }
+
+        $holidays = $holidays->with('countryName', 'subUnitName')->paginate(10);
         // dd(DB::getQueryLog());
 
         $country = mCountry::selectRaw('m_countries.id, m_countries.country')

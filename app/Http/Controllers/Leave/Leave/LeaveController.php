@@ -45,6 +45,8 @@ class LeaveController extends Controller
             ->select('t_leave_requests.*', 'm_leave_types.name', 't_leaves.leave_duration', 't_leaves.length_days', 't_leaves.approval_level')
             ->selectRaw('datediff(t_leave_requests.to_date, t_leave_requests.from_date) as leave_days, m_leave_status.name as leave_status')
             ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name')
+            ->selectRaw('(IF (t_leaves.approval_level =1 && t_leaves.status = 2, "Pending Approval From Admin", 
+            IF(approval_level =2 && t_leaves.status = 2, "Approved", m_leave_status.name)  )) AS my_status')
             ->when(request()->filled('status'), function ($query) {
                 $query->where('t_leave_requests.status', request('status'));
             })
@@ -54,9 +56,15 @@ class LeaveController extends Controller
             ->when(request()->filled('to_date'), function ($query) {
                 $query->where('t_leave_requests.to_date', '<=', request('to_date'));
             })
-            ->groupBy('t_leave_requests.id')
-            ->orderBy('t_leave_requests.status', 'ASC')
-            ->paginate(10); 
+            ->groupBy('t_leave_requests.id');
+
+            if($request->sort_by && $request->sort_field) {
+                $myLeaves = $myLeaves->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                $myLeaves = $myLeaves->orderBy('t_leave_requests.status', 'ASC');
+            }
+            
+            $myLeaves = $myLeaves->paginate(10); 
             // dd($myLeaves);
 
         return view('leave/leave/my_leaves', compact('leaveStatus', 'myLeaves'));   

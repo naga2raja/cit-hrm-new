@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\mLeavePeriod;
 use App\mCountry;
 use App\mCompanyLocation;
+use App\tLeave;
 use Session;
 use DB;
 
@@ -29,7 +30,10 @@ class LeavePeriodController extends Controller
 
         DB::connection()->enableQueryLog();
 
-        $leave_period = mLeavePeriod::orderBy('id', 'asc');
+        $leave_period = mLeavePeriod::join('m_company_locations', 'm_company_locations.id', 'm_leave_periods.sub_unit_id')
+            ->join('m_countries', 'm_leave_periods.country_id', 'm_countries.id')
+            ->select('m_leave_periods.*');
+            
         if ($country_id) {
             $leave_period->where('country_id', $country_id);
         }
@@ -42,9 +46,15 @@ class LeavePeriodController extends Controller
         if ($status != '') {
             $leave_period->where('status', $status);
         }
-        $leave_period = $leave_period->with('countryName', 'subUnitName')->paginate(7);
+        if($request->sort_by && $request->sort_field) {
+            $leave_period = $leave_period->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $leave_period = $leave_period->orderBy('m_leave_periods.id', 'asc');
+        }
 
-        // dd(DB::getQueryLog());
+        $leave_period = $leave_period->with('countryName', 'subUnitName')->paginate(10);
+
+        // dd(DB::getQueryLog(), $leave_period);
 
         $country = mCountry::selectRaw('m_countries.id, m_countries.country')
                             ->join('m_company_locations', 'm_company_locations.country_id', 'm_countries.id')
@@ -208,7 +218,26 @@ class LeavePeriodController extends Controller
 
     public function deleteMultiple(Request $request)
     {
-        if($request->delete_ids) {
+        if($request->delete_ids) {     
+            // check if the leave period is currently using or not
+            $leavePeriods = mLeavePeriod::whereIn('id', $request->delete_ids)->get();
+            foreach($leavePeriods as $leave_period) {
+                //check any leaves applied using this leave period.
+               $leavesAdded = tLeave::join('employees', 'employees.id', 't_leaves.employee_id')
+                    ->where('employees.company_location_id', $leave_period->sub_unit_id)
+                    ->whereRaw('t_leaves.date >= "'.$leave_period->start_period.'" AND t_leaves.date <= "'.$leave_period->end_period.'"')
+                    ->first();
+                    
+                if($leavesAdded) {
+                    //Leaves already added, You can't delete the leave period     
+                    header('HTTP/1.1 500 Internal Server');
+                    header('Content-Type: application/json; charset=UTF-8');
+                    die(json_encode(array('message' => 'ERROR', 'code' => $leavesAdded)));
+                } else {
+                    // mLeavePeriod::whereIn('id', $leave_period->id)->delete();
+                    // return true;
+                }
+            }            
             mLeavePeriod::whereIn('id', $request->delete_ids)
                     ->get()
                     ->map(function($news) {
