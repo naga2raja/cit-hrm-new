@@ -43,8 +43,7 @@ class HolidaysController extends Controller
 
         DB::connection()->enableQueryLog();
 
-        $holidays = mHoliday::join('m_company_locations', 'm_company_locations.id', 'm_holidays.operational_sub_unit_id')
-        ->join('m_countries', 'm_holidays.operational_country_id', 'm_countries.id');
+        $holidays = mHoliday::where('id', '>', 0);
         //orderBy('date', 'asc');
         if (($from_date)&&($from_date != '1970-01-01')) {
             $holidays->where('date', '>=', $from_date);

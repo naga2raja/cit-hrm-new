@@ -160,7 +160,7 @@
 											<div class="alert alert-success pull-left mt-3" id="contact_form_success_message" style="display:none;"><p>Contact Info Update Successfully</p></div>
 
 											<div class="text-center mt-3">
-												<button class="btn btn-theme text-white ctm-border-radius button-1" disabled="disabled" id="contact_add">Add </button>
+												<button class="btn btn-theme text-white ctm-border-radius button-1" disabled="disabled" id="contact_add">Save </button>
 											</div>
 										</div>
 									</div>
