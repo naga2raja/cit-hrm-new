@@ -108,7 +108,7 @@ class LeaveTypeController extends Controller
             $holidays->exclude_if_no_entitlement = $entitlement;
             $holidays->save();
 
-            return redirect()->back()->with('success', 'Leave Type Updated successfully');
+            return redirect()->route('leaveTypes.index')->with('success', 'Leave Type Updated successfully');
         }else{
             return redirect()->back()->with('failed', 'Duplicate Entry');
         }        

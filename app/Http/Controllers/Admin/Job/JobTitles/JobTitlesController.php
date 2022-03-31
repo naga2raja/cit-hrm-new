@@ -126,7 +126,7 @@ class JobTitlesController extends Controller
         $jobs->note = $request->input('note');
         $jobs->save();
 
-        return redirect()->back()->with('success', 'Job Titles Updated successfully');
+        return redirect('jobTitles')->with('success', 'Job Titles Updated successfully');
     }
 
     /**

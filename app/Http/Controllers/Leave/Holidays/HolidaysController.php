@@ -224,7 +224,7 @@ class HolidaysController extends Controller
             $holidays->operational_sub_unit_id  = $request->input('sub_unit_id');
             $holidays->save();
 
-            return redirect()->back()->with('success', 'Holiday Updated successfully');
+            return redirect()->route('holidays.index')->with('success', 'Holiday Updated successfully');
         }
     }
 

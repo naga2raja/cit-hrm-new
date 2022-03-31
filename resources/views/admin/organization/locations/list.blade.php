@@ -103,6 +103,12 @@
 								</div>
 								<div class="card-body align-center">									
 									<div class="table-responsive">
+										@if($message = Session::get('success'))
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
+											</div>
+										@endif
+										
 										<table class="table custom-table table-hover">
 											<thead>
 												<tr class="bg-light">

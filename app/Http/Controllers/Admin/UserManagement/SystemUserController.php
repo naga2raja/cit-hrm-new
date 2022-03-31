@@ -167,7 +167,7 @@ class SystemUserController extends Controller
 
         $users->syncRoles($request->input('role'));
 
-        return redirect()->back()->with('success', 'System User Updated successfully');
+        return redirect()->route('systemUsers.index')->with('success', 'System User Updated successfully');
     }
 
     /**

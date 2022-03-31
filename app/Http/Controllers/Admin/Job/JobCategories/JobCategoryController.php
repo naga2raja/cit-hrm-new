@@ -92,7 +92,7 @@ class JobCategoryController extends Controller
         $job_category->name = $request->input('name');
         $job_category->save();
 
-        return redirect()->back()->with('success', 'Job Category Updated successfully');
+        return redirect()->route('jobCategory.index')->with('success', 'Job Category Updated successfully');
     }
 
     /**

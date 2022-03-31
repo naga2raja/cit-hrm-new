@@ -96,7 +96,7 @@ class SkillsController extends Controller
         ]);
 
         // return redirect('/listSkills');
-        return redirect()->back()->with('success', 'Skill updated successfully');  
+        return redirect()->route('skills.index')->with('success', 'Skill updated successfully');  
     }
 
     /**

@@ -161,7 +161,7 @@ class LocationsController extends Controller
             'notes' => (empty($request->notes) ? '' :  $request->notes),
         ]);
 
-        return redirect()->back()->with('success', 'Location updated successfully'); 
+        return redirect()->route('locations.index')->with('success', 'Location updated successfully'); 
 
     }
 

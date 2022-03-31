@@ -88,7 +88,7 @@ class NewsController extends Controller
             'status'  => $request->input('status')
         ]);
 
-        return redirect()->back()->with('success', 'News Posted Successfully');
+        return redirect()->route('news.index')->with('success', 'News Posted Successfully');
     }
 
     /**
@@ -139,7 +139,7 @@ class NewsController extends Controller
         $news->status = $request->input('status');
         $news->save();
 
-        return redirect()->back()->with('success', 'News Updated successfully');
+        return redirect()->route('news.index')->with('success', 'News Updated successfully');
     }
 
     /**
