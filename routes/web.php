@@ -123,7 +123,7 @@ Route::group(['middleware' => ['role:Admin|Manager|Employee', 'auth']], function
     
     // employee list
     Route::resource('/employees', 'Employee\EmployeeController');
-    
+    Route::post('/upload-profile-image', 'Employee\EmployeeController@updateProfileImage')->name('profile.image');   
     Route::get('/emp-page', 'HomeController@demoEmployee');
 
     //Leave

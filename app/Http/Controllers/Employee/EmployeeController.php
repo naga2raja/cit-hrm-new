@@ -551,4 +551,21 @@ class EmployeeController extends Controller
 
         return response()->json($employee_details);
     }
+
+    public function updateProfileImage(Request $request)
+    {
+        $employeeId = (@$request->emp_user_id) ? $request->emp_user_id : Auth::User()->id;
+        $employee = Employee::where('user_id', $employeeId)->first();
+        $employee->updated_by = Auth::User()->id;      
+        
+        if ($request->file('profile_photo')) {
+            $imagePath = $request->file('profile_photo');
+            $imageName = $imagePath->getClientOriginalName();
+
+            $path = $request->file('profile_photo')->storeAs('uploads', $imageName, 'public');
+            $employee->profile_photo = '/storage/'.$path;
+        }
+        $employee->save();
+        return redirect()->back()->with('message', 'Profile image uploaded successfully!');
+    }
 }

@@ -283,4 +283,17 @@ function getCookie(name) {
 	}
 	
 }
+
+function openProfileImageModal() {
+	$('#upload_user_profile_image').hide();
+	$('#profile_image').modal('show');
+}
+
+function editProfileImage() {
+	//$('#preview_user_profile_image').hide();
+	$('#upload_user_profile_image').show();
+}
+setTimeout(function() {
+    $('.profile_img_success').remove();
+}, 4000); 
 </script>

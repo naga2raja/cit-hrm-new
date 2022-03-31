@@ -37,7 +37,13 @@
 
 					<div class="user-card card shadow-sm bg-white text-center ctm-border-radius">
 						<div class="user-info card-body">
-							<div class="user-avatar mb-4">
+							@if(session()->has('message'))
+								<div class="alert alert-success profile_img_success">
+									{{ session()->get('message') }}
+								</div>
+							@endif
+
+							<div class="user-avatar mb-4" onclick="openProfileImageModal()" style="cursor: pointer;">
 								@if($employee->profile_photo)												
 									<img src="{{ assetUrl($employee->profile_photo) }}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
 								@else
@@ -73,7 +79,7 @@
 				<div class="alert alert-success">
 					<p>{{$message}}</p>
 				</div>
-				@endif	
+			@endif	
 
 			<form method="POST" action="{{ route('employees.update', $id) }}" enctype="multipart/form-data">
 				@csrf
@@ -573,10 +579,10 @@
 							</div>
 							<div class="card-body">
 								@if($message = Session::get('success'))
-										<div class="alert alert-success">
-											<p>{{$message}}</p>
-										</div>
-										@endif	
+									<div class="alert alert-success">
+										<p>{{$message}}</p>
+									</div>
+								@endif	
 
 								<form method="POST" action="{{ route('employees.update', $id) }}">
 									@csrf
@@ -778,6 +784,41 @@
 	</div>
 	<!-- Job History Modal End -->
 
+	<!--  Profile image Modal -->
+	<div class="modal fade" id="profile_image">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">		
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form method="POST" enctype="multipart/form-data" action="{{ route('profile.image') }}">
+						@csrf
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h5 class="modal-title mb-3" style="word-break: break-all;">Update your profile image </h5><hr>
+						<p class="modal-message" style="word-break: break-all;">
+							<div id="preview_user_profile_image" style="max-width:150px;position: relative;">
+								@if($employee->profile_photo)												
+									<img src="{{ assetUrl($employee->profile_photo) }}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
+								@else
+									<img src="{{ assetUrl('img/profiles/img-1.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+								@endif
+								<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editProfileImage()"></a>
+							</div>
+							<input type="hidden" name="emp_user_id" value="{{ $employee->user_id }}">
+							<div class="form-group mt-3" style="{{ ($employee->profile_photo) ? 'display:none' : '' }}" id="upload_user_profile_image">
+								<input type='file' name="profile_photo" class="form-control {{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" required />
+								<label class="mb-2">Accepts jpg, .png, .gif up to 1MB.</label>
+							</div>
+
+						</p>
+						<button type="submit" class="btn btn-theme ctm-border-radius float-right ml-3 mt-4" style="color: #fff;">Upload</button>
+						<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3 mt-4" data-dismiss="modal">Close</button>
+					</form>	
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
 <style>
 #selected_managers i.fa.btn-primary.p-1.fa-close{	
     font-size: 13px;
