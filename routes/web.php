@@ -100,6 +100,7 @@ Route::group(['middleware' => ['role:Admin', 'auth']], function () {
     Route::post('/update-company-name', 'Admin\Organization\CompanyInfoController@update_company_name')->name('update-company-name');
     Route::post('/update-company-info', 'Admin\Organization\CompanyInfoController@update_company_info')->name('update-company-info');
     Route::post('/update-company-contact', 'Admin\Organization\CompanyInfoController@update_company_contact')->name('update-company-contact');
+    Route::post('/update-headoffice', 'Admin\Organization\CompanyInfoController@updateHeadOffice')->name('headoffice.update');
 
     /* Time/Attendance/Configuration */
     Route::resource('/configurations', 'Time\Attendance\ConfigurationsController');

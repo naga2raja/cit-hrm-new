@@ -46,16 +46,22 @@
 									</div>
 								</div>
 								<div class="card ctm-border-radius shadow-sm">
+									@if(session()->has('message'))
+										<div class="alert alert-success profile_img_success">
+											{{ session()->get('message') }}
+										</div>
+									@endif
+									
 									<div class="card-header">
 										<div class="d-inline-block">
 											<h4 class="card-title mb-0">
 												@if($company)
-													{{ $company->company_name }}
+													{{ $company->head_office_name }}
 												@endif
 											</h4>
 											<p class="mb-0 ctm-text-sm">Head Office</p>
 										</div>
-										<div class="d-inline-block float-right" data-toggle="modal" data-target="#editOffice">
+										<div class="d-inline-block float-right" data-toggle="modal" data-target="#editHeadOffice">
 											<a href="#" class="btn btn-theme mt-2 text-white float-right ctm-border-radius" title="Edit"><i class="fa fa-pencil"></i>	</a>
 										</div>
 									</div>
@@ -72,9 +78,11 @@
 												@if($company)
 													{{ $company->company_name }}
 												@endif
+												<!-- 
 												<div class="d-inline-block float-right" data-toggle="modal" data-target="#editOffice">
 													<a href="javascript:void(0)" class="float-right text-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 												</div>
+											-->
 											</h4>
 										</div>
 										<div class="card-body">
@@ -211,6 +219,42 @@
 							</div>
 							<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-theme text-white ctm-border-radius float-right" id="update_company_name">Save</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="editHeadOffice">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">					
+					<!-- Modal body -->
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title mb-3">Head Office</h4>
+						<form method="POST" action="{{ route('headoffice.update') }}">
+							@csrf
+							<div class="form-group">
+								<input class="form-control" type="hidden" value="@if($company){{ $company->id }}@endif" name="modal_company_id">
+								<select class="form-control select" name="head_office_id" id="head_office_id" required>
+									<option value="">-Select-</option>
+									@foreach ($allBranches as $office)
+									<option value="{{ $office->id }}" 
+										@if($company) 
+												@if($office->id == $company->head_office_id)
+													{{ "selected" }}
+												@else
+													{{ "" }}
+												@endif
+										@endif
+									>{{ $office->company_name }}
+									</option>
+									@endforeach
+								</select>
+
+							</div>
+							<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-theme text-white ctm-border-radius float-right" id="update_head_office_btn">Save</button>
 						</form>
 					</div>
 				</div>

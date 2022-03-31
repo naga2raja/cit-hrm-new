@@ -20,14 +20,17 @@ class CompanyInfoController extends Controller
      */
     public function index()
     {
-        $company = mCompany::select('m_companies.*', 'm_countries.country as country')
+        $company = mCompany::select('m_companies.*', 'm_countries.country as country', 'm_company_locations.company_name as head_office_name')
                             ->leftjoin('m_countries', 'm_countries.id', 'm_companies.country_id')
+                            ->leftJoin('m_company_locations', 'm_company_locations.id', 'm_companies.head_office_id')
                             ->first();
-        $branches = mCompanyLocation::select('*')->count(); 
+        //$branches = mCompanyLocation::select('*')->count(); 
         $employees = Employee::whereNull('deleted_at')->count();
         $countries = mCountry::get();
+        $allBranches = mCompanyLocation::get(); 
+        $branches = $allBranches->count();
 
-        return view('admin/organization/company_info/edit', compact('company', 'branches', 'employees', 'countries'));
+        return view('admin/organization/company_info/edit', compact('company', 'branches', 'employees', 'countries', 'allBranches'));
     }
 
     public function update_company_name(Request $request)
@@ -111,6 +114,19 @@ class CompanyInfoController extends Controller
         return response()->json(['url'=> route('company.index')]);
     }
 
+    public function updateHeadOffice(Request $request) {
+        $isExistsCompany = mCompany::where('id', $request->modal_company_id)->first();
+        if($isExistsCompany) {
+            $isExistsCompany->head_office_id = $request->head_office_id; 
+        } else {
+            $isExistsCompany = new mCompany();
+            $isExistsCompany->head_office_id = $request->head_office_id; 
+            $isExistsCompany->company_name = '';
+        } 
+        $isExistsCompany->save();
+        return redirect()->back()->with('message', 'Updated Successfully!!');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
