@@ -147,6 +147,8 @@
 											</h4>
 										</div>
 										<div class="card-body">
+											<div class="alert alert-success mt-0" id="contact_form_success_message" style="display:none;"><p>Contact Info Update Successfully</p></div>
+
 											<div class="input-group mb-3">
 												<input type="text" class="form-control numberonly" minlength="10" maxlength="10" placeholder="Phone Number..." value="@if($company && $company->phone_number != null) {{ $company->phone_number }} @endif" id="phone_number" name="phone_number" disabled="disabled">
 												<div class="input-group-append">
@@ -164,8 +166,7 @@
 												<div class="input-group-append">
 													<button class="btn btn-theme text-white" type="button" id="email_edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 												</div>
-											</div>
-											<div class="alert alert-success pull-left mt-3" id="contact_form_success_message" style="display:none;"><p>Contact Info Update Successfully</p></div>
+											</div>											
 
 											<div class="text-center mt-3">
 												<button class="btn btn-theme text-white ctm-border-radius button-1" disabled="disabled" id="contact_add">Save </button>
@@ -532,7 +533,11 @@
 		   success:function(data){
 		   	console.log(data);
 			$('#contact_form_success_message').show();
-		   	window.location =  data.url;
+			setTimeout(function() {
+				$('#contact_form_success_message').hide();
+			}, 4000);
+			$('#phone_number, #website, #email').prop('disabled', true);
+		   	// window.location =  data.url;
 		  },
 		  error:function(data){
 		  	console.log(data.responseJSON.errors);

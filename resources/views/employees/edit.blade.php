@@ -44,11 +44,14 @@
 							@endif
 
 							<div class="user-avatar mb-4" onclick="openProfileImageModal()" style="cursor: pointer;">
-								@if($employee->profile_photo)												
-									<img src="{{ assetUrl($employee->profile_photo) }}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
-								@else
-									<img src="{{ assetUrl('img/profiles/img-1.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
-								@endif
+								<div id="preview_user_profile_image" style="position: relative;">
+									@if($employee->profile_photo)												
+										<img src="{{ assetUrl($employee->profile_photo) }}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
+									@else
+										<img src="{{ assetUrl('img/profiles/img-1.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
+									@endif
+									<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;" onclick="openProfileImageModal()"></a>
+								</div>
 							</div>
 							<div class="user-details">
 								<h4><b>Hi {{ $employee->first_name }} {{ $employee->last_name }} </b></h4>
@@ -795,23 +798,16 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title mb-3" style="word-break: break-all;">Update your profile image </h5><hr>
 						<p class="modal-message" style="word-break: break-all;">
-							<div id="preview_user_profile_image" style="max-width:150px;position: relative;">
-								@if($employee->profile_photo)												
-									<img src="{{ assetUrl($employee->profile_photo) }}" alt="{{ $employee->first_name }}" class="img-fluid rounded-circle" width="100">
-								@else
-									<img src="{{ assetUrl('img/profiles/img-1.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle" width="100">
-								@endif
-								<a class="btn-sm btn-primary fa fa-pencil" style="cursor:pointer;color:#FFF;position: absolute;right: 0px;" onclick="editProfileImage()"></a>
-							</div>
+							
 							<input type="hidden" name="emp_user_id" value="{{ $employee->user_id }}">
-							<div class="form-group mt-3" style="{{ ($employee->profile_photo) ? 'display:none' : '' }}" id="upload_user_profile_image">
+							<div class="form-group mt-3">
 								<input type='file' name="profile_photo" class="form-control {{ $errors->has('profile_photo') ? 'is-invalid' : ''}}" accept=".png, .jpg, .jpeg" required />
 								<label class="mb-2">Accepts jpg, .png, .gif up to 1MB.</label>
 							</div>
 
 						</p>
-						<button type="submit" class="btn btn-theme ctm-border-radius float-right ml-3 mt-4" style="color: #fff;">Upload</button>
 						<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3 mt-4" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-theme ctm-border-radius float-right ml-3 mt-4" style="color: #fff;">Upload</button>						
 					</form>	
 
 				</div>

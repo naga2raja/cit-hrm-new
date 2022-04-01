@@ -294,6 +294,6 @@ function editProfileImage() {
 	$('#upload_user_profile_image').show();
 }
 setTimeout(function() {
-    $('.profile_img_success').remove();
+    $('.profile_img_success').hide();
 }, 4000); 
 </script>
