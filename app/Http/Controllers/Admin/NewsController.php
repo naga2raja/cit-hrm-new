@@ -36,7 +36,7 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-        $post_by = $request->input('post_by');
+        $post_by = $request->input('employee_id');
         $date = '';
         if($request->input('date') != ""){
             $date = DateTime::createFromFormat('d/m/Y', $request->input('date'));
@@ -48,13 +48,13 @@ class NewsController extends Controller
                        ->join('employees', 'employees.user_id', 't_news.created_by')
                        ->leftJoin('m_projects', 'm_projects.id', 't_news.project_id');
         if ($post_by) {
-            $news->Where('employees.id', $post_by);
+            $news->where('employees.id', $post_by);
         }
         if (($date)&&($date != '1970-01-01')) {
-            $news->Where('t_news.date', $date);
+            $news->where('t_news.date', $date);
         }
         if ($status) {
-            $news->Where('t_news.status', $status);
+            $news->where('t_news.status', $status);
         }
         $news = $news->orderBy('date', 'desc')
                     ->get();
