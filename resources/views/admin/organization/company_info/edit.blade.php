@@ -147,7 +147,7 @@
 											</h4>
 										</div>
 										<div class="card-body">
-											<div class="alert alert-success mt-0" id="contact_form_success_message" style="display:none;"><p>Contact Info Update Successfully</p></div>
+											<div class="alert alert-success mt-0" id="contact_form_success_message" style="display:none;"><p>Contact Info Updated Successfully</p></div>
 
 											<div class="input-group mb-3">
 												<input type="text" class="form-control numberonly" minlength="10" maxlength="10" placeholder="Phone Number..." value="@if($company && $company->phone_number != null) {{ $company->phone_number }} @endif" id="phone_number" name="phone_number" disabled="disabled">
