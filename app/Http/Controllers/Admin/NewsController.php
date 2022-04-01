@@ -45,10 +45,10 @@ class NewsController extends Controller
         $status = $request->input('status');
 
         $news = tNews::selectRaw('t_news.*, CONCAT_WS (" ", employees.first_name, employees.middle_name, employees.last_name) as employee_name, m_projects.project_name')
-                       ->join('employees', 'employees.id', 't_news.created_by')
+                       ->join('employees', 'employees.user_id', 't_news.created_by')
                        ->leftJoin('m_projects', 'm_projects.id', 't_news.project_id');
         if ($post_by) {
-            $news->Where('t_news.created_by', $post_by);
+            $news->Where('employees.id', $post_by);
         }
         if (($date)&&($date != '1970-01-01')) {
             $news->Where('t_news.date', $date);

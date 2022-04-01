@@ -117,7 +117,7 @@ class AdminController extends Controller
                                 ->get()->toArray();
 
         $news = tNews::selectRaw('t_news.*, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, profile_photo, CASE WHEN news != "" THEN "news" END AS type')
-                                ->join('employees', 'employees.id', 't_news.created_by')
+                                ->join('employees', 'employees.user_id', 't_news.created_by')
                                 ->where('t_news.status', 'Active');                                
                                 if(!Auth::user()->hasRole('Admin')){
                                     $news->where('t_news.project_id', null);
