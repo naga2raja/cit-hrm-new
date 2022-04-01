@@ -91,12 +91,14 @@ class SystemUserController extends Controller
 
         if($isExists) {
             // update
-            $msg = "User Updated";
+            $msg = "User Added ";
             $users = User::find($isExists->id);
             $users->name = $emp->name;
             if($request->input('generatePassword') == 'on'){
                 $users->password = Hash::make($request->input('password'));
                 $msg .= " with Username: ".$request->input('email')." Password: ".$request->input('password');
+            } else {
+                $msg = 'System User Added successfully';
             }
             $users->save();
             $users->syncRoles($request->input('role'));
