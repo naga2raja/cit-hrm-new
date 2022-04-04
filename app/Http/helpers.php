@@ -252,3 +252,13 @@ if (! function_exists('assetUrl')) {
                     ->first();
         return $data->e_name;
     }
+
+    function getLocalDateTime($date) {
+        $dt = new DateTime($date);
+        $tz = new DateTimeZone('Asia/Kolkata'); // or whatever zone you're after
+        if(@$_COOKIE['tz_client']) {            
+            $tz = new DateTimeZone($_COOKIE['tz_client']);
+        }
+        $dt->setTimezone($tz);
+        return $dt->format('Y-m-d h:i a');
+    }

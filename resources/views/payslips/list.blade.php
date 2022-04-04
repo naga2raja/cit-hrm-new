@@ -138,7 +138,8 @@
                                                                     <td> 
                                                                     	<a href="{{ route('payslip.download') }}?file={{ base64_encode($payslip->id) }}"><i class="fa fa-download"></i> Download</a>
                                                                     </td>
-                                                                    <td> {{ date('Y-m-d H:i a', strtotime($payslip->created_at)) }}</td>  
+                                                                    <td> {{ getLocalDateTime($payslip->created_at) }} 
+																		<!-- date('Y-m-d H:i a', strtotime($payslip->created_at)) --> </td>  
 																	@hasrole('Admin')
                                                                     <td> 
                                                                         <form onsubmit="return confirm('Are you sure?')" action="{{ route('payslips.destroy', $payslip->id)}}" method="post" style="margin-left: 5px;">

@@ -155,9 +155,9 @@
 														<td>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</td>
 														<td>
 															@if($user->emp_status == 'In active')
-																<a class="btn btn-outline-danger btn-sm" style="width: 60%"> Inactive </a>
+																<a class="btn btn-outline-danger btn-sm" style="width: 60%;cursor: text;"> Inactive </a>
 															@elseif($user->emp_status == 'Active')
-																<a class="btn  btn-outline-success btn-sm" style="width: 60%"> Active </a>
+																<a class="btn  btn-outline-success btn-sm" style="width: 60%;cursor: text;"> Active </a>
 															@endif
 														</td>
 													</tr>

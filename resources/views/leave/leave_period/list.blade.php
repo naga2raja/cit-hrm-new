@@ -148,9 +148,9 @@
 														<td>{{ $row->subUnitName->company_name }}</td>
 														<td>
 															@if($row->status == '0')
-																<input type="button" name="leave_period_status" class="btn btn-outline-danger btn-sm btn-block" value="In Active" disabled="">
+																<input type="button" name="leave_period_status" class="btn btn-outline-danger btn-sm btn-block" value="In Active" disabled="" style="cursor: text;">
 															@else
-																<input type="button" name="leave_period_status" class="btn btn-success btn-sm btn-block" value="Active">
+																<a type="button" name="leave_period_status" style="cursor: text;" class="btn btn-outline-success btn-sm btn-block" value="Active">Active</a>
 															@endif
 														</td>
 													</tr>

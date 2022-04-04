@@ -253,6 +253,9 @@ class ReportsController extends Controller
                 $date = DateTime::createFromFormat('d/m/Y', request('to_date'));
                 $date = $date->format('Y-m-d');
                 $query->whereRaw('DATE_FORMAT(t_timesheet_items.date, "%Y-%m-%d") <= "'. $date.'"');
+            })            
+            ->when(request()->filled('employee_id'), function ($query) {
+                $query->where('t_timesheets.employee_id', request('employee_id'));
             })
             ->selectRaw('m_projects.project_name as project_name, m_customers.customer_name, SUM(t_timesheet_items.duration) as duration, m_projects.id')
             ->orderBy('m_projects.project_name', 'ASC')

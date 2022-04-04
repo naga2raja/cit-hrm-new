@@ -61,7 +61,7 @@
 												</div>
 											</div>	
 											
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter attendance_report_filter timesheet_report_filter leave_balance_report_filter">  
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3 cit_filter_box leave_report_filter attendance_report_filter timesheet_report_filter leave_balance_report_filter productivity_report_filter">  
 												<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 													<label>Employee</label> 
 													<select class="form-control select" name="employee_id" id="employee_id">
