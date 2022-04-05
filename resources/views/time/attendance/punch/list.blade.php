@@ -377,7 +377,9 @@
 										<hr>							
 							<div class="row">				
 								<div class="col-md-12 text-center">
-									<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2"  id="action_buttons">Save</button>	
+									@if($edit_date_time)
+										<button type="submit" class="btn btn-theme button-1 ctm-border-radius text-white text-center mb-2"  id="action_buttons">Save</button>	
+									@endif
 									<button type="button" class="ml-2 btn btn-danger ctm-border-radius text-white text-center mb-2 mr-3" data-dismiss="modal">Close</button>
 								</div>
 							</div>

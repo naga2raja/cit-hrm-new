@@ -44,8 +44,11 @@ class ProjectsController extends Controller
         if ($project_admin_id) {
             $projects->Where('t_project_admins.admin_id', $project_admin_id);
         }
+        if($request->sort_by && $request->sort_field) {
+            $projects = $projects->orderBy($request->sort_field, $request->sort_by);
+        }
         $projects = $projects->groupby('m_projects.id')
-                       ->get();  
+                       ->paginate(10);  
         $activities = tActivity::get();
 
         return view('time/project_info/projects/list', compact('projects', 'activities'));

@@ -48,8 +48,10 @@ class PunchInOutController extends Controller
         } elseif($user->hasRole('Employee')) {
             $userRole = 'Employee';
         } 
-        // dd($data);
-        return view('time/attendance/punch/list', compact('data', 'userRole'));
+        $enabledFlag = $this->checkPuchchInOutEnable();
+        $myPermissions = $this->attendancePermission();            
+        $edit_date_time = $myPermissions['edit_date_time'];
+        return view('time/attendance/punch/list', compact('data', 'userRole', 'edit_date_time'));
     }
 
     /**

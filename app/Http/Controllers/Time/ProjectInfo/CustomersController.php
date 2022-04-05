@@ -15,9 +15,16 @@ class CustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = mCustomer::get();
+
+        $customers = mCustomer::where('customer_name', '!=', '');
+        if($request->sort_by && $request->sort_field) {
+            $customers = $customers->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $customers = $customers->orderBy('id', 'asc');
+        }
+        $customers = $customers->paginate(10);        
         return view('time/project_info/customers/list', ['customers' => $customers]);
     }
 

@@ -31,14 +31,18 @@
 												<p>{{$message}}</p>
 											</div>
 										@endif
+										<form method="GET" id="filter_form">
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+										</form>
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_customers_table')">
 													</th>
-													<th>Customer</th>
-													<th>Description</th>
+													<th>Customer <a href="#" class="{{ (Request::get('sort_field') == 'customer_name') ? 'active' : '' }}" onclick="sorting('customer_name')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Description <a href="#" class="{{ (Request::get('sort_field') == 'customer_description') ? 'active' : '' }}" onclick="sorting('customer_description')"><i class="fa fa-fw fa-sort"></i></th>
 												</tr>
 											</thead>
 											<tbody id="list_customers_table">
@@ -59,6 +63,13 @@
 															<td colspan="5"><p class="text-center">No customers Found!</p></td>
 														</tr>
 												@endif
+												<tr>
+													<td colspan="5">
+														<div class="d-flex justify-content-center">
+															{{ $customers->appends($_GET)->links() }}
+														</div>
+													</td>
+												</tr>
 											</tbody>
 										</table>
 									</div>

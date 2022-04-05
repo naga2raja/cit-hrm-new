@@ -29,7 +29,9 @@
 									<div class="card-body">
 										<!-- <h4 class="card-title"><i class="fa fa-search"></i> Search</h4><hr> -->
 										<form id="searchProjects" method="GET" action="{{ route('projects.index') }}">
-
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+											
 											<div class="row filter-row">
 												<div class="col-sm-6 col-md-12 col-lg-12 col-xl-12">
 													<div class="form-group">
@@ -114,13 +116,13 @@
 									<div class="table-responsive">
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_projects_table')">
 													</th>
-													<th>Project</th>
-													<th>Customer Name</th>
-													<th>project Admin</th>
+													<th>Project <a href="#" class="{{ (Request::get('sort_field') == 'project_name') ? 'active' : '' }}" onclick="sorting('project_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Customer Name <a href="#" class="{{ (Request::get('sort_field') == 'customer_name') ? 'active' : '' }}" onclick="sorting('customer_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>project Admin <a href="#" class="{{ (Request::get('sort_field') == 'admin_name') ? 'active' : '' }}" onclick="sorting('admin_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></th>
 												</tr>
 											</thead>
 											<tbody id="list_projects_table">
@@ -142,6 +144,13 @@
 														<td colspan="5"><p class="text-center">No projects Found!</p></td>
 													</tr>
 												@endif												
+												<tr>
+													<td colspan="5">
+														<div class="d-flex justify-content-center">
+															{{ $projects->appends($_GET)->links() }}
+														</div>
+													</td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
