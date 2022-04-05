@@ -240,7 +240,7 @@ class LeaveEntitlementController extends Controller
             $msg = "No employees match the selected filters";
         }
 
-        return redirect()->route('leaveEntitlement.create')->with($msg_type, $msg);
+        return redirect()->route('leaveEntitlement.index')->with($msg_type, $msg);
     }
 
     /**
@@ -322,7 +322,7 @@ class LeaveEntitlementController extends Controller
         $entitlement->no_of_days = $request->input('entitlement');
         $entitlement->save();
 
-        return redirect()->back()->with('success', 'Entitlement Updated successfully');
+        return redirect()->route('leaveEntitlement.index')->with('success', 'Entitlement Updated successfully');
     }
 
     /**

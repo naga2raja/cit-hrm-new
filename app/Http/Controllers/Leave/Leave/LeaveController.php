@@ -102,7 +102,7 @@ class LeaveController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ApplyLeaveRequest $request)
-    {        
+    {   
         $fromDate = str_replace('/', '-', $request->from_date);
         $fromDate = date('Y-m-d', strtotime($fromDate));
         $toDate = str_replace('/', '-', $request->to_date);
@@ -257,7 +257,10 @@ class LeaveController extends Controller
         if($sendMailFlag)
             Mail::to($managerEmails)->send(new ApplyLeaveRequestMail($details));
         
-        return redirect()->back()->with('success', 'You applied successfully!');      
+        if($request->assign_leave == 1) {
+            return redirect()->route('leave.list')->with('success', 'You applied successfully!');      
+        } 
+        return redirect()->route('leave.index')->with('success', 'You applied successfully!');      
                 
     }
 

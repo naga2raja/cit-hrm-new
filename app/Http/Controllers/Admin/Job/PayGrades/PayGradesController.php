@@ -105,7 +105,7 @@ class PayGradesController extends Controller
         $grades->name = $request->input('name');
         $grades->save();
 
-        return redirect()->back()->with('success', 'Pay Grade Updated successfully');
+        return redirect()->route('payGrades.index')->with('success', 'Pay Grade Updated successfully');
     }
 
     /**
