@@ -89,6 +89,9 @@ class ReportsController extends Controller
         })       
         ->when(request()->filled('job_title'), function ($query) {
             $query->where('m_job_titles.id', request('job_title'));
+        })
+        ->when(request()->filled('employee_id'), function ($query) {
+            $query->where('employees.id', request('employee_id'));
         })        
         ->selectRaw('employees.employee_id, first_name, middle_name, last_name, employees.email, date_of_birth, gender, joined_date, employees.status, employees.created_at, IF(employees.marital_status = 1, "YES", "NO") as marital_status')
         ->selectRaw('contact_details.street_address_1, contact_details.street_address_2, contact_details.city, contact_details.state, contact_details.country, contact_details.zip_code, contact_details.home_telephone, contact_details.mobile, contact_details.work_telephone, contact_details.alternate_email,

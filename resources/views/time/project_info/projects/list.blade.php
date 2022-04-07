@@ -114,6 +114,21 @@
 								</div>
 								<div class="card-body align-center">									
 									<div class="table-responsive">
+										@if($message = Session::get('success'))
+										<div class="col-md-12">
+											<div class="alert alert-success">
+												<p>{{$message}}</p>
+											</div>
+										</div>
+										@endif
+										@if(Request::get('updated') == 'success')
+										<div class="col-md-12 profile_img_success">
+											<div class="alert alert-success">
+												<p>Project Info Updated Successfully</p>
+											</div>
+										</div>
+										@endif
+										
 										<table class="table custom-table table-hover">
 											<thead>
 												<tr class="bg-light sort_row">

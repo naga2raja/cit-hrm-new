@@ -422,7 +422,12 @@ class PunchInOutController extends Controller
                     ->where('t_punch_in_outs.status', '>', 0)
                     ->orderBy('t_punch_in_outs.id', 'DESC')
                     ->paginate(30);
-        return view('time/attendance/punch/list', compact('data', 'userRole'));
+        
+        $enabledFlag = $this->checkPuchchInOutEnable();
+        $myPermissions = $this->attendancePermission();            
+        $edit_date_time = $myPermissions['edit_date_time'];
+
+        return view('time/attendance/punch/list', compact('data', 'userRole', 'edit_date_time'));
     }
 
     public function adminAction(Request $request)

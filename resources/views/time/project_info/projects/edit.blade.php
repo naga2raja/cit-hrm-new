@@ -13,10 +13,7 @@
 										<h4 class="card-title mb-0">Project</h4>
 									</div>
 								</div>
-								<div class="card-body">
-									<div id="alert_success_message_info" style="display: none;">
-										<div class="alert alert-success"><p> Project Info Updated Successfully </p></div>
-									</div>
+								<div class="card-body">								
 
 									@if($message = Session::get('success'))
 										<div class="alert alert-success">
@@ -59,7 +56,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="" name="project_name" id="project_name" value="{{ old('project_name', $projects[0]->project_name) }}" disabled="disabled" maxlength="30">
+													<input type="text" class="form-control {{ $errors->has('project_name') ? 'is-invalid' : ''}}" placeholder="" name="project_name" id="project_name" value="{{ old('project_name', $projects[0]->project_name) }}" maxlength="30">
 													{!! $errors->first('project_name', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
@@ -73,7 +70,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<select class="admin_id form-control {{ $errors->has('admin_id') ? 'is-invalid' : ''}}" name="admin_id" id="admin_id" style="width: 100%" disabled>
+													<select class="admin_id form-control {{ $errors->has('admin_id') ? 'is-invalid' : ''}}" name="admin_id" id="admin_id" style="width: 100%">
 														<option value="{{ $projects[0]->admin_id }}" selected> {{ $projects[0]->admin_name }}</option>														
 													</select>
 													{!! $errors->first('admin_id', '<span class="invalid-feedback" role="alert">:message</span>') !!}
@@ -89,7 +86,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-	                                    			<select class="managers form-control {{ $errors->has('managers') ? 'is-invalid' : ''}}" name="managers[]" id="manager_ids" multiple="multiple" style="width: 100%" disabled>
+	                                    			<select class="managers form-control {{ $errors->has('managers') ? 'is-invalid' : ''}}" name="managers[]" id="manager_ids" multiple="multiple" style="width: 100%">
 														@foreach ($managers as $item)
 															<option value="{{ $item['id'] }}" selected> {{ $item['name'] }}</option>
 														@endforeach
@@ -107,7 +104,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-	                                    			<select class="employee_name form-control {{ $errors->has('employees') ? 'is-invalid' : ''}}" name="employees[]" id="employee_ids" multiple="multiple" style="width: 100%" disabled>
+	                                    			<select class="employee_name form-control {{ $errors->has('employees') ? 'is-invalid' : ''}}" name="employees[]" id="employee_ids" multiple="multiple" style="width: 100%">
 														@foreach ($employees as $item)
 															<option value="{{ $item['id'] }}" selected> {{ $item['name'] }}</option>
 														@endforeach
@@ -127,7 +124,7 @@
 											</div>
 											<div class="col-sm-3">
 												<div class="form-group">
-													<textarea class="form-control {{ $errors->has('project_description') ? 'is-invalid' : ''}}" rows="3" disabled="disabled" id="project_description" name="project_description" maxlength="255">{{ old('project_description', $projects[0]->project_description) }}</textarea>{!! $errors->first('project_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
+													<textarea class="form-control {{ $errors->has('project_description') ? 'is-invalid' : ''}}" rows="3" id="project_description" name="project_description" maxlength="255">{{ old('project_description', $projects[0]->project_description) }}</textarea>{!! $errors->first('project_description', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 												</div>
 											</div>
 										</div>
@@ -147,7 +144,7 @@
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="submit-section text-center btn-add">
-															<button id="update" type="button" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0"> Edit</button>
+															<button id="update" type="button" class="btn btn-theme button-1 text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" data-action="1"> Update</button>
 														</div>
 													</div>
 													<div class="col-sm-6">
@@ -229,6 +226,9 @@
 				<div class="container-fluid">
 					<div class="row">					
 						<div class="col-xl-12 col-lg-8  col-md-12">
+							<div id="alert_success_message_info" style="display: none;">
+								<div class="alert alert-success"><p> Project Info Updated Successfully </p></div>
+							</div>
 
 							<div class="card shadow-sm ctm-border-radius border">
 								<div class="card-header">
@@ -439,11 +439,12 @@
 				   contentType: 'application/json',
 				   success:function(data){
 				   	console.log(data);					  
-				   	disable_edit();
-					$('#success_message_info').show();
-					setTimeout(function(){
-						$("#success_message_info").hide();
-					}, 2500);
+				   	// disable_edit();
+					// $('#success_message_info').show();
+					// setTimeout(function(){
+					// 	$("#success_message_info").hide();
+					// }, 2500);
+					window.location.href = '{{ route("projects.index") }}?updated=success';					
 				  }
 				});
 			} else{
@@ -536,6 +537,7 @@
 		var urlParams = new URLSearchParams(window.location.search);
 		console.log('URL PARAM:: ', urlParams.has('message')); 
 		if(urlParams.has('message')) {
+			$('#update').focus();
 			$('#alert_success_message_info').show();
 			setTimeout(function(){
 				$("#alert_success_message_info").hide();
