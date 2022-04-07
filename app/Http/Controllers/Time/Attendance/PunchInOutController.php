@@ -404,7 +404,7 @@ class PunchInOutController extends Controller
             if($reportTo)
                 $empIds = explode(',', $reportTo->reporting_manager_ids);
         } else {
-            $empIds = $leaveCtrl->getReportingToAdminEmployees($user->id);
+            $empIds = $leaveCtrl->getReportingToAdminEmployees($employeeId);
         }
         
         $data = tPunchInOut::join('employees', 't_punch_in_outs.employee_id', 'employees.id')

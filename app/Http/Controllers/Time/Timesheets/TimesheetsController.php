@@ -248,7 +248,7 @@ class TimesheetsController extends Controller
         } else {
           //admin
             $userRole = 'Admin';
-            $empIds = $leaveCtrl->getReportingToAdminEmployees($user->id);
+            $empIds = $leaveCtrl->getReportingToAdminEmployees($employeeId);
         }
 
         $timesheets = [];

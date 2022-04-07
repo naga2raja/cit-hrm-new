@@ -272,7 +272,7 @@
 															<input type="checkbox" name="delete_ids" id="delete_ids" value="{{ $activity->id }}">
 														</td>
 														<td>
-															<h2><u><a id="{{ $activity->id }}" name="{{$activity->activity_name}}" onclick="edit_activity(this.id, this.name)">{{$activity->activity_name}}</a></u></h2>
+															<h2><u><a style="cursor:pointer" id="{{ $activity->id }}" name="{{$activity->activity_name}}" onclick="edit_activity(this.id, this.name)">{{$activity->activity_name}}</a></u></h2>
 														</td>
 													</tr>
 													@endforeach
