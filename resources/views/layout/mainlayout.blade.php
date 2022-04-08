@@ -58,8 +58,11 @@
 						alert('Can\'t delete the '+ $module);
 					} else {
 						alert('Deleted successfully!');
-					}					
-					window.location.reload();
+					}						
+					location.href=location.href.replace(/&?page=([^&]$|[^&]*)/i, "");
+					// let url = window.location.href;
+					// window.location.href = url; //url.split('?')[0];				
+					//window.location.reload();
 	            },
 				error: function(response, status){
 	                console.log('error', response, 'status:', status);					

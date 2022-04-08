@@ -2303,3 +2303,11 @@ textarea.form-control {
 .sort_row a.active {
     color: #007bff;
 }
+
+#list_emp_table a.btn-outline-success,
+#list_news_table a.btn-outline-danger,
+#list_news_table a.btn-outline-success {
+    min-width: 70px;
+    text-align: center;
+    cursor: text;
+}

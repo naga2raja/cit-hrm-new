@@ -56,10 +56,11 @@ class NewsController extends Controller
         if ($status) {
             $news->where('t_news.status', $status);
         }
+        $total = $news->count();
         $news = $news->orderBy('date', 'desc')
-                    ->get();
+                    ->paginate(10);
         // dd($news);
-        return view('admin/news/list', compact('news'));
+        return view('admin/news/list', compact('news', 'total'));
     }
 
     public function create(Request $request)

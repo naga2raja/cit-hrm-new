@@ -398,10 +398,9 @@
 	$('#calendar_icon').on('click', function(){
 		$('#date').datetimepicker("show");
 	});
+	let edit = '{{ $edit_date_time }}';	
 
-	function showAttendanceInfo(punch_id, url = false)
-	{
-		$('#action_buttons').hide();
+	function disableFormFields() {
 		// disable all inputs
 		$('#punch_in_date').prop('disabled', true);
 		$('#in_time').prop('disabled', true);
@@ -409,6 +408,12 @@
 		$('#punch_out_date').prop('disabled', true);
 		$('#out_time').prop('disabled', true);
 		$('#punch_out_note').prop('disabled', true);
+	}
+
+	function showAttendanceInfo(punch_id, url = false)
+	{
+		$('#action_buttons').hide();
+		disableFormFields();
 
 		$('#punch_id').val(punch_id);
 		$('#attendance_action_log').html('');
@@ -441,14 +446,19 @@
 				$('#attendance_action_log').html(response.comments);
 				$('#leave_created_at').html(moment(response.created_at).utcOffset("+05:30").format('YYYY-MM-DD hh:MM a'));
 				if(response.status == 0){
-					$('#action_buttons').show();
-					// enable all inputs
-					$('#punch_in_date').prop('disabled', false);
-					$('#in_time').prop('disabled', false);
-					$('#punch_in_note').prop('disabled', false);		
-					$('#punch_out_date').prop('disabled', false);
-					$('#out_time').prop('disabled', false);
-					$('#punch_out_note').prop('disabled', false);
+					$('#action_buttons').show();				
+					
+					if(edit == 0) {						
+						disableFormFields();
+					} else {
+						// enable all inputs
+						$('#punch_in_date').prop('disabled', false);
+						$('#in_time').prop('disabled', false);
+						$('#punch_in_note').prop('disabled', false);		
+						$('#punch_out_date').prop('disabled', false);
+						$('#out_time').prop('disabled', false);
+						$('#punch_out_note').prop('disabled', false);
+					}
 				}
 				$('#punch_status').html(attendanceStatus[response.status]);
 				$('#showInfo').modal({

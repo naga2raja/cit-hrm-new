@@ -130,7 +130,7 @@
 															<h2><u><a href="{{ route('news.edit', $row->id) }}">{{ $row->title }}</a></u></h2>
 														</td>
 														<td>{{ $row->category }}</td>
-														<td>{{ ($row->project_name) ? $row->project_name : '-' }}</td>
+														<td>{{ ($row->project_name) ? $row->project_name : 'All' }}</td>
 														<td>{{ $row->date }}</td>
 														<td>{{ $row->employee_name }}</td>
 														<td>
@@ -142,6 +142,14 @@
 														</td>
 													<tr>
 													@endforeach
+													<tr>
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($news->currentPage() > 1) ? (($news->currentPage() * $news->perPage()) - $news->perPage()) + 1 : $news->currentPage() }} to {{ (($news->currentPage() * $news->perPage()) > $total) ? $total : ($news->currentPage() * $news->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
+																{{ $news->appends($_GET)->links() }}
+															</div>
+														</td>
+													</tr>
 												@else
 													<tr>
 														<td colspan="6"><p class="text-center">No Data Found</p></td>
