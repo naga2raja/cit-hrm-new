@@ -35,7 +35,7 @@ class LeavePeriodController extends Controller
             ->select('m_leave_periods.*');
             
         if ($country_id) {
-            $leave_period->where('country_id', $country_id);
+            $leave_period->where('m_leave_periods.country_id', $country_id);
         }
         if ($start_date) {
             $leave_period->where('start_period', 'like', '%'.$start_date.'%');

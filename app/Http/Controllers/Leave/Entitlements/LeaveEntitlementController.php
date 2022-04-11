@@ -240,6 +240,13 @@ class LeaveEntitlementController extends Controller
             $msg = "No employees match the selected filters";
         }
 
+        $leaveCtrl = new LeaveController;
+        $user = Auth::user();
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails($user->id);
+        $employeeId = $currentEmployeeDetails->id;
+        if($request->input('multiple_employee') != "on" && $request->input('emp_number') == $employeeId) {
+            return redirect()->route('myEntitlements.index')->with($msg_type, $msg);
+        }
         return redirect()->route('leaveEntitlement.index')->with($msg_type, $msg);
     }
 
@@ -322,7 +329,15 @@ class LeaveEntitlementController extends Controller
         $entitlement->no_of_days = $request->input('entitlement');
         $entitlement->save();
 
-        return redirect()->route('leaveEntitlement.index')->with('success', 'Entitlement Updated successfully');
+        $leaveCtrl = new LeaveController;
+        $user = Auth::user();
+        $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails($user->id);
+        $employeeId = $currentEmployeeDetails->id;
+        if($entitlement->emp_number == $employeeId) {
+            return redirect()->route('myEntitlements.index')->with('success', 'Entitlement Updated successfully');
+        } else {            
+            return redirect()->route('leaveEntitlement.index')->with('success', 'Entitlement Updated successfully');
+        }
     }
 
     /**

@@ -726,7 +726,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="assignEmployee()">Save</button>
+						<button class="btn btn-theme button-1 text-white p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="assignEmployee()">Assign</button>
 				        <button type="button" class="btn btn-danger text-white ctm-border-radius" data-dismiss="modal" id="customer_model_cancel">Cancel</button>						
 				    </div>	
 			</div>

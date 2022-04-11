@@ -208,6 +208,22 @@
 		</div>
 		
 		<div class="sidebar-overlay" id="sidebar_overlay"></div>
+
+		<!--  Validation Modal -->
+		<div class="modal fade" id="validation_message">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h5 class="modal-title mb-3"></h5><hr>
+						<p class="modal-message"></p>
+						<button type="button" class="btn btn-danger ctm-border-radius float-right ml-3 mt-4" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 @endsection
 
 @push('scripts')
@@ -220,6 +236,25 @@
 			$('#to_date').val(result[1]);
 		}
 	});
+
+	function validation_popup_msg(){
+		@if (Session::get('success'))
+			 title = 'Success'; msg = '{{ Session::get("success") }}';
+		@elseif (Session::get('error'))
+			 title = 'Failed'; msg = '{{ Session::get("error") }}';
+		@endif
+
+		@if ((Session::get('success'))||(Session::get('error')))
+			$('#validation_message').modal('toggle');
+			$('.modal-title').html(title);
+			$('.modal-message').html(msg);
+		@endif
+	}
+
+	window.onload = function() {
+		// calling validation_popup_msg
+		validation_popup_msg();
+	}
 
 </script>    
     <!-- <script src="{{ asset('js/system_users.js')}}"></script> -->

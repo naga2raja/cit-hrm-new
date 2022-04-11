@@ -178,6 +178,9 @@
 							</div>
 							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-body align-center">
+									<div class="alert alert-primary" id="initial_report_info">
+											<p>Please select a report</p>
+									</div>
 									<!-- <div class="employee-office-table"> -->
 										<div class="table-responsive">
 											<table id="report_table" class="table custom-table table-hover">
@@ -239,7 +242,7 @@
 														</tr>														
 														@endforeach
 
-														@if(count($data) < 1)
+														@if(Request::get('report') && count($data) < 1)
 														<tr>
 															<td colspan="100%">
 																<div class="alert alert-danger text-left">No Data Found</div>
@@ -477,8 +480,12 @@
 			$('#thead_timesheet_report').hide();
 			$('#thead_productivity_report').hide();
 			$('#thead_leave_balance_report').hide();
+			$('#initial_report_info').hide();
 
-			if(!report || report == 'employee_report') {
+			if(!report) {
+				$('#initial_report_info').show();
+			}
+			else if(report == 'employee_report') {
 				$('.employee_report_filter').show();
 				$('#thead_employee_report').show();
 			} else if(report == 'leave_report') {

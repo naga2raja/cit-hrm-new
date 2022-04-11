@@ -360,6 +360,7 @@
 		if(load) {
 			sub_unit_id = '{{ old("sub_unit_id") }}';
 			location_id = '{{ old("location_id") }}';
+			employee_id = '{{ Request::get("employee_id") }}';
 		}
 
 		$.ajax({
