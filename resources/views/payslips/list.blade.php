@@ -62,6 +62,9 @@
 															</div>
 															@endrole
 
+															<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+															<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+
 															<div class="row">
 																<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
 																	<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>													
@@ -117,11 +120,11 @@
 												<div class="table-responsive ">
 													<table class="table custom-table table-hover">
 														<thead>
-															<tr class="bg-light">
-                                                                <th>Employee Name</th>
-																<th>Month Year</th>
+															<tr class="bg-light sort_row">
+                                                                <th>Employee Name  <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>Month Year  <a href="#" class="{{ (Request::get('sort_field') == 'pay_month') ? 'active' : '' }}" onclick="sorting('pay_month', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
 																<th>Document</th>
-																<th>Created At</th>
+																<th>Created At  <a href="#" class="{{ (Request::get('sort_field') == 'created_at') ? 'active' : '' }}" onclick="sorting('created_at', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
 																@hasrole('Admin')
 																<th>Action</th>
 																@endrole
@@ -159,13 +162,14 @@
                                                                 </tr>
                                                         @endif
 
-                                                            <tr>
-                                                                <td colspan="100%">
-                                                                    <div class="d-flex justify-content-center">
-                                                                        {{ $data->links() }}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+														<tr>
+															<td colspan="100%">															
+																<div class="pull-left mt-3">Showing {{ ($data->currentPage() > 1) ? (($data->currentPage() * $data->perPage()) - $data->perPage()) + 1 : $data->currentPage() }} to {{ (($data->currentPage() * $data->perPage()) > $total) ? $total : ($data->currentPage() * $data->perPage()) }} of {{ $total }} entries</div>
+																<div class="pull-right mt-3">
+																	{{ $data->appends($_GET)->links() }}
+																</div>
+															</td>
+														</tr>
 															
 															
 														</tbody>

@@ -203,7 +203,7 @@ a:link {
 														</div>
 													</div>
 													<div class="no-wrap">														
-														<div class="item-date text-muted text-sm d-none d-md-block">{{ date('Y-m-d H:i A', strtotime($row->created_at)) }}</div>
+														<div class="item-date text-muted text-sm d-none d-md-block">{{ getLocalDateTime($row->created_at)  }}</div>
 													</div>
 												</div>											
 											@endforeach

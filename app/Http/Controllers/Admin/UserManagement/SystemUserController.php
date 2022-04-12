@@ -47,7 +47,7 @@ class SystemUserController extends Controller
             $users->Where('employees.status', $status);
         }
         $users = $users->orderBy('users.id', 'asc')
-                       ->paginate(7);
+                       ->paginate(10);
 
         // dd(DB::getQueryLog());
 

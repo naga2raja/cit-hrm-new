@@ -15,7 +15,7 @@ class PayslipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = tPayslip::join('employees', 'employees.id', 't_payslips.employee_id')
             ->when(request()->filled('employee_id'), function ($query) {
@@ -44,12 +44,17 @@ class PayslipController extends Controller
                     ->get();
             return view('payslips/employees_list', compact('empData'));
         } 
-        $data = $data->selectRaw('t_payslips.*, DATE_FORMAT(t_payslips.pay_month,"%b %Y") AS payslip_month, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name')
-            ->orderBy('t_payslips.pay_month', 'DESC')
-            ->paginate(12);
-        // dd($data);
+        $data = $data->selectRaw('t_payslips.*, DATE_FORMAT(t_payslips.pay_month,"%b %Y") AS payslip_month, CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name');
+        $total = $data->count();
+        if($request->sort_by && $request->sort_field) {
+            $data = $data->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $data = $data->orderBy('t_payslips.pay_month', 'DESC');
+        }   
+        $data = $data->paginate(10);
+                
         $employees = Employee::where('status', 'Active')->selectRaw('id, CONCAT_WS (" ", first_name, middle_name, last_name) as name')->get();        
-        return view('payslips/list', compact('data', 'employees'));        
+        return view('payslips/list', compact('data', 'employees', 'total'));        
     }
 
     /**

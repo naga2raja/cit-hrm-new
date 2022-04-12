@@ -68,6 +68,9 @@
 												</div>
 											</div>
 
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
@@ -107,16 +110,16 @@
 									<div class="table-responsive">
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_news_table')">
 													</th>
-													<th>News Title</th>
-													<th>Category</th>
-													<th>Project</th>
-													<th>Date</th>
-													<th>Post By</th>
-													<th>Status</th>
+													<th>News Title <a href="#" class="{{ (Request::get('sort_field') == 'title') ? 'active' : '' }}" onclick="sorting('title', 'searchNews')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Category <a href="#" class="{{ (Request::get('sort_field') == 'category') ? 'active' : '' }}" onclick="sorting('category', 'searchNews')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Project <a href="#" class="{{ (Request::get('sort_field') == 'project_id') ? 'active' : '' }}" onclick="sorting('project_id', 'searchNews')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Date <a href="#" class="{{ (Request::get('sort_field') == 't_news.date') ? 'active' : '' }}" onclick="sorting('t_news.date', 'searchNews')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Post By <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'searchNews')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Status <a href="#" class="{{ (Request::get('sort_field') == 't_news.status') ? 'active' : '' }}" onclick="sorting('t_news.status', 'searchNews')"><i class="fa fa-fw fa-sort"></i></th>
 												</tr>
 											</thead>
 											<tbody id="list_news_table">

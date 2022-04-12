@@ -96,7 +96,7 @@
 													<div class="col-sm-12">
 														<div class="form-group">
 															<label>Email Address <span class="text-danger">*</span></label>
-															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="" required name="email" value="{{ old('email') }}" maxlength="30" autocomplete="off" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" placeholder="yourname@gmail.com" required name="email" value="{{ old('email') }}" maxlength="30" autocomplete="off" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
 															{!! $errors->first('email', '<span class="invalid-feedback" role="alert">:message</span>') !!}
 														</div>
 													</div>

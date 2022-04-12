@@ -64,7 +64,7 @@
 							<div class="card shadow-sm ctm-border-radius">
 								<div class="card-header">
 									<div class="row filter-row">
-										<div class="col-sm-6 col-md-8 col-lg-7 {{ (Route::is(['punch.employee-records']) || $userRole == 'Admin') ? 'col-xl-10' : 'col-xl-8' }} ">  
+										<div class="col-sm-6 col-md-8 col-lg-7 {{ (Route::is(['punch.employee-records']) || $userRole == 'Admin') ? 'col-xl-10' : (!employeeDeleteEnabled()) ? 'col-xl-10' : 'col-xl-8' }} ">  
 											<div class="form-group mb-lg-0 mb-md-2 mb-sm-2">
 												<h4 class="card-title mb-0 ml-2 mt-2">{{ Request::is('employee-records') ? 'Employee' : 'My' }} Records</h4>
 											</div>
