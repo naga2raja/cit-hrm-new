@@ -32,7 +32,11 @@ class ReportsController extends Controller
     public function index(Request $request) {
         $data = [];
 
-        if($request->report == 'employee_report') {
+        if(!$request->report || $request->report == 'employee_report') {            
+            $request->merge([
+                "report" => "employee_report",               
+            ]);
+
            $data = $this->getEmployeesReport($request);
             if($request->export)
                 return (new EmployeesReportExport($data))->download('employees.xlsx');            

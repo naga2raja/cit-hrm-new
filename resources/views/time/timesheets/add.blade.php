@@ -457,6 +457,12 @@
 			$("#employee_name").select2({ disabled:'readonly' });
 		@endif
 
+		let isSaveButtonExists = $('#save').length
+		if(!isSaveButtonExists) {
+			$('select').prop('disabled', true);
+			$('.duration, textarea').attr('readonly', true);
+		}
+
 	    $('#add').click(function(){
 	    	var i = 0; var j = 0;
 			var lastTr = $('#timesheets tr:last').attr("id");

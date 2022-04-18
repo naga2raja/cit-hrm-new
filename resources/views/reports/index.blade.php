@@ -45,11 +45,13 @@
 								<div class="card-body align-center">
 									<form method="GET" id="reportForm">
 										<input type="hidden" name="export" value="0" id="export">
+										<input type="hidden" name="report" value="{{ Request::get('report') }}" id="report">
+
 										<div class="row filter-row">
-											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3"> 
+											<div class="col-sm-6 col-md-6 col-lg-6 col-xl-3" style="display: none;"> 
 												<div class="form-group mb-xl-0 mb-md-2 mb-sm-2">
 													<label>Report</label>
-													<select class="form-control select" name="report" id="report" required onchange="selectReportName()">
+													<select class="form-control select" name="report1" id="report1" required onchange="selectReportName()">
 														<option value="">Select</option>
 														<option value="employee_report" @if(Request::get('report') || Request::get('report') == 'employee_report') selected @endif >Employee Report</option>
 														<option value="leave_report" @if(Request::get('report') == 'leave_report') selected @endif>Leave Report</option>
@@ -453,6 +455,7 @@
 			if (window.location.href.indexOf(href) > -1){
 				// do nothing
 			}else{
+				$( "#reportForm" ).submit();
 				// onclick remove table data
 				$('#report_table tbody').empty();
 				// append no data found row		
