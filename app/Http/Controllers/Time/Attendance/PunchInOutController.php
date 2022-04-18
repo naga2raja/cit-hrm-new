@@ -38,9 +38,14 @@ class PunchInOutController extends Controller
                 $date = $date->format('Y-m-d');
                 $query->whereRaw('DATE_FORMAT(t_punch_in_outs.punch_in_user_time, "%Y-%m-%d") = "'. $date.'"');
             })
-            ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name, t_punch_in_outs.is_import')
-            ->orderBy('t_punch_in_outs.id', 'DESC')
-            ->paginate(30);
+            ->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name, t_punch_in_outs.is_import');
+
+            if($request->sort_by && $request->sort_field) {
+                $data = $data->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                $data = $data->orderBy('t_punch_in_outs.id', 'DESC');
+            }
+            $data = $data->paginate(30);
         
         $userRole = 'Admin'; 
         if($user->hasRole('Manager')) {
@@ -419,9 +424,13 @@ class PunchInOutController extends Controller
                 $data = $data->whereIn('t_punch_in_outs.employee_id', $empIds);
             }
             $data = $data->selectRaw('CONCAT(employees.first_name, " ", employees.last_name) as emp_name, t_punch_in_outs.is_import')
-                    ->where('t_punch_in_outs.status', '>', 0)
-                    ->orderBy('t_punch_in_outs.id', 'DESC')
-                    ->paginate(30);
+                    ->where('t_punch_in_outs.status', '>', 0);
+            if($request->sort_by && $request->sort_field) {
+                $data = $data->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                $data = $data->orderBy('t_punch_in_outs.id', 'DESC');
+            }
+            $data = $data->paginate(30);
         
         $enabledFlag = $this->checkPuchchInOutEnable();
         $myPermissions = $this->attendancePermission();            

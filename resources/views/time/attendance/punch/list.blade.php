@@ -44,6 +44,9 @@
 												</div>
 											</div>
 
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4"><i class="fa fa-search"></i> Search </button>
@@ -95,20 +98,20 @@
 										@endif
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													@if(!Route::is(['punch.employee-records']))
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_myrecords_table')">
 													</th>
 													@endif
-													<th> Name </th>
-													<th>Punch in</th>													
+													<th> Name <a href="#" class="{{ (Request::get('sort_field') == 'emp_name') ? 'active' : '' }}" onclick="sorting('emp_name', 'searchPunch')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Punch in <a href="#" class="{{ (Request::get('sort_field') == 'punch_in_user_time') ? 'active' : '' }}" onclick="sorting('punch_in_user_time', 'searchPunch')"><i class="fa fa-fw fa-sort"></i></a></th>
 													{{-- <th>Punch in Note</th> --}}
-													<th>Punch out</th>
+													<th>Punch out <a href="#" class="{{ (Request::get('sort_field') == 'punch_out_user_time') ? 'active' : '' }}" onclick="sorting('punch_out_user_time', 'searchPunch')"><i class="fa fa-fw fa-sort"></i></a></th>
 													{{-- <th>Punch out Note</th> --}}
-                                                    <th>Duration</th>
-													<th>Type</th>
-													<th>Status</th>
+                                                    <th>Duration <a href="#" class="{{ (Request::get('sort_field') == 'duration') ? 'active' : '' }}" onclick="sorting('duration', 'searchPunch')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Type <a href="#" class="{{ (Request::get('sort_field') == 'is_import') ? 'active' : '' }}" onclick="sorting('is_import', 'searchPunch')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Status <a href="#" class="{{ (Request::get('sort_field') == 't_punch_in_outs.status') ? 'active' : '' }}" onclick="sorting('t_punch_in_outs.status', 'searchPunch')"><i class="fa fa-fw fa-sort"></i></a></th>
 													<th>Action</th>
 												</tr>
 											</thead>

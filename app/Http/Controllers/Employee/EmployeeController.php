@@ -53,6 +53,9 @@ class EmployeeController extends Controller
             $employees = $employees->join('t_employee_report_to', 't_employee_report_to.employee_id', 'employees.id');
             $employees = $employees->where('t_employee_report_to.manager_id', $managerDet->id);
         }
+        if($request->sort_by && $request->sort_field) {
+            $employees = $employees->orderBy($request->sort_field, $request->sort_by);
+        }
 
         $employees = $employees->paginate(10);
         // dd($employees);

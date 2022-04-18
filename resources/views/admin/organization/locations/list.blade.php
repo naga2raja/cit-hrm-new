@@ -65,6 +65,8 @@
 													</div>
 												</div>
 											</div>
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
 
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -111,15 +113,15 @@
 										
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_locations_table')">
 													</th>
-													<th>Company</th>
-													<th>City</th>
-													<th>Country</th>
-													<th>Phone</th>
-													<th>Number of employees</th>
+													<th>Company <a href="#" class="{{ (Request::get('sort_field') == 'company_name') ? 'active' : '' }}" onclick="sorting('company_name', 'searchLocations')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>City <a href="#" class="{{ (Request::get('sort_field') == 'city') ? 'active' : '' }}" onclick="sorting('city', 'searchLocations')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Country <a href="#" class="{{ (Request::get('sort_field') == 'country') ? 'active' : '' }}" onclick="sorting('country', 'searchLocations')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Phone <a href="#" class="{{ (Request::get('sort_field') == 'phone_number') ? 'active' : '' }}" onclick="sorting('phone_number', 'searchLocations')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Number of employees <a href="#" class="{{ (Request::get('sort_field') == 'employees_count') ? 'active' : '' }}" onclick="sorting('employees_count', 'searchLocations')"><i class="fa fa-fw fa-sort"></i></a></th>
 												</tr>
 											</thead>
 											<tbody id="list_locations_table">
@@ -136,11 +138,12 @@
 															<td>{{ $location->country }}</td>
 															<td>{{ $location->phone_number }}</td>
 															<td>
-																@foreach($employees_count as $emp)
+																{{ $location->employees_count }} 
+																{{-- @foreach($employees_count as $emp)
 																	@if($emp->company_location_id == $location->id)
 																	{{ $emp->count }}
 																	@endif
-																@endforeach
+																@endforeach --}}
 															</td>
 														</tr>
 													@endforeach

@@ -27,7 +27,8 @@ class LocationsController extends Controller
         $countries = mCountry::get();
 
         $locations = mCompanyLocation::select('m_company_locations.*', 'm_countries.country as country')
-                                    ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id');
+                ->selectRaw(' (SELECT COUNT(*) FROM employees e WHERE e.deleted_at IS NULL AND e.company_location_id = m_company_locations.id) as employees_count')
+                ->join('m_countries', 'm_countries.id', 'm_company_locations.country_id');
         if ($company_name) {
             $locations->Where('company_name', 'like', "%$company_name%");
         }
@@ -37,18 +38,23 @@ class LocationsController extends Controller
         if ($country) {
             $locations->Where('m_countries.id', $country);
         }
-        $locations = $locations->orderBy('m_company_locations.id', 'asc')
-                       ->get();   
+
+        if($request->sort_by && $request->sort_field) {
+            $locations = $locations->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $locations = $locations->orderBy('m_company_locations.id', 'asc');
+        }        
+        $locations = $locations->get();   
         
         DB::connection()->enableQueryLog(); 
-        $employees_count = Employee::select('employees.company_location_id', DB::raw('count(*) as count'))
-                                ->where('employees.deleted_at', null)
-                                ->groupby('employees.company_location_id')
-                                ->get();
+        // $employees_count = Employee::select('employees.company_location_id', DB::raw('count(*) as count'))
+        //                         ->where('employees.deleted_at', null)
+        //                         ->groupby('employees.company_location_id')
+        //                         ->get();
 
         // dd(DB::getQueryLog());
 
-        return view('admin/organization/locations/list',compact('employees_count','countries','locations'));
+        return view('admin/organization/locations/list',compact('countries','locations'));
     }
 
     /**

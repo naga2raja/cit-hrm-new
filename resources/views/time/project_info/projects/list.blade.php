@@ -135,9 +135,9 @@
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_projects_table')">
 													</th>
-													<th>Project <a href="#" class="{{ (Request::get('sort_field') == 'project_name') ? 'active' : '' }}" onclick="sorting('project_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></th>
-													<th>Customer Name <a href="#" class="{{ (Request::get('sort_field') == 'customer_name') ? 'active' : '' }}" onclick="sorting('customer_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></th>
-													<th>project Admin <a href="#" class="{{ (Request::get('sort_field') == 'admin_name') ? 'active' : '' }}" onclick="sorting('admin_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Project <a href="#" class="{{ (Request::get('sort_field') == 'project_name') ? 'active' : '' }}" onclick="sorting('project_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Customer Name <a href="#" class="{{ (Request::get('sort_field') == 'customer_name') ? 'active' : '' }}" onclick="sorting('customer_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>project Admin <a href="#" class="{{ (Request::get('sort_field') == 'admin_name') ? 'active' : '' }}" onclick="sorting('admin_name', 'searchProjects')"><i class="fa fa-fw fa-sort"></i></a></th>
 												</tr>
 											</thead>
 											<tbody id="list_projects_table">

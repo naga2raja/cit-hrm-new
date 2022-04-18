@@ -69,6 +69,9 @@
 												</div>
 											</div>											
 
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+
 											<div class="row">
 												<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">													
 													<button type="submit" class="mt-1 btn btn-theme button-1 text-white ctm-border-radius btn-block mt-4" name="search"><span class="fa fa-search"></span> Search</button>
@@ -117,15 +120,15 @@
 									<div class="table-responsive">
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_emp_table')">
 													</th>
-													<th>Employee Id</th>
-													<th>First Name</th>
-													<th>Last Name</th>
-													<th>Email</th>
-													<th>Status</th>
+													<th>Employee Id <a href="#" class="{{ (Request::get('sort_field') == 'employees.employee_id') ? 'active' : '' }}" onclick="sorting('employees.employee_id')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>First Name <a href="#" class="{{ (Request::get('sort_field') == 'employees.first_name') ? 'active' : '' }}" onclick="sorting('employees.first_name')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Last Name <a href="#" class="{{ (Request::get('sort_field') == 'employees.last_name') ? 'active' : '' }}" onclick="sorting('employees.last_name')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Email <a href="#" class="{{ (Request::get('sort_field') == 'employees.email') ? 'active' : '' }}" onclick="sorting('employees.email')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Status <a href="#" class="{{ (Request::get('sort_field') == 'employees.status') ? 'active' : '' }}" onclick="sorting('employees.status')"><i class="fa fa-fw fa-sort"></i></a></th>
 													<!-- <th class="text-center">Action</th> -->
 												</tr>
 											</thead>
