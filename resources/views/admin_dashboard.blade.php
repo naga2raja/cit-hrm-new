@@ -254,9 +254,9 @@
 										<div class="card-header">
 											<h4 class="card-title mb-0 d-inline-block">Recent Activities</h4>											
 											<a href="javascript:void(0)" id="refresh_recent_activities" class="d-inline-block float-right text-primary"><i class="lnr lnr-sync"></i></a>
-											@hasrole('Admin')
+											
 											<a href="{{ route('allRecentActivities') }}" class="d-inline-block float-right text-primary" style="padding-right: 15px;">View all activities</a>
-											@endrole
+											
 										</div>
 										<div class="card-body recent-activ">
 											<div class="recent-comment" id="recent_activity">

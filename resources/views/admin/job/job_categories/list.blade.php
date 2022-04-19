@@ -31,13 +31,17 @@
 												<p>{{$message}}</p>
 											</div>
 										@endif
+										<form method="GET" id="filter_form">
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+										</form>
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_job_category_table')">
 													</th>
-													<th>Job Category</th>
+													<th>Job Category <a href="#" class="{{ (Request::get('sort_field') == 'name') ? 'active' : '' }}" onclick="sorting('name')"><i class="fa fa-fw fa-sort"></i></a></th>
 												</tr>
 											</thead>
 											<tbody id="list_job_category_table">
@@ -52,6 +56,14 @@
 														</td>
 													</tr>
 													@endforeach
+													<tr>
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($categories->currentPage() > 1) ? (($categories->currentPage() * $categories->perPage()) - $categories->perPage()) + 1 : $categories->currentPage() }} to {{ (($categories->currentPage() * $categories->perPage()) > $total) ? $total : ($categories->currentPage() * $categories->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
+																{{ $categories->appends($_GET)->links() }}
+															</div>
+														</td>
+													</tr>
 												@else
 													<tr>
 														<td colspan="5"><p class="text-center">No Job Category Found !</p></td>

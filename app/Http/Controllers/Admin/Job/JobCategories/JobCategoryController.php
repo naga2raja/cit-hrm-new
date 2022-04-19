@@ -17,10 +17,17 @@ class JobCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = mJobCategory::get();
-        return view('admin/job/job_categories/list', compact('categories'));
+        $categories = mJobCategory::where('name', '!=', '');
+        $total = $categories->count();
+        if($request->sort_by && $request->sort_field) {
+            $categories = $categories->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $categories = $categories->orderBy('id', 'desc');
+        }
+        $categories = $categories->paginate(10);
+        return view('admin/job/job_categories/list', compact('categories', 'total'));
     }
 
     /**

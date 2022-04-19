@@ -121,10 +121,10 @@
 													<table class="table custom-table table-hover">
 														<thead>
 															<tr class="bg-light sort_row">
-                                                                <th>Employee Name  <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
-																<th>Month Year  <a href="#" class="{{ (Request::get('sort_field') == 'pay_month') ? 'active' : '' }}" onclick="sorting('pay_month', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
+                                                                <th>Employee Name  <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'filter_form')"><i class="fa fa-fw fa-sort"></i></a></th>
+																<th>Month Year  <a href="#" class="{{ (Request::get('sort_field') == 'pay_month') ? 'active' : '' }}" onclick="sorting('pay_month', 'filter_form')"><i class="fa fa-fw fa-sort"></i></a></th>
 																<th>Document</th>
-																<th>Created At  <a href="#" class="{{ (Request::get('sort_field') == 'created_at') ? 'active' : '' }}" onclick="sorting('created_at', 'filter_form')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>Created At  <a href="#" class="{{ (Request::get('sort_field') == 'created_at') ? 'active' : '' }}" onclick="sorting('created_at', 'filter_form')"><i class="fa fa-fw fa-sort"></i></a></th>
 																@hasrole('Admin')
 																<th>Action</th>
 																@endrole

@@ -18,10 +18,17 @@ class JobTitlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = mJobTitle::get();
-        return view('admin/job/job_titles/list', compact('jobs'));
+        $jobs = mJobTitle::where('job_title', '!=', '');
+        $total = $jobs->count();
+        if($request->sort_by && $request->sort_field) {
+            $jobs = $jobs->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $jobs = $jobs->orderBy('id', 'asc');
+        }
+        $jobs = $jobs->paginate(10);
+        return view('admin/job/job_titles/list', compact('jobs', 'total'));
     }
 
     /**

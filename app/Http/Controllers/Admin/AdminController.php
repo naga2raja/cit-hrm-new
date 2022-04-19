@@ -412,6 +412,17 @@ class AdminController extends Controller
 
     public function getAllRecentActivities(Request $request) 
     {   
+        $leaveCtrl = new LeaveController;
+        $empIds = [];
+        $user = Auth::user();
+        //check current user role
+        if($user->hasRole('Manager')) {            
+            $currentEmployeeDetails = $leaveCtrl->getEmployeeDetails($user->id);
+            $employeeId = $currentEmployeeDetails->id;
+            $reportTo = $leaveCtrl->getReportingEmployees($employeeId);            
+            if($reportTo)
+                $empIds = explode(',', $reportTo->reporting_manager_ids);
+        }
         $activities = tLog::selectRaw('t_logs.*, CONCAT_WS (" ", first_name, last_name) as employee_name, profile_photo, roles.name as role_name, CASE WHEN t_logs.send_to != "" THEN "Others Activities" END as type')
                                 ->join('employees', 'employees.id', 't_logs.send_by')
                                 ->join('model_has_roles', 'model_has_roles.model_id', 'employees.user_id')
@@ -428,8 +439,11 @@ class AdminController extends Controller
                                     $date = \DateTime::createFromFormat('d/m/Y', request('date'));
                                     $date = $date->format('Y-m-d');
                                     $q->whereRaw('DATE_FORMAT(t_logs.created_at, "%Y-%m-%d") = "'. $date.'"');
-                                })                          
-                                ->orderBy('t_logs.created_at', 'DESC')
+                                });
+        if($user->hasRole('Manager')) {                        
+            $activities = $activities->whereIn('t_logs.send_by', $empIds);
+        }
+            $activities = $activities->orderBy('t_logs.created_at', 'DESC')
                                 ->groupBy('t_logs.id')
                                 ->paginate(100);
 

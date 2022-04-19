@@ -46,13 +46,18 @@ class SystemUserController extends Controller
         if ($status) {
             $users->Where('employees.status', $status);
         }
-        $users = $users->orderBy('users.id', 'asc')
-                       ->paginate(10);
+        $total = $users->count();
+        if($request->sort_by && $request->sort_field) {
+            $users = $users->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $users = $users->orderBy('users.id', 'asc');
+        }
+        $users = $users->paginate(10);
 
         // dd(DB::getQueryLog());
 
         $roles = Role::get();
-        return view('admin/system_users/list', compact('users', 'roles'));
+        return view('admin/system_users/list', compact('users', 'roles', 'total'));
     }
 
     /**

@@ -31,14 +31,18 @@
 												<p>{{$message}}</p>
 											</div>
 										@endif
+										<form method="GET" id="filter_form">
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+										</form>
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_job_title_table')">
 													</th>
-													<th>Job Title</th>
-													<th>Job Description</th>
+													<th>Job Title <a href="#" class="{{ (Request::get('sort_field') == 'job_title') ? 'active' : '' }}" onclick="sorting('job_title')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Job Description <a href="#" class="{{ (Request::get('sort_field') == 'job_description') ? 'active' : '' }}" onclick="sorting('job_description')"><i class="fa fa-fw fa-sort"></i></a></th>
 												</tr>
 											</thead>
 											<tbody id="list_job_title_table">
@@ -54,6 +58,14 @@
 														<td>{{ $job->job_description }}</td>
 													</tr>
 													@endforeach
+													<tr>
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($jobs->currentPage() > 1) ? (($jobs->currentPage() * $jobs->perPage()) - $jobs->perPage()) + 1 : $jobs->currentPage() }} to {{ (($jobs->currentPage() * $jobs->perPage()) > $total) ? $total : ($jobs->currentPage() * $jobs->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
+																{{ $jobs->appends($_GET)->links() }}
+															</div>
+														</td>
+													</tr>
 												@else
 													<tr>
 														<td colspan="3"><p class="text-center">No Data Found</p></td>

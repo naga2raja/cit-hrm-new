@@ -31,14 +31,20 @@
 										<p>{{$message}}</p>
 									</div>
 								@endif
+
+								<form method="GET" id="filter_form">
+									<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+									<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+								</form>
+
 								<table class="table custom-table table-hover">
 									<thead>
-										<tr class="bg-light">
+										<tr class="bg-light sort_row">
 											<th class="text-center">
 												<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_pay_grade_table')">
 											</th>
-											<th>Pay Grade</th>
-											<th>Currency</th>
+											<th>Pay Grade <a href="#" class="{{ (Request::get('sort_field') == 'm_pay_grades.name') ? 'active' : '' }}" onclick="sorting('m_pay_grades.name', 'filter_form')"><i class="fa fa-fw fa-sort"></i></a></th>
+											<th>Currency <a href="#" class="{{ (Request::get('sort_field') == 'currencies_name') ? 'active' : '' }}" onclick="sorting('currencies_name', 'filter_form')"><i class="fa fa-fw fa-sort"></i></a></th>
 										</tr>
 									</thead>
 									<tbody id="list_pay_grade_table">
@@ -56,6 +62,14 @@
 												</td>
 											</tr>
 											@endforeach
+											<tr>
+												<td colspan="100%">															
+													<div class="pull-left mt-3">Showing {{ ($payGrade->currentPage() > 1) ? (($payGrade->currentPage() * $payGrade->perPage()) - $payGrade->perPage()) + 1 : $payGrade->currentPage() }} to {{ (($payGrade->currentPage() * $payGrade->perPage()) > $total) ? $total : ($payGrade->currentPage() * $payGrade->perPage()) }} of {{ $total }} entries</div>
+													<div class="pull-right mt-3">
+														{{ $payGrade->appends($_GET)->links() }}
+													</div>
+												</td>
+											</tr>
 										@else
 											<tr>
 												<td colspan="5"><p class="text-center">No Pay Grades Found !</p></td>

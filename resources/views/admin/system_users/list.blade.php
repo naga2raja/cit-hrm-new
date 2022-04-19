@@ -95,6 +95,8 @@
 													<button type="button" class="mt-1 btn btn-danger text-white ctm-border-radius btn-block mt-4" onclick="resetAllValues('searchSystemUsers')"><i class="fa fa-refresh"></i> Reset </button>
 												</div>
 											</div>												
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
 										</form>
 									</div>
 								</div>
@@ -126,14 +128,14 @@
 									<div class="table-responsive">
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_user_table')">
 													</th>
-													<th>Username</th>
-													<th>User Role</th>
-													<th>Employee Name</th>
-													<th>Status</th>
+													<th>Username <a href="#" class="{{ (Request::get('sort_field') == 'users.email') ? 'active' : '' }}" onclick="sorting('users.email', 'searchSystemUsers')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>User Role <a href="#" class="{{ (Request::get('sort_field') == 'role_name') ? 'active' : '' }}" onclick="sorting('role_name', 'searchSystemUsers')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'first_name') ? 'active' : '' }}" onclick="sorting('first_name', 'searchSystemUsers')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Status <a href="#" class="{{ (Request::get('sort_field') == 'emp_status') ? 'active' : '' }}" onclick="sorting('emp_status', 'searchSystemUsers')"><i class="fa fa-fw fa-sort"></i></a></th>
 													<!-- <th class="text-right">Action</th> -->
 												</tr>
 											</thead>
@@ -167,13 +169,15 @@
 														<td colspan="5"><p class="text-center alert alert-danger">No Data Found</p></td>
 													</tr>
 												@endif
-													<tr>
-														<td colspan="5">
-															<div class="d-flex justify-content-center">
-																{{ $users->appends($_GET)->links() }}
-															</div>
-														</td>
-													</tr>
+												<tr>
+													<td colspan="100%">															
+														<div class="pull-left mt-3">Showing {{ ($users->currentPage() > 1) ? (($users->currentPage() * $users->perPage()) - $users->perPage()) + 1 : $users->currentPage() }} to {{ (($users->currentPage() * $users->perPage()) > $total) ? $total : ($users->currentPage() * $users->perPage()) }} of {{ $total }} entries</div>
+														<div class="pull-right mt-3">
+															{{ $users->appends($_GET)->links() }}
+														</div>
+													</td>
+												</tr>
+													
 											</tbody>
 										</table>
 									</div>
