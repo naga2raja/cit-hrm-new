@@ -109,7 +109,7 @@
 																<th>Days <a href="#" class="{{ (Request::get('sort_field') == 'no_leave_days') ? 'active' : '' }}" onclick="sorting('no_leave_days')"><i class="fa fa-fw fa-sort"></i></th>
 																{{-- <th>Remaining Days</th> --}}
 																{{-- <th>Notes</th> --}}
-																<th>Status<a href="#" class="{{ (Request::get('sort_field') == 'my_status') ? 'active' : '' }}" onclick="sorting('my_status', 'asc')"><i class="fa fa-fw fa-sort"></i></th>
+																<th>Status<a href="#" class="{{ (Request::get('sort_field') == 'my_status') ? 'active' : '' }}" onclick="sorting('my_status')"><i class="fa fa-fw fa-sort"></i></th>
 																<th class="text-left">Action</th>
 															</tr>
 														</thead>
@@ -164,15 +164,15 @@
                                                                         <div class="alert alert-danger"> No data found!</div>
                                                                     </td>
                                                                 </tr>
-                                                            @endif
-
-                                                            <tr>
-                                                                <td colspan="7">
-                                                                    <div class="d-flex justify-content-center">
-                                                                        {{ $myLeaves->appends($_GET)->links() }}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                            @endif                                                            
+															<tr>
+																<td colspan="100%">															
+																	<div class="pull-left mt-3">Showing {{ ($myLeaves->currentPage() > 1) ? (($myLeaves->currentPage() * $myLeaves->perPage()) - $myLeaves->perPage()) + 1 : $myLeaves->currentPage() }} to {{ (($myLeaves->currentPage() * $myLeaves->perPage()) > $total) ? $total : ($myLeaves->currentPage() * $myLeaves->perPage()) }} of {{ $total }} entries</div>
+																	<div class="pull-right mt-3">
+																		{{ $myLeaves->appends($_GET)->links() }}
+																	</div>
+																</td>
+															</tr>
 														</tbody>
 													</table>
                                                     <button type="button" class="btn btn-theme button-1 text-white pull-right p-2" style="display: none;" id="approve_action" data-toggle="modal" data-target="#delete">Save</button>

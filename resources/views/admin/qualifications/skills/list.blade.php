@@ -31,14 +31,18 @@
 												<p>{{$message}}</p>
 											</div>
 										@endif
+										<form method="GET" id="searchSkills">
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+										</form>
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr class="bg-light">
+												<tr class="bg-light sort_row">
 													<th class="text-center">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('list_skills_table')">
 													</th>
-													<th>Skill</th>
-													<th>Skill Description</th>
+													<th>Skill <a href="#" class="{{ (Request::get('sort_field') == 'skill') ? 'active' : '' }}" onclick="sorting('skill', 'searchSkills')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Skill Description <a href="#" class="{{ (Request::get('sort_field') == 'skill_description') ? 'active' : '' }}" onclick="sorting('skill_description', 'searchSkills')"><i class="fa fa-fw fa-sort"></i></a></th>
 												</tr>
 											</thead>
 											<tbody id="list_skills_table">
@@ -54,6 +58,14 @@
 														<td>{{$skill->skill_description}}</td>
 													</tr>
 													@endforeach
+													<tr>
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($skills->currentPage() > 1) ? (($skills->currentPage() * $skills->perPage()) - $skills->perPage()) + 1 : $skills->currentPage() }} to {{ (($skills->currentPage() * $skills->perPage()) > $total) ? $total : ($skills->currentPage() * $skills->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
+																{{ $skills->appends($_GET)->links() }}
+															</div>
+														</td>
+													</tr>
 												@else
 													<tr>
 														<td colspan="5"><p class="text-center">No Skills Found!</p></td>

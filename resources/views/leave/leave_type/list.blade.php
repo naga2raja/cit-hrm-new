@@ -33,13 +33,17 @@
 											</div>
 										</div>
 										@endif
+										<form method="GET" id="filter_form">
+											<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+											<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
+										</form>
 										<table class="table custom-table table-hover">
 											<thead>
-												<tr>
+												<tr class="bg-light sort_row">
 													<th class="text-center" style="width: 10%">
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('leave_type_table')">
 													</th>
-													<th>Leave Type</th>
+													<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'name') ? 'active' : '' }}" onclick="sorting('name')"><i class="fa fa-fw fa-sort"></i></a></th>
 												</tr>
 											</thead>
 											<tbody id="leave_type_table">
@@ -54,6 +58,14 @@
 														</td>
 													</tr>
 													@endforeach
+													<tr>
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($leave_type->currentPage() > 1) ? (($leave_type->currentPage() * $leave_type->perPage()) - $leave_type->perPage()) + 1 : $leave_type->currentPage() }} to {{ (($leave_type->currentPage() * $leave_type->perPage()) > $total) ? $total : ($leave_type->currentPage() * $leave_type->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
+																{{ $leave_type->appends($_GET)->links() }}
+															</div>
+														</td>
+													</tr>
 												@else
 													<tr>
 														<td colspan="2"><p class="text-center">No Data Found</p></td>

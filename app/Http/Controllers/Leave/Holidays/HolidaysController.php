@@ -60,7 +60,9 @@ class HolidaysController extends Controller
             $holidays = $holidays->orderBy('m_holidays.id', 'asc');
         }
 
-        $holidays = $holidays->with('countryName', 'subUnitName')->paginate(10);
+        $holidays = $holidays->with('countryName', 'subUnitName');
+        $total = $holidays->count();
+        $holidays = $holidays->paginate(10);
         // dd(DB::getQueryLog());
 
         $country = mCountry::selectRaw('m_countries.id, m_countries.country')
@@ -70,7 +72,7 @@ class HolidaysController extends Controller
 
         $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
 
-        return view('leave/holidays/list', compact('holidays', 'country', 'company_location'));
+        return view('leave/holidays/list', compact('holidays', 'country', 'company_location', 'total'));
     }
 
     /**

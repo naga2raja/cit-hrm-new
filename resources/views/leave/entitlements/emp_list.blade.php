@@ -126,11 +126,11 @@
 														<input type="checkbox" name="select_checkAll" id="select_checkAll" onclick="SelectAll('mylist_entitlements_table')">
 														@endrole
 													</th>
-													<th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
-													<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'leave_type_name') ? 'active' : '' }}" onclick="sorting('leave_type_name', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
-													<th>Valid From <a href="#" class="{{ (Request::get('sort_field') == 'from_date') ? 'active' : '' }}" onclick="sorting('from_date', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
-													<th>Valid To <a href="#" class="{{ (Request::get('sort_field') == 'to_date') ? 'active' : '' }}" onclick="sorting('to_date', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
-													<th class="text-right">Days <a href="#" class="{{ (Request::get('sort_field') == 'no_of_days') ? 'active' : '' }}" onclick="sorting('no_of_days', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></th>
+													<th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'leave_type_name') ? 'active' : '' }}" onclick="sorting('leave_type_name', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Valid From <a href="#" class="{{ (Request::get('sort_field') == 'from_date') ? 'active' : '' }}" onclick="sorting('from_date', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th>Valid To <a href="#" class="{{ (Request::get('sort_field') == 'to_date') ? 'active' : '' }}" onclick="sorting('to_date', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></a></th>
+													<th class="text-right">Days <a href="#" class="{{ (Request::get('sort_field') == 'no_of_days') ? 'active' : '' }}" onclick="sorting('no_of_days', 'searchEmployeeEntitlement')"><i class="fa fa-fw fa-sort"></i></a></th>
 												</tr>
 											</thead>
 											<tbody id="mylist_entitlements_table">
@@ -176,19 +176,21 @@
 														<td>Total :</td>
 														<td class="text-right">{{ number_format($total, 2) }}</td>
 													</tr>
+													<tr>
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($entitlement->currentPage() > 1) ? (($entitlement->currentPage() * $entitlement->perPage()) - $entitlement->perPage()) + 1 : $entitlement->currentPage() }} to {{ (($entitlement->currentPage() * $entitlement->perPage()) > $leaveTotal) ? $leaveTotal : ($entitlement->currentPage() * $entitlement->perPage()) }} of {{ $leaveTotal }} entries</div>
+															<div class="pull-right mt-3">
+																{{ $entitlement->appends($_GET)->links() }}
+															</div>
+														</td>
+													</tr>
 												@else
 													<tr>
 														<td colspan="6"><p class="text-center">No Data Found !</p></td>
 													</tr>
 												@endif
 
-												<tr>
-													<td colspan="6">
-														<div class="d-flex justify-content-center">
-															{{ $entitlement->appends($_GET)->links() }}
-														</div>
-													</td>
-												</tr>
+												
 
 											</tbody>
 										</table>

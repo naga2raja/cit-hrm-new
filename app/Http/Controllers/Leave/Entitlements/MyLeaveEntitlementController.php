@@ -33,6 +33,7 @@ class MyLeaveEntitlementController extends Controller
         $entitlement = [];
         $leave_types = [];
         $leave_period = [];
+        $leaveTotal = 0;
         if($employees){
             $employees_id = $employees->id;
             $entitlement = mLeaveEntitlement::select('m_leave_entitlements.*', 'm_leave_entitlements.id as entitlement_id', 'm_leave_types.*', 'm_leave_types.name as leave_type_name')
@@ -55,7 +56,7 @@ class MyLeaveEntitlementController extends Controller
             } else {
                 $entitlement = $entitlement->orderBy('m_leave_entitlements.from_date', 'asc');
             }
-
+            $leaveTotal = $entitlement->count();
             $entitlement = $entitlement->paginate(10);
 
             $leave_types = mLeaveType::get();
@@ -66,10 +67,8 @@ class MyLeaveEntitlementController extends Controller
                                             })
                                             ->distinct()
                                             ->get();
-        }        
-        // dd(DB::getQueryLog());        
-
-        return view('leave/entitlements/list', compact('entitlement', 'leave_types', 'leave_period', 'employees'));
+        } 
+        return view('leave/entitlements/list', compact('entitlement', 'leave_types', 'leave_period', 'employees', 'leaveTotal'));
     }
 
     /**

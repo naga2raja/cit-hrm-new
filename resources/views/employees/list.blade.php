@@ -185,8 +185,9 @@
 													</tr>
 												@endif
 												<tr>
-													<td colspan="6">
-														<div class="d-flex justify-content-center">
+													<td colspan="100%">															
+														<div class="pull-left mt-3">Showing {{ ($employees->currentPage() > 1) ? (($employees->currentPage() * $employees->perPage()) - $employees->perPage()) + 1 : $employees->currentPage() }} to {{ (($employees->currentPage() * $employees->perPage()) > $total) ? $total : ($employees->currentPage() * $employees->perPage()) }} of {{ $total }} entries</div>
+														<div class="pull-right mt-3">
 															{{ $employees->appends($_GET)->links() }}
 														</div>
 													</td>

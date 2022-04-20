@@ -147,6 +147,14 @@
 															</td>
 														</tr>
 													@endforeach
+													<tr>
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($locations->currentPage() > 1) ? (($locations->currentPage() * $locations->perPage()) - $locations->perPage()) + 1 : $locations->currentPage() }} to {{ (($locations->currentPage() * $locations->perPage()) > $total) ? $total : ($locations->currentPage() * $locations->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
+																{{ $locations->appends($_GET)->links() }}
+															</div>
+														</td>
+													</tr>
 												@else
 													<tr>
 														<td colspan="6"><p class="text-center">No locations Found!</p></td>

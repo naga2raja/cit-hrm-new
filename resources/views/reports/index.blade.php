@@ -519,7 +519,7 @@
 				row += '<tr><td colspan="100%">';
 				row += '<div class="alert alert-danger text-left">No Data Found</div>';
 				row += '</td></tr>';
-			return row;
+			return '';
 		}
 
 		$("#reset").click(function() {

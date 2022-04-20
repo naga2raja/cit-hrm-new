@@ -15,10 +15,18 @@ class LeaveTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $leave_type = mLeaveType::get();
-        return view('leave/leave_type/list', compact('leave_type'));
+        $leave_type = mLeaveType::select('*');
+        if($request->sort_by && $request->sort_field) {
+            $leave_type = $leave_type->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $leave_type = $leave_type->orderBy('id', 'asc');
+        }
+        $total = $leave_type->count();
+        $leave_type = $leave_type->paginate(10);
+
+        return view('leave/leave_type/list', compact('leave_type', 'total'));
     }
 
     /**

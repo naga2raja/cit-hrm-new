@@ -180,12 +180,13 @@
 													</tr>
 
 													<tr>
-														<td colspan="100%">
-															<div class="d-flex justify-content-center">
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($entitlement->currentPage() > 1) ? (($entitlement->currentPage() * $entitlement->perPage()) - $entitlement->perPage()) + 1 : $entitlement->currentPage() }} to {{ (($entitlement->currentPage() * $entitlement->perPage()) > $leaveTotal) ? $leaveTotal : ($entitlement->currentPage() * $entitlement->perPage()) }} of {{ $leaveTotal }} entries</div>
+															<div class="pull-right mt-3">
 																{{ $entitlement->appends($_GET)->links() }}
 															</div>
 														</td>
-													</tr>
+													</tr>													
 												@else
 													<tr>
 														@hasrole('Admin')

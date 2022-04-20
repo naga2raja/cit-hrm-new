@@ -56,10 +56,10 @@ class EmployeeController extends Controller
         if($request->sort_by && $request->sort_field) {
             $employees = $employees->orderBy($request->sort_field, $request->sort_by);
         }
-
+        $total = $employees->count();
         $employees = $employees->paginate(10);
         // dd($employees);
-        return view('employees/list', compact('employees'));
+        return view('employees/list', compact('employees', 'total'));
     }
 
     /**

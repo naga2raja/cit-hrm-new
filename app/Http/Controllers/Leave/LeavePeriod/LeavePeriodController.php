@@ -52,7 +52,9 @@ class LeavePeriodController extends Controller
             $leave_period = $leave_period->orderBy('m_leave_periods.id', 'asc');
         }
 
-        $leave_period = $leave_period->with('countryName', 'subUnitName')->paginate(10);
+        $leave_period = $leave_period->with('countryName', 'subUnitName');
+        $total = $leave_period->count();
+        $leave_period = $leave_period->paginate(10);
 
         // dd(DB::getQueryLog(), $leave_period);
 
@@ -63,7 +65,7 @@ class LeavePeriodController extends Controller
 
         $company_location = mCompanyLocation::selectRaw('id, company_name')->get();
 
-        return view('leave/leave_period/list', compact('leave_period', 'country', 'company_location'));
+        return view('leave/leave_period/list', compact('leave_period', 'country', 'company_location', 'total'));
     }
 
     /**

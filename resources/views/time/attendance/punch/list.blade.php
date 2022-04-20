@@ -187,6 +187,16 @@
 														</td>
                                                     </tr>
                                                 @endforeach
+												@if(count($data))
+												<tr>
+													<td colspan="100%">															
+														<div class="pull-left mt-3">Showing {{ ($data->currentPage() > 1) ? (($data->currentPage() * $data->perPage()) - $data->perPage()) + 1 : $data->currentPage() }} to {{ (($data->currentPage() * $data->perPage()) > $total) ? $total : ($data->currentPage() * $data->perPage()) }} of {{ $total }} entries</div>
+														<div class="pull-right mt-3">
+															{{ $data->appends($_GET)->links() }}
+														</div>
+													</td>
+												</tr>
+												@endif
 
 												@if(!count($data)) 
 													<tr>
@@ -194,14 +204,7 @@
 															<div class="alert alert-danger"> No data found!</div>
 														</td>
 													</tr>
-												@endif
-												<tr>
-													<td colspan="100%">
-														<div class="d-flex justify-content-center">
-															{{ $data->links() }}
-														</div>
-													</td>
-												</tr>
+												@endif											
 																										
 											</tbody>
 										</table>

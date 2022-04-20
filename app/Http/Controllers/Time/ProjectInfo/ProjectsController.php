@@ -47,11 +47,12 @@ class ProjectsController extends Controller
         if($request->sort_by && $request->sort_field) {
             $projects = $projects->orderBy($request->sort_field, $request->sort_by);
         }
-        $projects = $projects->groupby('m_projects.id')
-                       ->paginate(10);  
+        $projects = $projects->groupBy('m_projects.id');                        
+        $total = $projects->get()->count();
+        $projects = $projects->paginate(10); 
         $activities = tActivity::get();
 
-        return view('time/project_info/projects/list', compact('projects', 'activities'));
+        return view('time/project_info/projects/list', compact('projects', 'activities', 'total'));
     }
 
     /**

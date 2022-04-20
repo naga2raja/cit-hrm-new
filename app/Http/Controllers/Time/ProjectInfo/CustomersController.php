@@ -24,8 +24,9 @@ class CustomersController extends Controller
         } else {
             $customers = $customers->orderBy('id', 'asc');
         }
+        $total = $customers->count();
         $customers = $customers->paginate(10);        
-        return view('time/project_info/customers/list', ['customers' => $customers]);
+        return view('time/project_info/customers/list', ['customers' => $customers, 'total' => $total]);
     }
 
     /**

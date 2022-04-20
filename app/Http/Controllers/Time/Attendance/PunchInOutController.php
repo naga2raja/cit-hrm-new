@@ -45,7 +45,8 @@ class PunchInOutController extends Controller
             } else {
                 $data = $data->orderBy('t_punch_in_outs.id', 'DESC');
             }
-            $data = $data->paginate(30);
+            $total = $data->count();
+            $data = $data->paginate(10);
         
         $userRole = 'Admin'; 
         if($user->hasRole('Manager')) {
@@ -56,7 +57,7 @@ class PunchInOutController extends Controller
         $enabledFlag = $this->checkPuchchInOutEnable();
         $myPermissions = $this->attendancePermission();            
         $edit_date_time = $myPermissions['edit_date_time'];
-        return view('time/attendance/punch/list', compact('data', 'userRole', 'edit_date_time'));
+        return view('time/attendance/punch/list', compact('data', 'userRole', 'edit_date_time', 'total'));
     }
 
     /**
@@ -430,13 +431,14 @@ class PunchInOutController extends Controller
             } else {
                 $data = $data->orderBy('t_punch_in_outs.id', 'DESC');
             }
-            $data = $data->paginate(30);
+            $total = $data->get()->count();
+            $data = $data->paginate(10);
         
         $enabledFlag = $this->checkPuchchInOutEnable();
         $myPermissions = $this->attendancePermission();            
         $edit_date_time = $myPermissions['edit_date_time'];
 
-        return view('time/attendance/punch/list', compact('data', 'userRole', 'edit_date_time'));
+        return view('time/attendance/punch/list', compact('data', 'userRole', 'edit_date_time', 'total'));
     }
 
     public function adminAction(Request $request)

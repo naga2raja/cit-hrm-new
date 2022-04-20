@@ -58,18 +58,22 @@
 														<td>{{ ($customer->customer_description) ? $customer->customer_description : '-'}}</td>
 													</tr>
 														@endforeach
+														@if(count($customers))
+														<tr>
+															<td colspan="100%">															
+																<div class="pull-left mt-3">Showing {{ ($customers->currentPage() > 1) ? (($customers->currentPage() * $customers->perPage()) - $customers->perPage()) + 1 : $customers->currentPage() }} to {{ (($customers->currentPage() * $customers->perPage()) > $total) ? $total : ($customers->currentPage() * $customers->perPage()) }} of {{ $total }} entries</div>
+																<div class="pull-right mt-3">
+																	{{ $customers->appends($_GET)->links() }}
+																</div>
+															</td>
+														</tr>
+														@endif
 													@else
 														<tr>
 															<td colspan="5"><p class="text-center">No customers Found!</p></td>
 														</tr>
 												@endif
-												<tr>
-													<td colspan="5">
-														<div class="d-flex justify-content-center">
-															{{ $customers->appends($_GET)->links() }}
-														</div>
-													</td>
-												</tr>
+												
 											</tbody>
 										</table>
 									</div>

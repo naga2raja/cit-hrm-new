@@ -150,18 +150,19 @@
 														<td>{{ $row->subUnitName->company_name }}</td>
 													</tr>
 													@endforeach
-												@else
 													<tr>
-														<td colspan="7"><p class="text-center alert alert-danger">No Data Found</p></td>
-													</tr>
-												@endif
-													<tr>
-														<td colspan="7">
-															<div class="d-flex justify-content-center">
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($holidays->currentPage() > 1) ? (($holidays->currentPage() * $holidays->perPage()) - $holidays->perPage()) + 1 : $holidays->currentPage() }} to {{ (($holidays->currentPage() * $holidays->perPage()) > $total) ? $total : ($holidays->currentPage() * $holidays->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
 																{{ $holidays->appends($_GET)->links() }}
 															</div>
 														</td>
 													</tr>
+												@else
+													<tr>
+														<td colspan="7"><p class="text-center alert alert-danger">No Data Found</p></td>
+													</tr>
+												@endif													
 											</tbody>
 										</table>
 									</div>

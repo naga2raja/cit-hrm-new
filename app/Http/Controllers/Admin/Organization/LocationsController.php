@@ -43,8 +43,9 @@ class LocationsController extends Controller
             $locations = $locations->orderBy($request->sort_field, $request->sort_by);
         } else {
             $locations = $locations->orderBy('m_company_locations.id', 'asc');
-        }        
-        $locations = $locations->get();   
+        }     
+        $total = $locations->count();   
+        $locations = $locations->paginate(10);   
         
         DB::connection()->enableQueryLog(); 
         // $employees_count = Employee::select('employees.company_location_id', DB::raw('count(*) as count'))
@@ -54,7 +55,7 @@ class LocationsController extends Controller
 
         // dd(DB::getQueryLog());
 
-        return view('admin/organization/locations/list',compact('countries','locations'));
+        return view('admin/organization/locations/list',compact('countries','locations', 'total'));
     }
 
     /**

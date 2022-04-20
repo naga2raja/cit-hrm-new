@@ -15,10 +15,18 @@ class SkillsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $skills = mSkill::get();
-        return view('admin/qualifications/skills/list', ['skills' => $skills]);
+        $skills = mSkill::select('*');
+
+        if($request->sort_by && $request->sort_field) {
+            $skills = $skills->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $skills = $skills->orderBy('id', 'desc');
+        }
+        $total = $skills->count();
+        $skills = $skills->paginate(10);        
+        return view('admin/qualifications/skills/list', ['skills' => $skills, 'total' => $total]);
     }
 
     /**

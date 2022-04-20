@@ -155,18 +155,19 @@
 														</td>
 													</tr>
 													@endforeach
-												@else
 													<tr>
-														<td colspan="5"><p class="text-center alert alert-danger">No Data Found</p></td>
-													</tr>
-												@endif
-													<tr>
-														<td colspan="5">
-															<div class="d-flex justify-content-center">
+														<td colspan="100%">															
+															<div class="pull-left mt-3">Showing {{ ($leave_period->currentPage() > 1) ? (($leave_period->currentPage() * $leave_period->perPage()) - $leave_period->perPage()) + 1 : $leave_period->currentPage() }} to {{ (($leave_period->currentPage() * $leave_period->perPage()) > $total) ? $total : ($leave_period->currentPage() * $leave_period->perPage()) }} of {{ $total }} entries</div>
+															<div class="pull-right mt-3">
 																{{ $leave_period->appends($_GET)->links() }}
 															</div>
 														</td>
 													</tr>
+												@else
+													<tr>
+														<td colspan="5"><p class="text-center alert alert-danger">No Data Found</p></td>
+													</tr>
+												@endif													
 											</tbody>
 										</table>
 									</div>

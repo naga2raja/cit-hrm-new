@@ -159,13 +159,16 @@
 														<td colspan="5"><p class="text-center">No projects Found!</p></td>
 													</tr>
 												@endif												
+												@if(count($projects))
 												<tr>
-													<td colspan="5">
-														<div class="d-flex justify-content-center">
+													<td colspan="100%">															
+														<div class="pull-left mt-3">Showing {{ ($projects->currentPage() > 1) ? (($projects->currentPage() * $projects->perPage()) - $projects->perPage()) + 1 : $projects->currentPage() }} to {{ (($projects->currentPage() * $projects->perPage()) > $total) ? $total : ($projects->currentPage() * $projects->perPage()) }} of {{ $total }} entries</div>
+														<div class="pull-right mt-3">
 															{{ $projects->appends($_GET)->links() }}
 														</div>
 													</td>
 												</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>

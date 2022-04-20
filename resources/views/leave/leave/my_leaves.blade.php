@@ -172,12 +172,13 @@
                                                             @endif
 
                                                             <tr>
-                                                                <td colspan="7">
-                                                                    <div class="d-flex justify-content-center">
-                                                                        {{ $myLeaves->appends($_GET)->links() }}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+																<td colspan="100%">															
+																	<div class="pull-left mt-3">Showing {{ ($myLeaves->currentPage() > 1) ? (($myLeaves->currentPage() * $myLeaves->perPage()) - $myLeaves->perPage()) + 1 : $myLeaves->currentPage() }} to {{ (($myLeaves->currentPage() * $myLeaves->perPage()) > $total) ? $total : ($myLeaves->currentPage() * $myLeaves->perPage()) }} of {{ $total }} entries</div>
+																	<div class="pull-right mt-3">
+																		{{ $myLeaves->appends($_GET)->links() }}
+																	</div>
+																</td>
+															</tr>
 														</tbody>
 													</table>
 												</div>
