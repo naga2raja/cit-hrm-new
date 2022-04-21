@@ -175,6 +175,8 @@
 												<button id="reset" type="button" class="btn btn-danger ctm-border-radius text-white btn-block p-2 mb-md-0 mb-sm-0 mb-lg-0 mb-0" onclick="resetAllValues('reportForm')"> Reset </button>
 											</div>
 										</div>
+										<input type="hidden" name="sort_field" id="sort_field" value="{{ Request::get('sort_field') }}">
+										<input type="hidden" name="sort_by" id="sort_by" value="{{ Request::get('sort_by') }}">
 									</form>
 								</div>
 							</div>
@@ -187,30 +189,30 @@
 										<div class="table-responsive">
 											<table id="report_table" class="table custom-table table-hover">
 												<thead id="thead_employee_report">
-													<tr class="bg-light">
-														<th>Employee Id</th>
-														<th>First Name</th>
-														<th>Middle Name</th>
-														<th>Last Name</th>
-														<th>Email</th>
-														<th>Date of Birth</th>
-														<th>Gender</th>
-														<th>Date of Joining</th>
-														<th>Marital Status</th>
-														<th>Status</th>
-														<th>Street address1 </th>
-														<th>Street address2 </th>
-														<th>City </th>
-														<th>State </th>
-														<th>Country </th>
-														<th>Zip code </th>
-														<th>Home Telephone </th>
-														<th>Mobile </th>
-														<th>Work Telephone </th>
-														<th>Alternate Email </th>
-														<th>Job Title</th>
-														<th>Report to</th>
-														<th>Created At</th>
+													<tr class="bg-light sort_row">
+														<th>Employee Id <a href="#" class="{{ (Request::get('sort_field') == 'employee_id') ? 'active' : '' }}" onclick="sorting('employee_id', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>First Name <a href="#" class="{{ (Request::get('sort_field') == 'first_name') ? 'active' : '' }}" onclick="sorting('first_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th></th>
+														<th>Middle Name <a href="#" class="{{ (Request::get('sort_field') == 'middle_name') ? 'active' : '' }}" onclick="sorting('middle_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Last Name <a href="#" class="{{ (Request::get('sort_field') == 'last_name') ? 'active' : '' }}" onclick="sorting('last_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Email <a href="#" class="{{ (Request::get('sort_field') == 'email') ? 'active' : '' }}" onclick="sorting('email', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Date of Birth <a href="#" class="{{ (Request::get('sort_field') == 'date_of_birth') ? 'active' : '' }}" onclick="sorting('date_of_birth', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Gender <a href="#" class="{{ (Request::get('sort_field') == 'gender') ? 'active' : '' }}" onclick="sorting('gender', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Date of Joining <a href="#" class="{{ (Request::get('sort_field') == 'joined_date') ? 'active' : '' }}" onclick="sorting('joined_date', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Marital Status <a href="#" class="{{ (Request::get('sort_field') == 'marital_status') ? 'active' : '' }}" onclick="sorting('marital_status', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Status <a href="#" class="{{ (Request::get('sort_field') == 'status') ? 'active' : '' }}" onclick="sorting('status', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Street address1 <a href="#" class="{{ (Request::get('sort_field') == 'street_address_1') ? 'active' : '' }}" onclick="sorting('street_address_1', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Street address2 <a href="#" class="{{ (Request::get('sort_field') == 'street_address_2') ? 'active' : '' }}" onclick="sorting('street_address_2', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>City <a href="#" class="{{ (Request::get('sort_field') == 'city') ? 'active' : '' }}" onclick="sorting('city', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>State <a href="#" class="{{ (Request::get('sort_field') == 'state') ? 'active' : '' }}" onclick="sorting('state', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Country <a href="#" class="{{ (Request::get('sort_field') == 'country') ? 'active' : '' }}" onclick="sorting('country', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Zip code <a href="#" class="{{ (Request::get('sort_field') == 'zip_code') ? 'active' : '' }}" onclick="sorting('zip_code', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Home Telephone <a href="#" class="{{ (Request::get('sort_field') == 'home_telephone') ? 'active' : '' }}" onclick="sorting('home_telephone', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Mobile <a href="#" class="{{ (Request::get('sort_field') == 'mobile') ? 'active' : '' }}" onclick="sorting('mobile', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Work Telephone <a href="#" class="{{ (Request::get('sort_field') == 'work_telephone') ? 'active' : '' }}" onclick="sorting('work_telephone', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Alternate Email <a href="#" class="{{ (Request::get('sort_field') == 'alternate_email') ? 'active' : '' }}" onclick="sorting('alternate_email', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Job Title <a href="#" class="{{ (Request::get('sort_field') == 'job_title') ? 'active' : '' }}" onclick="sorting('job_title', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Report to <a href="#" class="{{ (Request::get('sort_field') == 'report_to') ? 'active' : '' }}" onclick="sorting('report_to', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Created At <a href="#" class="{{ (Request::get('sort_field') == 'created_at') ? 'active' : '' }}" onclick="sorting('created_at', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
 													</tr>
 												</thead>												
 											  	
@@ -256,15 +258,15 @@
 
 											<!-- leave_report -->
 												<thead id="thead_leave_report">
-													<tr class="bg-light">
-														<th>Employee Name</th>
-														<th>Leave Type</th>
-														<th>From</th>
-														<th>To</th>
-														<th>Days</th>																
-														<th>Notes</th>
-														<th>Status</th>	
-														<th>Created At</th>														
+													<tr class="bg-light sort_row">
+														<th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'emp_name') ? 'active' : '' }}" onclick="sorting('emp_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'name') ? 'active' : '' }}" onclick="sorting('name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>From <a href="#" class="{{ (Request::get('sort_field') == 'from_date') ? 'active' : '' }}" onclick="sorting('from_date', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>To <a href="#" class="{{ (Request::get('sort_field') == 'to_date') ? 'active' : '' }}" onclick="sorting('to_date', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Days <a href="#" class="{{ (Request::get('sort_field') == 'my_leave_duration') ? 'active' : '' }}" onclick="sorting('my_leave_duration', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>																
+														<th>Notes <a href="#" class="{{ (Request::get('sort_field') == 'comments') ? 'active' : '' }}" onclick="sorting('comments', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Status <a href="#" class="{{ (Request::get('sort_field') == 'my_leave_status') ? 'active' : '' }}" onclick="sorting('my_leave_status', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Created At <a href="#" class="{{ (Request::get('sort_field') == 'created_at') ? 'active' : '' }}" onclick="sorting('created_at', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
 													</tr>
 												</thead>
 												@if(Request::get('report') == 'leave_report')
@@ -291,13 +293,13 @@
 
 											<!-- attendance_report -->
 												<thead id="thead_attendance_report">
-													<tr class="bg-light">														
-														<th> Name </th>
-														<th>Punch in</th>		
-														<th>Punch out</th>
-														<th>Duration</th>
-														<th>Status</th>
-														<th>Type</th>
+													<tr class="bg-light sort_row">														
+														<th> Name <a href="#" class="{{ (Request::get('sort_field') == 'emp_name') ? 'active' : '' }}" onclick="sorting('emp_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Punch in <a href="#" class="{{ (Request::get('sort_field') == 'punch_in_user_time') ? 'active' : '' }}" onclick="sorting('punch_in_user_time', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Punch out <a href="#" class="{{ (Request::get('sort_field') == 'punch_out_user_time') ? 'active' : '' }}" onclick="sorting('punch_out_user_time', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Duration <a href="#" class="{{ (Request::get('sort_field') == 'duration') ? 'active' : '' }}" onclick="sorting('duration', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Status <a href="#" class="{{ (Request::get('sort_field') == 'current_status') ? 'active' : '' }}" onclick="sorting('current_status', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Type <a href="#" class="{{ (Request::get('sort_field') == 'is_import') ? 'active' : '' }}" onclick="sorting('is_import', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
 													</tr>
 												</thead>
 												@if(Request::get('report') == 'attendance_report')
@@ -329,13 +331,13 @@
 
 											<!-- timesheet_report -->
 												<thead id="thead_timesheet_report">
-													<tr class="bg-light">														
-														<th>Employee Name </th>
-														<th>Project Name</th>		
-														<th>Date</th>
-														<th>Duration</th>
-														<th>Status</th>
-														<th>Create At</th>
+													<tr class="bg-light sort_row">														
+														<th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Project Name <a href="#" class="{{ (Request::get('sort_field') == 'project_name') ? 'active' : '' }}" onclick="sorting('project_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Date <a href="#" class="{{ (Request::get('sort_field') == 'date') ? 'active' : '' }}" onclick="sorting('date', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Duration <a href="#" class="{{ (Request::get('sort_field') == 'duration') ? 'active' : '' }}" onclick="sorting('duration', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Status <a href="#" class="{{ (Request::get('sort_field') == 'status') ? 'active' : '' }}" onclick="sorting('status', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Create At <a href="#" class="{{ (Request::get('sort_field') == 'created_at') ? 'active' : '' }}" onclick="sorting('created_at', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
 													</tr>
 												</thead>
 												@if(Request::get('report') == 'timesheet_report')
@@ -355,10 +357,10 @@
 
 											<!-- productivity_report -->
 												<thead id="thead_productivity_report">
-													<tr class="bg-light">														
-														<th>Project Name </th>
-														<th>Customer Name</th>																
-														<th>Duration (HH:MM)</th>
+													<tr class="bg-light sort_row">														
+														<th>Project Name <a href="#" class="{{ (Request::get('sort_field') == 'project_name') ? 'active' : '' }}" onclick="sorting('project_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Customer Name <a href="#" class="{{ (Request::get('sort_field') == 'customer_name') ? 'active' : '' }}" onclick="sorting('customer_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Duration (HH:MM) <a href="#" class="{{ (Request::get('sort_field') == 'duration') ? 'active' : '' }}" onclick="sorting('duration', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
 													</tr>
 												</thead>
 												@if(Request::get('report') == 'productivity_report')
@@ -387,13 +389,13 @@
 
 											<!-- leave_balance_report -->
 												<thead id="thead_leave_balance_report">
-													<tr class="bg-light">														
-														<th>Employee Name </th>
-														<th>Leave Type</th>	
-														<th>Leave Period</th>																
-														<th>Total Leaves</th>
-														<th>Leaves Taken</th>
-														<th>Leave Balance</th>
+													<tr class="bg-light sort_row">														
+														<th>Employee Name <a href="#" class="{{ (Request::get('sort_field') == 'employee_name') ? 'active' : '' }}" onclick="sorting('employee_name', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Leave Type <a href="#" class="{{ (Request::get('sort_field') == 'leave_type') ? 'active' : '' }}" onclick="sorting('leave_type', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Leave Period <a href="#" class="{{ (Request::get('sort_field') == 'from_date') ? 'active' : '' }}" onclick="sorting('from_date', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Total Leaves <a href="#" class="{{ (Request::get('sort_field') == 'no_of_days') ? 'active' : '' }}" onclick="sorting('no_of_days', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Leaves Taken <a href="#" class="{{ (Request::get('sort_field') == 'leaves_taken') ? 'active' : '' }}" onclick="sorting('leaves_taken', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
+														<th>Leave Balance <a href="#" class="{{ (Request::get('sort_field') == 'balance_leave') ? 'active' : '' }}" onclick="sorting('balance_leave', 'reportForm')"><i class="fa fa-fw fa-sort"></i></a></th>
 													</tr>
 												</thead>
 												@if(Request::get('report') == 'leave_balance_report')
@@ -405,7 +407,7 @@
 															<td> {{ $leave['from_date'] }} -  {{ $leave['to_date'] }} </td> 
 															<td> {{ $leave['no_of_days'] }} </td>
 															<td> {{ (float) $leave['leaves_taken'] }} </td>
-															<td> {{ (float) ($leave['no_of_days'] - $leave['leaves_taken']) }} </td>
+															<td> {{ (float) $leave['balance_leave'] }} </td>
 														</tr>
 													@endforeach
 												</tbody>
@@ -446,15 +448,17 @@
 			$('#export').val(0);
 		}
 
-		$("#reports_list li.list-group-item").click(function() {
+		$("#reports_list li.list-group-item").click(function() {			
 			$(this).addClass('active').siblings().removeClass('active');
 			var href = $('#reports_list li.list-group-item.active a').attr('href');
 			href = href.replace('#', '');
-			$('[name=report]').val(href).trigger('change');
+			$('[name=report]').val(href).trigger('change');			
 
-			if (window.location.href.indexOf(href) > -1){
-				// do nothing
-			}else{
+			// if (window.location.href.indexOf(href) > -1){
+			// 	// do nothing
+			// 	alert(href);
+			// }else{
+				$('#sort_field, #sort_by').val('');
 				$( "#reportForm" ).submit();
 				// onclick remove table data
 				$('#report_table tbody').empty();
@@ -464,7 +468,7 @@
 				var uri = window.location.toString();
 				var clean_uri = uri.substring(0, uri.indexOf("?"));
 		        window.history.pushState({}, document.title, clean_uri);
-			}
+			//}
 
 			// calling manageSearchBox()
 			manageSearchBox(href);

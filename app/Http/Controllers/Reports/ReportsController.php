@@ -99,9 +99,11 @@ class ReportsController extends Controller
         })        
         ->selectRaw('employees.employee_id, first_name, middle_name, last_name, employees.email, date_of_birth, gender, joined_date, employees.status, employees.created_at, IF(employees.marital_status = 1, "YES", "NO") as marital_status')
         ->selectRaw('contact_details.street_address_1, contact_details.street_address_2, contact_details.city, contact_details.state, contact_details.country, contact_details.zip_code, contact_details.home_telephone, contact_details.mobile, contact_details.work_telephone, contact_details.alternate_email,
-        m_job_titles.job_title, (SELECT GROUP_CONCAT(e.first_name) FROM t_employee_report_to ert INNER JOIN employees e ON e.id = ert.manager_id WHERE employees.id = ert.employee_id  ) as report_to')
-        ->get()
-        ->toArray();
+        m_job_titles.job_title, (SELECT GROUP_CONCAT(e.first_name) FROM t_employee_report_to ert INNER JOIN employees e ON e.id = ert.manager_id WHERE employees.id = ert.employee_id  ) as report_to');
+        if($request->sort_by && $request->sort_field) {
+            $data = $data->orderBy($request->sort_field, $request->sort_by);
+        }
+        $data = $data->get()->toArray();
         return $data;
     }
 
@@ -137,10 +139,11 @@ class ReportsController extends Controller
         ->when(request()->filled('employee_id'), function ($query) {
             $query->where('t_leave_requests.employee_id', request('employee_id'));
         })  
-        ->groupBy('t_leave_requests.id')
-        ->get()
-        ->toArray();
-        
+        ->groupBy('t_leave_requests.id');
+        if($request->sort_by && $request->sort_field) {
+            $data = $data->orderBy($request->sort_field, $request->sort_by);
+        }
+        $data = $data->get()->toArray();        
         return $data;
     }
 
@@ -183,10 +186,14 @@ class ReportsController extends Controller
                     })
                     ->when(request()->filled('employee_id'), function ($query) {
                         $query->where('t_punch_in_outs.employee_id', request('employee_id'));
-                    })
-                    ->orderBy('t_punch_in_outs.id', 'DESC')
-                    ->get()
-                    ->toArray();
+                    });
+                    
+            if($request->sort_by && $request->sort_field) {
+                $data = $data->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                $data = $data->orderBy('t_punch_in_outs.id', 'DESC');
+            }
+            $data = $data->get()->toArray();
             return $data;
     }
 
@@ -233,12 +240,16 @@ class ReportsController extends Controller
         
         $timesheets = $timesheets->where('t_timesheets.status', '!=', 0)
             ->selectRaw('CONCAT_WS (" ", first_name, middle_name, last_name) as employee_name, m_projects.project_name')
-            ->selectRaw('employees.user_id, roles.name as role_name, t_timesheet_items.duration, t_timesheet_items.date')
+            ->selectRaw('employees.user_id, roles.name as role_name, t_timesheet_items.duration, t_timesheet_items.date');
             // ->with('allTimesheetItem')
-            ->orderBy('t_timesheets.start_date', 'asc')
-            ->orderBy('t_timesheets.id', 'asc')
-            ->get()
-            ->toArray();
+            
+        if($request->sort_by && $request->sort_field) {
+            $timesheets = $timesheets->orderBy($request->sort_field, $request->sort_by);
+        } else {
+            $timesheets = $timesheets->orderBy('t_timesheets.start_date', 'asc')
+                ->orderBy('t_timesheets.id', 'asc');
+        }
+        $timesheets = $timesheets->get()->toArray();
 
         return $timesheets;
     }
@@ -264,9 +275,13 @@ class ReportsController extends Controller
             ->when(request()->filled('employee_id'), function ($query) {
                 $query->where('t_timesheets.employee_id', request('employee_id'));
             })
-            ->selectRaw('m_projects.project_name as project_name, m_customers.customer_name, SUM(t_timesheet_items.duration) as duration, m_projects.id')
-            ->orderBy('m_projects.project_name', 'ASC')
-            ->groupBy('m_projects.id')
+            ->selectRaw('m_projects.project_name as project_name, m_customers.customer_name, SUM(t_timesheet_items.duration) as duration, m_projects.id');
+            if($request->sort_by && $request->sort_field) {
+                $projects = $projects->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                $projects = $projects->orderBy('m_projects.project_name', 'ASC');
+            }            
+            $projects = $projects->groupBy('m_projects.id')
             ->get()
             ->toArray();
         
@@ -308,7 +323,7 @@ class ReportsController extends Controller
            return $out;        
     }
 
-    public function getLeaveBalanceReport() {
+    public function getLeaveBalanceReport($request) {
 
         $data = mLeaveEntitlement::join('m_leave_types', 'm_leave_types.id', 'm_leave_entitlements.leave_type_id')
             // ->leftJoin('t_leaves', 't_leaves.entitlement_id', 'm_leave_entitlements.id')
@@ -329,8 +344,15 @@ class ReportsController extends Controller
                 $query->where('m_leave_entitlements.leave_type_id', request('leave_type'));
             })
             ->selectraw('CONCAT_WS (" ", employees.first_name, employees.middle_name, employees.last_name) as employee_name, m_leave_types.name as leave_type, m_leave_entitlements.no_of_days, SUM(t_leaves.length_days) as leaves_taken, m_leave_entitlements.from_date, m_leave_entitlements.to_date')
-            ->orderBy('employees.id', 'ASC')
-            ->groupBy('m_leave_entitlements.id', 'm_leave_entitlements.emp_number')
+            ->selectRaw('(m_leave_entitlements.no_of_days - (SUM(t_leaves.length_days)) ) as balance_leave');
+
+            if($request->sort_by && $request->sort_field) {
+                $data = $data->orderBy($request->sort_field, $request->sort_by);
+            } else {
+                $data = $data->orderBy('employees.id', 'ASC');
+            }
+            
+            $data = $data->groupBy('m_leave_entitlements.id', 'm_leave_entitlements.emp_number')
             ->get()
             ->toArray();
         return  $data;
