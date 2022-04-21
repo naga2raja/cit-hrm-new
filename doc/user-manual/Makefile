@@ -35,6 +35,7 @@ pdf:
 	pwd
 	$(MAKE) -C pdf pdf
 	rm -rf pdf/
+	rm -rf __pycache__/
 
 html:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(HTMLBUILDDIR)" $(SPHINXOPTS) $(O)
