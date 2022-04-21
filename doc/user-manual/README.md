@@ -48,10 +48,24 @@ git clone https://github.com/naga2raja/cit-hrm-new
 
 cd to project directory:
 ```bash
-cd cit-hrm-new/doc
+cd cit-hrm-new/doc/user-manual/
+```
+## Generate User manual
+
+To clean temporary directories and files
+```bash
+make clean
 ```
 
+To generate pdf document:
+```bash
+make pdf
+```
+PDF document will be generated and copied in the current directory.
 
-
-
+To generate html:
+```bash
+make html
+```
+HTML files for the user manual will be generated into the html directory.
 
