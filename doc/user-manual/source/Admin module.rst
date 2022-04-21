@@ -67,10 +67,10 @@ Enter Currency, Minimum Salary and Maximum Salary and Click on “Save” button
 Job categories
 ^^^^^^^^^^^^^^^^^^^
 Select Job → “Job Categories” to add new Job Categories or list existing Job Categories if any.
-<=image=>
+.. figure:: images/job-categories-1.png
 
 Click “Add” button, enter the Category name and click on Save button to add the new job category to the organization.
-<=image=>
+.. figure:: images/job-categories-2.png
 
 ----------------
 User Management
@@ -78,32 +78,34 @@ User Management
 
 In this Sub-Module, Admin will assign role to the added employee in PIM Module. 
 Select Admin >> click on “User Management” to check the list of added employees. 
-<=image=>
+.. figure:: images/user-management-1.png
 
 Click on “ADD” or  “Username” to assign role. Employee’s been added in PIM Module, will be listed here for role allocation like Employee, Manager or Admin.
 While creating new Employee in PIM module, Login credentials can be created. If not created, then while assigning role Login credentials for that employee can be create. If credentials care created while Employee creation, then by mistake if Admin again creates while assigning role then previous credentials will be overwritten.
-<=image=>
+.. figure:: images/add-user-1.png
 Single employee or multiple employees can be deleted by selecting check box and click on “Delete ” button.
-<=image=>
+.. figure:: images/user-management-2.png
 Employee details can be searched by Employee Name or Role or Status.
-<=image=>
+.. figure:: images/user-management-1.png
 
 ----------------
 Qualification
 ----------------
 
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 Skills
-^^^^^^^^^^^^^^^^^
-
+^^^^^^^^^^^^^^^
 Select Admin >> Qualification >> “Skills” to add new skill or list existing skills if any.
-<=image=>
+.. figure:: images/skills-1.png
+
 Click “ADD” button to add new Skill. Enter Skill and description then click on “Save” button.
-<=image=>
+.. figure:: images/skills-2.png
+
+Skills can be deleted by checking check box and click on “Delete” button. 
 
 -----------------------------------
 Punch IN/OUT Configuration
 -----------------------------------
 In this Sub-module, Admin can give access to employees for some modules if needed. 
 Like , if attendance data is missing for some employee or for all employees then admin can enable that configuration then only Employees can see that menu.
-<=image=>
+.. figure:: images/punk-in-out-1.png
