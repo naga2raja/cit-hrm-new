@@ -28,6 +28,13 @@ Bangalore, India
    :name: maintoc
    :includehidden:
 
+
+   .. All the rst files (modules) are listed below.
+      On addition of new module or deletion, update the below list.
+      
+      
+      MODULE LIST
+
    module
    Login-LogOut-Changing-your-Password
    dashboard

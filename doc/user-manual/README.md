@@ -69,3 +69,17 @@ make html
 ```
 HTML files for the user manual will be generated into the html directory.
 
+## Documentation
+
+Each module in CIT HRM has been documented in seperate reStructuredText file with .rst extension.
+
+Reference:
+
+https://docutils.sourceforge.io/docs/user/rst/cheatsheet.txt
+
+https://docutils.sourceforge.io/rst.html
+
+Once a new module is created, add new .rst file with details of the module in it to source directory.
+Add the file name, excluding extension (.rst), in the index.rst under MODULE LIST.
+
+Generate user manual after changing the value for version in conf.py and source/conf.py.
