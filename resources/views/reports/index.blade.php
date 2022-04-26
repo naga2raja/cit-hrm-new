@@ -452,7 +452,7 @@
 			$(this).addClass('active').siblings().removeClass('active');
 			var href = $('#reports_list li.list-group-item.active a').attr('href');
 			href = href.replace('#', '');
-			$('[name=report]').val(href).trigger('change');			
+			$('[name=report]').val(href); //.trigger('change');			
 
 			// if (window.location.href.indexOf(href) > -1){
 			// 	// do nothing
@@ -460,6 +460,7 @@
 			// }else{
 				$('#sort_field, #sort_by').val('');
 				$( "#reportForm" ).submit();
+				/*
 				// onclick remove table data
 				$('#report_table tbody').empty();
 				// append no data found row		
@@ -468,10 +469,11 @@
 				var uri = window.location.toString();
 				var clean_uri = uri.substring(0, uri.indexOf("?"));
 		        window.history.pushState({}, document.title, clean_uri);
+				*/
 			//}
 
 			// calling manageSearchBox()
-			manageSearchBox(href);
+			//manageSearchBox(href);
 		});
 
 		$('#employee_id').select2();
