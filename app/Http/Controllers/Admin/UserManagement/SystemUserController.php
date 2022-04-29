@@ -191,11 +191,16 @@ class SystemUserController extends Controller
     public function deleteMultiple(Request $request)
     {
         if($request->delete_ids) {
-            User::whereIn('id', $request->delete_ids)
-                ->get()
-                ->map(function($user) {
-                    $user->delete();
-                });
+            Employee::whereIn('user_id', $request->delete_ids)
+                    ->update(['user_id' => NULL]);
+
+            User::whereIn('id', $request->delete_ids)->forceDelete();
+            
+            // User::whereIn('id', $request->delete_ids)
+            //     ->get()
+            //     ->map(function($user) {
+            //         $user->forceDelete();
+            //     });
 
             // --- need not to empty -----
             // Employee::whereIn('user_id', $request->delete_ids)
@@ -277,7 +282,8 @@ class SystemUserController extends Controller
                         ->join('employees', 'employees.email', 'users.email')
                         ->where('employees.id', $employee_id)
                         ->first();                
-            } else {
+            } 
+            if(!$data) {
                 $employee->role_name = 'Employee';
                 $data = $employee;
             }

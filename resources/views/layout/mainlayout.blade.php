@@ -138,8 +138,12 @@
 						return false;
 						// alert('Can\'t delete the '+ $module);
 					} else {
-						alert('Deleted successfully!');
-						location.href=location.href.replace(/&?page=([^&]$|[^&]*)/i, "");
+						//alert('Deleted successfully!');
+						var url = new URL(window.location.href);
+						url.searchParams.set("delete_success", true); // setting your param
+						url.searchParams.set("page", 1);					
+
+						location.href=url.href; //location.href.replace(/&?page=([^&]$|[^&]*)/i, "");
 					}					
 
 					//location.href=location.href.replace(/&?page=([^&]$|[^&]*)/i, "");
@@ -158,6 +162,14 @@
 	            }
 	        });
 
+		}
+		
+		let is_del_success = '{{ Request::get("delete_success") }}';
+		if(is_del_success) {
+			$( ".custom-table" ).before( '<div class="alert alert-success" id="delete_success_alert_info"><p>Deleted Successfully!</p></div>' );
+			setTimeout(function() {
+				$('#delete_success_alert_info').hide();
+			}, 4000); 
 		}
 
 		function resetAllValues(formId) {
